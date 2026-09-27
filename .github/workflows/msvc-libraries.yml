@@ -8,9 +8,12 @@
 # a Windows SDK. Rows that need a toolset or SDK the image lacks add it with
 # the image's own Visual Studio installer first.
 #
-# A pull request runs every row and stops at the artifacts. Only a manual run
-# creates a release, and that release is a draft unless publish_release is
-# set: the archives are unmodified Microsoft libraries (see README.md).
+# A pull request only runs the collector's unit tests: the rows occupy a
+# dozen Windows runners, and GitHub evaluates a pull request's path filter
+# against its whole diff, so every push would restart them. A manual run
+# collects every row and creates a release, which is a draft unless
+# publish_release is set: the archives are unmodified Microsoft libraries
+# (see README.md).
 
 name: Collect MSVC libraries
 
@@ -59,6 +62,7 @@ jobs:
   collect:
     name: Collect ${{ matrix.name }}
     needs: verify
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 120
     strategy:
