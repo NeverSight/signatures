@@ -3,10 +3,12 @@
 # pinned revision.
 #
 # One job builds neverd-sigmaker against the published prebuilt LLVM
-# package; one job per architecture turns that architecture's archives into
-# lines and merges them into the files already here; a final job commits the
-# result, and only when a manual run asks it to. A pull request that edits
-# this workflow only builds the generator.
+# package; one job per architecture rebuilds every file of that architecture
+# that has library archives, from those archives alone; a final job commits
+# the result, and only when a manual run asks it to. Files with no archives
+# behind them (the imported vs2005-vs2013, masm32 and mingw32-zlib files) are
+# left as they are. A pull request that edits this workflow only builds the
+# generator.
 
 name: Build MSVC signatures
 
@@ -14,7 +16,7 @@ on:
   workflow_dispatch:
     inputs:
       release:
-        description: Library release tag (default every msvc-libs-* release, newest first, drafts included)
+        description: Library release tags, space separated (default every msvc-libs-* release, drafts included). A file is rebuilt from the archives of these releases alone.
         required: false
         type: string
       publish:
@@ -43,7 +45,7 @@ env:
   # produce these files. Pinning it is what makes a regenerated file
   # attributable to a known generator.
   NEVERD_REPO: NeverSight/NeverD
-  NEVERD_REF: b91a639d87fe8b795b1e327f8c54a35743a777a2
+  NEVERD_REF: e44e258777e9c02b22519ba6856b77417465ff95
 
 jobs:
   sigmaker:
@@ -173,7 +175,9 @@ jobs:
             --report "migration-$ARCH.json" \
             --work "$RUNNER_TEMP"
 
-      - name: Generate and merge
+      # Every archive of the architecture goes in at once: the builder drops
+      # bytes that any file of a directory finds ambiguous from all of them.
+      - name: Generate
         env:
           TAG: ${{ steps.release.outputs.tag }}
         run: |
@@ -183,7 +187,6 @@ jobs:
             --sigmaker generator/neverd-sigmaker \
             --assets assets \
             --output . \
-            --merge-existing \
             --neverd-ref "$NEVERD_REF" \
             --release "$TAG" \
             --work "$RUNNER_TEMP"
