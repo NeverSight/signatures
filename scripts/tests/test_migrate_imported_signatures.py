@@ -97,6 +97,22 @@ class VerbatimTests(unittest.TestCase):
         self.assertFalse(migrate.is_verbatim("_Close_CFile__UEAAXXZ", "pe"))
 
 
+class SectionSymbolTests(unittest.TestCase):
+    def test_function_sections_name_their_function(self) -> None:
+        self.assertEqual(migrate.section_symbol(".text._ZNSt6__ndk19strstreamD1Ev", "elf"),
+                         "_ZNSt6__ndk19strstreamD1Ev")
+        self.assertEqual(migrate.section_symbol(".text.unlikely.crc32_combine", "elf"),
+                         "crc32_combine")
+        self.assertIsNone(migrate.section_symbol(".LTHUNK3", "elf"))
+        self.assertIsNone(migrate.section_symbol(".text_tii_131", "pe"))
+
+    def test_a_section_name_is_renamed_not_removed(self) -> None:
+        reference = migrate.Reference("elf")
+        reference.index_spellings()
+        line = migrate.Line.parse("AABBCCDD 00 0000 0004 :0000 .text.crc32_combine")
+        self.assertEqual(migrate.resolve(line, reference), ("crc32_combine", "section"))
+
+
 class CRCTests(unittest.TestCase):
     def test_matches_neverd_check_vector(self) -> None:
         self.assertEqual(migrate.crc16(b"123456789"), 0x6E90)
@@ -205,6 +221,28 @@ class TailAlignmentTests(unittest.TestCase):
         self.assertEqual(how, "realigned")
         self.assertEqual(aligned.tail, body[36:40].hex().upper())
         self.assertEqual(migrate.resolve(aligned, reference), ("?f@@YAXXZ", "bytes"))
+
+
+class MoveTests(unittest.TestCase):
+    def test_only_bytes_of_the_other_width_move_a_line(self) -> None:
+        own = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28C3"))
+        other = pe_reference(
+            reference_line("?Thumb@@YAXXZ", "10B50446BDE81040"),
+            reference_line("?Spelled@@YAXXZ", "70B5054670BD"),
+        )
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "android-ndk.pat"
+            path.write_text(
+                "10B50446BDE81040 00 0000 0008 :0000 _Thumb__YAXXZ\n"
+                "AABBCCDDEEFF 00 0000 0006 :0000 _Spelled__YAXXZ\n"
+            )
+            report = migrate.FileReport()
+            moved: list[str] = []
+            lines = migrate.migrate_file(path, own, report, other, moved)
+        self.assertEqual(moved, ["10B50446BDE81040 00 0000 0008 :0000 ?Thumb@@YAXXZ"])
+        self.assertEqual(lines, ["AABBCCDDEEFF 00 0000 0006 :0000 _Spelled__YAXXZ"])
+        self.assertEqual(report.moved, 1)
+        self.assertEqual(report.unresolved, 1)
 
 
 class MigrateFileTests(unittest.TestCase):

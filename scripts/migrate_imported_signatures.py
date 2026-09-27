@@ -81,6 +81,19 @@ _ELF_ARTIFACT = re.compile(r"^(obj\..+|\.[A-Za-z_].*)$")
 # into `_`, so only a PE name that starts with a letter is known to be one; a
 # demangled ELF name has `::`, an argument list or a `method.` prefix.
 _PE_VERBATIM = re.compile(r"^[A-Za-z][A-Za-z0-9_]*$")
+
+# A function compiled with -ffunction-sections sits alone in `.text.<symbol>`,
+# and rizin named some lines after that section.
+_ELF_SECTION_SYMBOL = re.compile(
+    r"^\.text\.(?:(?:unlikely|hot|startup|exit|split)\.)?(?P<symbol>[A-Za-z_$][A-Za-z0-9_.$]*)$")
+
+# The directory whose functions have the other pointer width, where an
+# imported line filed under the wrong one belongs.
+SIBLINGS = {
+    "elf/arm/64": "elf/arm/32", "elf/arm/32": "elf/arm/64",
+    "elf/x86/64": "elf/x86/32", "elf/x86/32": "elf/x86/64",
+    "pe/x86/64": "pe/x86/32", "pe/x86/32": "pe/x86/64",
+}
 _ELF_VERBATIM = re.compile(r"^[A-Za-z_][A-Za-z0-9_.$]*$")
 
 
@@ -113,6 +126,15 @@ def elf_spellings(demangled: str) -> set[str]:
 def is_artifact(name: str, binary_format: str) -> bool:
     pattern = _PE_ARTIFACT if binary_format == "pe" else _ELF_ARTIFACT
     return bool(pattern.match(name))
+
+
+def section_symbol(name: str, binary_format: str) -> str | None:
+    """The function a line named after its `.text.<symbol>` section holds."""
+
+    if binary_format != "elf":
+        return None
+    match = _ELF_SECTION_SYMBOL.match(name)
+    return match.group("symbol") if match else None
 
 
 def is_verbatim(name: str, binary_format: str) -> bool:
@@ -392,6 +414,9 @@ def resolve(line: Line, reference: Reference) -> tuple[str | None, str]:
         alias = reference.one_routine(both or matched)
         if alias is not None:
             return alias, "bytes"
+    symbol = section_symbol(line.name, reference.binary_format)
+    if symbol is not None:
+        return symbol, "section"
     if is_artifact(line.name, reference.binary_format):
         return None, "artifact"
     if len(spelled) == 1:
@@ -418,6 +443,8 @@ class FileReport:
     by_bytes: int = 0
     by_spelling: int = 0
     already_conforming: int = 0
+    from_section: int = 0
+    moved: int = 0
     verbatim: int = 0
     removed_artifacts: int = 0
     unresolved: int = 0
@@ -466,7 +493,9 @@ def align(line: Line, reference: Reference, default: str | None) -> tuple[Line, 
     return line, "kept"
 
 
-def migrate_file(path: Path, reference: Reference, report: FileReport) -> list[str]:
+def migrate_file(path: Path, reference: Reference, report: FileReport,
+                 sibling: Reference | None = None,
+                 moved: list[str] | None = None) -> list[str]:
     texts = path.read_text(encoding="utf-8").splitlines()
     parsed = [
         Line.parse(raw.strip())
@@ -492,6 +521,14 @@ def migrate_file(path: Path, reference: Reference, report: FileReport) -> list[s
             report.removed_artifacts += 1
             report.removed_names.append(line.name)
             continue
+        if name is None and sibling is not None and moved is not None:
+            # Some imported lines were filed under the wrong pointer width;
+            # only the bytes of a function of the other width may move one.
+            other, other_how = resolve(line, sibling)
+            if other is not None and other_how == "bytes":
+                report.moved += 1
+                moved.append(line.render(other))
+                continue
         if name is None:
             report.unresolved += 1
             report.unresolved_names.append(line.name)
@@ -499,6 +536,8 @@ def migrate_file(path: Path, reference: Reference, report: FileReport) -> list[s
             continue
         if how == "verbatim":
             report.verbatim += 1
+        elif how == "section":
+            report.from_section += 1
         elif name == line.name:
             report.already_conforming += 1
         elif how == "bytes":
@@ -569,12 +608,17 @@ def imported_files(tree: Path, revision: str, directory: str) -> list[Path]:
 
 
 def migrate_directory(tree: Path, directory: str, files: list[Path], reference: Reference,
-                      summary: dict[str, dict], verify_with: Path | None) -> None:
+                      summary: dict[str, dict], verify_with: Path | None,
+                      sibling: Reference | None = None,
+                      moves: dict[Path, list[str]] | None = None) -> None:
     print(f"{directory}: {reference.functions} reference functions, "
           f"{len(reference.names)} names", flush=True)
     for path in files:
         report = FileReport()
-        lines = migrate_file(path, reference, report)
+        moved: list[str] = []
+        lines = migrate_file(path, reference, report, sibling, moved)
+        if moved and moves is not None:
+            moves.setdefault(tree / SIBLINGS[directory] / path.name, []).extend(moved)
         path.write_text("\n".join(lines) + "\n", encoding="utf-8")
         if verify_with is not None:
             # The loader rejects a whole directory for one bad line.
@@ -584,8 +628,9 @@ def migrate_directory(tree: Path, directory: str, files: list[Path], reference: 
         summary[key] = report.__dict__
         print(
             f"{key}: {report.lines} lines, {report.by_bytes} renamed by bytes, "
-            f"{report.by_spelling} by spelling, {report.already_conforming} already "
-            f"conforming, {report.verbatim} C names kept, "
+            f"{report.by_spelling} by spelling, {report.from_section} from their section, "
+            f"{report.moved} moved to the other width, "
+            f"{report.already_conforming} already conforming, {report.verbatim} C names kept, "
             f"{report.removed_artifacts} non-function lines removed, "
             f"{report.unresolved} unresolved; {report.realigned_tails} tails realigned, "
             f"{report.undecided_tails} undecided",
@@ -626,21 +671,45 @@ def main(argv: list[str] | None = None) -> int:
         with tempfile.TemporaryDirectory(dir=args.work) as scratch:
             reference = build_pe_reference(args.sigmaker, args.assets, arch, Path(scratch))
         migrate_directory(args.tree, directory, files, reference, summary, args.verify_with)
+    moves: dict[Path, list[str]] = {}
     for directory in args.directory:
         if args.references is None:
             parser.error("--directory needs --references")
         files = imported_files(args.tree, args.imported_from, directory)
         if not files:
             continue
-        reference = load_reference(args.references / directory, directory.split("/")[0])
-        migrate_directory(args.tree, directory, files, reference, summary, args.verify_with)
+        binary_format = directory.split("/")[0]
+        reference = load_reference(args.references / directory, binary_format)
+        sibling = None
+        sibling_directory = args.references / SIBLINGS.get(directory, "-")
+        if directory in SIBLINGS and sibling_directory.is_dir():
+            sibling = load_reference(sibling_directory, binary_format)
+        migrate_directory(args.tree, directory, files, reference, summary, args.verify_with,
+                          sibling, moves)
+
+    # Moved lines are already in NeverD's form, so they join their new file
+    # only after every file has been migrated.
+    for destination, lines in sorted(moves.items()):
+        existing = destination.read_text(encoding="utf-8").splitlines() if destination.is_file() else []
+        seen = set(existing)
+        added = [line for line in lines if line not in seen and not seen.add(line)]
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text("\n".join(existing + added) + "\n", encoding="utf-8")
+        if args.verify_with is not None:
+            subprocess.run([str(args.verify_with), "--verify", str(destination)], check=True,
+                           stdout=subprocess.DEVNULL)
+        key = destination.relative_to(args.tree).as_posix()
+        summary.setdefault(key, FileReport().__dict__)["received"] = len(added)
+        print(f"{key}: {len(lines)} lines moved here from the other width, "
+              f"{len(lines) - len(added)} of them already present", flush=True)
 
     args.report.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     totals = Counter()
     for report in summary.values():
-        for key in ("lines", "by_bytes", "by_spelling", "already_conforming", "verbatim",
-                    "removed_artifacts", "unresolved", "realigned_tails", "undecided_tails"):
-            totals[key] += report[key]
+        for key in ("lines", "by_bytes", "by_spelling", "from_section", "moved",
+                    "already_conforming", "verbatim", "removed_artifacts", "unresolved",
+                    "realigned_tails", "undecided_tails"):
+            totals[key] += report.get(key, 0)
     print(f"total: {dict(totals)}")
     return 0
 
