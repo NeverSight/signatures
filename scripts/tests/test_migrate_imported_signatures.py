@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import shutil
 import sys
 import tempfile
 import unittest
@@ -18,7 +19,15 @@ def reference_line(name: str, data: str) -> str:
     return f"{data} 00 0000 {len(data) // 2:04X} :0000 {name}"
 
 
-class SpellingTests(unittest.TestCase):
+def pe_reference(*lines: str) -> migrate.Reference:
+    reference = migrate.Reference("pe")
+    for line in lines:
+        reference.add_line(line)
+    reference.index_spellings()
+    return reference
+
+
+class PESpellingTests(unittest.TestCase):
     def test_rizin_spelling_of_decorated_names(self) -> None:
         cases = {
             "??1CMFCButton@@UEAA@XZ": "__1CMFCButton__UEAA_XZ",
@@ -30,16 +39,62 @@ class SpellingTests(unittest.TestCase):
             "___std_stacktrace_address_to_string@12": "___std_stacktrace_address_to_string_12",
         }
         for linkage, imported in cases.items():
-            self.assertEqual(migrate.rizin_spelling(linkage), imported)
+            self.assertEqual(migrate.pe_spelling(linkage), imported)
 
     def test_long_names_are_cut_at_125(self) -> None:
-        self.assertEqual(len(migrate.rizin_spelling("?" + "a" * 300)), 125)
+        self.assertEqual(len(migrate.pe_spelling("?" + "a" * 300)), 125)
 
     def test_section_and_label_names_are_not_functions(self) -> None:
         for name in (".text_tii_131", ".lf_1", ".lf", "_LN116"):
-            self.assertTrue(migrate.is_artifact(name), name)
+            self.assertTrue(migrate.is_artifact(name, "pe"), name)
         for name in ("_memcpy", "__1CMFCButton__UEAA_XZ", "_LN", "_LNfoo"):
-            self.assertFalse(migrate.is_artifact(name), name)
+            self.assertFalse(migrate.is_artifact(name, "pe"), name)
+
+
+class ELFSpellingTests(unittest.TestCase):
+    def test_plain_and_method_forms(self) -> None:
+        cases = {
+            "std::__cxx11::basic_stringbuf<char, std::char_traits<char>, "
+            "std::allocator<char> >::setbuf(char*, long)":
+                "std::__cxx11::basic_stringbuf_char__std::char_traits_char___"
+                "std::allocator_char___::setbuf_char___long",
+            "std::filesystem::temp_directory_path[abi:cxx11](std::error_code&)":
+                "std::filesystem::temp_directory_path_abi:cxx11__std::error_code",
+            "(anonymous namespace)::_M_destroy_thread_key(void*)":
+                "_anonymous_namespace_::_M_destroy_thread_key_void",
+        }
+        for demangled, imported in cases.items():
+            self.assertIn(imported, migrate.elf_spellings(demangled))
+
+    def test_method_form_splits_before_the_first_parenthesis(self) -> None:
+        forms = migrate.elf_spellings("std::basic_ios<char, std::char_traits<char> >::fill() const")
+        self.assertIn("method.std::basic_ios_char__std::char_traits_char___.fill___const", forms)
+        forms = migrate.elf_spellings(
+            "std::filesystem::__cxx11::path::_M_split_cmpts() [clone .cold]")
+        self.assertIn("method.std::filesystem::__cxx11::path._M_split_cmpts____clone_.cold", forms)
+        # The first '(' can be the one in "(anonymous namespace)".
+        forms = migrate.elf_spellings(
+            "char const* std::(anonymous namespace)::ucs4_span<char>(char const*)")
+        self.assertIn(
+            "method.char_const__std._anonymous_namespace_::ucs4_span_char__char_const", forms)
+
+    def test_data_objects_are_not_functions(self) -> None:
+        for name in ("obj.once.9977", "obj.atexit_mutex", ".text.unlikely"):
+            self.assertTrue(migrate.is_artifact(name, "elf"), name)
+        for name in ("psiginfo", "method.std::thread.join", "std::thread::join"):
+            self.assertFalse(migrate.is_artifact(name, "elf"), name)
+
+
+class VerbatimTests(unittest.TestCase):
+    def test_only_names_the_import_cannot_have_changed(self) -> None:
+        self.assertTrue(migrate.is_verbatim("psiginfo", "elf"))
+        self.assertTrue(migrate.is_verbatim("__libc_start_main", "elf"))
+        self.assertFalse(migrate.is_verbatim("std::thread::join", "elf"))
+        self.assertFalse(migrate.is_verbatim("method.std::thread.join", "elf"))
+        self.assertTrue(migrate.is_verbatim("memcpy", "pe"))
+        # A decorated PE name's leading '?' became '_', so these could be either.
+        self.assertFalse(migrate.is_verbatim("_memcpy", "pe"))
+        self.assertFalse(migrate.is_verbatim("_Close_CFile__UEAAXXZ", "pe"))
 
 
 class CRCTests(unittest.TestCase):
@@ -50,19 +105,17 @@ class CRCTests(unittest.TestCase):
 
 class ResolveTests(unittest.TestCase):
     def setUp(self) -> None:
-        self.reference = migrate.Reference()
-        body = "".join(f"{i:02X}" for i in range(48))
-        self.body = body
-        self.reference.add_line(reference_line("?Close@CFile@@UEAAXXZ", body))
-        # Same length, different bytes after the prologue.
-        other = body[:64] + "FF" * 16
-        self.reference.add_line(reference_line("?Abort@CFile@@UEAAXXZ", other))
-        # A relocation in the CRC span of the imported line below.
-        relocated = body[:70] + "........" + body[78:]
-        self.reference.add_line(reference_line("?Flush@CFile@@UEAAXXZ", relocated))
+        self.body = "".join(f"{i:02X}" for i in range(48))
+        other = self.body[:64] + "FF" * 16
+        relocated = self.body[:70] + "........" + self.body[78:]
+        self.reference = pe_reference(
+            reference_line("?Close@CFile@@UEAAXXZ", self.body),
+            reference_line("?Abort@CFile@@UEAAXXZ", other),
+            reference_line("?Flush@CFile@@UEAAXXZ", relocated),
+        )
 
-    def imported(self, name: str, crc_from: str | None = None, lead: str | None = None) -> migrate.Line:
-        data = bytes.fromhex(crc_from or self.body)
+    def imported(self, name: str, lead: str | None = None) -> migrate.Line:
+        data = bytes.fromhex(self.body)
         lead = lead or self.body[:64]
         crc = migrate.crc16(data[32:48])
         return migrate.Line.parse(f"{lead} 10 {crc:04X} 0030 :0000 {name}")
@@ -78,7 +131,6 @@ class ResolveTests(unittest.TestCase):
         self.assertEqual(migrate.resolve(line, self.reference)[0], "?Close@CFile@@UEAAXXZ")
 
     def test_spelling_settles_bytes_no_library_has(self) -> None:
-        # Bytes nothing in the reference states; the spelling is unique.
         line = migrate.Line.parse("AABBCCDD 00 0000 0004 :0000 _Abort_CFile__UEAAXXZ")
         self.assertEqual(
             migrate.resolve(line, self.reference), ("?Abort@CFile@@UEAAXXZ", "spelling")
@@ -88,18 +140,76 @@ class ResolveTests(unittest.TestCase):
         line = migrate.Line.parse("AABBCCDD 00 0000 0004 :0000 _Gone_CFile__UEAAXXZ")
         self.assertEqual(migrate.resolve(line, self.reference), (None, "unresolved"))
 
+    def test_bytes_rename_an_artifact_before_it_is_removed(self) -> None:
+        named = self.imported(".text_tii_131")
+        self.assertEqual(migrate.resolve(named, self.reference)[0], "?Close@CFile@@UEAAXXZ")
+        unnamed = migrate.Line.parse("AABBCCDD 00 0000 0004 :0000 .text_tii_131")
+        self.assertEqual(migrate.resolve(unnamed, self.reference), (None, "artifact"))
+
     def test_uncheckable_crc_still_settles_when_nothing_else_does(self) -> None:
-        reference = migrate.Reference()
         relocated = self.body[:70] + "........" + self.body[78:]
-        reference.add_line(reference_line("?Flush@CFile@@UEAAXXZ", relocated))
+        reference = pe_reference(reference_line("?Flush@CFile@@UEAAXXZ", relocated))
         line = self.imported("_Flush_CFile__UEAAXXZ")
         self.assertEqual(migrate.resolve(line, reference), ("?Flush@CFile@@UEAAXXZ", "bytes"))
 
 
+@unittest.skipUnless(shutil.which("c++filt"), "needs c++filt")
+class ELFReferenceTests(unittest.TestCase):
+    def test_spelling_index_maps_imports_back_to_mangled_names(self) -> None:
+        reference = migrate.Reference("elf")
+        reference.add_line(reference_line("_ZNSt6thread4joinEv", "4883EC08C3"))
+        reference.add_line(reference_line("psiginfo", "C3C3C3C3"))
+        reference.index_spellings()
+        self.assertEqual(reference.spelled("std::thread::join"), {"_ZNSt6thread4joinEv"})
+        self.assertEqual(reference.spelled("method.std::thread.join"), {"_ZNSt6thread4joinEv"})
+        self.assertEqual(reference.spelled("psiginfo"), {"psiginfo"})
+
+
+class TailAlignmentTests(unittest.TestCase):
+    LEAD = "".join(f"{i:02X}" for i in range(32))
+
+    def line(self, crc_len: int, total: int, tail: str) -> migrate.Line:
+        return migrate.Line.parse(
+            f"{self.LEAD} {crc_len:02X} 0000 {total:04X} :0000 f {tail}")
+
+    def test_tail_with_fixed_bytes_inside_the_crc_width_starts_after_the_crc(self) -> None:
+        self.assertEqual(self.line(4, 48, "..AABBCC").tail_style(), "after-crc")
+
+    def test_tail_longer_than_the_room_after_the_crc_starts_after_the_lead(self) -> None:
+        # 44 bytes: 32 leading, 4 in the CRC span, 8 after it; the tail is 12.
+        line = self.line(4, 44, "........1122334455667788")
+        self.assertEqual(line.tail_style(), "after-lead")
+        self.assertEqual(line.realigned().tail, "1122334455667788")
+
+    def test_realigned_tail_is_clipped_to_the_function(self) -> None:
+        line = self.line(2, 38, "....11223344556677")
+        self.assertEqual(line.realigned().tail, "11223344")
+
+    def test_undecided_tails_follow_a_file_that_is_settled_one_way(self) -> None:
+        settled = [self.line(4, 44, "........1122334455667788")] * 19 + [
+            self.line(4, 48, "..AABBCC")]
+        self.assertEqual(migrate.file_tail_style(settled), "after-lead")
+        mixed = settled + [self.line(4, 48, "..AABBCC")] * 5
+        self.assertIsNone(migrate.file_tail_style(mixed))
+
+    def test_reference_bytes_decide_an_undecided_tail(self) -> None:
+        body = bytes(range(48))
+        reference = pe_reference(reference_line("?f@@YAXXZ", body.hex().upper()))
+        crc = migrate.crc16(body[32:36])
+        # Stated from the end of the lead: four CRC wildcards, then bytes 36..
+        tail = "........" + body[36:40].hex().upper()
+        line = migrate.Line.parse(
+            f"{body[:32].hex().upper()} 04 {crc:04X} 0030 :0000 _f__YAXXZ {tail}")
+        self.assertEqual(line.tail_style(), "either")
+        aligned, how = migrate.align(line, reference, None)
+        self.assertEqual(how, "realigned")
+        self.assertEqual(aligned.tail, body[36:40].hex().upper())
+        self.assertEqual(migrate.resolve(aligned, reference), ("?f@@YAXXZ", "bytes"))
+
+
 class MigrateFileTests(unittest.TestCase):
     def test_file_keeps_order_renames_and_reports(self) -> None:
-        reference = migrate.Reference()
-        reference.add_line(reference_line("?Run@@YAXXZ", "4883EC28C3"))
+        reference = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28C3"))
         with tempfile.TemporaryDirectory() as scratch:
             path = Path(scratch) / "vs2013.pat"
             path.write_text(
