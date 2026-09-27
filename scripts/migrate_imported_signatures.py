@@ -135,22 +135,19 @@ def crc16(data: bytes) -> int:
     return ((crc << 8) | (crc >> 8)) & 0xFFFF
 
 
+_MASK_TABLE = str.maketrans({c: "\x01" for c in "0123456789ABCDEFabcdef"} | {".": "\x00"})
+
+
 def parse_hex(text: str) -> tuple[bytes, bytes]:
     """Pattern bytes as (values, mask); a mask byte of 0 is a wildcard."""
 
     if len(text) % 2:
         raise ValueError(f"odd-length pattern {text[:40]}")
-    values = bytearray()
-    mask = bytearray()
-    for index in range(0, len(text), 2):
-        pair = text[index : index + 2]
-        if pair == "..":
-            values.append(0)
-            mask.append(0)
-        else:
-            values.append(int(pair, 16))
-            mask.append(1)
-    return bytes(values), bytes(mask)
+    values = bytes.fromhex(text.replace("..", "00"))
+    # Each pair is either ".." or two hex digits, so its first character
+    # says which.
+    mask = text[0::2].translate(_MASK_TABLE).encode("latin-1")
+    return values, mask
 
 
 def demangle(names: list[str]) -> list[str]:
@@ -243,14 +240,20 @@ class Reference:
         self.demangled: dict[str, str] = {}
         self.by_name: dict[str, list[Function]] = defaultdict(list)
         self.names: set[str] = set()
+        self._seen: set[int] = set()
         self.functions = 0
         self.too_long = 0
 
     def add_line(self, text: str) -> None:
         tokens = text.split()
+        name = tokens[5]
+        # Builds of one library share most functions byte for byte.
+        identity = hash((name, tokens[0], tokens[3]))
+        if identity in self._seen:
+            return
+        self._seen.add(identity)
         values, mask = parse_hex(tokens[0])
         total = int(tokens[3], 16)
-        name = tokens[5]
         self.names.add(name)
         if len(values) < total:
             # Longer than the leading pattern can state; only the name is usable.
