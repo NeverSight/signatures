@@ -17,6 +17,9 @@ param(
   [Parameter(Mandatory)] [string] $Label,
   [Parameter(Mandatory)] [string] $OutputDirectory,
   [string] $VcvarsVersion = '',
+  # An older toolset links against the Universal CRT of an SDK from its own
+  # era; the newest UCRT expects compiler intrinsics v141 does not provide.
+  [string] $WindowsSdk = '',
   [switch] $NoMfc
 )
 
@@ -35,7 +38,9 @@ function Import-Environment([string] $Target) {
   if ($VcvarsVersion) {
     $Arguments += "-vcvars_ver=$VcvarsVersion"
   }
-  if ($Target -eq 'arm') {
+  if ($WindowsSdk) {
+    $Arguments += "-winsdk=$WindowsSdk"
+  } elseif ($Target -eq 'arm') {
     # ARM32 libraries end with Windows SDK 10.0.22621.
     $Kits = Join-Path ${env:ProgramFiles(x86)} 'Windows Kits/10/Lib'
     $Sdk = Get-ChildItem -Directory $Kits |

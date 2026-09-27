@@ -1,0 +1,216 @@
+[
+  {
+    "name": "vs2026",
+    "runner": "windows-2025-vs2026",
+    "vswhere_version": "[18.0,19.0)",
+    "components": [],
+    "choco": [],
+    "collect": "toolset --vs-year 2026 --vswhere-version \"[18.0,19.0)\" --toolset default --arch x86 --arch x64 --arch arm64",
+    "probe_arches": [
+      "x86",
+      "x64",
+      "arm64"
+    ],
+    "probe_vcvars": "",
+    "probe_winsdk": "",
+    "probe_mfc": true
+  },
+  {
+    "name": "vs2026-14.50",
+    "runner": "windows-2025-vs2026",
+    "vswhere_version": "[18.0,19.0)",
+    "components": [
+      "Microsoft.VisualStudio.Component.VC.14.50.18.0.x86.x64",
+      "Microsoft.VisualStudio.Component.VC.14.50.18.0.ARM64",
+      "Microsoft.VisualStudio.Component.VC.14.50.18.0.ATL",
+      "Microsoft.VisualStudio.Component.VC.14.50.18.0.MFC",
+      "Microsoft.VisualStudio.Component.VC.14.50.18.0.ATL.ARM64",
+      "Microsoft.VisualStudio.Component.VC.14.50.18.0.MFC.ARM64"
+    ],
+    "choco": [],
+    "collect": "toolset --vs-year 2026 --vswhere-version \"[18.0,19.0)\" --toolset 14.50 --arch x86 --arch x64 --arch arm64",
+    "probe_arches": [
+      "x86",
+      "x64",
+      "arm64"
+    ],
+    "probe_vcvars": "14.50",
+    "probe_winsdk": "",
+    "probe_mfc": true
+  },
+  {
+    "name": "vs2022",
+    "runner": "windows-2022",
+    "vswhere_version": "[17.0,18.0)",
+    "components": [],
+    "choco": [],
+    "collect": "toolset --vs-year 2022 --vswhere-version \"[17.0,18.0)\" --toolset default --arch x86 --arch x64 --arch arm --arch arm64",
+    "probe_arches": [
+      "x86",
+      "x64",
+      "arm",
+      "arm64"
+    ],
+    "probe_vcvars": "",
+    "probe_winsdk": "",
+    "probe_mfc": true
+  },
+  {
+    "name": "vs2019",
+    "runner": "windows-2022",
+    "vswhere_version": "[17.0,18.0)",
+    "components": [
+      "Microsoft.VisualStudio.Component.VC.14.29.16.11.ATL",
+      "Microsoft.VisualStudio.Component.VC.14.29.16.11.MFC",
+      "Microsoft.VisualStudio.Component.VC.14.29.16.11.ATL.ARM",
+      "Microsoft.VisualStudio.Component.VC.14.29.16.11.MFC.ARM",
+      "Microsoft.VisualStudio.Component.VC.14.29.16.11.ATL.ARM64",
+      "Microsoft.VisualStudio.Component.VC.14.29.16.11.MFC.ARM64"
+    ],
+    "choco": [],
+    "collect": "toolset --vs-year 2019 --vswhere-version \"[17.0,18.0)\" --toolset 14.29 --arch x86 --arch x64 --arch arm --arch arm64",
+    "probe_arches": [
+      "x86",
+      "x64",
+      "arm",
+      "arm64"
+    ],
+    "probe_vcvars": "14.29",
+    "probe_winsdk": "10.0.19041.0",
+    "probe_mfc": true
+  },
+  {
+    "name": "vs2017",
+    "runner": "windows-2022",
+    "vswhere_version": "[17.0,18.0)",
+    "components": [
+      "Microsoft.VisualStudio.Component.VC.v141.x86.x64",
+      "Microsoft.VisualStudio.Component.VC.v141.ARM",
+      "Microsoft.VisualStudio.Component.VC.v141.ARM64",
+      "Microsoft.VisualStudio.Component.VC.v141.ATL",
+      "Microsoft.VisualStudio.Component.VC.v141.MFC",
+      "Microsoft.VisualStudio.Component.VC.v141.ATL.ARM",
+      "Microsoft.VisualStudio.Component.VC.v141.MFC.ARM",
+      "Microsoft.VisualStudio.Component.VC.v141.ATL.ARM64",
+      "Microsoft.VisualStudio.Component.VC.v141.MFC.ARM64"
+    ],
+    "choco": [],
+    "collect": "toolset --vs-year 2017 --vswhere-version \"[17.0,18.0)\" --toolset 14.16 --arch x86 --arch x64 --arch arm --arch arm64",
+    "probe_arches": [
+      "x86",
+      "x64",
+      "arm",
+      "arm64"
+    ],
+    "probe_vcvars": "14.16",
+    "probe_winsdk": "10.0.17763.0",
+    "probe_mfc": true
+  },
+  {
+    "name": "vs2015",
+    "runner": "windows-2022",
+    "vswhere_version": "[17.0,18.0)",
+    "components": [
+      "Microsoft.VisualStudio.Component.VC.140"
+    ],
+    "choco": [],
+    "collect": "toolset-v140 --no-atlmfc --arch x86 --arch x64",
+    "probe_arches": [
+      "x86",
+      "x64"
+    ],
+    "probe_vcvars": "14.0",
+    "probe_winsdk": "",
+    "probe_mfc": false
+  },
+  {
+    "name": "winsdk-10.0.17763.0",
+    "runner": "windows-2022",
+    "vswhere_version": "[17.0,18.0)",
+    "components": [],
+    "choco": [],
+    "collect": "winsdk --sdk 10.0.17763.0 --arch x86 --arch x64 --arch arm --arch arm64",
+    "probe_arches": [],
+    "probe_vcvars": "",
+    "probe_winsdk": "",
+    "probe_mfc": true
+  },
+  {
+    "name": "winsdk-10.0.18362.0",
+    "runner": "windows-2022",
+    "vswhere_version": "[17.0,18.0)",
+    "components": [],
+    "choco": [
+      "windows-sdk-10-version-1903-all"
+    ],
+    "collect": "winsdk --sdk 10.0.18362.0 --arch x86 --arch x64 --arch arm --arch arm64",
+    "probe_arches": [],
+    "probe_vcvars": "",
+    "probe_winsdk": "",
+    "probe_mfc": true
+  },
+  {
+    "name": "winsdk-10.0.19041.0",
+    "runner": "windows-2022",
+    "vswhere_version": "[17.0,18.0)",
+    "components": [],
+    "choco": [],
+    "collect": "winsdk --sdk 10.0.19041.0 --arch x86 --arch x64 --arch arm --arch arm64",
+    "probe_arches": [],
+    "probe_vcvars": "",
+    "probe_winsdk": "",
+    "probe_mfc": true
+  },
+  {
+    "name": "winsdk-10.0.20348.0",
+    "runner": "windows-2022",
+    "vswhere_version": "[17.0,18.0)",
+    "components": [],
+    "choco": [
+      "windows-sdk-10-version-2104-all"
+    ],
+    "collect": "winsdk --sdk 10.0.20348.0 --arch x86 --arch x64 --arch arm --arch arm64",
+    "probe_arches": [],
+    "probe_vcvars": "",
+    "probe_winsdk": "",
+    "probe_mfc": true
+  },
+  {
+    "name": "winsdk-10.0.22000.0",
+    "runner": "windows-2022",
+    "vswhere_version": "[17.0,18.0)",
+    "components": [],
+    "choco": [
+      "windows-sdk-11-version-21H2-all"
+    ],
+    "collect": "winsdk --sdk 10.0.22000.0 --arch x86 --arch x64 --arch arm --arch arm64",
+    "probe_arches": [],
+    "probe_vcvars": "",
+    "probe_winsdk": "",
+    "probe_mfc": true
+  },
+  {
+    "name": "winsdk-10.0.22621.0",
+    "runner": "windows-2022",
+    "vswhere_version": "[17.0,18.0)",
+    "components": [],
+    "choco": [],
+    "collect": "winsdk --sdk 10.0.22621.0 --arch x86 --arch x64 --arch arm --arch arm64",
+    "probe_arches": [],
+    "probe_vcvars": "",
+    "probe_winsdk": "",
+    "probe_mfc": true
+  },
+  {
+    "name": "winsdk-10.0.26100.0",
+    "runner": "windows-2025-vs2026",
+    "vswhere_version": "[18.0,19.0)",
+    "components": [],
+    "choco": [],
+    "collect": "winsdk --sdk 10.0.26100.0 --arch x86 --arch x64 --arch arm64",
+    "probe_arches": [],
+    "probe_vcvars": "",
+    "probe_winsdk": "",
+    "probe_mfc": true
+  }
+]
