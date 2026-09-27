@@ -5,9 +5,8 @@
 # One job builds neverd-sigmaker against the published prebuilt LLVM
 # package; one job per architecture turns that architecture's archives into
 # lines and merges them into the files already here; a final job commits the
-# result, and only when a manual run asks it to. Every other trigger stops at
-# the artifacts, so a pull request shows what would change without changing
-# it.
+# result, and only when a manual run asks it to. A pull request that edits
+# this workflow only builds the generator.
 
 name: Build MSVC signatures
 
@@ -95,6 +94,9 @@ jobs:
   produce:
     name: Signatures (${{ matrix.arch }})
     needs: sigmaker
+    # A pull request only proves the generator still builds; generating
+    # needs a library release to read.
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     # Draft releases are only visible to tokens that can write to the
