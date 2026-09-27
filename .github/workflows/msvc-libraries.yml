@@ -115,6 +115,23 @@ jobs:
         shell: pwsh
         run: choco install ${{ matrix.choco }} --yes --no-progress
 
+      # The standalone installer of a Windows SDK that neither the image's
+      # Visual Studio installer nor Chocolatey still offers.
+      - name: Install a Windows SDK from its standalone installer
+        if: matrix.sdk_installer != ''
+        shell: pwsh
+        env:
+          SDK_INSTALLER: ${{ matrix.sdk_installer }}
+        run: |
+          $Installer = Join-Path $env:RUNNER_TEMP 'winsdksetup.exe'
+          Invoke-WebRequest -Uri $env:SDK_INSTALLER -OutFile $Installer
+          $Process = Start-Process -FilePath $Installer -Wait -PassThru `
+            -ArgumentList '/features', '+', '/quiet', '/norestart', '/ceip', 'off'
+          Write-Host "winsdksetup.exe exited with $($Process.ExitCode)"
+          if ($Process.ExitCode -notin 0, 3010) {
+            throw "winsdksetup.exe failed with exit code $($Process.ExitCode)"
+          }
+
       - name: Show installed toolsets and SDKs
         shell: pwsh
         run: |

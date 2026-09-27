@@ -22,7 +22,8 @@ class CheckedInMatrixTests(unittest.TestCase):
                 self.assertTrue(invocation.strip().startswith(
                     ("toolset ", "toolset-v140 ", "winsdk ")), row["name"])
             # A row installs through one mechanism at most.
-            self.assertFalse(row["components"] and row["choco"], row["name"])
+            mechanisms = [bool(row["components"]), bool(row["choco"]), bool(row["sdk_installer"])]
+            self.assertLessEqual(sum(mechanisms), 1, row["name"])
 
     def test_vs2026_has_no_arm32(self) -> None:
         rows = {row["name"]: row for row in msvc_matrix.load(msvc_matrix.DEFAULT_MATRIX)}
