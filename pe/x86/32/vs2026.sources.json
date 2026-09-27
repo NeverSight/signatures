@@ -1,0 +1,29 @@
+{
+  "file": "pe/x86/32/vs2026.pat",
+  "generator": {
+    "neverd_ref": "b91a639d87fe8b795b1e327f8c54a35743a777a2",
+    "release": "msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 49362,
+  "sources": [
+    {
+      "arch": "x86",
+      "archive_sha256": "526642c3ed144269d0317c274e409fb47a5fc069502ffdac1b2389b468071013",
+      "asset": "vs2026-14.50.35717-x86",
+      "compiler_version": "19.50.35738.0",
+      "kind": "toolset",
+      "sigmaker": "Generated 329756 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-jbkceq8h/vs2026-14.50.35717-x86.pat (8061 objects, 16002 for another machine skipped, 71207 non-object members, 21731 functions below --min-size, 131199 functions stating too few exact bytes)",
+      "toolset_version": "14.50.35717"
+    },
+    {
+      "arch": "x86",
+      "archive_sha256": "2c3fa8a3f85abe209dcfddec03c9efdc13e9a6b928f6cec5361a5f0249f96b18",
+      "asset": "vs2026-14.51.36231-x86",
+      "compiler_version": "19.51.36257.0",
+      "kind": "toolset",
+      "sigmaker": "Generated 427289 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-jbkceq8h/vs2026-14.51.36231-x86.pat (8843 objects, 17060 for another machine skipped, 78313 non-object members, 21887 functions below --min-size, 161431 functions stating too few exact bytes)",
+      "toolset_version": "14.51.36231"
+    }
+  ]
+}

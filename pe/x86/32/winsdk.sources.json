@@ -1,0 +1,43 @@
+{
+  "file": "pe/x86/32/winsdk.pat",
+  "generator": {
+    "neverd_ref": "b91a639d87fe8b795b1e327f8c54a35743a777a2",
+    "release": "msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 38312,
+  "sources": [
+    {
+      "arch": "x86",
+      "archive_sha256": "56a7b744005f3a76893e3c2b5bb3f838e2f7a400768d5a7132e9bc99fcd60ce9",
+      "asset": "winsdk-10.0.17763.0-x86",
+      "kind": "winsdk",
+      "sigmaker": "Generated 28136 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-jbkceq8h/winsdk-10.0.17763.0-x86.pat (8406 objects, 1010 for another machine skipped, 93639 non-object members, 1106 functions below --min-size, 11515 functions stating too few exact bytes)",
+      "windows_sdk_version": "10.0.17763.0"
+    },
+    {
+      "arch": "x86",
+      "archive_sha256": "e1172fbaadb046ac81d3988c5efcce2482ce0e3a604011f65bcf17dbb615b82e",
+      "asset": "winsdk-10.0.19041.0-x86",
+      "kind": "winsdk",
+      "sigmaker": "Generated 29193 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-jbkceq8h/winsdk-10.0.19041.0-x86.pat (10334 objects, 1010 for another machine skipped, 110187 non-object members, 1119 functions below --min-size, 11698 functions stating too few exact bytes)",
+      "windows_sdk_version": "10.0.19041.0"
+    },
+    {
+      "arch": "x86",
+      "archive_sha256": "e0915d8102977c3229c11c172d73caee3d74a04cd2474d62015cd71abd068aa7",
+      "asset": "winsdk-10.0.22621.0-x86",
+      "kind": "winsdk",
+      "sigmaker": "Generated 31063 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-jbkceq8h/winsdk-10.0.22621.0-x86.pat (11425 objects, 1662 for another machine skipped, 120172 non-object members, 1215 functions below --min-size, 10347 functions stating too few exact bytes)",
+      "windows_sdk_version": "10.0.22621.0"
+    },
+    {
+      "arch": "x86",
+      "archive_sha256": "c62dd34fc8db174a37e855e76e09f0ddc8dd83603f22bd66b2136233bd5ba85e",
+      "asset": "winsdk-10.0.26100.0-x86",
+      "kind": "winsdk",
+      "sigmaker": "Generated 31154 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-jbkceq8h/winsdk-10.0.26100.0-x86.pat (11679 objects, 1662 for another machine skipped, 117280 non-object members, 1233 functions below --min-size, 10220 functions stating too few exact bytes)",
+      "windows_sdk_version": "10.0.26100.0"
+    }
+  ]
+}

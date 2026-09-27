@@ -1,0 +1,20 @@
+{
+  "file": "pe/x86/64/vs2015.pat",
+  "generator": {
+    "neverd_ref": "b91a639d87fe8b795b1e327f8c54a35743a777a2",
+    "release": "msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 42994,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "f28719e779c312a9af6e6a71ef4757c2bc8baf63841246949bd27267e4b054e0",
+      "asset": "vs2015-14.0-x64",
+      "compiler_version": "19.00.24247.2 built by: VCTOOLSD14ULDR",
+      "kind": "toolset",
+      "sigmaker": "Generated 104344 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-yriuxu9j/vs2015-14.0-x64.pat (2559 objects, 2182 for another machine skipped, 8028 non-object members, 1927 functions below --min-size, 24851 functions stating too few exact bytes)",
+      "toolset_version": "14.0"
+    }
+  ]
+}
