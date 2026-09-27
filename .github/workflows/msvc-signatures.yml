@@ -242,13 +242,15 @@ jobs:
           set -euo pipefail
           cp -R staged/. .
           rm -rf staged
-          if [ -z "$(git status --porcelain -- pe)" ]; then
+          if [ -z "$(git status --porcelain -- pe reports)" ]; then
             echo "the signatures are unchanged"
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- pe
+          # The migration reports list every line it removed or could not
+          # rename; they belong beside the files they describe.
+          git add -- pe reports
           git commit \
             -m 'signatures: regenerate pe/ from MSVC and Windows SDK libraries' \
             -m "Produced by neverd-sigmaker at ${NEVERD_REPO}@${NEVERD_REF}, run ${GITHUB_RUN_ID}."
