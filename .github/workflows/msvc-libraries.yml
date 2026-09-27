@@ -34,6 +34,10 @@ on:
         description: Only these rows of .github/msvc-matrix.json (comma separated; default every row)
         required: false
         type: string
+      from_run:
+        description: Publish the artifacts of this earlier run instead of collecting again
+        required: false
+        type: string
   pull_request:
     paths:
       - .github/workflows/msvc-libraries.yml
@@ -79,7 +83,7 @@ jobs:
   collect:
     name: Collect ${{ matrix.name }}
     needs: verify
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' && inputs.from_run == ''
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 120
     strategy:
@@ -186,6 +190,7 @@ jobs:
     timeout-minutes: 120
     permissions:
       contents: write
+      actions: read
     steps:
       - name: Check out
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -196,18 +201,23 @@ jobs:
           pattern: msvc-libs-*
           path: assets
           merge-multiple: true
+          run-id: ${{ inputs.from_run || github.run_id }}
+          github-token: ${{ github.token }}
 
       - name: Index assets
         id: index
         env:
           INPUT_TAG: ${{ inputs.tag }}
           COLLECT_RESULT: ${{ needs.collect.result }}
+          FROM_RUN: ${{ inputs.from_run }}
         run: |
           set -euo pipefail
           tag="${INPUT_TAG:-msvc-libs-$(date -u +%Y%m%d)-${GITHUB_RUN_NUMBER}}"
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           python3 scripts/summarize_library_assets.py assets --tag "$tag" --commit "$GITHUB_SHA"
-          if [ "$COLLECT_RESULT" != "success" ]; then
+          if [ -n "$FROM_RUN" ]; then
+            printf '\nThe archives were collected by run %s.\n' "$FROM_RUN" >> assets/RELEASE.md
+          elif [ "$COLLECT_RESULT" != "success" ]; then
             {
               echo
               echo "> Not every collection row succeeded in run $GITHUB_RUN_ID ($COLLECT_RESULT);"
@@ -221,15 +231,19 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.index.outputs.tag }}
           PUBLISH: ${{ inputs.publish_release }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         run: |
           set -euo pipefail
           visibility=--draft
           if [ "$PUBLISH" = "true" ]; then
             visibility=
           fi
+          # A release that targets a commit whose .github/workflows differs
+          # from the default branch needs the workflows permission, which
+          # GITHUB_TOKEN never has; the collecting commit is in the notes.
           gh release create "$TAG" \
             --repo "$GITHUB_REPOSITORY" \
-            --target "$GITHUB_SHA" \
+            --target "$DEFAULT_BRANCH" \
             --title "MSVC and Windows SDK libraries ($TAG)" \
             --notes-file assets/RELEASE.md \
             $visibility \
