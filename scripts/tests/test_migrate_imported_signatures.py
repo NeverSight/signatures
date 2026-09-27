@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -40,6 +41,14 @@ class PESpellingTests(unittest.TestCase):
         }
         for linkage, imported in cases.items():
             self.assertEqual(migrate.pe_spelling(linkage), imported)
+
+    def test_a_cut_name_that_ends_in_underscores_loses_them(self) -> None:
+        name = ("?Pop@?$WorkStealingQueue@V_UnrealizedChore@details@Concurrency@@"
+                "V_CriticalNonReentrantLock@23@@details@Concurrency@@QEAAPEAV_UnrealizedChore@23@XZ")
+        reference = pe_reference(reference_line(name, "4883EC28" * 5 + "C3"))
+        imported = migrate.pe_spelling(name).rstrip("_")
+        self.assertEqual(len(imported), 124)
+        self.assertEqual(reference.spelled(imported), {name})
 
     def test_long_names_are_cut_at_125(self) -> None:
         self.assertEqual(len(migrate.pe_spelling("?" + "a" * 300)), 125)
@@ -162,6 +171,60 @@ class ResolveTests(unittest.TestCase):
         unnamed = migrate.Line.parse("AABBCCDD 00 0000 0004 :0000 .text_tii_131")
         self.assertEqual(migrate.resolve(unnamed, self.reference), (None, "artifact"))
 
+    def test_bytes_several_routines_share_remove_the_line(self) -> None:
+        # MSVC compiles many constructors to the same bytes; the imported
+        # spelling must not pick one of them.
+        reference = pe_reference(
+            reference_line("??0CSpinButtonCtrl@@QEAA@XZ", self.body),
+            reference_line("??0CMFCBaseToolBar@@QEAA@XZ", self.body),
+        )
+        line = self.imported("__0CSpinButtonCtrl__QEAA_XZ")
+        self.assertEqual(migrate.resolve(line, reference), (None, "ambiguous"))
+
+    def test_a_routine_shorter_than_the_lead_is_compared_by_its_bytes(self) -> None:
+        # rizin pads the leading pattern of a 26-byte routine to 32 bytes.
+        code = "4883EC28488B4940FF1500000000488BC84883C428E900000000"
+        relocated = code[:20] + "........" + code[28:44] + "........"
+        reference = pe_reference(reference_line("?GetParent@CWnd@@QEBAPEAV1@XZ", relocated))
+        padded = relocated + ".." * 6
+        line = migrate.Line.parse(f"{padded} 00 0000 001A :0000 _GetParent_CWnd__QEBAPEAV1_XZ")
+        self.assertEqual(
+            migrate.resolve(line, reference), ("?GetParent@CWnd@@QEBAPEAV1@XZ", "bytes")
+        )
+        # Its modern twin differs only in what the call reaches.
+        twin = pe_reference(
+            reference_line("?GetParent@CWnd@@QEBAPEAV1@XZ", relocated),
+            reference_line("?GetMenu@CWnd@@UEBAPEAVCMenu@@XZ", relocated),
+        )
+        self.assertEqual(migrate.resolve(line, twin), (None, "ambiguous"))
+
+    def test_bytes_of_a_routine_the_import_does_not_name_remove_the_line(self) -> None:
+        # OpenSSL's SSL_peek_ex compiles to the same bytes as libstdc++'s
+        # std::thread::hardware_concurrency; only the call target differs.
+        code = "4883EC08E8........BA0000000085C00F48C24883C408C3"
+        reference = migrate.Reference("elf")
+        reference.add_line(reference_line("_ZNSt6thread20hardware_concurrencyEv", code))
+        line = migrate.Line.parse(f"{code}{'..' * 8} 00 0000 0018 :0000 SSL_peek_ex")
+        self.assertEqual(migrate.settle(line, reference), (None, "ambiguous"))
+
+    def test_bytes_that_open_a_longer_routine_remove_the_line(self) -> None:
+        # The imported routine is the first 48 bytes of a longer one that
+        # the libraries name differently.
+        reference = pe_reference(
+            reference_line("?Close@CFile@@UEAAXXZ", self.body),
+            reference_line("?Close@CStdioFile@@UEAAXXZ", self.body + "C3CCCCCC"),
+        )
+        line = self.imported("_Close_CFile__UEAAXXZ")
+        self.assertEqual(migrate.resolve(line, reference), (None, "opening"))
+
+    def test_a_longer_build_of_the_same_routine_keeps_the_line(self) -> None:
+        reference = pe_reference(
+            reference_line("?Close@CFile@@UEAAXXZ", self.body),
+            reference_line("?Close@CFile@@UEAAXXZ", self.body + "C3CCCCCC"),
+        )
+        line = self.imported("_Close_CFile__UEAAXXZ")
+        self.assertEqual(migrate.resolve(line, reference), ("?Close@CFile@@UEAAXXZ", "bytes"))
+
     def test_uncheckable_crc_still_settles_when_nothing_else_does(self) -> None:
         relocated = self.body[:70] + "........" + self.body[78:]
         reference = pe_reference(reference_line("?Flush@CFile@@UEAAXXZ", relocated))
@@ -248,6 +311,23 @@ class MoveTests(unittest.TestCase):
         self.assertEqual(report.moved, 1)
         self.assertEqual(report.unresolved, 1)
 
+    def test_code_several_routines_of_the_other_width_share_is_removed(self) -> None:
+        # zlib's crc32_combine and crc32_combine64 compile to the same 32-bit
+        # code; a copy of it filed under 64 bits names neither.
+        own = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28" * 5 + "C3"))
+        other = pe_reference(
+            reference_line("crc32_combine", self.THUMB),
+            reference_line("crc32_combine64", self.THUMB),
+        )
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "android-ndk.pat"
+            path.write_text(f"{self.THUMB} 00 0000 0018 :0000 _Spelled__YAXXZ\n")
+            report = migrate.FileReport()
+            moved: list[str] = []
+            lines = migrate.migrate_file(path, own, report, other, moved)
+        self.assertEqual((lines, moved), ([], []))
+        self.assertEqual(report.removed_ambiguous, 1)
+
 
 class WeakLineTests(unittest.TestCase):
     def test_stated_bytes_follow_the_matcher(self) -> None:
@@ -279,7 +359,12 @@ class WeakLineTests(unittest.TestCase):
 class MigrateFileTests(unittest.TestCase):
     def test_file_keeps_order_renames_and_reports(self) -> None:
         run = "4883EC28" * 5 + "C3"
-        reference = pe_reference(reference_line("?Run@@YAXXZ", run))
+        shared = "4883EC38" * 5 + "C3"
+        reference = pe_reference(
+            reference_line("?Run@@YAXXZ", run),
+            reference_line("??1CListCtrl@@UEAA@XZ", shared),
+            reference_line("??1CTreeCtrl@@UEAA@XZ", shared),
+        )
         unknown = "AABBCCDD" * 5
         section = "90909090" * 5
         with tempfile.TemporaryDirectory() as scratch:
@@ -288,6 +373,7 @@ class MigrateFileTests(unittest.TestCase):
                 f"{unknown} 00 0000 0014 :0000 _unknown_thing__YAXXZ\n"
                 f"{run} 00 0000 0015 :0000 _Run__YAXXZ\n"
                 f"{section} 00 0000 0014 :0000 .text_tii_131\n"
+                f"{shared} 00 0000 0015 :0000 __1CListCtrl__UEAA_XZ\n"
                 "---\n"
             )
             report = migrate.FileReport()
@@ -302,8 +388,44 @@ class MigrateFileTests(unittest.TestCase):
         )
         self.assertEqual(report.by_bytes, 1)
         self.assertEqual(report.removed_artifacts, 1)
+        self.assertEqual(report.removed_ambiguous, 1)
+        self.assertEqual(report.ambiguous_names, ["__1CListCtrl__UEAA_XZ"])
         self.assertEqual(report.unresolved, 1)
         self.assertEqual(report.unresolved_names, ["_unknown_thing__YAXXZ"])
+
+
+class ImportedFilesTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which("git"), "needs git")
+    def test_files_rebuilt_from_libraries_are_not_imported_any_more(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            tree = Path(scratch)
+            directory = tree / "pe/x86/64"
+            directory.mkdir(parents=True)
+            for name in ("vs2013.pat", "vs2022.pat"):
+                (directory / name).write_text("AABBCCDD 00 0000 0004 :0000 f\n")
+            git = ["git", "-C", str(tree), "-c", "user.name=t", "-c", "user.email=t@t"]
+            subprocess.run([*git, "init", "-q"], check=True)
+            subprocess.run([*git, "add", "."], check=True)
+            subprocess.run([*git, "commit", "-qm", "import"], check=True)
+            (directory / "vs2022.sources.json").write_text("{}\n")
+            files = migrate.imported_files(tree, "HEAD", "pe/x86/64")
+        self.assertEqual([path.name for path in files], ["vs2013.pat"])
+
+    @unittest.skipUnless(shutil.which("git"), "needs git")
+    def test_a_run_starts_from_the_imported_text(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            tree = Path(scratch)
+            path = tree / "pe/x86/64/vs2013.pat"
+            path.parent.mkdir(parents=True)
+            imported = "4883EC28" * 5 + "C3 00 0000 0015 :0000 _Run__YAXXZ\n"
+            path.write_text(imported)
+            git = ["git", "-C", str(tree), "-c", "user.name=t", "-c", "user.email=t@t"]
+            subprocess.run([*git, "init", "-q"], check=True)
+            subprocess.run([*git, "add", "."], check=True)
+            subprocess.run([*git, "commit", "-qm", "import"], check=True)
+            path.write_text("an earlier run's output\n")
+            migrate.restore(tree, "HEAD", path)
+            self.assertEqual(path.read_text(), imported)
 
 
 if __name__ == "__main__":

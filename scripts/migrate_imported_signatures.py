@@ -35,13 +35,27 @@ leaves the rest untouched. For each line, in order:
 1. By bytes. neverd-sigmaker runs over the same libraries with a leading
    pattern long enough to state every byte of every function. If the bytes
    an imported line states agree with those functions under exactly one
-   name, the line takes that name.
+   name, the line takes that name when the imported name is that
+   function's rizin spelling, or names nothing, like a section or a label.
+   Bytes of a function the import does not name are shared by two routines,
+   so the line is removed. So is one whose bytes agree in full with
+   functions of several names: NeverD drops such a byte claim from
+   the files it builds, because any one name would be a guess, and the
+   imported name is a guess as well. So is a line whose bytes open a longer
+   function of another name, since NeverD's matcher compares a line only as
+   far as its own length: it would name that function too.
 2. A line named after a section, label or data object that the bytes did not
    settle names no function, so it is removed.
 3. By spelling. The line takes the one library name that rizin's conversion
    turns into the imported name. When no name or more than one name converts
    to it, this step settles nothing either.
 4. Every other line stays exactly as it was, and is listed in the report.
+
+Every run starts from the text of the import commit, so what a file holds
+depends only on the import, the reference libraries and these rules, and the
+report describes a single pass. A file with a provenance record
+(`<name>.sources.json`) is rebuilt from collected libraries and holds no
+imported line, so it is left alone.
 
 Knowledge of rizin's conventions lives here and nowhere else. This script
 exists to undo one import; NeverD itself never needs it.
@@ -73,6 +87,10 @@ WHOLE_FUNCTION = 65535
 
 PE_NAME_LIMIT = 125
 ELF_NAME_LIMIT = 1023
+
+# Every line covers at least this many bytes (see MIN_STATED_BYTES), so a
+# line that opens a longer function agrees with it this far.
+OPENING = 16
 
 # neverd::sigs::SignatureMatcher::MinStatedBytes: neverd-sigmaker never writes
 # a line that states fewer bytes exactly, because such a line agrees with a
@@ -281,6 +299,8 @@ class Reference:
         self.by_spelling: dict[str, set[str]] = defaultdict(set)
         self.demangled: dict[str, str] = {}
         self.by_name: dict[str, list[Function]] = defaultdict(list)
+        # Functions by their first OPENING bytes, as stated or relocated.
+        self.by_opening: dict[tuple[bytes, bytes], list[Function]] = defaultdict(list)
         self.names: set[str] = set()
         self._seen: set[int] = set()
         self.functions = 0
@@ -305,13 +325,19 @@ class Reference:
         function = Function(name, values[:total], mask[:total])
         self.by_shape[(total, first)].append(function)
         self.by_name[name].append(function)
+        if total > OPENING:
+            self.by_opening[(values[:OPENING], mask[:OPENING])].append(function)
         self.functions += 1
 
     def index_spellings(self) -> None:
         names = sorted(self.names)
         if self.binary_format == "pe":
             for name in names:
-                self.by_spelling[pe_spelling(name)].add(name)
+                spelling = pe_spelling(name)
+                self.by_spelling[spelling].add(name)
+                # A name cut at the limit lost the underscores it then ended
+                # with ("...QEAAPEAV_" was imported as "...QEAAPEAV").
+                self.by_spelling[spelling.rstrip("_")].add(name)
             return
         for name, demangled in zip(names, demangle(names)):
             self.demangled[name] = demangled
@@ -365,7 +391,10 @@ def agrees(line: Line, lead: tuple[bytes, bytes], tail: tuple[bytes, bytes],
             return False
     crc_start = len(lead_values)
     crc_end = crc_start + line.crc_len
-    if crc_end > line.total:
+    # A routine shorter than the leading pattern has its lead padded with
+    # wildcards and no CRC span; like NeverD's matcher, compare it only as
+    # far as its length.
+    if line.crc_len and crc_end > line.total:
         return False
     checked = True
     if line.crc_len:
@@ -382,7 +411,14 @@ def agrees(line: Line, lead: tuple[bytes, bytes], tail: tuple[bytes, bytes],
     return True if checked else None
 
 
-def by_bytes(line: Line, reference: Reference) -> set[str]:
+def agreeing_names(line: Line, reference: Reference) -> tuple[set[str], set[str]]:
+    """The names of the functions a line's bytes agree with.
+
+    The first set holds the functions it agrees with fully; the second those
+    it agrees with wherever both state a byte, but whose relocations keep the
+    CRC from being checked.
+    """
+
     lead = parse_hex(line.lead)
     tail = parse_hex(line.tail) if line.tail else (b"", b"")
     first = lead[0][0] if lead[1] and lead[1][0] else None
@@ -394,6 +430,11 @@ def by_bytes(line: Line, reference: Reference) -> set[str]:
             strong.add(function.name)
         elif verdict is None:
             weak.add(function.name)
+    return strong, weak
+
+
+def by_bytes(line: Line, reference: Reference) -> set[str]:
+    strong, weak = agreeing_names(line, reference)
     return strong or weak
 
 
@@ -419,22 +460,77 @@ def among(line: Line, names: set[str], reference: Reference) -> set[str]:
     return agreeing
 
 
+def opening_names(line: Line, reference: Reference) -> set[str]:
+    """The names of longer functions whose opening bytes a line states in full.
+
+    NeverD's matcher compares a line only as far as the line's own length,
+    so such a line matches the start of each of them. Only functions that
+    state or relocate the same first bytes as the line are compared.
+    """
+
+    lead = parse_hex(line.lead)
+    tail = parse_hex(line.tail) if line.tail else (b"", b"")
+    if len(lead[0]) < OPENING or line.total < OPENING:
+        return set()
+    key = (lead[0][:OPENING], lead[1][:OPENING])
+    names = set()
+    for function in reference.by_opening.get(key, ()):
+        if len(function.values) <= line.total or function.name in names:
+            continue
+        clipped = Function(function.name, function.values[: line.total],
+                           function.mask[: line.total])
+        if agrees(line, lead, tail, clipped):
+            names.add(function.name)
+    return names
+
+
 def resolve(line: Line, reference: Reference) -> tuple[str | None, str]:
     """The linkage name for an imported line, and how it was settled."""
 
-    matched = by_bytes(line, reference)
-    if len(matched) == 1:
-        return next(iter(matched)), "bytes"
+    name, how = settle(line, reference)
+    if how in ("ambiguous", "artifact"):
+        return name, how
+    own = name if name is not None else line.name
+    others = opening_names(line, reference) - {own}
+    if others and reference.one_routine(others | {own}) is None:
+        return None, "opening"
+    return name, how
+
+
+def settle(line: Line, reference: Reference) -> tuple[str | None, str]:
+    """The name the bytes and the spelling give a line, before openings."""
+
+    strong, weak = agreeing_names(line, reference)
     spelled = reference.spelled(line.name)
-    if matched:
-        # The bytes are shared; the imported spelling may still pick one.
-        both = matched & spelled
-        if len(both) == 1:
-            return next(iter(both)), "bytes"
-        alias = reference.one_routine(both or matched)
+    symbol = section_symbol(line.name, reference.binary_format)
+    # The names the import can stand for. A line named after a label or a
+    # section-relative artifact names nothing, so its bytes alone decide.
+    named = spelled | {line.name} | ({symbol} if symbol else set())
+    anonymous = symbol is None and is_artifact(line.name, reference.binary_format)
+    if strong:
+        routine = strong if len(strong) == 1 or reference.one_routine(strong) else None
+        if routine is None:
+            # The collected libraries hold exactly these bytes under several
+            # names. NeverD drops such a claim from the files it builds,
+            # because any one name would be a guess, and the imported spelling
+            # is no better: kept, the line names every routine with them.
+            return None, "ambiguous"
+        chosen = routine & named if not anonymous else routine
+        if not chosen:
+            # The bytes are another routine's than the one the import names:
+            # two routines share them, so neither name identifies the code.
+            return None, "ambiguous"
+        return (next(iter(chosen)) if len(chosen) == 1
+                else reference.one_routine(chosen) or min(chosen)), "bytes"
+    if weak:
+        # The CRC could not be checked, so the bytes only confirm a name the
+        # import already points at.
+        chosen = weak if anonymous else weak & named
+        if len(chosen) == 1:
+            return next(iter(chosen)), "bytes"
+        alias = reference.one_routine(chosen)
         if alias is not None:
             return alias, "bytes"
-    symbol = section_symbol(line.name, reference.binary_format)
     if symbol is not None:
         return symbol, "section"
     if is_artifact(line.name, reference.binary_format):
@@ -468,12 +564,16 @@ class FileReport:
     verbatim: int = 0
     removed_artifacts: int = 0
     removed_weak: int = 0
+    removed_ambiguous: int = 0
+    removed_openings: int = 0
     unresolved: int = 0
     realigned_tails: int = 0
     undecided_tails: int = 0
     unresolved_names: list[str] = field(default_factory=list)
     removed_names: list[str] = field(default_factory=list)
     weak_names: list[str] = field(default_factory=list)
+    ambiguous_names: list[str] = field(default_factory=list)
+    opening_names: list[str] = field(default_factory=list)
 
 
 def file_tail_style(lines: list[Line]) -> str | None:
@@ -545,6 +645,14 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
         elif alignment == "undecided":
             report.undecided_tails += 1
         name, how = resolve(line, reference)
+        if how == "ambiguous":
+            report.removed_ambiguous += 1
+            report.ambiguous_names.append(line.name)
+            continue
+        if how == "opening":
+            report.removed_openings += 1
+            report.opening_names.append(line.name)
+            continue
         if how == "artifact":
             report.removed_artifacts += 1
             report.removed_names.append(line.name)
@@ -553,6 +661,12 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
             # Some imported lines were filed under the wrong pointer width;
             # only the bytes of a function of the other width may move one.
             other, other_how = resolve(line, sibling)
+            if other_how in ("ambiguous", "opening"):
+                # Code of the other width that several routines share names
+                # none of them, in either directory.
+                report.removed_ambiguous += 1
+                report.ambiguous_names.append(line.name)
+                continue
             if other is not None and other_how == "bytes":
                 report.moved += 1
                 moved.append(line.render(other))
@@ -632,16 +746,36 @@ def imported_files(tree: Path, revision: str, directory: str) -> list[Path]:
         ).stdout.split()
     except subprocess.CalledProcessError:
         return []
-    return [tree / directory / name for name in listing if name.endswith(".pat")]
+    # A file with a provenance record is rebuilt from collected libraries
+    # and holds no imported line any more.
+    return [
+        tree / directory / name
+        for name in listing
+        if name.endswith(".pat")
+        and not (tree / directory / name).with_suffix(".sources.json").exists()
+    ]
 
 
-def migrate_directory(tree: Path, directory: str, files: list[Path], reference: Reference,
-                      summary: dict[str, dict], verify_with: Path | None,
+def restore(tree: Path, revision: str, path: Path) -> None:
+    """Put a file's imported text back, so that every run starts from it."""
+
+    relative = path.relative_to(tree).as_posix()
+    text = subprocess.run(
+        ["git", "-C", str(tree), "show", f"{revision}:{relative}"],
+        check=True, capture_output=True, text=True,
+    ).stdout
+    path.write_text(text, encoding="utf-8")
+
+
+def migrate_directory(tree: Path, revision: str, directory: str, files: list[Path],
+                      reference: Reference, summary: dict[str, dict],
+                      verify_with: Path | None,
                       sibling: Reference | None = None,
                       moves: dict[Path, list[str]] | None = None) -> None:
     print(f"{directory}: {reference.functions} reference functions, "
           f"{len(reference.names)} names", flush=True)
     for path in files:
+        restore(tree, revision, path)
         report = FileReport()
         moved: list[str] = []
         lines = migrate_file(path, reference, report, sibling, moved)
@@ -661,6 +795,8 @@ def migrate_directory(tree: Path, directory: str, files: list[Path], reference: 
             f"{report.already_conforming} already conforming, {report.verbatim} C names kept, "
             f"{report.removed_artifacts} non-function lines removed, "
             f"{report.removed_weak} lines stating under {MIN_STATED_BYTES} bytes removed, "
+            f"{report.removed_ambiguous} lines whose bytes several library routines share "
+            f"removed, {report.removed_openings} whose bytes open a longer routine removed, "
             f"{report.unresolved} unresolved; {report.realigned_tails} tails realigned, "
             f"{report.undecided_tails} undecided",
             flush=True,
@@ -699,7 +835,8 @@ def main(argv: list[str] | None = None) -> int:
             continue
         with tempfile.TemporaryDirectory(dir=args.work) as scratch:
             reference = build_pe_reference(args.sigmaker, args.assets, arch, Path(scratch))
-        migrate_directory(args.tree, directory, files, reference, summary, args.verify_with)
+        migrate_directory(args.tree, args.imported_from, directory, files, reference, summary,
+                          args.verify_with)
     moves: dict[Path, list[str]] = {}
     for directory in args.directory:
         if args.references is None:
@@ -713,8 +850,8 @@ def main(argv: list[str] | None = None) -> int:
         sibling_directory = args.references / SIBLINGS.get(directory, "-")
         if directory in SIBLINGS and sibling_directory.is_dir():
             sibling = load_reference(sibling_directory, binary_format)
-        migrate_directory(args.tree, directory, files, reference, summary, args.verify_with,
-                          sibling, moves)
+        migrate_directory(args.tree, args.imported_from, directory, files, reference, summary,
+                          args.verify_with, sibling, moves)
 
     # Moved lines are already in NeverD's form, so they join their new file
     # only after every file has been migrated.
@@ -737,7 +874,7 @@ def main(argv: list[str] | None = None) -> int:
     for report in summary.values():
         for key in ("lines", "by_bytes", "by_spelling", "from_section", "moved",
                     "already_conforming", "verbatim", "removed_artifacts", "removed_weak",
-                    "unresolved",
+                    "removed_ambiguous", "removed_openings", "unresolved",
                     "realigned_tails", "undecided_tails"):
             totals[key] += report.get(key, 0)
     print(f"total: {dict(totals)}")

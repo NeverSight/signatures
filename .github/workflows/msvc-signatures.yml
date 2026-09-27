@@ -25,7 +25,7 @@ on:
         type: boolean
         default: false
       migrate_imported:
-        description: First rename the lines imported from rizin's sigdb-source (scripts/migrate_imported_signatures.py)
+        description: First move the files imported from rizin's sigdb-source to NeverD's rules again, starting from the imported text (scripts/migrate_imported_signatures.py)
         required: false
         type: boolean
         default: false
@@ -45,7 +45,7 @@ env:
   # produce these files. Pinning it is what makes a regenerated file
   # attributable to a known generator.
   NEVERD_REPO: NeverSight/NeverD
-  NEVERD_REF: e44e258777e9c02b22519ba6856b77417465ff95
+  NEVERD_REF: f6ac98c003e7e2c1c85c3d6c582ef77722eb64dd
 
 jobs:
   sigmaker:
@@ -161,15 +161,19 @@ jobs:
           echo "tag=$(echo "$tags" | tr '\n' ' ' | sed 's/ *$//')" >> "$GITHUB_OUTPUT"
           ls -la assets
 
+      # Only pe/x86 received imported files; the ARM directories hold none.
       - name: Rename the imported lines
-        if: inputs.migrate_imported
+        if: inputs.migrate_imported && (matrix.arch == 'x86' || matrix.arch == 'x64')
         env:
           ARCH: ${{ matrix.arch }}
         run: |
           set -euo pipefail
           chmod +x generator/neverd-sigmaker
+          # Every rewritten file is read back with the loader's parser, which
+          # rejects a whole directory for one bad line.
           python3 scripts/migrate_imported_signatures.py \
             --sigmaker generator/neverd-sigmaker \
+            --verify-with generator/neverd-sigmaker \
             --assets assets \
             --arch "$ARCH" \
             --report "migration-$ARCH.json" \
