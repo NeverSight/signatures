@@ -35,7 +35,9 @@ on:
       - scripts/collect_msvc_libraries.py
       - scripts/summarize_library_assets.py
       - scripts/Install-VisualStudioComponents.ps1
+      - scripts/Build-ValidationProbes.ps1
       - scripts/tests/**
+      - validation/**
 
 permissions:
   contents: read
@@ -76,6 +78,9 @@ jobs:
             vswhere_version: '[18.0,19.0)'
             components: ''
             collect: 'toolset --vs-year 2026 --vswhere-version "[18.0,19.0)" --toolset default --arch x86 --arch x64 --arch arm64'
+            probe_vcvars: ''
+            probe_arches: 'x86 x64 arm64'
+            probe_flags: ''
           - name: vs2026-14.50
             runner: windows-2025-vs2026
             vswhere_version: '[18.0,19.0)'
@@ -87,12 +92,18 @@ jobs:
               Microsoft.VisualStudio.Component.VC.14.50.18.0.ATL.ARM64
               Microsoft.VisualStudio.Component.VC.14.50.18.0.MFC.ARM64
             collect: 'toolset --vs-year 2026 --vswhere-version "[18.0,19.0)" --toolset 14.50 --arch x86 --arch x64 --arch arm64'
+            probe_vcvars: '14.50'
+            probe_arches: 'x86 x64 arm64'
+            probe_flags: ''
           # Visual Studio 2022 (v143): everything is on the image.
           - name: vs2022
             runner: windows-2022
             vswhere_version: '[17.0,18.0)'
             components: ''
             collect: 'toolset --vs-year 2022 --vswhere-version "[17.0,18.0)" --toolset default --arch x86 --arch x64 --arch arm --arch arm64'
+            probe_vcvars: ''
+            probe_arches: 'x86 x64 arm arm64'
+            probe_flags: ''
           # Visual Studio 2019 (v142, 14.29): the image has the build tools
           # but not their ATL/MFC.
           - name: vs2019
@@ -106,6 +117,9 @@ jobs:
               Microsoft.VisualStudio.Component.VC.14.29.16.11.ATL.ARM64
               Microsoft.VisualStudio.Component.VC.14.29.16.11.MFC.ARM64
             collect: 'toolset --vs-year 2019 --vswhere-version "[17.0,18.0)" --toolset 14.29 --arch x86 --arch x64 --arch arm --arch arm64'
+            probe_vcvars: '14.29'
+            probe_arches: 'x86 x64 arm arm64'
+            probe_flags: ''
           # Visual Studio 2017 (v141, 14.16), through the VS 2022 installer.
           - name: vs2017
             runner: windows-2022
@@ -121,6 +135,9 @@ jobs:
               Microsoft.VisualStudio.Component.VC.v141.ATL.ARM64
               Microsoft.VisualStudio.Component.VC.v141.MFC.ARM64
             collect: 'toolset --vs-year 2017 --vswhere-version "[17.0,18.0)" --toolset 14.16 --arch x86 --arch x64 --arch arm --arch arm64'
+            probe_vcvars: '14.16'
+            probe_arches: 'x86 x64 arm arm64'
+            probe_flags: ''
           # Visual Studio 2015 (v140), through the VS 2022 installer. It
           # installs in the pre-2017 layout and without ATL/MFC.
           - name: vs2015
@@ -128,42 +145,66 @@ jobs:
             vswhere_version: '[17.0,18.0)'
             components: Microsoft.VisualStudio.Component.VC.140
             collect: 'toolset-v140 --no-atlmfc --arch x86 --arch x64'
+            probe_vcvars: '14.0'
+            probe_arches: 'x86 x64'
+            probe_flags: '-NoMfc'
           # Windows SDKs. ARM32 libraries end with 10.0.22621.
           - name: winsdk-10.0.17763.0
             runner: windows-2022
             vswhere_version: '[17.0,18.0)'
             components: ''
             collect: 'winsdk --sdk 10.0.17763.0 --arch x86 --arch x64 --arch arm --arch arm64'
+            probe_vcvars: ''
+            probe_arches: ''
+            probe_flags: ''
           - name: winsdk-10.0.18362.0
             runner: windows-2022
             vswhere_version: '[17.0,18.0)'
             components: Microsoft.VisualStudio.Component.Windows10SDK.18362
             collect: 'winsdk --sdk 10.0.18362.0 --arch x86 --arch x64 --arch arm --arch arm64'
+            probe_vcvars: ''
+            probe_arches: ''
+            probe_flags: ''
           - name: winsdk-10.0.19041.0
             runner: windows-2022
             vswhere_version: '[17.0,18.0)'
             components: ''
             collect: 'winsdk --sdk 10.0.19041.0 --arch x86 --arch x64 --arch arm --arch arm64'
+            probe_vcvars: ''
+            probe_arches: ''
+            probe_flags: ''
           - name: winsdk-10.0.20348.0
             runner: windows-2022
             vswhere_version: '[17.0,18.0)'
             components: Microsoft.VisualStudio.Component.Windows10SDK.20348
             collect: 'winsdk --sdk 10.0.20348.0 --arch x86 --arch x64 --arch arm --arch arm64'
+            probe_vcvars: ''
+            probe_arches: ''
+            probe_flags: ''
           - name: winsdk-10.0.22000.0
             runner: windows-2022
             vswhere_version: '[17.0,18.0)'
             components: Microsoft.VisualStudio.Component.Windows11SDK.22000
             collect: 'winsdk --sdk 10.0.22000.0 --arch x86 --arch x64 --arch arm --arch arm64'
+            probe_vcvars: ''
+            probe_arches: ''
+            probe_flags: ''
           - name: winsdk-10.0.22621.0
             runner: windows-2022
             vswhere_version: '[17.0,18.0)'
             components: ''
             collect: 'winsdk --sdk 10.0.22621.0 --arch x86 --arch x64 --arch arm --arch arm64'
+            probe_vcvars: ''
+            probe_arches: ''
+            probe_flags: ''
           - name: winsdk-10.0.26100.0
             runner: windows-2025-vs2026
             vswhere_version: '[18.0,19.0)'
             components: ''
             collect: 'winsdk --sdk 10.0.26100.0 --arch x86 --arch x64 --arch arm64'
+            probe_vcvars: ''
+            probe_arches: ''
+            probe_flags: ''
 
     steps:
       - name: Check out
@@ -211,6 +252,30 @@ jobs:
           if-no-files-found: error
           compression-level: 0
           retention-days: 7
+
+      # The same toolset builds programs that link these libraries statically,
+      # with linker maps, so the signatures made from them can be checked
+      # against the map of a real image.
+      - name: Build validation probes
+        if: matrix.probe_arches != ''
+        shell: pwsh
+        run: >-
+          ./scripts/Build-ValidationProbes.ps1
+          -VersionRange '${{ matrix.vswhere_version }}'
+          -Arch ('${{ matrix.probe_arches }}' -split '\s+')
+          -Label '${{ matrix.name }}'
+          -VcvarsVersion '${{ matrix.probe_vcvars }}'
+          -OutputDirectory "$env:RUNNER_TEMP/probes"
+          ${{ matrix.probe_flags }}
+
+      - name: Upload validation probes
+        if: matrix.probe_arches != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: msvc-probes-${{ matrix.name }}
+          path: ${{ runner.temp }}/probes
+          if-no-files-found: error
+          retention-days: 30
 
   release:
     name: Create library release
