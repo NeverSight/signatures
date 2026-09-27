@@ -1,0 +1,262 @@
+# Collects the static libraries that Visual Studio toolsets and Windows SDKs
+# link into programs, from GitHub-hosted Windows images, and keeps them in a
+# release. Those archives are what msvc-signatures.yml generates the pe/
+# signature files from, so every signature can be traced to the bytes it
+# was made from.
+#
+# One matrix row is one runner: a toolset (every architecture it targets) or
+# a Windows SDK. Rows that need a toolset or SDK the image lacks add it with
+# the image's own Visual Studio installer first.
+#
+# A pull request only runs the collector's unit tests: the rows occupy a
+# dozen Windows runners, and GitHub evaluates a pull request's path filter
+# against its whole diff, so every push would restart them. A manual run
+# collects every row and creates a release, which is a draft unless
+# publish_release is set: the archives are unmodified Microsoft libraries
+# (see README.md).
+
+name: Collect MSVC libraries
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag (default msvc-libs-<UTC date>-<run number>)
+        required: false
+        type: string
+      publish_release:
+        description: Publish the release publicly instead of keeping it a draft
+        required: false
+        type: boolean
+        default: false
+  pull_request:
+    paths:
+      - .github/workflows/msvc-libraries.yml
+      - scripts/collect_msvc_libraries.py
+      - scripts/summarize_library_assets.py
+      - scripts/Install-VisualStudioComponents.ps1
+      - scripts/tests/**
+
+permissions:
+  contents: read
+
+concurrency:
+  group: msvc-libraries-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify collector
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Run collector unit tests
+        run: python3 -m unittest discover -s scripts/tests -v
+
+      - name: Compile-check scripts
+        run: python3 -m py_compile scripts/*.py
+
+  collect:
+    name: Collect ${{ matrix.name }}
+    needs: verify
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Visual Studio 2026: the image's default toolset, and 14.50, the
+          # toolset VS 2026 shipped with. VS 2026 has no ARM32 toolchain.
+          - name: vs2026
+            runner: windows-2025-vs2026
+            vswhere_version: '[18.0,19.0)'
+            components: ''
+            collect: 'toolset --vs-year 2026 --vswhere-version "[18.0,19.0)" --toolset default --arch x86 --arch x64 --arch arm64'
+          - name: vs2026-14.50
+            runner: windows-2025-vs2026
+            vswhere_version: '[18.0,19.0)'
+            components: >-
+              Microsoft.VisualStudio.Component.VC.14.50.18.0.x86.x64
+              Microsoft.VisualStudio.Component.VC.14.50.18.0.ARM64
+              Microsoft.VisualStudio.Component.VC.14.50.18.0.ATL
+              Microsoft.VisualStudio.Component.VC.14.50.18.0.MFC
+              Microsoft.VisualStudio.Component.VC.14.50.18.0.ATL.ARM64
+              Microsoft.VisualStudio.Component.VC.14.50.18.0.MFC.ARM64
+            collect: 'toolset --vs-year 2026 --vswhere-version "[18.0,19.0)" --toolset 14.50 --arch x86 --arch x64 --arch arm64'
+          # Visual Studio 2022 (v143): everything is on the image.
+          - name: vs2022
+            runner: windows-2022
+            vswhere_version: '[17.0,18.0)'
+            components: ''
+            collect: 'toolset --vs-year 2022 --vswhere-version "[17.0,18.0)" --toolset default --arch x86 --arch x64 --arch arm --arch arm64'
+          # Visual Studio 2019 (v142, 14.29): the image has the build tools
+          # but not their ATL/MFC.
+          - name: vs2019
+            runner: windows-2022
+            vswhere_version: '[17.0,18.0)'
+            components: >-
+              Microsoft.VisualStudio.Component.VC.14.29.16.11.ATL
+              Microsoft.VisualStudio.Component.VC.14.29.16.11.MFC
+              Microsoft.VisualStudio.Component.VC.14.29.16.11.ATL.ARM
+              Microsoft.VisualStudio.Component.VC.14.29.16.11.MFC.ARM
+              Microsoft.VisualStudio.Component.VC.14.29.16.11.ATL.ARM64
+              Microsoft.VisualStudio.Component.VC.14.29.16.11.MFC.ARM64
+            collect: 'toolset --vs-year 2019 --vswhere-version "[17.0,18.0)" --toolset 14.29 --arch x86 --arch x64 --arch arm --arch arm64'
+          # Visual Studio 2017 (v141, 14.16), through the VS 2022 installer.
+          - name: vs2017
+            runner: windows-2022
+            vswhere_version: '[17.0,18.0)'
+            components: >-
+              Microsoft.VisualStudio.Component.VC.v141.x86.x64
+              Microsoft.VisualStudio.Component.VC.v141.ARM
+              Microsoft.VisualStudio.Component.VC.v141.ARM64
+              Microsoft.VisualStudio.Component.VC.v141.ATL
+              Microsoft.VisualStudio.Component.VC.v141.MFC
+              Microsoft.VisualStudio.Component.VC.v141.ATL.ARM
+              Microsoft.VisualStudio.Component.VC.v141.MFC.ARM
+              Microsoft.VisualStudio.Component.VC.v141.ATL.ARM64
+              Microsoft.VisualStudio.Component.VC.v141.MFC.ARM64
+            collect: 'toolset --vs-year 2017 --vswhere-version "[17.0,18.0)" --toolset 14.16 --arch x86 --arch x64 --arch arm --arch arm64'
+          # Visual Studio 2015 (v140), through the VS 2022 installer. It
+          # installs in the pre-2017 layout and without ATL/MFC.
+          - name: vs2015
+            runner: windows-2022
+            vswhere_version: '[17.0,18.0)'
+            components: Microsoft.VisualStudio.Component.VC.140
+            collect: 'toolset-v140 --no-atlmfc --arch x86 --arch x64'
+          # Windows SDKs. ARM32 libraries end with 10.0.22621.
+          - name: winsdk-10.0.17763.0
+            runner: windows-2022
+            vswhere_version: '[17.0,18.0)'
+            components: ''
+            collect: 'winsdk --sdk 10.0.17763.0 --arch x86 --arch x64 --arch arm --arch arm64'
+          - name: winsdk-10.0.18362.0
+            runner: windows-2022
+            vswhere_version: '[17.0,18.0)'
+            components: Microsoft.VisualStudio.Component.Windows10SDK.18362
+            collect: 'winsdk --sdk 10.0.18362.0 --arch x86 --arch x64 --arch arm --arch arm64'
+          - name: winsdk-10.0.19041.0
+            runner: windows-2022
+            vswhere_version: '[17.0,18.0)'
+            components: ''
+            collect: 'winsdk --sdk 10.0.19041.0 --arch x86 --arch x64 --arch arm --arch arm64'
+          - name: winsdk-10.0.20348.0
+            runner: windows-2022
+            vswhere_version: '[17.0,18.0)'
+            components: Microsoft.VisualStudio.Component.Windows10SDK.20348
+            collect: 'winsdk --sdk 10.0.20348.0 --arch x86 --arch x64 --arch arm --arch arm64'
+          - name: winsdk-10.0.22000.0
+            runner: windows-2022
+            vswhere_version: '[17.0,18.0)'
+            components: Microsoft.VisualStudio.Component.Windows11SDK.22000
+            collect: 'winsdk --sdk 10.0.22000.0 --arch x86 --arch x64 --arch arm --arch arm64'
+          - name: winsdk-10.0.22621.0
+            runner: windows-2022
+            vswhere_version: '[17.0,18.0)'
+            components: ''
+            collect: 'winsdk --sdk 10.0.22621.0 --arch x86 --arch x64 --arch arm --arch arm64'
+          - name: winsdk-10.0.26100.0
+            runner: windows-2025-vs2026
+            vswhere_version: '[18.0,19.0)'
+            components: ''
+            collect: 'winsdk --sdk 10.0.26100.0 --arch x86 --arch x64 --arch arm64'
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - name: Install Visual Studio components
+        if: matrix.components != ''
+        shell: pwsh
+        run: >-
+          ./scripts/Install-VisualStudioComponents.ps1
+          -VersionRange '${{ matrix.vswhere_version }}'
+          -Component ('${{ matrix.components }}' -split '\s+')
+
+      - name: Show installed toolsets and SDKs
+        shell: pwsh
+        run: |
+          $VsWhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio/Installer/vswhere.exe'
+          & $VsWhere -products * -format text | Select-String 'installationPath|installationVersion|displayName'
+          foreach ($Path in (& $VsWhere -products * -property installationPath)) {
+            Get-ChildItem -Directory (Join-Path $Path 'VC/Tools/MSVC') -ErrorAction SilentlyContinue |
+              ForEach-Object { "$($_.FullName): $((Get-ChildItem -Directory (Join-Path $_.FullName 'lib') -ErrorAction SilentlyContinue).Name -join ' ')" }
+          }
+          $V140 = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio 14.0/VC'
+          if (Test-Path $V140) {
+            "v140 lib: $((Get-ChildItem -Directory (Join-Path $V140 'lib') -ErrorAction SilentlyContinue).Name -join ' ')"
+            "v140 atlmfc: $(Test-Path (Join-Path $V140 'atlmfc/lib'))"
+          }
+          Get-ChildItem -Directory (Join-Path ${env:ProgramFiles(x86)} 'Windows Kits/10/Lib') -ErrorAction SilentlyContinue |
+            ForEach-Object { "$($_.Name): ucrt $((Get-ChildItem -Directory (Join-Path $_.FullName 'ucrt') -ErrorAction SilentlyContinue).Name -join ' ')" }
+
+      - name: Collect
+        shell: bash
+        run: python scripts/collect_msvc_libraries.py ${{ matrix.collect }} --output "$RUNNER_TEMP/assets"
+
+      - name: Upload assets
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: msvc-libs-${{ matrix.name }}
+          path: ${{ runner.temp }}/assets
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+
+  release:
+    name: Create library release
+    needs: collect
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Download every row's assets
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          pattern: msvc-libs-*
+          path: assets
+          merge-multiple: true
+
+      - name: Index assets
+        id: index
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          tag="${INPUT_TAG:-msvc-libs-$(date -u +%Y%m%d)-${GITHUB_RUN_NUMBER}}"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          python3 scripts/summarize_library_assets.py assets --tag "$tag" --commit "$GITHUB_SHA"
+          ls -la assets
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.index.outputs.tag }}
+          PUBLISH: ${{ inputs.publish_release }}
+        run: |
+          set -euo pipefail
+          visibility=--draft
+          if [ "$PUBLISH" = "true" ]; then
+            visibility=
+          fi
+          gh release create "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "MSVC and Windows SDK libraries ($TAG)" \
+            --notes-file assets/RELEASE.md \
+            $visibility \
+            assets/*.tar.zst assets/*.json assets/SHA256SUMS

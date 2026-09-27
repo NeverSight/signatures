@@ -1,0 +1,225 @@
+# Regenerates pe/<arch>/<bits>/vs<year>.pat and winsdk.pat from a library
+# release made by msvc-libraries.yml, with NeverD's own signature maker at a
+# pinned revision.
+#
+# One job builds neverd-sigmaker against the published prebuilt LLVM
+# package; one job per architecture turns that architecture's archives into
+# lines and merges them into the files already here; a final job commits the
+# result, and only when a manual run asks it to. A pull request that edits
+# this workflow only builds the generator.
+
+name: Build MSVC signatures
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: Library release tag (default the newest msvc-libs-* release, drafts included)
+        required: false
+        type: string
+      publish:
+        description: Commit the regenerated files to the branch this runs on
+        required: false
+        type: boolean
+        default: false
+  pull_request:
+    paths:
+      - .github/workflows/msvc-signatures.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: msvc-signatures-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # The NeverD revision whose neverd-sigmaker and build_msvc_signatures.py
+  # produce these files. Pinning it is what makes a regenerated file
+  # attributable to a known generator.
+  NEVERD_REPO: NeverSight/NeverD
+  NEVERD_REF: 87f2f57e437995bddfe425c39c697a9039346f9f
+
+jobs:
+  sigmaker:
+    name: Build neverd-sigmaker
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - name: Check out NeverD
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ${{ env.NEVERD_REPO }}
+          ref: ${{ env.NEVERD_REF }}
+          path: neverd
+
+      # The prebuilt LLVM package replaces the llvm-project submodule, and
+      # the signature maker needs neither unicorn nor the corpora; capstone
+      # is configured unconditionally.
+      - name: Check out capstone
+        run: git -C neverd submodule update --init --depth 1 third_party/capstone
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes clang cmake lld ninja-build
+
+      - name: Configure against the prebuilt LLVM package
+        run: >-
+          cmake -S neverd -B build -G Ninja
+          -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_C_COMPILER=clang
+          -DCMAKE_CXX_COMPILER=clang++
+          -DBUILD_TESTING=OFF
+          -DNEVERD_ENABLE_PYTHON_PLUGINS=OFF
+          -DNEVERD_LLVM_PREBUILT=ON
+
+      - name: Build the signature maker
+        run: cmake --build build --target neverd-sigmaker --parallel 4
+
+      - name: Stage the generator
+        run: |
+          mkdir -p generator
+          cp build/bin/neverd-sigmaker generator/
+          cp neverd/scripts/signatures/build_msvc_signatures.py generator/
+
+      - name: Upload the generator
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: neverd-sigmaker
+          path: generator
+          if-no-files-found: error
+          retention-days: 7
+
+  produce:
+    name: Signatures (${{ matrix.arch }})
+    needs: sigmaker
+    # A pull request only proves the generator still builds; generating
+    # needs a library release to read.
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    # Draft releases are only visible to tokens that can write to the
+    # repository.
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [x86, x64, arm, arm64]
+    steps:
+      - name: Check out the signature database
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Download the generator
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: neverd-sigmaker
+          path: generator
+
+      - name: Resolve the library release
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REQUESTED: ${{ inputs.release }}
+        run: |
+          set -euo pipefail
+          tag="${REQUESTED:-}"
+          if [ -z "$tag" ]; then
+            tag="$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
+              --jq '[.[] | select(.tag_name | startswith("msvc-libs-"))] | sort_by(.created_at) | last | .tag_name')"
+          fi
+          if [ -z "$tag" ] || [ "$tag" = "null" ]; then
+            echo "no msvc-libs-* release to build from" >&2
+            exit 1
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "building from $tag"
+
+      - name: Download this architecture's archives
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag }}
+          ARCH: ${{ matrix.arch }}
+        run: |
+          set -euo pipefail
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir assets \
+            --pattern "*-${ARCH}.tar.zst" --pattern "*-${ARCH}.json"
+          ls -la assets
+
+      - name: Generate and merge
+        env:
+          TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          set -euo pipefail
+          chmod +x generator/neverd-sigmaker
+          python3 generator/build_msvc_signatures.py \
+            --sigmaker generator/neverd-sigmaker \
+            --assets assets \
+            --output . \
+            --merge-existing \
+            --neverd-ref "$NEVERD_REF" \
+            --release "$TAG" \
+            --work "$RUNNER_TEMP"
+
+      - name: Stage this architecture's files
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: |
+          set -euo pipefail
+          case "$ARCH" in
+            x86) dir=pe/x86/32 ;;
+            x64) dir=pe/x86/64 ;;
+            arm) dir=pe/arm/32 ;;
+            arm64) dir=pe/arm/64 ;;
+          esac
+          mkdir -p "staged/$dir"
+          cp "$dir"/*.pat "$dir"/*.sources.json "staged/$dir/"
+          git status --short -- "$dir"
+          du -h "staged/$dir"/*
+
+      - name: Upload this architecture's files
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: msvc-signatures-${{ matrix.arch }}
+          path: staged
+          if-no-files-found: error
+          retention-days: 14
+
+  publish:
+    name: Commit regenerated signatures
+    needs: produce
+    if: github.event_name == 'workflow_dispatch' && inputs.publish
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Download every architecture
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          pattern: msvc-signatures-*
+          path: staged
+          merge-multiple: true
+
+      - name: Commit
+        run: |
+          set -euo pipefail
+          cp -R staged/. .
+          rm -rf staged
+          if [ -z "$(git status --porcelain -- pe)" ]; then
+            echo "the signatures are unchanged"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- pe
+          git commit \
+            -m 'signatures: regenerate pe/ from MSVC and Windows SDK libraries' \
+            -m "Produced by neverd-sigmaker at ${NEVERD_REPO}@${NEVERD_REF}, run ${GITHUB_RUN_ID}."
+          git push origin "HEAD:${GITHUB_REF_NAME}"
