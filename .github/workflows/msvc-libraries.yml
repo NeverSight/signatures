@@ -277,10 +277,14 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
+  # A row that fails does not hold the others back: the release carries every
+  # row that succeeded, its notes name the run's overall result, and the
+  # signature workflow reads the union of all msvc-libs-* releases, so a
+  # later run only has to supply what this one missed.
   release:
     name: Create library release
     needs: collect
-    if: github.event_name == 'workflow_dispatch'
+    if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     permissions:
@@ -300,11 +304,19 @@ jobs:
         id: index
         env:
           INPUT_TAG: ${{ inputs.tag }}
+          COLLECT_RESULT: ${{ needs.collect.result }}
         run: |
           set -euo pipefail
           tag="${INPUT_TAG:-msvc-libs-$(date -u +%Y%m%d)-${GITHUB_RUN_NUMBER}}"
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
           python3 scripts/summarize_library_assets.py assets --tag "$tag" --commit "$GITHUB_SHA"
+          if [ "$COLLECT_RESULT" != "success" ]; then
+            {
+              echo
+              echo "> Not every collection row succeeded in run $GITHUB_RUN_ID ($COLLECT_RESULT);"
+              echo "> this release holds the rows listed above. Rerun the workflow to add the rest."
+            } >> assets/RELEASE.md
+          fi
           ls -la assets
 
       - name: Create release

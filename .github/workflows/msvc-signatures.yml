@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
     inputs:
       release:
-        description: Library release tag (default the newest msvc-libs-* release, drafts included)
+        description: Library release tag (default every msvc-libs-* release, newest first, drafts included)
         required: false
         type: string
       publish:
@@ -125,34 +125,38 @@ jobs:
           name: neverd-sigmaker
           path: generator
 
-      - name: Resolve the library release
+      - name: Download this architecture's archives
         id: release
         env:
           GH_TOKEN: ${{ github.token }}
           REQUESTED: ${{ inputs.release }}
-        run: |
-          set -euo pipefail
-          tag="${REQUESTED:-}"
-          if [ -z "$tag" ]; then
-            tag="$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
-              --jq '[.[] | select(.tag_name | startswith("msvc-libs-"))] | sort_by(.created_at) | last | .tag_name')"
-          fi
-          if [ -z "$tag" ] || [ "$tag" = "null" ]; then
-            echo "no msvc-libs-* release to build from" >&2
-            exit 1
-          fi
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
-          echo "building from $tag"
-
-      - name: Download this architecture's archives
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ steps.release.outputs.tag }}
           ARCH: ${{ matrix.arch }}
         run: |
           set -euo pipefail
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir assets \
-            --pattern "*-${ARCH}.tar.zst" --pattern "*-${ARCH}.json"
+          if [ -n "${REQUESTED:-}" ]; then
+            tags="$REQUESTED"
+          else
+            # Every library release, newest first; an asset a newer release
+            # already supplied is not fetched again.
+            tags="$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
+              --jq '[.[] | select(.tag_name | startswith("msvc-libs-"))] | sort_by(.created_at) | reverse | .[].tag_name')"
+          fi
+          if [ -z "$tags" ]; then
+            echo "no msvc-libs-* release to build from" >&2
+            exit 1
+          fi
+          mkdir -p assets
+          for tag in $tags; do
+            for name in $(gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
+                --jq ".assets[].name | select(endswith(\"-${ARCH}.json\"))"); do
+              stem="${name%.json}"
+              [ -f "assets/$name" ] && continue
+              gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir assets \
+                --pattern "$name" --pattern "$stem.tar.zst"
+              echo "$tag: $stem"
+            done
+          done
+          echo "tag=$(echo "$tags" | tr '\n' ' ' | sed 's/ *$//')" >> "$GITHUB_OUTPUT"
           ls -la assets
 
       - name: Rename the imported lines
