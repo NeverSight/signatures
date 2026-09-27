@@ -3,9 +3,10 @@
 
 Each row is one Windows runner: a Visual Studio toolset with every
 architecture it targets, or one Windows SDK. A row lists what has to be
-installed first -- Visual Studio installer components, or Chocolatey packages
-for Windows SDKs the image's installer no longer offers -- the collector
-arguments, and how to build the validation probes with the same toolset.
+installed first (Visual Studio installer components, Chocolatey packages, or a
+Windows SDK's standalone installer, for SDKs the image's installer no longer
+offers), the collector arguments, and how to build the validation probes with
+the same toolset.
 
 `--rows` keeps only the named rows, so a run can supply what an earlier one
 missed without repeating every row. Naming a row that does not exist is an
@@ -32,6 +33,7 @@ FIELDS = {
     "probe_vcvars": str,
     "probe_winsdk": str,
     "probe_mfc": bool,
+    "sdk_installer": str,
 }
 
 
