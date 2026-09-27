@@ -224,36 +224,70 @@ class TailAlignmentTests(unittest.TestCase):
 
 
 class MoveTests(unittest.TestCase):
+    THUMB = "10B50446BDE81040" * 3
+    OTHER = "70B5054670BD" * 3
+
     def test_only_bytes_of_the_other_width_move_a_line(self) -> None:
-        own = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28C3"))
+        own = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28" * 5 + "C3"))
         other = pe_reference(
-            reference_line("?Thumb@@YAXXZ", "10B50446BDE81040"),
-            reference_line("?Spelled@@YAXXZ", "70B5054670BD"),
+            reference_line("?Thumb@@YAXXZ", self.THUMB),
+            reference_line("?Spelled@@YAXXZ", self.OTHER),
         )
+        unknown = "AABBCCDDEEFF" * 3
         with tempfile.TemporaryDirectory() as scratch:
             path = Path(scratch) / "android-ndk.pat"
             path.write_text(
-                "10B50446BDE81040 00 0000 0008 :0000 _Thumb__YAXXZ\n"
-                "AABBCCDDEEFF 00 0000 0006 :0000 _Spelled__YAXXZ\n"
+                f"{self.THUMB} 00 0000 0018 :0000 _Thumb__YAXXZ\n"
+                f"{unknown} 00 0000 0012 :0000 _Spelled__YAXXZ\n"
             )
             report = migrate.FileReport()
             moved: list[str] = []
             lines = migrate.migrate_file(path, own, report, other, moved)
-        self.assertEqual(moved, ["10B50446BDE81040 00 0000 0008 :0000 ?Thumb@@YAXXZ"])
-        self.assertEqual(lines, ["AABBCCDDEEFF 00 0000 0006 :0000 _Spelled__YAXXZ"])
+        self.assertEqual(moved, [f"{self.THUMB} 00 0000 0018 :0000 ?Thumb@@YAXXZ"])
+        self.assertEqual(lines, [f"{unknown} 00 0000 0012 :0000 _Spelled__YAXXZ"])
         self.assertEqual(report.moved, 1)
         self.assertEqual(report.unresolved, 1)
 
 
+class WeakLineTests(unittest.TestCase):
+    def test_stated_bytes_follow_the_matcher(self) -> None:
+        lead = "".join(f"{i:02X}" for i in range(32))
+        line = migrate.Line.parse(f"{lead} 04 0000 0030 :0000 f ....AABB")
+        # 32 leading + 4 in the CRC span + 2 fixed tail bytes.
+        self.assertEqual(line.stated_bytes(), 38)
+        short = migrate.Line.parse("55......C3 00 0000 0005 :0000 g")
+        self.assertEqual(short.stated_bytes(), 2)
+        # Bytes past the function's end state nothing.
+        past = migrate.Line.parse("AABBCCDD 00 0000 0002 :0000 h")
+        self.assertEqual(past.stated_bytes(), 2)
+
+    def test_weak_lines_are_removed_and_listed(self) -> None:
+        reference = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28" * 5 + "C3"))
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "vs2008.pat"
+            path.write_text(
+                "55......C3 00 0000 0005 :0000 _tiny\n"
+                + "4883EC28" * 5 + "C3 00 0000 0015 :0000 _Run__YAXXZ\n"
+            )
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, reference, report)
+        self.assertEqual(lines, ["4883EC28" * 5 + "C3 00 0000 0015 :0000 ?Run@@YAXXZ"])
+        self.assertEqual(report.removed_weak, 1)
+        self.assertEqual(report.weak_names, ["_tiny"])
+
+
 class MigrateFileTests(unittest.TestCase):
     def test_file_keeps_order_renames_and_reports(self) -> None:
-        reference = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28C3"))
+        run = "4883EC28" * 5 + "C3"
+        reference = pe_reference(reference_line("?Run@@YAXXZ", run))
+        unknown = "AABBCCDD" * 5
+        section = "90909090" * 5
         with tempfile.TemporaryDirectory() as scratch:
             path = Path(scratch) / "vs2013.pat"
             path.write_text(
-                "AABBCCDD 00 0000 0004 :0000 _unknown_thing__YAXXZ\n"
-                "4883EC28C3 00 0000 0005 :0000 _Run__YAXXZ\n"
-                "90909090 00 0000 0004 :0000 .text_tii_131\n"
+                f"{unknown} 00 0000 0014 :0000 _unknown_thing__YAXXZ\n"
+                f"{run} 00 0000 0015 :0000 _Run__YAXXZ\n"
+                f"{section} 00 0000 0014 :0000 .text_tii_131\n"
                 "---\n"
             )
             report = migrate.FileReport()
@@ -261,8 +295,8 @@ class MigrateFileTests(unittest.TestCase):
         self.assertEqual(
             lines,
             [
-                "AABBCCDD 00 0000 0004 :0000 _unknown_thing__YAXXZ",
-                "4883EC28C3 00 0000 0005 :0000 ?Run@@YAXXZ",
+                f"{unknown} 00 0000 0014 :0000 _unknown_thing__YAXXZ",
+                f"{run} 00 0000 0015 :0000 ?Run@@YAXXZ",
                 "---",
             ],
         )

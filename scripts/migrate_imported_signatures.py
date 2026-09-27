@@ -29,6 +29,9 @@ leaves the rest untouched. For each line, in order:
    crclen wildcards are dropped so that it starts where NeverD reads it. For
    a tail that could be either, the reference bytes decide; without them, the
    file decides when at least 95% of the lines it settles agree.
+   A line that then states fewer than 16 bytes exactly is removed:
+   neverd-sigmaker never writes one, because it names far more code than the
+   function it was made from.
 1. By bytes. neverd-sigmaker runs over the same libraries with a leading
    pattern long enough to state every byte of every function. If the bytes
    an imported line states agree with those functions under exactly one
@@ -70,6 +73,11 @@ WHOLE_FUNCTION = 65535
 
 PE_NAME_LIMIT = 125
 ELF_NAME_LIMIT = 1023
+
+# neverd::sigs::SignatureMatcher::MinStatedBytes: neverd-sigmaker never writes
+# a line that states fewer bytes exactly, because such a line agrees with a
+# great deal of unrelated code.
+MIN_STATED_BYTES = 16
 _PE_UNSAFE = re.compile(r"[^A-Za-z0-9_.]")
 _ELF_UNSAFE = re.compile(r"[^A-Za-z0-9_.:]")
 
@@ -239,6 +247,18 @@ class Line:
         tail = self.tail[2 * self.crc_len :].rstrip(".") if self.tail else ""
         room = max(0, self.total - len(self.lead) // 2 - self.crc_len)
         return Line(self.lead, self.crc_len, self.crc, self.total, self.name, tail[: 2 * room])
+
+    def stated_bytes(self) -> int:
+        """Bytes the line states exactly, as NeverD's matcher reads it."""
+
+        lead = self.lead[: 2 * self.total]
+        stated = sum(1 for index in range(0, len(lead), 2) if lead[index] != ".")
+        room = max(0, self.total - len(self.lead) // 2)
+        stated += min(self.crc_len, room)
+        room = max(0, room - self.crc_len)
+        tail = self.tail[: 2 * room]
+        stated += sum(1 for index in range(0, len(tail), 2) if tail[index] != ".")
+        return stated
 
     def render(self, name: str) -> str:
         text = f"{self.lead} {self.crc_len:02X} {self.crc:04X} {self.total:04X} :0000 {name}"
@@ -447,11 +467,13 @@ class FileReport:
     moved: int = 0
     verbatim: int = 0
     removed_artifacts: int = 0
+    removed_weak: int = 0
     unresolved: int = 0
     realigned_tails: int = 0
     undecided_tails: int = 0
     unresolved_names: list[str] = field(default_factory=list)
     removed_names: list[str] = field(default_factory=list)
+    weak_names: list[str] = field(default_factory=list)
 
 
 def file_tail_style(lines: list[Line]) -> str | None:
@@ -511,6 +533,12 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
             continue
         line, alignment = align(Line.parse(text), reference, default)
         report.lines += 1
+        if line.stated_bytes() < MIN_STATED_BYTES:
+            # NeverD never writes such a line; it names far more code than
+            # the function it was made from.
+            report.removed_weak += 1
+            report.weak_names.append(line.name)
+            continue
         if alignment == "realigned":
             report.realigned_tails += 1
             text = line.render(line.name)
@@ -632,6 +660,7 @@ def migrate_directory(tree: Path, directory: str, files: list[Path], reference: 
             f"{report.moved} moved to the other width, "
             f"{report.already_conforming} already conforming, {report.verbatim} C names kept, "
             f"{report.removed_artifacts} non-function lines removed, "
+            f"{report.removed_weak} lines stating under {MIN_STATED_BYTES} bytes removed, "
             f"{report.unresolved} unresolved; {report.realigned_tails} tails realigned, "
             f"{report.undecided_tails} undecided",
             flush=True,
@@ -707,7 +736,8 @@ def main(argv: list[str] | None = None) -> int:
     totals = Counter()
     for report in summary.values():
         for key in ("lines", "by_bytes", "by_spelling", "from_section", "moved",
-                    "already_conforming", "verbatim", "removed_artifacts", "unresolved",
+                    "already_conforming", "verbatim", "removed_artifacts", "removed_weak",
+                    "unresolved",
                     "realigned_tails", "undecided_tails"):
             totals[key] += report.get(key, 0)
     print(f"total: {dict(totals)}")
