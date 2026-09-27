@@ -18,7 +18,9 @@ class CheckedInMatrixTests(unittest.TestCase):
         rows = msvc_matrix.load(msvc_matrix.DEFAULT_MATRIX)
         self.assertGreaterEqual(len(rows), 13)
         for row in rows:
-            self.assertTrue(row["collect"].startswith(("toolset ", "toolset-v140 ", "winsdk ")))
+            for invocation in row["collect"].split(";"):
+                self.assertTrue(invocation.strip().startswith(
+                    ("toolset ", "toolset-v140 ", "winsdk ")), row["name"])
             # A row installs through one mechanism at most.
             self.assertFalse(row["components"] and row["choco"], row["name"])
 
@@ -52,7 +54,8 @@ class OutputTests(unittest.TestCase):
         self.assertTrue(line.startswith("matrix="))
         matrix = json.loads(line[len("matrix="):])
         rows = {row["name"]: row for row in matrix["include"]}
-        self.assertEqual(rows["vs2015"]["probe_flags"], "-NoMfc")
+        self.assertEqual(rows["vs2015"]["probe_flags"], "")
+        self.assertEqual(rows["vs2015"]["probe_winsdk"], "10.0.17763.0")
         self.assertEqual(rows["winsdk-10.0.20348.0"]["choco"], "windows-sdk-10-version-2104-all")
         self.assertEqual(rows["winsdk-10.0.20348.0"]["components"], "")
 

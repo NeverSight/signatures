@@ -128,9 +128,17 @@ jobs:
           Get-ChildItem -Directory (Join-Path ${env:ProgramFiles(x86)} 'Windows Kits/10/Lib') -ErrorAction SilentlyContinue |
             ForEach-Object { "$($_.Name): ucrt $((Get-ChildItem -Directory (Join-Path $_.FullName 'ucrt') -ErrorAction SilentlyContinue).Name -join ' ')" }
 
+      # A row may hold several collector invocations, separated by ';'.
       - name: Collect
         shell: bash
-        run: python scripts/collect_msvc_libraries.py ${{ matrix.collect }} --output "$RUNNER_TEMP/assets"
+        env:
+          COLLECT: ${{ matrix.collect }}
+        run: |
+          set -euo pipefail
+          IFS=';' read -ra invocations <<< "$COLLECT"
+          for invocation in "${invocations[@]}"; do
+            eval "python scripts/collect_msvc_libraries.py $invocation --output \"\$RUNNER_TEMP/assets\""
+          done
 
       - name: Upload assets
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

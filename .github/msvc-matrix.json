@@ -114,14 +114,14 @@
       "Microsoft.VisualStudio.Component.VC.140"
     ],
     "choco": [],
-    "collect": "toolset-v140 --no-atlmfc --arch x86 --arch x64",
+    "collect": "toolset-v140 --arch x86 --arch x64; toolset-v140 --no-atlmfc --arch arm",
     "probe_arches": [
       "x86",
       "x64"
     ],
     "probe_vcvars": "14.0",
-    "probe_winsdk": "",
-    "probe_mfc": false
+    "probe_winsdk": "10.0.17763.0",
+    "probe_mfc": true
   },
   {
     "name": "winsdk-10.0.17763.0",
