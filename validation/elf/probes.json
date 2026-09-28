@@ -224,5 +224,97 @@
       "libgcc.a",
       "libgcc_eh.a"
     ]
+  },
+  {
+    "name": "elf-zlib-1.2.11-x64-o2",
+    "compiler": "gcc",
+    "flags": [
+      "-std=gnu11",
+      "-O2",
+      "-fno-stack-protector",
+      "-fcf-protection=none"
+    ],
+    "program": "probe_zlib.c",
+    "packages": [
+      {
+        "package": "ubuntu/jammy/amd64/zlib1g-dev/1:1.2.11.dfsg-2ubuntu9/zlib1g-dev_1.2.11.dfsg-2ubuntu9_amd64.deb",
+        "sha1": "2925b77e147d2de9ded7a14abd71a426a0c09c6f"
+      },
+      {
+        "package": "ubuntu/jammy/amd64/libc6-dev/2.35-0ubuntu3.1/libc6-dev_2.35-0ubuntu3.1_amd64.deb",
+        "sha1": "57ed6e372553fdfb5262e2364f28a75235c822de"
+      },
+      {
+        "package": "ubuntu/jammy/amd64/libgcc-11-dev/11.2.0-19ubuntu1/libgcc-11-dev_11.2.0-19ubuntu1_amd64.deb",
+        "sha1": "55689cb307650bfd82becc30e1a208c009257ca5"
+      }
+    ],
+    "archives": [
+      "libz.a",
+      "libc.a",
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "elf-openssl-3.0-x64-o2",
+    "compiler": "gcc",
+    "flags": [
+      "-std=gnu11",
+      "-O2",
+      "-fno-stack-protector",
+      "-fcf-protection=none"
+    ],
+    "program": "probe_openssl.c",
+    "packages": [
+      {
+        "package": "ubuntu/jammy/amd64/libssl-dev/3.0.2-0ubuntu1.6/libssl-dev_3.0.2-0ubuntu1.6_amd64.deb",
+        "sha1": "3054526b55411ceaf7f0c9eada2598de6f4bc575"
+      },
+      {
+        "package": "ubuntu/jammy/amd64/libc6-dev/2.35-0ubuntu3.1/libc6-dev_2.35-0ubuntu3.1_amd64.deb",
+        "sha1": "57ed6e372553fdfb5262e2364f28a75235c822de"
+      },
+      {
+        "package": "ubuntu/jammy/amd64/libgcc-11-dev/11.2.0-19ubuntu1/libgcc-11-dev_11.2.0-19ubuntu1_amd64.deb",
+        "sha1": "55689cb307650bfd82becc30e1a208c009257ca5"
+      }
+    ],
+    "archives": [
+      "libcrypto.a",
+      "libc.a",
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "elf-musl-1.2.2-x64-o2",
+    "compiler": "gcc",
+    "flags": [
+      "-std=gnu11",
+      "-O2",
+      "-fno-stack-protector",
+      "-fcf-protection=none",
+      "-U_FORTIFY_SOURCE"
+    ],
+    "program": "probe.c",
+    "packages": [
+      {
+        "package": "ubuntu/jammy/amd64/musl-dev/1.2.2-4/musl-dev_1.2.2-4_amd64.deb",
+        "sha1": "01c73e59a59bf35597ed3df245cabf0d4cf9bc4d"
+      },
+      {
+        "package": "ubuntu/jammy/amd64/libgcc-11-dev/11.2.0-19ubuntu1/libgcc-11-dev_11.2.0-19ubuntu1_amd64.deb",
+        "sha1": "55689cb307650bfd82becc30e1a208c009257ca5"
+      }
+    ],
+    "includes": [
+      "usr/include/x86_64-linux-musl"
+    ],
+    "archives": [
+      "libc.a",
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
   }
 ]
