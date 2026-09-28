@@ -33,6 +33,16 @@ class SettledNameTests(unittest.TestCase):
         self.assertEqual(names, {0x20: "b"})
         self.assertEqual(disputed, set())
 
+    def test_matches_that_share_an_alias_agree_on_the_preferred_one(self) -> None:
+        names, disputed = evaluate_probes.settled_names(
+            [{"addr": "0x30", "name": "malloc", "aliases": ["__libc_malloc"]},
+             {"addr": "0x30", "name": "__libc_malloc", "aliases": ["__malloc"]},
+             {"addr": "0x40", "name": "puts", "aliases": ["_IO_puts"]},
+             {"addr": "0x40", "name": "fputs"}]
+        )
+        self.assertEqual(names, {0x30: "__libc_malloc"})
+        self.assertEqual(disputed, {0x40})
+
     def test_two_confirmed_names_still_dispute(self) -> None:
         names, disputed = evaluate_probes.settled_names(
             [match(0x20, "b", True), match(0x20, "c", True)]

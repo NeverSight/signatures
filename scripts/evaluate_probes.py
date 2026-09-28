@@ -53,30 +53,72 @@ def parse_map(path: Path) -> dict[int, MapFunction]:
     return dict(functions)
 
 
+def parse_truth(path: Path) -> dict[int, MapFunction]:
+    """A probe's <name>.truth.json: each function's address, names, and
+    whether a library it was linked from defines it.
+
+    An ELF probe has no MSVC linker map; build_elf_probes.py writes this from
+    the unstripped program's symbol table and the libraries' own.
+    """
+
+    functions = {}
+    for entry in json.loads(path.read_text(encoding="utf-8")):
+        functions[int(entry["address"], 16)] = MapFunction(
+            set(entry["names"]), bool(entry["from_library"]))
+    return functions
+
+
+def probe_functions(probe: Path) -> dict[int, MapFunction]:
+    truth = probe.with_suffix(".truth.json")
+    if truth.is_file():
+        return parse_truth(truth)
+    return parse_map(probe.with_suffix(".map"))
+
+
+def alias_order(name: str) -> tuple:
+    """Where a name sorts among one routine's names: the fewest leading
+    underscores first, then the shorter, then the smaller.
+
+    The same rule as preferredAliasOrder in NeverD's
+    include/neverd/sigs/Signature.h and alias_order in its builder,
+    scripts/signatures/build_msvc_signatures.py.
+    """
+
+    return (len(name) - len(name.lstrip("_")), len(name), name)
+
+
 def settled_names(matches: list[dict]) -> tuple[dict[int, str], set[int]]:
     """The name NeverD renames each address to, as SignatureDB::buildNameMap does.
 
-    An address the matches name differently is disputed, unless exactly one
-    of the names comes from a match whose branch references the image
-    confirmed (`confirmed`, which NeverD before those references omits).
+    Each match gives its address a set of names: its name and its `aliases`,
+    the other symbols its library gives the same routine. Matches agree when
+    a name is in every one of those sets, and the address takes the preferred
+    such name. Otherwise it is disputed, unless the matches whose branch
+    references the image confirmed (`confirmed`, which NeverD before those
+    references omits) agree on one in the same way.
     """
 
-    proposed: dict[int, dict[str, bool]] = {}
+    proposed: dict[int, list[tuple[frozenset[str], bool]]] = {}
     for match in matches:
-        by_name = proposed.setdefault(int(match["addr"], 16), {})
-        name = match["name"]
-        by_name[name] = by_name.get(name, False) or bool(match.get("confirmed", False))
+        names = frozenset([match["name"], *match.get("aliases", [])])
+        proposed.setdefault(int(match["addr"], 16), []).append(
+            (names, bool(match.get("confirmed", False))))
+
+    def agree(name_sets: list[frozenset[str]]) -> str | None:
+        if not name_sets:
+            return None
+        shared = frozenset.intersection(*name_sets)
+        return min(shared, key=alias_order) if shared else None
+
     names: dict[int, str] = {}
     disputed: set[int] = set()
-    for address, by_name in proposed.items():
-        if len(by_name) == 1:
-            names[address] = next(iter(by_name))
-            continue
-        confirmed = [name for name, settled in by_name.items() if settled]
-        if len(confirmed) == 1:
-            names[address] = confirmed[0]
-        else:
+    for address, proposals in proposed.items():
+        name = (agree([names_ for names_, _ in proposals])
+                or agree([names_ for names_, confirmed in proposals if confirmed]))
+        if name is None:
             disputed.add(address)
+        else:
+            names[address] = name
     return names, disputed
 
 
@@ -100,7 +142,7 @@ def evaluate(neverd: Path, source: str, probe: Path) -> Result:
         check=True, capture_output=True, text=True,
     )
     matches = json.loads(completed.stdout or "[]")
-    functions = parse_map(probe.with_suffix(".map"))
+    functions = probe_functions(probe)
     names, disputed = settled_names(matches)
     result = Result(probe.name)
     result.library_functions = sum(1 for f in functions.values() if f.from_library)
@@ -130,7 +172,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("probes", nargs="+", type=Path, help="probe executables")
     args = parser.parse_args(argv)
 
-    directories = {"x86": "pe/x86/32", "x64": "pe/x86/64", "arm": "pe/arm/32", "arm64": "pe/arm/64"}
+    directories = {"x86": "x86/32", "x64": "x86/64", "arm": "arm/32", "arm64": "arm/64"}
     results = []
     failed = False
     for probe in args.probes:
@@ -138,8 +180,9 @@ def main(argv: list[str] | None = None) -> int:
         if arch is None:
             print(f"{probe.name}: cannot tell the architecture from the name", file=sys.stderr)
             return 1
+        tree = "elf" if probe.read_bytes()[:4] == b"\x7fELF" else "pe"
         source = (f"--sig-base={args.signatures}" if args.auto
-                  else f"--sig-dir={args.signatures / directories[arch]}")
+                  else f"--sig-dir={args.signatures / tree / directories[arch]}")
         result = evaluate(args.neverd, source, probe)
         results.append(result)
         failed |= bool(result.wrong)

@@ -570,6 +570,52 @@ class ReferenceTests(unittest.TestCase):
         self.assertEqual(reference.functions, 1)
 
 
+class ELFReferenceTests(unittest.TestCase):
+    def test_names_one_line_gives_a_routine_are_its_aliases(self) -> None:
+        reference = migrate.Reference("elf")
+        body = "F30F1EFA" + "4883EC08" * 5 + "C3"
+        reference.add_line(f"{body} 00 0000 {len(body) // 2:04X} :0000 puts :0000 _IO_puts")
+        reference.index_spellings()
+        self.assertEqual(reference.functions, 2)
+        self.assertEqual(reference.one_routine({"puts", "_IO_puts"}), "puts")
+        self.assertIsNone(reference.one_routine({"puts", "fputs"}))
+        # An imported name that is one of the routine's stays; a label rizin
+        # named the code after takes the name NeverD shows.
+        line = migrate.Line.parse(f"{body} 00 0000 {len(body) // 2:04X} :0000 _IO_puts")
+        self.assertEqual(migrate.resolve(line, reference), ("_IO_puts", "bytes"))
+        label = migrate.Line.parse(f"{body} 00 0000 {len(body) // 2:04X} :0000 obj.puts_0")
+        self.assertEqual(migrate.resolve(label, reference), ("puts", "bytes"))
+
+    def test_pe_and_elf_assets_of_one_architecture_stay_apart(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            assets = Path(scratch)
+            (assets / "vs2022-14.44.35207-x64.json").write_text(
+                '{"kind": "toolset", "visual_studio": {"year": 2022}}')
+            (assets / "ubuntu-libc6-x64.json").write_text(
+                '{"kind": "library", "format": "elf", "library": "ubuntu-libc6", '
+                '"reproduces_import": false}')
+            self.assertEqual(migrate.collected_releases(assets, "x64"), {"vs2022": True})
+            self.assertEqual(migrate.collected_releases(assets, "x64", "elf"),
+                             {"ubuntu-libc6": False})
+
+    @unittest.skipUnless(shutil.which("cc") and shutil.which("ar"), "needs a C compiler")
+    def test_elf_archives_name_their_functions(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            (root / "a.c").write_text(
+                "int answer(void) { return 42; }\n"
+                "static int helper(int x) { return x + 1; }\n"
+                "int use(int x) { return helper(x); }\n"
+                "int data = 1;\n")
+            subprocess.run(["cc", "-O0", "-c", str(root / "a.c"), "-o", str(root / "a.o")],
+                           check=True)
+            subprocess.run(["ar", "rcs", str(root / "liba.a"), str(root / "a.o")], check=True)
+            from coff_symbols import code_symbols
+            names = code_symbols(root / "liba.a")
+        self.assertTrue({"answer", "helper", "use"} <= names)
+        self.assertNotIn("data", names)
+
+
 class ImportedFilesTests(unittest.TestCase):
     @unittest.skipUnless(shutil.which("git"), "needs git")
     def test_files_rebuilt_from_libraries_are_not_imported_any_more(self) -> None:
