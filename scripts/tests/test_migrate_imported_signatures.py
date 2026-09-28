@@ -523,6 +523,28 @@ class ImportedFilesTests(unittest.TestCase):
         self.assertEqual([path.name for path in kept], ["vs2013.pat"])
 
     @unittest.skipUnless(shutil.which("git"), "needs git")
+    def test_a_file_its_libraries_reproduce_in_full_keeps_no_imported_lines(self) -> None:
+        run = "4883EC28" * 5 + "C3"
+        with tempfile.TemporaryDirectory() as scratch:
+            tree = Path(scratch)
+            path = tree / "pe/x86/64/masm32.pat"
+            path.parent.mkdir(parents=True)
+            path.write_text(f"{run} 00 0000 0015 :0000 Run\n")
+            git = ["git", "-C", str(tree), "-c", "user.name=t", "-c", "user.email=t@t"]
+            subprocess.run([*git, "init", "-q"], check=True)
+            subprocess.run([*git, "add", "."], check=True)
+            subprocess.run([*git, "commit", "-qm", "import"], check=True)
+            # An earlier run kept the line, before the libraries reproduced it.
+            imported = path.with_suffix(".imported")
+            imported.write_text(f"{run} 00 0000 0015 :0000 Run\n")
+            summary: dict[str, dict] = {}
+            migrate.migrate_directory(tree, "HEAD", "pe/x86/64", [path],
+                                      pe_reference(reference_line("Run", run)), summary, None,
+                                      collected={"masm32": True})
+            self.assertFalse(imported.exists())
+        self.assertEqual(summary["pe/x86/64/masm32.imported"]["reproduced"], 1)
+
+    @unittest.skipUnless(shutil.which("git"), "needs git")
     def test_a_run_starts_from_the_imported_text(self) -> None:
         with tempfile.TemporaryDirectory() as scratch:
             tree = Path(scratch)

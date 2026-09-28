@@ -946,11 +946,18 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
         # A release whose libraries were collected gets its file built anew;
         # what the libraries cannot reproduce joins it from <name>.imported.
         written = path.with_suffix(".imported") if rebuilt else path
-        written.write_text("\n".join(lines) + "\n", encoding="utf-8")
-        if verify_with is not None:
-            # The loader rejects a whole directory for one bad line.
-            subprocess.run([str(verify_with), "--verify", str(written)], check=True,
-                           stdout=subprocess.DEVNULL)
+        if rebuilt and not any(line.strip() for line in lines):
+            # The libraries reproduce or supersede every imported line, so the
+            # file is built from them alone, like a release rizin never had;
+            # an earlier run's <name>.imported would bring back what they
+            # replace.
+            written.unlink(missing_ok=True)
+        else:
+            written.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            if verify_with is not None:
+                # The loader rejects a whole directory for one bad line.
+                subprocess.run([str(verify_with), "--verify", str(written)], check=True,
+                               stdout=subprocess.DEVNULL)
         key = written.relative_to(tree).as_posix()
         summary[key] = report.__dict__
         print(
