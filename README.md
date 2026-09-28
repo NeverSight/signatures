@@ -23,14 +23,20 @@ the files that belong to no release (`winsdk.pat`, `masm32.pat`,
 release, and older releases state some of the same bytes under other names.
 Without a usable Rich header it reads every file of the directory.
 
+A file larger than 50 MB, GitHub's recommended limit, is written in parts of
+even size: `<name>.pat`, `<name>.part2.pat` and so on. NeverD reads the parts
+as one library, and the Rich header chooses a release's parts together.
+
 ## What a line says
 
 ```
 <leading bytes> <crc length> <crc16> <function length> :0000 <name> [^<offset> <name>]... [<tail bytes>]
 ```
 
-Each line states the bytes of one library function and gives it one name at
-offset 0:
+Each line states the bytes of one library function and gives it its names at
+offset 0: one, or every symbol an ELF library gives the routine (glibc's
+`puts` is also `_IO_puts`), of which NeverD shows the one with the fewest
+leading underscores, then the shortest:
 
 - The leading bytes are the first 32 bytes of the function, or all of it
   when it is shorter.
@@ -38,7 +44,9 @@ offset 0:
   rewrites.
 - The tail states the bytes after the CRC span, starting where the CRC span
   ends.
-- Bytes that a relocation rewrites are `..` wildcards.
+- Bytes that a relocation rewrites are `..` wildcards, and so are the bytes an
+  ELF linker may rewrite around one: the opcode of a GOT load it relaxes to a
+  `lea` or a direct call, or a whole TLS access sequence in a static link.
 - A line states at least 16 bytes exactly. A shorter claim matches far more
   code than the function it came from.
 - Each `^<offset> <name>` names a routine the function branches to directly:
@@ -50,7 +58,7 @@ offset 0:
   lines.
 
 These rules are NeverD's own:
-[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/22d94b450c945f8dee0b511bd8cfea23e43a5c93/tools/neverd-sigmaker)
+[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/78622a59a3f1ea3d04bdfa522a870d1dc63e2102/tools/neverd-sigmaker)
 produces the lines, and `neverd::sigs::PatternGenerator` defines how many
 bytes each relocation rewrites.
 
@@ -58,9 +66,11 @@ A name is the linkage name the library's symbol table spells, byte for byte:
 `?Close@CFile@@UEAAXXZ`, `_ZNSt6thread4joinEv`, x86 `_memcpy`. Names are never
 demangled, sanitized, prefixed or truncated.
 
-A line is kept only if its bytes identify one routine. When lines state the
-same bytes under different names, all of them are dropped, because any one
-name would be a guess, unless the file's lines name different routines at a
+A line is kept only if its bytes identify one routine. Lines that state the
+same bytes under names they share are one routine's, under the symbols each
+build of the library defines, and become one line with all of their names.
+When lines state the same bytes under names with nothing in common, all of
+them are dropped, because any one name would be a guess, unless the file's lines name different routines at a
 branch they all make: then the one whose branch NeverD confirms is taken. NeverD may apply every file of a directory together, so
 this holds across the directory. A line is also dropped when a routine of
 another name, at least as long, states every byte the line states: NeverD
@@ -134,7 +144,7 @@ Two workflows produce the generated files:
      ([`scripts/collect_mingw_library.py`](scripts/collect_mingw_library.py)).
 2. [`msvc-signatures.yml`](.github/workflows/msvc-signatures.yml) builds
    `neverd-sigmaker` at a pinned NeverD revision and runs NeverD's
-   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/626e9eea16c0dc8dc49b8bc4fe6d2f46236ac1e4/scripts/signatures/build_msvc_signatures.py)
+   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/78622a59a3f1ea3d04bdfa522a870d1dc63e2102/scripts/signatures/build_msvc_signatures.py)
    over every `msvc-libs-*` release, one architecture at a time:
    - A file with library archives behind it is rebuilt from them alone, and
      from its `<name>.imported` when it has one.

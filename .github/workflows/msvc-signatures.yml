@@ -170,14 +170,23 @@ jobs:
           set -euo pipefail
           chmod +x generator/neverd-sigmaker
           # Every rewritten file is read back with the loader's parser, which
-          # rejects a whole directory for one bad line.
+          # rejects a whole directory for one bad line. Only pe/x86 holds
+          # imported PE files.
+          if [ "$ARCH" = x86 ] || [ "$ARCH" = x64 ]; then
+            python3 scripts/migrate_imported_signatures.py \
+              --sigmaker generator/neverd-sigmaker \
+              --verify-with generator/neverd-sigmaker \
+              --assets assets \
+              --arch "$ARCH" \
+              --report "migration-$ARCH.json" \
+              --work "$RUNNER_TEMP"
+          fi
           python3 scripts/migrate_imported_signatures.py \
             --sigmaker generator/neverd-sigmaker \
             --verify-with generator/neverd-sigmaker \
             --assets assets \
-            --arch "$ARCH" \
             --elf-arch "$ARCH" \
-            --report "migration-$ARCH.json" \
+            --report "migration-elf-$ARCH.json" \
             --work "$RUNNER_TEMP"
 
       # Every archive of the architecture goes in at once: the builder drops
@@ -225,9 +234,13 @@ jobs:
             git status --short -- "$dir"
             du -h "staged/$dir"/* | tail -5
           done
-          if [ -f "migration-$ARCH.json" ]; then
+          reports=()
+          for report in "migration-$ARCH.json" "migration-elf-$ARCH.json"; do
+            if [ -f "$report" ]; then reports+=("$report"); fi
+          done
+          if [ "${#reports[@]}" -gt 0 ]; then
             mkdir -p staged/reports
-            cp "migration-$ARCH.json" staged/reports/
+            cp "${reports[@]}" staged/reports/
           fi
 
       - name: Upload this architecture's files
@@ -266,6 +279,17 @@ jobs:
             git rm --quiet -- "$removed"
           done < <(cat staged/removed/*.txt 2>/dev/null | sort -u)
           rm -rf staged/removed
+          # The ELF migration of each architecture is one report of elf/.
+          if compgen -G "staged/reports/migration-elf-*.json" > /dev/null; then
+            python3 - staged/reports/migration-elf-*.json > staged/reports/migration-elf.json <<'PY'
+          import json, sys
+          merged = {}
+          for path in sys.argv[1:]:
+              merged.update(json.load(open(path)))
+          print(json.dumps(merged, indent=2, sort_keys=True))
+          PY
+            rm staged/reports/migration-elf-*.json
+          fi
           cp -R staged/. .
           rm -rf staged
           if [ -z "$(git status --porcelain -- pe elf reports)" ]; then
