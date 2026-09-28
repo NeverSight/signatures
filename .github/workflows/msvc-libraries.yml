@@ -555,7 +555,7 @@ jobs:
           gh release create "$TAG" \
             --repo "$GITHUB_REPOSITORY" \
             --target "$DEFAULT_BRANCH" \
-            --title "MSVC and Windows SDK libraries ($TAG)" \
+            --title "Signature-build libraries ($TAG)" \
             --notes-file assets/RELEASE.md \
             $visibility \
             assets/*.tar.zst assets/*.json assets/SHA256SUMS
