@@ -49,7 +49,13 @@ leaves the rest untouched. For each line, in order:
 3. By spelling. The line takes the one library name that rizin's conversion
    turns into the imported name. When no name or more than one name converts
    to it, this step settles nothing either.
-4. Every other line stays exactly as it was, and is listed in the report.
+4. A PE C name. Every decorated C++ name holds "@@", which rizin spelled
+   "__", so a name without "__" past its leading underscores is a C name
+   rizin left as it was. On 32-bit x86, "_name_N" is also how rizin spelled
+   the stdcall "_name@N"; it becomes that only when the routine ends in
+   `ret N`, and otherwise stays unresolved.
+5. Every other line is kept as a comment, which the loader does not read,
+   and is listed in the report.
 
 Every run starts from the text of the import commit, so what a file holds
 depends only on the import, the reference libraries and these rules, and the
@@ -74,6 +80,8 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from coff_symbols import code_symbols
+
 # The PE directory of each collector architecture, and its sigmaker machine.
 PE_TARGETS = {
     "x86": ("pe/x86/32", "x86"),
@@ -96,6 +104,11 @@ OPENING = 16
 # a line that states fewer bytes exactly, because such a line agrees with a
 # great deal of unrelated code.
 MIN_STATED_BYTES = 16
+
+# How <name>.imported keeps a line it cannot give a linkage name: as a
+# comment, which neither the loader nor the builder reads.
+UNRESOLVED = "; unresolved:"
+
 _PE_UNSAFE = re.compile(r"[^A-Za-z0-9_.]")
 _ELF_UNSAFE = re.compile(r"[^A-Za-z0-9_.:]")
 
@@ -167,8 +180,41 @@ def is_verbatim(name: str, binary_format: str) -> bool:
     """Whether rizin's import cannot have changed this name."""
 
     if binary_format == "pe":
-        return bool(_PE_VERBATIM.match(name))
+        # A character rizin's conversion replaces means it never touched the name.
+        return bool(_PE_VERBATIM.match(name) or _PE_UNSAFE.search(name))
     return bool(_ELF_VERBATIM.match(name)) and not name.startswith("method.")
+
+
+_STDCALL_SPELLING = re.compile(r"^(?P<stem>_[A-Za-z0-9_.]*?)_(?P<size>[0-9]+)$")
+
+
+def c_linkage_name(line: Line, reference: "Reference") -> str | None:
+    """The linkage name of a C function whose spelling rizin left intact.
+
+    Every decorated MSVC C++ function name holds "@@", which rizin spelled
+    "__", so a PE name with no "__" past its leading underscores is a C name,
+    and rizin kept it as it was. On 32-bit x86 there is one exception: the
+    stdcall "_name@N" became "_name_N", which a cdecl name can be as well.
+    That spelling is settled only when the routine ends in `ret N`, which the
+    stdcall routine does and the cdecl one does not.
+    """
+
+    name = line.name
+    if reference.binary_format != "pe" or not name.startswith("_"):
+        return None
+    if "__" in name.lstrip("_") or _PE_UNSAFE.search(name):
+        return None
+    match = _STDCALL_SPELLING.match(name) if reference.callee_cleanup else None
+    if match is None:
+        return name
+    size = int(match.group("size"))
+    if size % 4:
+        # A stdcall routine pops whole stack slots.
+        return name
+    ending = [line.byte_at(line.total - back) for back in (3, 2, 1)]
+    if size and size <= 0xFFFF and ending == [0xC2, size & 0xFF, size >> 8]:
+        return f"{match.group('stem')}@{size}"
+    return None
 
 
 def crc16(data: bytes) -> int:
@@ -266,6 +312,24 @@ class Line:
         room = max(0, self.total - len(self.lead) // 2 - self.crc_len)
         return Line(self.lead, self.crc_len, self.crc, self.total, self.name, tail[: 2 * room])
 
+    def byte_at(self, offset: int) -> int | None:
+        """The byte the line states at a routine offset, or None.
+
+        The CRC span states only its bytes' checksum, and a wildcard nothing.
+        """
+
+        lead_len = len(self.lead) // 2
+        if offset < 0 or offset >= self.total:
+            return None
+        if offset < lead_len:
+            text = self.lead[2 * offset : 2 * offset + 2]
+        else:
+            index = offset - lead_len - self.crc_len
+            if index < 0:
+                return None
+            text = self.tail[2 * index : 2 * index + 2]
+        return int(text, 16) if len(text) == 2 and text != ".." else None
+
     def stated_bytes(self) -> int:
         """Bytes the line states exactly, as NeverD's matcher reads it."""
 
@@ -302,6 +366,11 @@ class Reference:
         # Functions by their first OPENING bytes, as stated or relocated.
         self.by_opening: dict[tuple[bytes, bytes], list[Function]] = defaultdict(list)
         self.names: set[str] = set()
+        # The names each collected Visual Studio release's libraries define in
+        # their code sections, whether or not neverd-sigmaker wrote a line.
+        self.defined: dict[int, set[str]] = defaultdict(set)
+        # 32-bit x86, where the callee-cleanup conventions decorate C names.
+        self.callee_cleanup = False
         self._seen: set[int] = set()
         self.functions = 0
         self.too_long = 0
@@ -550,6 +619,10 @@ def settle(line: Line, reference: Reference) -> tuple[str | None, str]:
             return alias, "bytes"
     elif is_verbatim(line.name, reference.binary_format):
         return line.name, "verbatim"
+    else:
+        c_name = c_linkage_name(line, reference)
+        if c_name is not None:
+            return c_name, "verbatim" if c_name == line.name else "stdcall"
     return None, "unresolved"
 
 
@@ -566,6 +639,8 @@ class FileReport:
     removed_weak: int = 0
     removed_ambiguous: int = 0
     removed_openings: int = 0
+    reproduced: int = 0
+    superseded: int = 0
     unresolved: int = 0
     realigned_tails: int = 0
     undecided_tails: int = 0
@@ -617,7 +692,22 @@ def align(line: Line, reference: Reference, default: str | None) -> tuple[Line, 
 
 def migrate_file(path: Path, reference: Reference, report: FileReport,
                  sibling: Reference | None = None,
-                 moved: list[str] | None = None) -> list[str]:
+                 moved: list[str] | None = None,
+                 defined: set[str] | None = None) -> list[str]:
+    """The migrated lines of an imported file.
+
+    `defined` holds the names the file's own release's collected libraries
+    define when that release was collected; its file is then built anew
+    from them. A line whose bytes a collected function of the same name
+    states in full is left out as reproduced. So is one whose name those
+    libraries define at all: they hold that routine, and the line
+    neverd-sigmaker made for it -- or its decision to make none, for code
+    its rules reject -- stands.
+
+    A line still unresolved, in any file, is kept as a comment, which the
+    loader does not read: a name in rizin's spelling is no linkage name.
+    """
+
     texts = path.read_text(encoding="utf-8").splitlines()
     parsed = [
         Line.parse(raw.strip())
@@ -674,10 +764,21 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
         if name is None:
             report.unresolved += 1
             report.unresolved_names.append(line.name)
-            output.append(text)
+            output.append(f"{UNRESOLVED} {text}")
             continue
+        if defined is not None:
+            strong, _ = agreeing_names(line, reference)
+            if name in strong or (strong and reference.one_routine(strong | {name})):
+                report.reproduced += 1
+                continue
+            if name in defined:
+                report.superseded += 1
+                continue
         if how == "verbatim":
             report.verbatim += 1
+        elif how == "stdcall":
+            # The routine's `ret N` decided between cdecl and stdcall.
+            report.by_bytes += 1
         elif how == "section":
             report.from_section += 1
         elif name == line.name:
@@ -692,6 +793,7 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
 
 def build_pe_reference(sigmaker: Path, assets: Path, arch: str, work: Path) -> Reference:
     reference = Reference("pe")
+    reference.callee_cleanup = arch == "x86"
     machine = PE_TARGETS[arch][1]
     manifests = sorted(assets.glob(f"*-{arch}.json"))
     if not manifests:
@@ -708,6 +810,15 @@ def build_pe_reference(sigmaker: Path, assets: Path, arch: str, work: Path) -> R
             str(path) for path in unpacked.rglob("*")
             if path.is_file() and path.suffix.lower() in (".lib", ".obj")
         )
+        release = (manifest["visual_studio"]["year"]
+                   if manifest.get("kind") == "toolset" else None)
+        for library in libraries:
+            names = code_symbols(Path(library))
+            # Every name a library defines can be one an import spelled,
+            # including those of code neverd-sigmaker writes no line for.
+            reference.names |= names
+            if release is not None:
+                reference.defined[int(release)] |= names
         out = work / f"{manifest['asset']}.ref.pat"
         subprocess.run(
             [str(sigmaker), *libraries, "-o", str(out), "--machine", machine,
@@ -727,6 +838,7 @@ def load_reference(directory: Path, binary_format: str) -> Reference:
     """Reference lines already generated, one or more .pat files per target."""
 
     reference = Reference(binary_format)
+    reference.callee_cleanup = directory.as_posix().endswith("pe/x86/32")
     files = sorted(directory.glob("*.pat"))
     if not files:
         raise SystemExit(f"no reference .pat files in {directory}")
@@ -767,26 +879,51 @@ def restore(tree: Path, revision: str, path: Path) -> None:
     path.write_text(text, encoding="utf-8")
 
 
+def release_of(path: Path) -> int | None:
+    """The Visual Studio release a vs<year>.pat file belongs to."""
+
+    match = re.fullmatch(r"vs(\d{4})", path.stem)
+    return int(match.group(1)) if match else None
+
+
+def collected_releases(assets: Path, arch: str) -> set[int]:
+    """The Visual Studio releases whose libraries the assets hold for arch."""
+
+    releases = set()
+    for manifest_path in assets.glob(f"*-{arch}.json"):
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if manifest.get("kind") == "toolset":
+            releases.add(int(manifest["visual_studio"]["year"]))
+    return releases
+
+
 def migrate_directory(tree: Path, revision: str, directory: str, files: list[Path],
                       reference: Reference, summary: dict[str, dict],
                       verify_with: Path | None,
                       sibling: Reference | None = None,
-                      moves: dict[Path, list[str]] | None = None) -> None:
+                      moves: dict[Path, list[str]] | None = None,
+                      collected: set[int] = frozenset()) -> None:
     print(f"{directory}: {reference.functions} reference functions, "
           f"{len(reference.names)} names", flush=True)
     for path in files:
         restore(tree, revision, path)
         report = FileReport()
         moved: list[str] = []
-        lines = migrate_file(path, reference, report, sibling, moved)
+        release = release_of(path)
+        rebuilt = release in collected
+        defined = reference.defined.get(release, set()) if rebuilt else None
+        lines = migrate_file(path, reference, report, sibling, moved, defined=defined)
         if moved and moves is not None:
             moves.setdefault(tree / SIBLINGS[directory] / path.name, []).extend(moved)
-        path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        # A release whose libraries were collected gets its file built anew;
+        # what the libraries cannot reproduce joins it from <name>.imported.
+        written = path.with_suffix(".imported") if rebuilt else path
+        written.write_text("\n".join(lines) + "\n", encoding="utf-8")
         if verify_with is not None:
             # The loader rejects a whole directory for one bad line.
-            subprocess.run([str(verify_with), "--verify", str(path)], check=True,
+            subprocess.run([str(verify_with), "--verify", str(written)], check=True,
                            stdout=subprocess.DEVNULL)
-        key = path.relative_to(tree).as_posix()
+        key = written.relative_to(tree).as_posix()
         summary[key] = report.__dict__
         print(
             f"{key}: {report.lines} lines, {report.by_bytes} renamed by bytes, "
@@ -797,6 +934,8 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
             f"{report.removed_weak} lines stating under {MIN_STATED_BYTES} bytes removed, "
             f"{report.removed_ambiguous} lines whose bytes several library routines share "
             f"removed, {report.removed_openings} whose bytes open a longer routine removed, "
+            f"{report.reproduced} reproduced by collected libraries, "
+            f"{report.superseded} superseded by what they define, "
             f"{report.unresolved} unresolved; {report.realigned_tails} tails realigned, "
             f"{report.undecided_tails} undecided",
             flush=True,
@@ -836,7 +975,7 @@ def main(argv: list[str] | None = None) -> int:
         with tempfile.TemporaryDirectory(dir=args.work) as scratch:
             reference = build_pe_reference(args.sigmaker, args.assets, arch, Path(scratch))
         migrate_directory(args.tree, args.imported_from, directory, files, reference, summary,
-                          args.verify_with)
+                          args.verify_with, collected=collected_releases(args.assets, arch))
     moves: dict[Path, list[str]] = {}
     for directory in args.directory:
         if args.references is None:
@@ -874,7 +1013,8 @@ def main(argv: list[str] | None = None) -> int:
     for report in summary.values():
         for key in ("lines", "by_bytes", "by_spelling", "from_section", "moved",
                     "already_conforming", "verbatim", "removed_artifacts", "removed_weak",
-                    "removed_ambiguous", "removed_openings", "unresolved",
+                    "removed_ambiguous", "removed_openings", "reproduced", "superseded",
+                    "unresolved",
                     "realigned_tails", "undecided_tails"):
             totals[key] += report.get(key, 0)
     print(f"total: {dict(totals)}")

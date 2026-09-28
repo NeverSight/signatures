@@ -307,7 +307,7 @@ class MoveTests(unittest.TestCase):
             moved: list[str] = []
             lines = migrate.migrate_file(path, own, report, other, moved)
         self.assertEqual(moved, [f"{self.THUMB} 00 0000 0018 :0000 ?Thumb@@YAXXZ"])
-        self.assertEqual(lines, [f"{unknown} 00 0000 0012 :0000 _Spelled__YAXXZ"])
+        self.assertEqual(lines, [f"; unresolved: {unknown} 00 0000 0012 :0000 _Spelled__YAXXZ"])
         self.assertEqual(report.moved, 1)
         self.assertEqual(report.unresolved, 1)
 
@@ -381,7 +381,7 @@ class MigrateFileTests(unittest.TestCase):
         self.assertEqual(
             lines,
             [
-                f"{unknown} 00 0000 0014 :0000 _unknown_thing__YAXXZ",
+                f"; unresolved: {unknown} 00 0000 0014 :0000 _unknown_thing__YAXXZ",
                 f"{run} 00 0000 0015 :0000 ?Run@@YAXXZ",
                 "---",
             ],
@@ -392,6 +392,94 @@ class MigrateFileTests(unittest.TestCase):
         self.assertEqual(report.ambiguous_names, ["__1CListCtrl__UEAA_XZ"])
         self.assertEqual(report.unresolved, 1)
         self.assertEqual(report.unresolved_names, ["_unknown_thing__YAXXZ"])
+
+
+class CNameTests(unittest.TestCase):
+    @staticmethod
+    def line(name: str, data: str) -> migrate.Line:
+        return migrate.Line.parse(reference_line(name, data))
+
+    def test_names_no_cxx_decoration_can_spell_are_kept(self) -> None:
+        x86 = pe_reference()
+        x86.callee_cleanup = True
+        body = "558BEC" + "90" * 16 + "5DC3"
+        self.assertEqual(migrate.c_linkage_name(self.line("_gzclose", body), x86), "_gzclose")
+        self.assertEqual(migrate.c_linkage_name(self.line("_adler32_z", body), x86), "_adler32_z")
+        self.assertEqual(migrate.c_linkage_name(self.line("___crtFlsAlloc", body), x86),
+                         "___crtFlsAlloc")
+        # "@@" became "__": this may be ?Close@CFile@@UAEXXZ.
+        self.assertIsNone(migrate.c_linkage_name(self.line("_Close_CFile__UAEXXZ", body), x86))
+
+    def test_stdcall_spelling_needs_the_routines_ret(self) -> None:
+        x86 = pe_reference()
+        x86.callee_cleanup = True
+        stdcall = "558BEC" + "90" * 16 + "5DC21800"
+        cdecl = "558BEC" + "90" * 16 + "5DC3"
+        self.assertEqual(migrate.c_linkage_name(self.line("_TimeSpan_24", stdcall), x86),
+                         "_TimeSpan@24")
+        self.assertIsNone(migrate.c_linkage_name(self.line("_TimeSpan_24", cdecl), x86))
+        # No stdcall routine pops six bytes.
+        self.assertEqual(migrate.c_linkage_name(self.line("_crc32_6", cdecl), x86), "_crc32_6")
+
+    def test_other_architectures_do_not_decorate_c_names(self) -> None:
+        x64 = pe_reference()
+        body = "4883EC28" + "90" * 16 + "4883C428C3"
+        self.assertEqual(migrate.c_linkage_name(self.line("_tr_init", body), x64), "_tr_init")
+        self.assertEqual(migrate.c_linkage_name(self.line("_foo_24", body), x64), "_foo_24")
+
+
+class CollectedReleaseTests(unittest.TestCase):
+    def test_lines_the_collected_libraries_reproduce_are_left_out(self) -> None:
+        run = "4883EC28" * 5 + "C3"
+        reference = pe_reference(reference_line("?Run@@YAXXZ", run))
+        other = "AABBCCDD" * 5
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "vs2013.pat"
+            path.write_text(
+                f"{run} 00 0000 0015 :0000 _Run__YAXXZ\n"
+                f"{other} 00 0000 0014 :0000 ?Only@CInImportedLibs@@QAEXXZ\n"
+            )
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, reference, report, defined=set())
+        self.assertEqual(lines, [f"{other} 00 0000 0014 :0000 ?Only@CInImportedLibs@@QAEXXZ"])
+        self.assertEqual(report.reproduced, 1)
+
+    def test_lines_for_routines_the_collected_libraries_define_are_superseded(self) -> None:
+        # The collected libraries define ?Skip@@YAXXZ, but neverd-sigmaker
+        # wrote no line for it: its rules reject that code, and the imported
+        # line does not bring it back.
+        reference = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28" * 5 + "C3"))
+        reference.names.add("?Skip@@YAXXZ")
+        reference.index_spellings()
+        skipped = "90CC" * 10
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "vs2013.pat"
+            path.write_text(f"{skipped} 00 0000 0014 :0000 _Skip__YAXXZ\n")
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, reference, report, defined={"?Skip@@YAXXZ"})
+        self.assertEqual(lines, [])
+        self.assertEqual(report.superseded, 1)
+
+    def test_unresolved_lines_of_a_collected_release_are_kept_as_comments(self) -> None:
+        reference = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28" * 5 + "C3"))
+        unknown = "AABBCCDD" * 5
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "vs2013.pat"
+            path.write_text(f"{unknown} 00 0000 0014 :0000 _unknown_thing__YAXXZ\n")
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, reference, report, defined=set())
+        self.assertEqual(lines, [f"; unresolved: {unknown} 00 0000 0014 :0000 _unknown_thing__YAXXZ"])
+        self.assertEqual(report.unresolved, 1)
+
+    def test_releases_come_from_toolset_manifests(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            assets = Path(scratch)
+            (assets / "vs2013-12.0.21005-x86.json").write_text(
+                '{"kind": "toolset", "visual_studio": {"year": 2013}}')
+            (assets / "winsdk-10.0.26100.0-x86.json").write_text('{"kind": "winsdk"}')
+            self.assertEqual(migrate.collected_releases(assets, "x86"), {2013})
+        self.assertEqual(migrate.release_of(Path("pe/x86/32/vs2013.pat")), 2013)
+        self.assertIsNone(migrate.release_of(Path("pe/x86/32/masm32.pat")))
 
 
 class ImportedFilesTests(unittest.TestCase):

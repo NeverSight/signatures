@@ -9,6 +9,11 @@
 # or SDK the image lacks installs it first, through the image's own Visual
 # Studio installer or, for SDKs that installer no longer offers, Chocolatey.
 #
+# The toolsets no current image can install, Visual Studio 2005 to 2013, come
+# from Microsoft's own installation media instead: one Linux job per row of
+# .github/msvc-legacy-matrix.json downloads the media, checks its SHA-256, and
+# unpacks the library packages with 7-Zip, cabextract and msitools.
+#
 # A pull request only runs the collector's unit tests: the rows occupy a
 # dozen Windows runners, and GitHub evaluates a pull request's path filter
 # against its whole diff, so every push would restart them. A manual run
@@ -47,6 +52,9 @@ on:
       - scripts/Build-ValidationProbes.ps1
       - scripts/msvc_matrix.py
       - .github/msvc-matrix.json
+      - .github/msvc-legacy-matrix.json
+      - scripts/extract_legacy_toolset.py
+      - scripts/collect_legacy_media.py
       - scripts/tests/**
       - validation/**
 
@@ -64,6 +72,9 @@ jobs:
     timeout-minutes: 10
     outputs:
       matrix: ${{ steps.matrix.outputs.matrix }}
+      rows: ${{ steps.matrix.outputs.rows }}
+      legacy_matrix: ${{ steps.matrix.outputs.legacy_matrix }}
+      legacy_rows: ${{ steps.matrix.outputs.legacy_rows }}
     steps:
       - name: Check out
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -83,7 +94,7 @@ jobs:
   collect:
     name: Collect ${{ matrix.name }}
     needs: verify
-    if: github.event_name == 'workflow_dispatch' && inputs.from_run == ''
+    if: github.event_name == 'workflow_dispatch' && inputs.from_run == '' && needs.verify.outputs.rows != '0'
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 120
     strategy:
@@ -195,13 +206,71 @@ jobs:
           if-no-files-found: error
           retention-days: 30
 
+  collect-legacy:
+    name: Collect ${{ matrix.name }}
+    needs: verify
+    if: github.event_name == 'workflow_dispatch' && inputs.from_run == '' && needs.verify.outputs.legacy_rows != '0'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.verify.outputs.legacy_matrix) }}
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # A disc image, its unpacked packages and what they install take up to
+      # 10 GB; the image's preinstalled SDKs are not needed here.
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc \
+            /opt/hostedtoolcache/CodeQL
+          df -h "$RUNNER_TEMP"
+
+      - name: Install the unpacking tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes p7zip-full cabextract msitools zstd
+
+      - name: Download the installation media
+        env:
+          NAME: ${{ matrix.name }}
+        run: |
+          set -euo pipefail
+          url="$(python3 -c 'import json, os
+          rows = json.load(open(".github/msvc-legacy-matrix.json"))
+          print(next(row["media"] for row in rows if row["name"] == os.environ["NAME"]))')"
+          curl -fsSL --retry 10 --retry-all-errors --retry-delay 15 -C - \
+            -o "$RUNNER_TEMP/media.iso" "$url"
+          ls -la "$RUNNER_TEMP/media.iso"
+
+      - name: Collect
+        env:
+          NAME: ${{ matrix.name }}
+        run: >-
+          python3 scripts/collect_legacy_media.py
+          --name "$NAME"
+          --iso "$RUNNER_TEMP/media.iso"
+          --work "$RUNNER_TEMP/work"
+          --output "$RUNNER_TEMP/assets"
+
+      - name: Upload assets
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: msvc-libs-${{ matrix.name }}
+          path: ${{ runner.temp }}/assets
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+
   # A row that fails does not hold the others back: the release carries every
   # row that succeeded, its notes name the run's overall result, and the
   # signature workflow reads the union of all msvc-libs-* releases, so a
   # later run only has to supply what this one missed.
   release:
     name: Create library release
-    needs: collect
+    needs: [collect, collect-legacy]
     if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 120
@@ -226,6 +295,7 @@ jobs:
         env:
           INPUT_TAG: ${{ inputs.tag }}
           COLLECT_RESULT: ${{ needs.collect.result }}
+          LEGACY_RESULT: ${{ needs.collect-legacy.result }}
           FROM_RUN: ${{ inputs.from_run }}
         run: |
           set -euo pipefail
@@ -234,10 +304,11 @@ jobs:
           python3 scripts/summarize_library_assets.py assets --tag "$tag" --commit "$GITHUB_SHA"
           if [ -n "$FROM_RUN" ]; then
             printf '\nThe archives were collected by run %s.\n' "$FROM_RUN" >> assets/RELEASE.md
-          elif [ "$COLLECT_RESULT" != "success" ]; then
+          elif { [ "$COLLECT_RESULT" != "success" ] && [ "$COLLECT_RESULT" != "skipped" ]; } \
+              || { [ "$LEGACY_RESULT" != "success" ] && [ "$LEGACY_RESULT" != "skipped" ]; }; then
             {
               echo
-              echo "> Not every collection row succeeded in run $GITHUB_RUN_ID ($COLLECT_RESULT);"
+              echo "> Not every collection row succeeded in run $GITHUB_RUN_ID ($COLLECT_RESULT, legacy $LEGACY_RESULT);"
               echo "> this release holds the rows listed above. Rerun the workflow to add the rest."
             } >> assets/RELEASE.md
           fi

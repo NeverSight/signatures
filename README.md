@@ -13,10 +13,15 @@ at `32` or `64` bits, so Windows ARM64 images use `pe/arm/64` and Windows
 ARM32 (Thumb-2) images use `pe/arm/32`.
 
 NeverD copies this tree to `build/bin/signatures/` at build time. Use
-`neverd sigs --auto` to apply the set that matches the loaded binary. It
-reads every `.pat` file in the matching directory and ignores other files,
-such as the `<name>.sources.json` provenance records that sit next to
-generated files.
+`neverd sigs --auto` to apply the set that matches the loaded binary. It reads
+the `.pat` files of the matching directory and ignores other files, such as the
+`<name>.sources.json` provenance records and `<name>.imported` inputs that sit
+next to generated files. For a PE image whose Rich header names the Visual
+Studio release of its linker, it reads only that release's `vs<year>.pat` and
+the files that belong to no release (`winsdk.pat`, `masm32.pat`,
+`mingw32-zlib.pat`). A static runtime library comes from the linker's own
+release, and older releases state some of the same bytes under other names.
+Without a usable Rich header it reads every file of the directory.
 
 ## What a line says
 
@@ -38,7 +43,7 @@ offset 0:
   code than the function it came from.
 
 These rules are NeverD's own:
-[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/f6ac98c003e7e2c1c85c3d6c582ef77722eb64dd/tools/neverd-sigmaker)
+[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/a58c002ded16d84301b2c08a57be9789d789346c/tools/neverd-sigmaker)
 produces the lines, and `neverd::sigs::PatternGenerator` defines how many
 bytes each relocation rewrites.
 
@@ -48,10 +53,11 @@ demangled, sanitized, prefixed or truncated.
 
 A line is kept only if its bytes identify one routine. When lines state the
 same bytes under different names, all of them are dropped, because any one
-name would be a guess. NeverD applies every file of a directory together, so
-this holds across the directory. A line is also dropped when its bytes open a
-longer routine of another name: NeverD compares a line only as far as the
-line's own length, so the line would name that routine too.
+name would be a guess. NeverD may apply every file of a directory together, so
+this holds across the directory. A line is also dropped when a routine of
+another name, at least as long, states every byte the line states: NeverD
+compares a line only as far as the line's own length and accepts any byte
+where the line has a wildcard, so the line would name that routine too.
 
 ## Windows (pe/) signatures
 
@@ -63,12 +69,21 @@ line's own length, so the line would name that routine too.
 | `vs2022.pat` | MSVC v143 14.44 with ATL/MFC (x86, x64, ARM32, ARM64) |
 | `vs2026.pat` | MSVC 14.50 and 14.51 with ATL/MFC (x86, x64, ARM64; VS 2026 has no ARM32 toolchain) |
 | `winsdk.pat` | Windows SDK 10.0.17763, 18362, 19041, 20348, 22000, 22621 and 26100: the Universal CRT and the user-mode libraries (ARM32 through 10.0.22621) |
+| `vs2005.pat` | Visual Studio 2005 Team Suite (8.0.50727.42) with ATL/MFC, the Platform SDK, the Windows CE x86 libraries and the DIA SDK (x86, x64) |
+| `vs2008.pat` | Visual Studio 2008 Professional (9.0.21022) with ATL/MFC, the Windows SDK 6.0A, the Windows CE x86 libraries and the CRT libraries built from source (x86, x64) |
+| `vs2010.pat` | The Visual C++ 2010 compilers of the Windows SDK 7.1 (10.0.30319) with that SDK's libraries, without ATL/MFC (x86, x64) |
+| `vs2012.pat` | Visual Studio 2012 Professional (11.0.50727) with ATL/MFC (x86, x64, ARM32) |
+| `vs2013.pat` | Visual Studio 2013 Professional (12.0.21005) with ATL/MFC and the Windows SDK 7.1A (x86, x64, ARM32) |
 
-The x86 and x64 directories also hold files imported from rizin's
-sigdb-source for toolsets whose libraries are not collected: `vs2005` to
-`vs2013`, `masm32` and `mingw32-zlib`. They were moved to the rules above
-wherever a collected library could tell how; see
-[Lines imported from rizin](#lines-imported-from-rizin).
+The Visual Studio 2005 to 2013 libraries come from Microsoft's installation
+media, which no current Windows image can install; they are unpacked on
+Ubuntu instead (see below). They are the release-to-manufacturing builds of
+the same media rizin's files were made from. The VS 2010 ATL/MFC libraries
+are on no medium Microsoft still publishes, so `vs2010.pat` keeps the
+imported lines for them, renamed to their linkage names, in
+`vs2010.imported`; each `<name>.imported` joins its file when the file is
+built. `masm32` and `mingw32-zlib` have no collected libraries and stay
+imported files. See [Lines imported from rizin](#lines-imported-from-rizin).
 
 Two workflows produce the generated files:
 
@@ -83,11 +98,18 @@ Two workflows produce the generated files:
      and keeps the archives as assets of an `msvc-libs-*` release.
    - It builds the programs in `validation/` with the same toolset:
      statically linked, with linker maps.
+   - One Ubuntu job per row of
+     [`.github/msvc-legacy-matrix.json`](.github/msvc-legacy-matrix.json)
+     downloads an older release's installation medium from Microsoft, checks
+     its SHA-256, unpacks the Windows Installer packages that hold the
+     libraries with 7-Zip, cabextract and msitools, and packs the same kind
+     of archive ([`scripts/collect_legacy_media.py`](scripts/collect_legacy_media.py)).
 2. [`msvc-signatures.yml`](.github/workflows/msvc-signatures.yml) builds
    `neverd-sigmaker` at a pinned NeverD revision and runs NeverD's
-   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/f6ac98c003e7e2c1c85c3d6c582ef77722eb64dd/scripts/signatures/build_msvc_signatures.py)
+   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/a58c002ded16d84301b2c08a57be9789d789346c/scripts/signatures/build_msvc_signatures.py)
    over every `msvc-libs-*` release, one architecture at a time:
-   - A file with library archives behind it is rebuilt from them alone.
+   - A file with library archives behind it is rebuilt from them alone, and
+     from its `<name>.imported` when it has one.
    - Each architecture keeps only objects built for it (`--machine`), and
      lines cover every byte of every function.
    - Ambiguous lines are dropped across the directory, as described above.
@@ -119,46 +141,41 @@ every name NeverD would apply with the linker map of the same image:
 MFC program and a CRT program built with `/O2 /MT`, and the CRT program built
 with `/Od /MTd`. They were built with Visual Studio 2015 (x86, x64), 2017, 2019
 and 2022 (x86, x64, ARM32, ARM64), and 2026 with both its default toolset and
-14.50 (x86, x64, ARM64): 60 programs. Each directory is loaded whole, as
-`neverd sigs --auto` loads it. Named is the share of the map's library
-functions; wrong is the share of the names NeverD applies.
+14.50 (x86, x64, ARM64): 60 programs. NeverD chooses the files as
+`neverd sigs --auto` does, by the program's Rich header. Named is the share of
+the map's library functions; wrong is the share of the names NeverD applies.
 
 | Architecture | Programs | Named, optimized | Named, `/Od` | Wrong, optimized | Wrong, `/Od` | Disputed |
 | --- | --- | --- | --- | --- | --- | --- |
-| x86 | 18 | 24% | 50% | <0.1% | 4.7% | 52 |
-| x64 | 18 | 57% | 54% | 0.3% | 9.4% | 306 |
-| ARM32 | 9 | 57% | 57% | 0.7% | 2.1% | 9 |
-| ARM64 | 15 | 56% | 58% | 1.4% | 10.1% | 578 |
+| x86 | 18 | 28% | 51% | <0.1% | 2.7% | 0 |
+| x64 | 18 | 57% | 53% | <0.1% | 2.3% | 0 |
+| ARM32 | 9 | 57% | 56% | 0.1% | 1.4% | 0 |
+| ARM64 | 15 | 57% | 58% | 0.1% | 1.7% | 17 |
 
-Across all 60 programs NeverD names 133,078 of 284,642 library functions
-(47%), 2,678 names are wrong (2.0%), and 945 addresses are disputed. With the
-first generated files, which still had the imported lines merged into them,
-it named 117,063 (41%), 7.6% of the names were wrong, and 18,733 addresses
-were disputed.
+Across all 60 programs NeverD names 136,986 of 284,642 library functions
+(48%), 612 names are wrong (0.4%), and 17 addresses are disputed. Before the
+Rich header chose the files, before the covering rule, and before the
+Visual Studio 2005 to 2013 files were rebuilt from their libraries, it named
+133,078 (47%), 2,678 names were wrong (2.0%), and 945 addresses were
+disputed.
 
-- Optimized builds (`/O2`, `/MT`, with or without MFC) are the common case.
-  On x86 and x64 fewer than 0.3% of the names NeverD applies to them are
-  wrong, and three quarters of those come from the imported `vs2005`–`vs2013`
-  files (see the last item). On ARM, what remains is mostly short routines
+- Optimized builds (`/O2`, `/MT`, with or without MFC) are the common case,
+  and 52 of their names are wrong. On ARM these are mostly short routines
   that share their code with other routines except for what a relocation
   rewrites, such as MFC initializers that differ only in the message they
   register.
 - `/Od` builds compile many template instantiations to the same bytes, so
-  more of their names are wrong. Telling them apart needs the names a
-  routine references, which the line format supports and NeverD does not
-  read yet.
-- x86 coverage is bounded by NeverD's function discovery. On the VS 2026
-  x86 `/MT` program, `--no-debug` finds 344 of its 1,021 library functions;
-  462 of the others follow a `ret` directly, with no padding between them.
-- ARM64 needs a NeverD that takes every primary `.pdata` entry as a
-  function (`fix(loader): make every primary ARM and ARM64 pdata entry a
-  function`). Before it, VS 2017 and 2019 ARM64 programs had almost no
-  functions to name.
-- On programs built with Visual Studio 2015 and later, the imported
-  `vs2005`–`vs2013` files add no correct names: with them loaded, 387 more
-  names are wrong (82 of them in optimized builds) and 118 fewer are right.
-  They are kept for programs built with those older toolsets, which the
-  validation programs do not cover.
+  more of their names are wrong: the program's own instantiations take the
+  names of the library's. Telling them apart needs the names a routine
+  references, which the line format supports and NeverD does not read yet.
+- x86 coverage is bounded by NeverD's function discovery, which since
+  `Find packed MSVC hotpatch entries and start them at the no-op` also finds
+  the functions MSVC packs directly after a `ret`. Most of the x86 library
+  functions still unnamed are ones it does not find.
+- The Visual Studio 2005 to 2013 files have no validation programs with
+  maps. On the setup programs of their media, the Rich header chooses the
+  file of the linker's release (VS 2005, VS 2008, and VS 2010 SP1 for the VS
+  2012 and 2013 installers), and none of their names is disputed.
 
 ## Lines imported from rizin
 
@@ -168,8 +185,11 @@ The first commit of this repository imported pattern files from rizin's
 file. Those lines followed rizin's conventions, not the rules above:
 
 - Names were rewritten. Characters outside `[A-Za-z0-9_.]` became `_`, and PE
-  names were cut at 125 characters. ELF C++ names were demangled, and some
-  were turned into `method.<class>.<member>`.
+  names were cut at 125 characters: `?AfxRegisterClass@@YAHPAUtagWNDCLASSW@@@Z`
+  became `_AfxRegisterClass__YAHPAUtagWNDCLASSW___Z`, and the stdcall
+  `_TimeSpan@24` became `_TimeSpan_24`. ELF C++ names were demangled, and some
+  were turned into `method.<class>.<member>`. None of this can be undone from
+  the text alone: `_` stands for any of `_`, `?`, `@` and `$`.
 - Some lines were named after sections, labels or data objects
   (`.text_tii_131`, `_LN116`, `obj.once.9977`).
 - Many tails were stated from the end of the leading bytes, with the CRC span
@@ -179,17 +199,18 @@ file. Those lines followed rizin's conventions, not the rules above:
 - Many lines stated bytes that other routines share under other names. In the
   ELF files, which the same packages explain, 18,780 lines did.
 
-The PE files for Visual Studio 2015 to 2022 and the Windows SDK are now
-rebuilt from collected libraries, so they hold no imported line. The imported
-lines had been merged into them at first, and caused 3,100 of the 3,900 wrong
-names on the x86 and x64 validation programs of Visual Studio 2017, 2022 and
-2026.
+sigdb-source records where each line came from: the SHA-1 of the medium or
+package, and a pattern file per library object. For Visual Studio 2005 to
+2013 those were the MSDN Professional discs. Their libraries are the
+release-to-manufacturing builds on the media Microsoft still publishes, so
+the PE files for Visual Studio 2005 to 2022 and the Windows SDK are now built
+from collected libraries.
 
 [`scripts/migrate_imported_signatures.py`](scripts/migrate_imported_signatures.py)
-moves the remaining imported files to the rules above. It starts from the
-text of the import commit every time, and compares each line with every
-function of the libraries it can read: the collected MSVC and SDK libraries
-for `pe/`, and for `elf/` the packages rizin recorded in sigdb-source, which
+moves what remains to the rules above. It starts from the text of the import
+commit every time, and compares each line with every function of the
+libraries it can read: the collected MSVC and SDK libraries for `pe/`, and for
+`elf/` the packages rizin recorded in sigdb-source, which
 [`scripts/fetch_imported_sources.py`](scripts/fetch_imported_sources.py)
 downloads and checks against rizin's SHA-1s. For each line:
 
@@ -203,10 +224,26 @@ downloads and checks against rizin's SHA-1s. For each line:
    takes that name, when the imported name is its rizin spelling or names
    nothing (a section or a label).
 4. Failing that, a line takes the one library name that rizin's conversion
-   spells the same way.
-5. A line named after a section, label or data object, which no library
+   spells the same way. The names include every routine a library's symbol
+   table defines, also those `neverd-sigmaker` writes no line for.
+5. A PE C name is kept as it is: every decorated C++ name holds `@@`, which
+   rizin spelled `__`, so a name with no `__` past its leading underscores
+   was never rewritten. On 32-bit x86, `_name_N` is also how rizin spelled
+   the stdcall `_name@N`; it becomes that only when the routine ends in
+   `ret N`.
+6. A line named after a section, label or data object, which no library
    function explained, is removed.
-6. An ELF line of the other pointer width's code moves to that directory.
-7. Any other line is left unchanged, with its imported name.
+7. An ELF line of the other pointer width's code moves to that directory.
+8. In a file whose release's libraries were collected, a line those
+   libraries reproduce, or whose routine they define at all, is left out:
+   the line `neverd-sigmaker` made for that routine, or its decision to make
+   none, stands. The rest go to `<name>.imported`.
+9. A line with no linkage name is kept as a `; unresolved:` comment, which
+   NeverD does not read.
 
+Of the 265,631 imported PE lines, 502 are left unresolved. Most are VS 2010
+ATL/MFC routines whose names are on no collected library, and masm32 stdcall
+routines whose `ret N` falls where the line states no bytes. In `elf/`, 406
+lines are, where the packages rizin recorded are gone or two routines spell
+the same, such as zlib's `crc32_combine` and `crc32_combine_`.
 [`reports/`](reports) lists, per file, every removed and unresolved name.
