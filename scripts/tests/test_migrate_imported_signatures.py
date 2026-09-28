@@ -497,7 +497,12 @@ class ImportedFilesTests(unittest.TestCase):
             subprocess.run([*git, "commit", "-qm", "import"], check=True)
             (directory / "vs2022.sources.json").write_text("{}\n")
             files = migrate.imported_files(tree, "HEAD", "pe/x86/64")
+            # A rebuilt release that keeps imported lines is migrated again.
+            (directory / "vs2013.sources.json").write_text("{}\n")
+            (directory / "vs2013.imported").write_text("")
+            kept = migrate.imported_files(tree, "HEAD", "pe/x86/64")
         self.assertEqual([path.name for path in files], ["vs2013.pat"])
+        self.assertEqual([path.name for path in kept], ["vs2013.pat"])
 
     @unittest.skipUnless(shutil.which("git"), "needs git")
     def test_a_run_starts_from_the_imported_text(self) -> None:

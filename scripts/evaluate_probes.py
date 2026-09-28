@@ -54,19 +54,29 @@ def parse_map(path: Path) -> dict[int, MapFunction]:
 
 
 def settled_names(matches: list[dict]) -> tuple[dict[int, str], set[int]]:
-    """The name NeverD renames each address to, as SignatureDB::buildNameMap does."""
+    """The name NeverD renames each address to, as SignatureDB::buildNameMap does.
 
+    An address the matches name differently is disputed, unless exactly one
+    of the names comes from a match whose branch references the image
+    confirmed (`confirmed`, which NeverD before those references omits).
+    """
+
+    proposed: dict[int, dict[str, bool]] = {}
+    for match in matches:
+        by_name = proposed.setdefault(int(match["addr"], 16), {})
+        name = match["name"]
+        by_name[name] = by_name.get(name, False) or bool(match.get("confirmed", False))
     names: dict[int, str] = {}
     disputed: set[int] = set()
-    for match in matches:
-        address = int(match["addr"], 16)
-        if address in disputed:
+    for address, by_name in proposed.items():
+        if len(by_name) == 1:
+            names[address] = next(iter(by_name))
             continue
-        if address in names and names[address] != match["name"]:
-            del names[address]
+        confirmed = [name for name, settled in by_name.items() if settled]
+        if len(confirmed) == 1:
+            names[address] = confirmed[0]
+        else:
             disputed.add(address)
-            continue
-        names[address] = match["name"]
     return names, disputed
 
 
