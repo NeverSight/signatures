@@ -10,6 +10,16 @@
     ],
     "archives": [
       "*.a"
+    ],
+    "paths": [
+      "*/platforms/*",
+      "*/sources/*",
+      "*/sysroot/*",
+      "*/lib/gcc/*-linux-android*/*",
+      "*/prebuilt/*/*-linux-android*/lib*/*",
+      "*/lib/linux/*-android.a",
+      "*/lib/linux/[!h]*/*",
+      "*/renderscript/prebuilt/*/platform/*"
     ]
   },
   {

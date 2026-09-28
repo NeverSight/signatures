@@ -6,11 +6,12 @@ listing the exact packages the patterns were generated from: Ubuntu `.deb`
 files and Android NDK archives. Each row of .github/elf-matrix.json names one
 such library, the directories of the tree it has files in, and the archives
 of the packages its lines came from, as file name patterns (glibc's libc.a,
-not the libm.a beside it; libgcc's libgcc.a, not the sanitizer runtimes;
-every archive of an NDK). This downloads
-every package the library's lists name, once, checks it against the SHA-1
-rizin recorded, and files each static library it holds under the directory
-its objects' ELF class and machine belong to -- an NDK archive holds every
+not the libm.a beside it; libgcc's libgcc.a, not the sanitizer runtimes),
+and where needed as path patterns too (every Android library of an NDK, none
+of the libraries its toolchains run on the host). This downloads every
+package the library's lists name, once, checks it against the SHA-1 rizin
+recorded, and files each static library it holds under the directory its
+objects' ELF class and machine belong to -- an NDK archive holds every
 Android ABI -- as one `library` asset per directory, for NeverD's builder:
 
     elf/x86/64  ->  <library>-x64.tar.zst and its manifest
@@ -171,6 +172,13 @@ def main(argv: list[str] | None = None) -> int:
             # carries others, such as libgcc's sanitizer runtimes.
             if not any(fnmatch.fnmatchcase(library.name, pattern)
                        for pattern in row["archives"]):
+                continue
+            # An NDK also carries libraries its toolchains run on the host
+            # (Python, libiberty, Linux sanitizer runtimes); a row's paths,
+            # when it has them, keep the Android ones.
+            inside = library.relative_to(unpacked).as_posix()
+            if "paths" in row and not any(fnmatch.fnmatchcase(inside, pattern)
+                                          for pattern in row["paths"]):
                 continue
             directory = fetcher.archive_machine(library)
             if directory not in files:

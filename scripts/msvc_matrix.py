@@ -90,6 +90,10 @@ ELF_FIELDS = {
     "archives": list,
 }
 
+# Where in its packages a row's archives lie, when their names alone would
+# also take other archives: an NDK carries its toolchains' host libraries.
+ELF_OPTIONAL = {"paths": list}
+
 
 MINGW_FIELDS = {
     "name": str,
@@ -104,17 +108,18 @@ MINGW_FIELDS = {
 }
 
 
-def load(path: Path, fields: dict = FIELDS) -> list[dict]:
+def load(path: Path, fields: dict = FIELDS, optional: dict | None = None) -> list[dict]:
+    optional = optional or {}
     rows = json.loads(path.read_text(encoding="utf-8"))
     names = set()
     for row in rows:
         missing = set(fields) - set(row)
-        extra = set(row) - set(fields)
+        extra = set(row) - set(fields) - set(optional)
         if missing or extra:
             raise SystemExit(f"{row.get('name', '?')}: missing {sorted(missing)}, "
                              f"unexpected {sorted(extra)}")
-        for key, kind in fields.items():
-            if not isinstance(row[key], kind):
+        for key, kind in (fields | optional).items():
+            if key in row and not isinstance(row[key], kind):
                 raise SystemExit(f"{row['name']}: {key} must be {kind.__name__}")
         if row["name"] in names:
             raise SystemExit(f"{row['name']}: duplicate row")
@@ -165,7 +170,7 @@ def main(argv: list[str] | None = None) -> int:
     legacy = load(args.legacy_matrix, LEGACY_FIELDS)
     masm32 = load(args.masm32_matrix, MASM32_FIELDS)
     mingw = load(args.mingw_matrix, MINGW_FIELDS)
-    elf = load(args.elf_matrix, ELF_FIELDS)
+    elf = load(args.elf_matrix, ELF_FIELDS, ELF_OPTIONAL)
     rows = select(windows, args.rows, legacy + masm32 + mingw + elf)
     legacy_rows = select(legacy, args.rows, windows + masm32 + mingw + elf)
     masm32_rows = select(masm32, args.rows, windows + legacy + mingw + elf)

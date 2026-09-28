@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import fnmatch
 import hashlib
 import io
 import json
@@ -100,6 +101,9 @@ class CollectTests(unittest.TestCase):
                 "ndk/platforms/android-21/arch-x86/usr/lib/libc.a": elf_archive(3, False),
                 "ndk/platforms/android-21/arch-arm64/usr/lib/libc.a": elf_archive(183, True),
                 "ndk/sources/libfoo.txt.a": b"not an archive",
+                # A library the toolchain runs on the host, not an Android one.
+                "ndk/toolchains/x86_64-4.9/prebuilt/linux-x86_64/lib64/libiberty.a":
+                    elf_archive(62, True, b"host"),
             }
             with tarfile.open(package, "w:bz2") as bundle:
                 for name, data in members.items():
@@ -109,7 +113,8 @@ class CollectTests(unittest.TestCase):
             matrix = root / "elf-matrix.json"
             matrix.write_text(json.dumps([{
                 "name": "android-ndk", "library": "android-ndk",
-                "directories": ["elf/x86/64", "elf/x86/32"], "archives": ["libc.a"]}]))
+                "directories": ["elf/x86/64", "elf/x86/32"], "archives": ["*.a"],
+                "paths": ["*/platforms/*"]}]))
 
             original_sources, original_obtain = collect.package_sources, collect.obtain
             collect.package_sources = lambda row, cache: [("ab", "android-ndk-r1-linux.tar.bz2"),
@@ -145,12 +150,52 @@ class CollectTests(unittest.TestCase):
 
 class MatrixTests(unittest.TestCase):
     def test_every_row_names_directories_rizin_had_files_in(self) -> None:
-        rows = msvc_matrix.load(collect.DEFAULT_MATRIX, msvc_matrix.ELF_FIELDS)
+        rows = msvc_matrix.load(collect.DEFAULT_MATRIX, msvc_matrix.ELF_FIELDS,
+                                msvc_matrix.ELF_OPTIONAL)
         self.assertTrue(rows)
         for row in rows:
             with self.subTest(row=row["name"]):
                 self.assertTrue(row["archives"])
                 self.assertTrue(set(row["directories"]) <= set(collect.DIRECTORIES))
+
+    def test_an_ndk_row_takes_its_android_libraries_and_no_host_library(self) -> None:
+        row = collect.row_named(collect.DEFAULT_MATRIX, "android-ndk")
+        root = "android-ndk-r25b/toolchains/llvm/prebuilt/linux-x86_64/"
+        android = [
+            "android-ndk-r10e/platforms/android-21/arch-x86_64/usr/lib64/libc.a",
+            "android-ndk-r17c/sources/cxx-stl/llvm-libc++/libs/x86_64/libc++_static.a",
+            "android-ndk-r10e/sources/android/compiler-rt/libs/x86_64/libcompiler_rt_static.a",
+            root + "sysroot/usr/lib/x86_64-linux-android/21/libc.a",
+            root + "lib64/clang/14.0.6/lib/linux/libclang_rt.builtins-x86_64-android.a",
+            root + "lib64/clang/14.0.6/lib/linux/x86_64/libunwind.a",
+            root + "lib/gcc/x86_64-linux-android/4.9.x/libgcc_real.a",
+            root + "x86_64-linux-android/lib64/libatomic.a",
+            "android-ndk-r17c/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/"
+            "lib/gcc/arm-linux-androideabi/4.9.x/armv7-a/thumb/libgcc.a",
+            "android-ndk-r17c/toolchains/x86_64-4.9/prebuilt/linux-x86_64/"
+            "x86_64-linux-android/libx32/libgomp.a",
+            "android-ndk-r17c/toolchains/renderscript/prebuilt/linux-x86_64/platform/"
+            "x86_64/libcompiler_rt.a",
+        ]
+        host = [
+            "android-ndk-r10e/prebuilt/linux-x86_64/lib/libpython2.7.a",
+            "android-ndk-r10e/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/"
+            "lib/libarm-linux-android-sim.a",
+            "android-ndk-r10e/toolchains/x86-4.9/prebuilt/linux-x86_64/lib64/libiberty.a",
+            "android-ndk-r10e/toolchains/x86-4.9/prebuilt/linux-x86_64/lib32/libbfd.a",
+            root + "lib64/clang/14.0.6/lib/linux/libclang_rt.asan-x86_64.a",
+            "android-ndk-r12b/toolchains/llvm/prebuilt/linux-x86_64/lib64/clang/3.8/"
+            "lib/linux/libclang_rt.asan-i686.a",
+            root + "lib64/clang/14.0.6/lib/linux/host/libFuzzer.a",
+            root + "lib/libbolt_rt_instr.a",
+            root + "lib64/clang/14.0.6/lib/baremetal/libclang_rt.builtins-aarch64.a",
+        ]
+
+        def taken(path: str) -> bool:
+            return any(fnmatch.fnmatchcase(path, pattern) for pattern in row["paths"])
+
+        self.assertEqual([path for path in android if not taken(path)], [])
+        self.assertEqual([path for path in host if taken(path)], [])
 
     @unittest.skipUnless(shutil.which("git"), "needs git")
     def test_the_rows_cover_the_imported_elf_files_built_from_packages(self) -> None:
