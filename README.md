@@ -142,8 +142,10 @@ every name NeverD would apply with the linker map of the same image:
 - **wrong**: addresses NeverD would give a name the map does not give them.
   This includes the program's own functions: STL templates the program
   instantiates compile to the same bytes as library code.
-- **disputed**: addresses where the loaded lines disagree, so NeverD names
-  nothing.
+- **disputed**: addresses where the loaded lines disagree and no branch
+  reference settles which is right, so NeverD names nothing. An address
+  where exactly one of the names comes from a match whose references NeverD
+  confirmed gets that name, and counts as named or wrong like any other.
 
 `validation/` holds three programs, each linked statically with a map: an
 MFC program and a CRT program built with `/O2 /MT`, and the CRT program built
@@ -155,15 +157,19 @@ the map's library functions; wrong is the share of the names NeverD applies.
 
 | Architecture | Programs | Named, optimized | Named, `/Od` | Wrong, optimized | Wrong, `/Od` | Disputed |
 | --- | --- | --- | --- | --- | --- | --- |
-| x86 | 18 | 28% | 53% | <0.1% | 1.7% | 3,041 |
-| x64 | 18 | 59% | 56% | <0.1% | 2.1% | 3,255 |
-| ARM32 | 9 | 59% | 59% | 0.1% | 1.3% | 1,634 |
-| ARM64 | 15 | 58% | 63% | 0.1% | 1.5% | 2,644 |
+| x86 | 18 | 28% | 53% | <0.1% | 1.7% | 2,862 |
+| x64 | 18 | 59% | 56% | <0.1% | 2.1% | 3,212 |
+| ARM32 | 9 | 59% | 59% | 0.1% | 1.3% | 1,626 |
+| ARM64 | 15 | 58% | 63% | 0.1% | 1.5% | 2,585 |
 
-Across all 60 programs NeverD names 141,351 of 284,642 library functions
-(50%), 528 names are wrong (0.4%), and 10,574 addresses are disputed. A
+Across all 60 programs NeverD names 141,635 of 284,642 library functions
+(50%), 530 names are wrong (0.4%), and 10,285 addresses are disputed. A
 disputed address is one where lines that differ only in their branches all
-match and none of the branches settles which: NeverD leaves it unnamed.
+match and none of the branches settles which: NeverD leaves it unnamed. At
+289 other such addresses a confirmed branch settles it, and 284 of those
+names are right. Counting these needs a NeverD that reports each match's
+`confirmed` flag (NeverSight/NeverD#164); with an older one the script
+counts them as disputed.
 Before the Rich header chose the files, before the covering rule and the
 branch references, and before the Visual Studio 2005 to 2013 files were
 rebuilt from their libraries, it named 133,078 (47%) and 2,678 names were

@@ -858,13 +858,18 @@ def imported_files(tree: Path, revision: str, directory: str) -> list[Path]:
         ).stdout.split()
     except subprocess.CalledProcessError:
         return []
-    # A file with a provenance record is rebuilt from collected libraries
-    # and holds no imported line any more.
+    # A file with a provenance record is rebuilt from collected libraries.
+    # It holds no imported line any more, unless its release keeps the lines
+    # those libraries do not define in <name>.imported, which the migration
+    # writes anew.
     return [
         tree / directory / name
         for name in listing
         if name.endswith(".pat")
-        and not (tree / directory / name).with_suffix(".sources.json").exists()
+        and (
+            not (tree / directory / name).with_suffix(".sources.json").exists()
+            or (tree / directory / name).with_suffix(".imported").exists()
+        )
     ]
 
 
