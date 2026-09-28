@@ -6,7 +6,8 @@ listing the exact packages the patterns were generated from: Ubuntu `.deb`
 files and Android NDK archives. Each row of .github/elf-matrix.json names one
 such library, the directories of the tree it has files in, and the archives
 of the packages its lines came from, as file name patterns (glibc's libc.a,
-not the libm.a beside it; libgcc's libgcc.a, not the sanitizer runtimes),
+not the libm.a beside it; libgcc's libgcc.a, not the sanitizer runtimes; an
+NDK's archives and its crtbegin/crtend start files),
 and where needed as path patterns too (every Android library of an NDK, none
 of the libraries its toolchains run on the host). This downloads every
 package the library's lists name, once, checks it against the SHA-1 rizin
@@ -168,8 +169,9 @@ def main(argv: list[str] | None = None) -> int:
             # listed too.
             if library.is_symlink():
                 continue
-            # The archives rizin's lines were made from; a package also
-            # carries others, such as libgcc's sanitizer runtimes.
+            # The archives rizin's lines were made from, and an NDK's start
+            # files; a package also carries others, such as libgcc's
+            # sanitizer runtimes.
             if not any(fnmatch.fnmatchcase(library.name, pattern)
                        for pattern in row["archives"]):
                 continue

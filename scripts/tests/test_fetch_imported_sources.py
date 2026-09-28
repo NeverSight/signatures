@@ -13,8 +13,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import fetch_imported_sources as fetch  # noqa: E402
 
 
-def elf_header(machine: int) -> bytes:
-    ident = b"\x7fELF" + bytes([2, 1, 1]) + bytes(9)
+def elf_header(machine: int, wide: bool | None = None) -> bytes:
+    """An ELF header of a machine, of its usual class unless `wide` says."""
+
+    if wide is None:
+        wide = machine in (62, 183)
+    ident = b"\x7fELF" + bytes([2 if wide else 1, 1, 1]) + bytes(9)
     return ident + struct.pack("<HH", 1, machine) + bytes(44)
 
 
@@ -40,6 +44,17 @@ class ArchiveMachineTests(unittest.TestCase):
         name = b"a_long_object_name.o"
         path = self.archive(member(b"#1/" + str(len(name)).encode(), name + elf_header(40)))
         self.assertEqual(fetch.archive_machine(path), "elf/arm/32")
+
+    def test_an_object_file_is_filed_by_its_own_header(self) -> None:
+        with tempfile.NamedTemporaryFile(suffix=".o") as handle:
+            handle.write(elf_header(3))
+            handle.flush()
+            self.assertEqual(fetch.archive_machine(Path(handle.name)), "elf/x86/32")
+
+    def test_x32_code_has_no_directory(self) -> None:
+        # x86-64 instructions in a 32-bit class object: neither x86 nor x64.
+        path = self.archive(member(b"a.o/", elf_header(62, wide=False)))
+        self.assertIsNone(fetch.archive_machine(path))
 
     def test_unknown_machine_and_non_archives_are_not_filed(self) -> None:
         self.assertIsNone(fetch.archive_machine(self.archive(member(b"a.o/", elf_header(8)))))

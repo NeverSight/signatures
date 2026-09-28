@@ -9,7 +9,8 @@
       "elf/x86/64"
     ],
     "archives": [
-      "*.a"
+      "*.a",
+      "crt*.o"
     ],
     "paths": [
       "*/platforms/*",
