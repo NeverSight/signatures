@@ -98,7 +98,9 @@ def release_notes(manifests: list[dict], tag: str, commit: str) -> str:
         lines.append("| Asset | Library | Version | Source | Files |")
         lines.append("| --- | --- | --- | --- | --- |")
         for manifest in libraries:
-            source = (manifest.get("source") or {}).get("media", "")
+            # An installer or disc (MASM32), or a source archive (MinGW builds).
+            origin = manifest.get("source") or {}
+            source = origin.get("media") or origin.get("url", "")
             lines.append(
                 f"| `{manifest['asset']}` | {manifest.get('library', '')} "
                 f"| {manifest.get('library_version', '')} | {source} "

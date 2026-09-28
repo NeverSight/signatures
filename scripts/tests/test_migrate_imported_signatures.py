@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
+import json
+import os
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
+import textwrap
 import unittest
 from pathlib import Path
 
@@ -473,6 +477,31 @@ class CollectedReleaseTests(unittest.TestCase):
         self.assertEqual(lines, [f"{imported} 00 0000 0015 :0000 _deflate"])
         self.assertEqual(report.superseded, 0)
 
+    def test_a_build_that_pads_the_routine_after_it_still_reproduces_it(self) -> None:
+        # rizin measured zcfree to its ret; neverd-sigmaker takes in the NOPs
+        # that pad the object's code section after it.
+        code = "5589E583EC188B450C890424" + "8B4508" * 4 + "C9C3"
+        reference = pe_reference(reference_line("_zcfree", code + "909090"))
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "mingw32-zlib.pat"
+            path.write_text(f"{code} 00 0000 {len(code) // 2:04X} :0000 _zcfree\n")
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, reference, report, defined=set())
+        self.assertEqual(lines, [])
+        self.assertEqual(report.reproduced, 1)
+
+    def test_code_after_the_line_is_not_padding(self) -> None:
+        code = "5589E583EC188B450C890424" + "8B4508" * 4 + "C9C3"
+        reference = pe_reference(reference_line("_zcfree", code + "5589E5"))
+        imported = f"{code} 00 0000 {len(code) // 2:04X} :0000 _zcfree"
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "mingw32-zlib.pat"
+            path.write_text(imported + "\n")
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, reference, report, defined=set())
+        self.assertEqual(lines, [imported])
+        self.assertEqual(report.reproduced, 0)
+
     def test_unresolved_lines_of_a_collected_release_are_kept_as_comments(self) -> None:
         reference = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28" * 5 + "C3"))
         unknown = "AABBCCDD" * 5
@@ -498,6 +527,47 @@ class CollectedReleaseTests(unittest.TestCase):
                              {"vs2013": True, "masm32": True, "mingw32-zlib": False})
         self.assertEqual(migrate.release_of(Path("pe/x86/32/vs2013.pat")), "vs2013")
         self.assertEqual(migrate.release_of(Path("pe/x86/32/masm32.pat")), "masm32")
+
+
+# Writes one whole-function line per library it is given, named after it.
+FAKE_SIGMAKER = textwrap.dedent(
+    """\
+    #!{python}
+    import sys
+    from pathlib import Path
+
+    args = sys.argv[1:]
+    output = Path(args[args.index("-o") + 1])
+    stems = [Path(a).stem for a in args[: args.index("-o")]]
+    output.write_text("".join(f"AABBCCDD 00 0000 0004 :0000 {{s}}\\n" for s in stems))
+    """
+)
+
+
+@unittest.skipUnless(os.name == "posix" and shutil.which("zstd"), "needs POSIX and zstd")
+class ReferenceTests(unittest.TestCase):
+    def test_mingw_archives_are_read_like_msvc_libraries(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            sigmaker = root / "neverd-sigmaker"
+            sigmaker.write_text(FAKE_SIGMAKER.format(python=sys.executable))
+            sigmaker.chmod(0o755)
+            assets = root / "assets"
+            assets.mkdir()
+            library = root / "libz.a"
+            library.write_bytes(b"!<arch>\n")
+            archive = assets / "mingw32-zlib-1.3-x86.tar"
+            with tarfile.open(archive, "w") as bundle:
+                bundle.add(library, "mingw32-zlib/x86/libz.a")
+            subprocess.run(["zstd", "-q", "--rm", str(archive)], check=True)
+            (assets / "mingw32-zlib-1.3-x86.json").write_text(json.dumps({
+                "asset": "mingw32-zlib-1.3-x86", "kind": "library",
+                "library": "mingw32-zlib", "archive": {"name": archive.name + ".zst"}}))
+            work = root / "work"
+            work.mkdir()
+            reference = migrate.build_pe_reference(sigmaker, assets, "x86", work)
+        self.assertIn("libz", reference.names)
+        self.assertEqual(reference.functions, 1)
 
 
 class ImportedFilesTests(unittest.TestCase):

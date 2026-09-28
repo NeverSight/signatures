@@ -78,21 +78,26 @@ where the line has a wildcard, so the line would name that routine too.
 | `vs2026.pat` | MSVC 14.50 and 14.51 with ATL/MFC (x86, x64, ARM64; VS 2026 has no ARM32 toolchain) |
 | `winsdk.pat` | Windows SDK 10.0.17763, 18362, 19041, 20348, 22000, 22621 and 26100: the Universal CRT and the user-mode libraries (ARM32 through 10.0.22621) |
 | `vs2005.pat` | Visual Studio 2005 Team Suite (8.0.50727.42) with ATL/MFC, the Platform SDK, the Windows CE x86 libraries and the DIA SDK (x86, x64) |
-| `vs2008.pat` | Visual Studio 2008 Professional (9.0.21022) with ATL/MFC, the Windows SDK 6.0A, the Windows CE x86 libraries and the CRT libraries built from source (x86, x64) |
-| `vs2010.pat` | The Visual C++ 2010 compilers of the Windows SDK 7.1 (10.0.30319) with that SDK's libraries, without ATL/MFC (x86, x64) |
+| `vs2008.pat` | Visual Studio 2008 Professional (9.0.21022) with ATL/MFC, the Windows SDK 6.0A, the Windows CE x86 libraries, the CRT libraries built from source and the DIA SDK (x86, x64) |
+| `vs2010.pat` | Visual Studio 2010 Professional (10.0.30319) with ATL/MFC, the Windows SDK 7.0A and the DIA SDK (x86, x64) |
 | `vs2012.pat` | Visual Studio 2012 Professional (11.0.50727) with ATL/MFC (x86, x64, ARM32) |
 | `vs2013.pat` | Visual Studio 2013 Professional (12.0.21005) with ATL/MFC and the Windows SDK 7.1A (x86, x64, ARM32) |
 | `masm32.pat` | The MASM32 SDK 8.2, 9, 10 and 11: `masm32.lib`, `fpu.lib` and `datetime.lib` built from their sources with the SDK's own assembler, and the prebuilt `debug.lib` (x86) |
+| `mingw32-zlib.pat` | zlib 1.3 compiled without optimization, as the code of rizin's `mingw32-zlib` lines reads, by Ubuntu's MinGW-w64 GCC (x86, x64) |
 
 The Visual Studio 2005 to 2013 libraries come from Microsoft's installation
 media, which no current Windows image can install; they are unpacked on
 Ubuntu instead (see below). They are the release-to-manufacturing builds of
-the same media rizin's files were made from. The VS 2010 ATL/MFC libraries
-are on no medium Microsoft still publishes, so `vs2010.pat` keeps the
-imported lines for them, renamed to their linkage names, in
-`vs2010.imported`; each `<name>.imported` joins its file when the file is
-built. `mingw32-zlib` has no collected libraries and stays an imported
-file. See [Lines imported from rizin](#lines-imported-from-rizin).
+the same media rizin's files were made from. Microsoft no longer publishes a
+Visual Studio 2010 disc; its libraries come from the Internet Archive's copy
+of the MSDN Professional disc, `en_visual_studio_2010_professional_x86_dvd_509727.iso`,
+whose SHA-1 `f0ed50712d83bf0eda7d284da76df49e4c88cef7` is the one MSDN listed
+for it and the one rizin's sigdb-source records. (The Windows SDK 7.1, which
+Microsoft does publish, carries the same Visual C++ 2010 CRT libraries byte
+for byte, but no ATL/MFC.) A file whose libraries do not reproduce every
+line rizin had for it keeps the rest, renamed to their linkage names, in
+`<name>.imported`, which joins the file when it is built. See
+[Lines imported from rizin](#lines-imported-from-rizin).
 
 Two workflows produce the generated files:
 
@@ -109,7 +114,8 @@ Two workflows produce the generated files:
      statically linked, with linker maps.
    - One Ubuntu job per row of
      [`.github/msvc-legacy-matrix.json`](.github/msvc-legacy-matrix.json)
-     downloads an older release's installation medium from Microsoft, checks
+     downloads an older release's installation medium from Microsoft (for
+     Visual Studio 2010, the Internet Archive's copy of the MSDN disc), checks
      its SHA-256, unpacks the Windows Installer packages that hold the
      libraries with 7-Zip, cabextract and msitools, and packs the same kind
      of archive ([`scripts/collect_legacy_media.py`](scripts/collect_legacy_media.py)).
@@ -120,9 +126,15 @@ Two workflows produce the generated files:
      the job runs the same make files under Wine and clears the time
      stamps `LINK` writes, so two builds give the same archive
      ([`scripts/collect_masm32.py`](scripts/collect_masm32.py)).
+   - One Ubuntu job per row of
+     [`.github/mingw-matrix.json`](.github/mingw-matrix.json) compiles a C
+     library rizin built with MinGW itself, from its release archive, with
+     Ubuntu's MinGW-w64 cross compilers, and archives it in ar's
+     deterministic mode, recording the compiler and header packages
+     ([`scripts/collect_mingw_library.py`](scripts/collect_mingw_library.py)).
 2. [`msvc-signatures.yml`](.github/workflows/msvc-signatures.yml) builds
    `neverd-sigmaker` at a pinned NeverD revision and runs NeverD's
-   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/cd6dc926ce06920492213ead58c14e39e890598f/scripts/signatures/build_msvc_signatures.py)
+   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/626e9eea16c0dc8dc49b8bc4fe6d2f46236ac1e4/scripts/signatures/build_msvc_signatures.py)
    over every `msvc-libs-*` release, one architecture at a time:
    - A file with library archives behind it is rebuilt from them alone, and
      from its `<name>.imported` when it has one.
@@ -165,13 +177,13 @@ the map's library functions; wrong is the share of the names NeverD applies.
 
 | Architecture | Programs | Named, optimized | Named, `/Od` | Wrong, optimized | Wrong, `/Od` | Disputed |
 | --- | --- | --- | --- | --- | --- | --- |
-| x86 | 18 | 28% | 53% | <0.1% | 1.7% | 2,862 |
-| x64 | 18 | 59% | 56% | <0.1% | 2.1% | 3,212 |
+| x86 | 18 | 28% | 53% | <0.1% | 1.8% | 2,862 |
+| x64 | 18 | 59% | 56% | <0.1% | 2.1% | 3,211 |
 | ARM32 | 9 | 59% | 59% | 0.1% | 1.3% | 1,626 |
 | ARM64 | 15 | 58% | 63% | 0.1% | 1.5% | 2,585 |
 
-Across all 60 programs NeverD names 141,635 of 284,642 library functions
-(50%), 530 names are wrong (0.4%), and 10,285 addresses are disputed. A
+Across all 60 programs NeverD names 141,605 of 284,642 library functions
+(50%), 535 names are wrong (0.4%), and 10,284 addresses are disputed. A
 disputed address is one where lines that differ only in their branches all
 match and none of the branches settles which: NeverD leaves it unnamed. At
 289 other such addresses a confirmed branch settles it, and 284 of those
@@ -193,6 +205,13 @@ wrong (2.0%).
   names of the library's. The branch references drop such a name when the
   instantiation calls a routine NeverD names otherwise, which it cannot do
   when the routines it calls are the program's own and unnamed.
+- Rebuilding `vs2010.pat` from the Visual Studio 2010 disc, with ATL/MFC,
+  cost these programs 30 names and made 5 wrong. Releases give some short
+  routines' bytes different names -- ATL's `T2BSTR` and the Universal CRT's
+  `_wcslen` are the same code up to the routine they call -- so every file
+  of the directory drops them, as described above. With the debug CRT's
+  `_wcslen` unnamed, the `/Od` programs' `tcslen` wrappers match
+  `_aligned_free`'s line, and its reference has no name to contradict.
 - x86 coverage is bounded by NeverD's function discovery, which since
   `Find packed MSVC hotpatch entries and start them at the no-op` also finds
   the functions MSVC packs directly after a `ret`. Most of the x86 library
@@ -227,9 +246,10 @@ file. Those lines followed rizin's conventions, not the rules above:
 sigdb-source records where each line came from: the SHA-1 of the medium or
 package, and a pattern file per library object. For Visual Studio 2005 to
 2013 those were the MSDN Professional discs. Their libraries are the
-release-to-manufacturing builds on the media Microsoft still publishes, so
-the PE files for Visual Studio 2005 to 2022 and the Windows SDK are now built
-from collected libraries.
+release-to-manufacturing builds on the media Microsoft still publishes, and
+for Visual Studio 2010 the very disc sigdb-source names, so the PE files for
+Visual Studio 2005 to 2022 and the Windows SDK are now built from collected
+libraries, as are `masm32.pat` and `mingw32-zlib.pat`.
 
 [`scripts/migrate_imported_signatures.py`](scripts/migrate_imported_signatures.py)
 moves what remains to the rules above. It starts from the text of the import
@@ -260,20 +280,26 @@ downloads and checks against rizin's SHA-1s. For each line:
    function explained, is removed.
 7. An ELF line of the other pointer width's code moves to that directory.
 8. In a file whose libraries were collected, a line those libraries
-   reproduce is left out, and the rest go to `<name>.imported`. When the
+   reproduce is left out, and the rest go to `<name>.imported`. A line is
+   reproduced when a collected function of its name states every byte the
+   line states, also when the function runs on past the line's end only into
+   the NOPs or INT3s that pad its section: rizin measured a function to its
+   last instruction, `neverd-sigmaker` to the next symbol. When the
    collected libraries are the very build the import was made from (a Visual
    Studio release's RTM libraries, the MASM32 SDK's libraries built from its
    sources with its own assembler), a line whose routine they define at all is
    left out too: the line `neverd-sigmaker` made for that routine, or its
    decision to make none, stands. A library asset states which it is
-   (`reproduces_import`).
+   (`reproduces_import`): zlib compiled here is not rizin's build, so only
+   the `mingw32-zlib` lines it reproduces are left out.
 9. A line with no linkage name is kept as a `; unresolved:` comment, which
    NeverD does not read.
 
-Of the 265,631 imported PE lines, 286 are left unresolved. Most are VS 2010
-ATL/MFC routines whose names are on no collected library. The MASM32 SDK's
+Of the 265,631 imported PE lines, 64 are left unresolved: C++/CLI catch
+funclets and labels whose rizin names are not linkage names, and VS 2005
+lines from test-harness objects on no collected library. The MASM32 SDK's
 libraries, built from its sources, reproduce or supersede every imported
-`masm32` line, so `masm32.pat` keeps none of them. In `elf/`, 374 lines are
-left unresolved, where the packages rizin recorded are gone or two routines
-spell the same.
+`masm32` line, and the Visual Studio 2010 disc's libraries every x64 `vs2010`
+line, so those files keep none. In `elf/`, 374 lines are left unresolved,
+where the packages rizin recorded are gone or two routines spell the same.
 [`reports/`](reports) lists, per file, every removed and unresolved name.

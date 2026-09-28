@@ -1,11 +1,11 @@
 {
   "file": "pe/x86/64/vs2022.pat",
   "generator": {
-    "neverd_ref": "cd6dc926ce06920492213ead58c14e39e890598f",
-    "release": "msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "neverd_ref": "626e9eea16c0dc8dc49b8bc4fe6d2f46236ac1e4",
+    "release": "msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 50620,
+  "lines": 50581,
   "sources": [
     {
       "arch": "x64",

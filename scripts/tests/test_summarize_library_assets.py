@@ -58,6 +58,27 @@ class SummarizeTests(unittest.TestCase):
         self.assertIn("`winsdk-10.0.26100.0-arm64`", notes)
         self.assertIn("abc123", notes)
 
+    def test_libraries_name_their_installer_or_source_archive(self) -> None:
+        library = self.assets.parent / "libz.a"
+        library.write_bytes(b"!<arch>\n")
+        for asset, source in (
+            ("masm32-11r-x86", {"media": "http://www.oby.ro/masm32/masm32v11r.zip"}),
+            ("mingw32-zlib-1.3-x86", {"url": "https://example.org/zlib-1.3.tar.gz"}),
+        ):
+            collector.emit_asset(
+                output=self.assets, asset=asset, kind="library", arch="x86",
+                files=[collector.CollectedFile(library, Path("lib/libz.a"))],
+                extra={"library": asset.rsplit("-", 2)[0], "library_version": "1",
+                       "source": source},
+                level=3,
+            )
+        summarize.main([str(self.assets), "--tag", "t", "--commit", "c"])
+        notes = (self.assets / "RELEASE.md").read_text()
+        self.assertIn("| `masm32-11r-x86` | masm32 | 1 | http://www.oby.ro/masm32/masm32v11r.zip |",
+                      notes)
+        self.assertIn("| `mingw32-zlib-1.3-x86` | mingw32-zlib | 1 "
+                      "| https://example.org/zlib-1.3.tar.gz |", notes)
+
     def test_archive_that_disagrees_with_its_manifest_fails(self) -> None:
         archive = self.assets / "winsdk-10.0.26100.0-x64.tar.zst"
         archive.write_bytes(archive.read_bytes() + b"tampered")

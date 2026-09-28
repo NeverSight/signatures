@@ -15,7 +15,10 @@ error, not an empty run.
 .github/msvc-legacy-matrix.json lists the toolsets no current image can
 install, Visual Studio 2005 to 2013: each row names Microsoft's installation
 media and what to unpack from it (see collect_legacy_media.py).  Its rows run
-on Linux and are selected by the same `--rows`.
+on Linux and are selected by the same `--rows`, as are the rows of
+.github/masm32-matrix.json (MASM32 SDK releases, built under Wine; see
+collect_masm32.py) and .github/mingw-matrix.json (C libraries built with the
+MinGW-w64 cross compilers; see collect_mingw_library.py).
 """
 
 from __future__ import annotations
@@ -31,6 +34,9 @@ DEFAULT_LEGACY_MATRIX = (
 )
 DEFAULT_MASM32_MATRIX = (
     Path(__file__).resolve().parents[1] / ".github" / "masm32-matrix.json"
+)
+DEFAULT_MINGW_MATRIX = (
+    Path(__file__).resolve().parents[1] / ".github" / "mingw-matrix.json"
 )
 
 FIELDS = {
@@ -69,6 +75,19 @@ MASM32_FIELDS = {
     "media": str,
     "sha256": str,
     "build": list,
+}
+
+
+MINGW_FIELDS = {
+    "name": str,
+    "library": str,
+    "version": str,
+    "source": str,
+    "sha256": str,
+    "sources": list,
+    "archive": str,
+    "cflags": list,
+    "arches": list,
 }
 
 
@@ -123,6 +142,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--matrix", type=Path, default=DEFAULT_MATRIX)
     parser.add_argument("--legacy-matrix", type=Path, default=DEFAULT_LEGACY_MATRIX)
     parser.add_argument("--masm32-matrix", type=Path, default=DEFAULT_MASM32_MATRIX)
+    parser.add_argument("--mingw-matrix", type=Path, default=DEFAULT_MINGW_MATRIX)
     parser.add_argument("--rows", default="", help="row names to keep, comma or space separated")
     parser.add_argument("--github-output", type=Path, help="append matrix=<json> to this file")
     args = parser.parse_args(argv)
@@ -130,15 +150,20 @@ def main(argv: list[str] | None = None) -> int:
     windows = load(args.matrix)
     legacy = load(args.legacy_matrix, LEGACY_FIELDS)
     masm32 = load(args.masm32_matrix, MASM32_FIELDS)
-    rows = select(windows, args.rows, legacy + masm32)
-    legacy_rows = select(legacy, args.rows, windows + masm32)
-    masm32_rows = select(masm32, args.rows, windows + legacy)
+    mingw = load(args.mingw_matrix, MINGW_FIELDS)
+    rows = select(windows, args.rows, legacy + masm32 + mingw)
+    legacy_rows = select(legacy, args.rows, windows + masm32 + mingw)
+    masm32_rows = select(masm32, args.rows, windows + legacy + mingw)
+    mingw_rows = select(mingw, args.rows, windows + legacy + masm32)
     matrix = json.dumps({"include": [for_workflow(row) for row in rows]}, separators=(",", ":"))
     legacy_matrix = json.dumps(
         {"include": [{"name": row["name"]} for row in legacy_rows]}, separators=(",", ":")
     )
     masm32_matrix = json.dumps(
         {"include": [{"name": row["name"]} for row in masm32_rows]}, separators=(",", ":")
+    )
+    mingw_matrix = json.dumps(
+        {"include": [{"name": row["name"]} for row in mingw_rows]}, separators=(",", ":")
     )
     if args.github_output:
         with args.github_output.open("a", encoding="utf-8") as out:
@@ -148,7 +173,9 @@ def main(argv: list[str] | None = None) -> int:
             out.write(f"legacy_rows={len(legacy_rows)}\n")
             out.write(f"masm32_matrix={masm32_matrix}\n")
             out.write(f"masm32_rows={len(masm32_rows)}\n")
-    print("\n".join(row["name"] for row in rows + legacy_rows + masm32_rows))
+            out.write(f"mingw_matrix={mingw_matrix}\n")
+            out.write(f"mingw_rows={len(mingw_rows)}\n")
+    print("\n".join(row["name"] for row in rows + legacy_rows + masm32_rows + mingw_rows))
     return 0
 
 

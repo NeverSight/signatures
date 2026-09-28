@@ -48,26 +48,27 @@
     "extra_directories": []
   },
   {
-    "name": "vs2010-sdk71",
+    "name": "vs2010-media",
     "vs_year": 2010,
-    "media": "https://download.microsoft.com/download/F/1/0/F10113F5-B750-4969-A255-274341AC6BCE/GRMSDK_EN_DVD.iso",
-    "sha256": "27cb38f76095c0acb9b558109f8693b39cbceb796856c15bd575f9e9d0b316c3",
+    "media": "https://archive.org/download/en_visual_studio_2010_professional_x86_dvd_509727/en_visual_studio_2010_professional_x86_dvd_509727.iso",
+    "sha256": "bdfba5df0bd72cffdb398fe885d9e36d052617647c0ae4fd0579a8fc785c95ba",
     "members": [
-      "Setup/vc_stdx86/*",
-      "Setup/vc_stdamd64/*",
-      "Setup/WinSDKBuild/*"
+      "vs_setup.msi",
+      "cab*.cab"
     ],
     "bundle": "",
     "vc_directory": "Program Files/Microsoft Visual Studio 10.0/VC",
-    "version_package": "vc_stdx86.msi",
-    "atlmfc": false,
+    "version_package": "vs_setup.msi",
+    "atlmfc": true,
     "arches": [
       "x86",
       "x64"
     ],
     "extra_directories": [
-      "x86:Program Files/Microsoft SDKs/Windows/v7.1/Lib",
-      "x64:Program Files/Microsoft SDKs/Windows/v7.1/Lib/x64"
+      "x86:Program Files/Microsoft SDKs/Windows/v7.0A/Lib",
+      "x64:Program Files/Microsoft SDKs/Windows/v7.0A/Lib/x64",
+      "x86:Program Files/Microsoft Visual Studio 10.0/DIA SDK/lib",
+      "x64:Program Files/Microsoft Visual Studio 10.0/DIA SDK/lib/amd64"
     ]
   },
   {
@@ -99,7 +100,9 @@
       "x64:Program Files/Microsoft Visual Studio 9.0/VC/crt/src/AMD64/mt_lib",
       "x64:Program Files/Microsoft Visual Studio 9.0/VC/crt/src/AMD64/xmt_lib",
       "x64:Program Files/Microsoft Visual Studio 9.0/VC/crt/src/AMD64/dll_lib",
-      "x64:Program Files/Microsoft Visual Studio 9.0/VC/crt/src/AMD64/xdll_lib"
+      "x64:Program Files/Microsoft Visual Studio 9.0/VC/crt/src/AMD64/xdll_lib",
+      "x86:Program Files/Microsoft Visual Studio 9.0/DIA SDK/lib",
+      "x64:Program Files/Microsoft Visual Studio 9.0/DIA SDK/lib/amd64"
     ]
   },
   {

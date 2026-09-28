@@ -1,25 +1,25 @@
 {
   "file": "pe/x86/32/vs2008.pat",
   "generator": {
-    "neverd_ref": "cd6dc926ce06920492213ead58c14e39e890598f",
-    "release": "msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "neverd_ref": "626e9eea16c0dc8dc49b8bc4fe6d2f46236ac1e4",
+    "release": "msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 30707,
+  "lines": 30144,
   "sources": [
     {
       "arch": "x86",
-      "archive_sha256": "386533ba799e500919d18ee514e86eae10d9170509801dde2f083de63cafe573",
+      "archive_sha256": "ff59b756b2a0ab71ed17a9dbca20247f815d13b6c2259de4157fa5999ac548be",
       "asset": "vs2008-9.0.21022-x86",
       "kind": "toolset",
-      "sigmaker": "Generated 114095 signatures \u2192 vs2008-9.0.21022-x86.pat (9348 objects, 13622 for another machine skipped, 70021 non-object members, 3587 functions below --min-size, 51137 functions stating too few exact bytes)",
+      "sigmaker": "Generated 114099 signatures \u2192 vs2008-9.0.21022-x86.pat (9351 objects, 13622 for another machine skipped, 70021 non-object members, 3587 functions below --min-size, 51138 functions stating too few exact bytes)",
       "toolset_version": "9.0.21022"
     },
     {
-      "archive_sha256": "f04062fc9f4bd1212adc5d27ebb4beac1f33af367670aea8cb9e6f9ab766d191",
+      "archive_sha256": "33be1c716e57d217d48d4424ee33375f647d8b352b2a5290e52f0374f1596eda",
       "asset": "vs2008.imported",
       "kind": "imported",
-      "lines": 18
+      "lines": 16
     }
   ]
 }
