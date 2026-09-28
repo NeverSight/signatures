@@ -473,6 +473,31 @@ class CollectedReleaseTests(unittest.TestCase):
         self.assertEqual(lines, [f"{imported} 00 0000 0015 :0000 _deflate"])
         self.assertEqual(report.superseded, 0)
 
+    def test_a_build_that_pads_the_routine_after_it_still_reproduces_it(self) -> None:
+        # rizin measured zcfree to its ret; neverd-sigmaker takes in the NOPs
+        # that pad the object's code section after it.
+        code = "5589E583EC188B450C890424" + "8B4508" * 4 + "C9C3"
+        reference = pe_reference(reference_line("_zcfree", code + "909090"))
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "mingw32-zlib.pat"
+            path.write_text(f"{code} 00 0000 {len(code) // 2:04X} :0000 _zcfree\n")
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, reference, report, defined=set())
+        self.assertEqual(lines, [])
+        self.assertEqual(report.reproduced, 1)
+
+    def test_code_after_the_line_is_not_padding(self) -> None:
+        code = "5589E583EC188B450C890424" + "8B4508" * 4 + "C9C3"
+        reference = pe_reference(reference_line("_zcfree", code + "5589E5"))
+        imported = f"{code} 00 0000 {len(code) // 2:04X} :0000 _zcfree"
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "mingw32-zlib.pat"
+            path.write_text(imported + "\n")
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, reference, report, defined=set())
+        self.assertEqual(lines, [imported])
+        self.assertEqual(report.reproduced, 0)
+
     def test_unresolved_lines_of_a_collected_release_are_kept_as_comments(self) -> None:
         reference = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28" * 5 + "C3"))
         unknown = "AABBCCDD" * 5

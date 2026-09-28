@@ -529,6 +529,36 @@ def among(line: Line, names: set[str], reference: Reference) -> set[str]:
     return agreeing
 
 
+# What fills a code section after its last function: gas pads a COFF code
+# section with NOPs to its alignment, MSVC with INT3s.
+PADDING = frozenset((0x90, 0xCC))
+
+
+def padded_names(line: Line, names: set[str], reference: Reference) -> set[str]:
+    """The names whose functions state a line's bytes in full and run on past
+    its end only into padding.
+
+    rizin measured a function by analysis, which stops at its last
+    instruction; neverd-sigmaker measures it to the next symbol or to the end
+    of its section, so the last function of a section takes in the padding
+    after it. The line and the function are then the same code.
+    """
+
+    lead = parse_hex(line.lead)
+    tail = parse_hex(line.tail) if line.tail else (b"", b"")
+    found = set()
+    for name in names:
+        for function in reference.by_name.get(name, ()):
+            rest, stated = function.values[line.total :], function.mask[line.total :]
+            if not rest or not all(stated) or any(value not in PADDING for value in rest):
+                continue
+            clipped = Function(name, function.values[: line.total], function.mask[: line.total])
+            # Only a checked CRC shows the code is the same.
+            if agrees(line, lead, tail, clipped) is True:
+                found.add(name)
+    return found
+
+
 def opening_names(line: Line, reference: Reference) -> set[str]:
     """The names of longer functions whose opening bytes a line states in full.
 
@@ -698,7 +728,8 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
 
     `defined` is not None when the file's own libraries were collected; its
     file is then built anew from them. A line whose bytes a collected
-    function of the same name states in full is left out as reproduced. When
+    function of the same name states in full, to the line's end or with only
+    padding after it, is left out as reproduced. When
     those libraries are the build the import was made from, `defined` holds
     every name they define, and a line with one of them is left out too:
     they hold that routine, and the line neverd-sigmaker made for it -- or
@@ -769,7 +800,8 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
             continue
         if defined is not None:
             strong, _ = agreeing_names(line, reference)
-            if name in strong or (strong and reference.one_routine(strong | {name})):
+            if (name in strong or (strong and reference.one_routine(strong | {name}))
+                    or padded_names(line, {name}, reference)):
                 report.reproduced += 1
                 continue
             if name in defined:

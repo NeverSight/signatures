@@ -1,0 +1,34 @@
+[
+  {
+    "name": "mingw32-zlib-1.3",
+    "library": "mingw32-zlib",
+    "version": "1.3",
+    "source": "https://github.com/madler/zlib/releases/download/v1.3/zlib-1.3.tar.gz",
+    "sha256": "ff0ba4c292013dbc27530b3a81e1f9a813cd39de01ca5e0f8bf355702efa593e",
+    "sources": [
+      "adler32.c",
+      "compress.c",
+      "crc32.c",
+      "deflate.c",
+      "gzclose.c",
+      "gzlib.c",
+      "gzread.c",
+      "gzwrite.c",
+      "infback.c",
+      "inffast.c",
+      "inflate.c",
+      "inftrees.c",
+      "trees.c",
+      "uncompr.c",
+      "zutil.c"
+    ],
+    "archive": "libz.a",
+    "cflags": [
+      "-O0"
+    ],
+    "arches": [
+      "x86",
+      "x64"
+    ]
+  }
+]
