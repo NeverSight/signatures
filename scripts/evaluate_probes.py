@@ -68,6 +68,12 @@ def parse_truth(path: Path) -> dict[int, MapFunction]:
     return functions
 
 
+def has_truth(probe: Path) -> bool:
+    """Whether a probe has a linker map or truth file to compare with."""
+
+    return probe.with_suffix(".truth.json").is_file() or probe.with_suffix(".map").is_file()
+
+
 def probe_functions(probe: Path) -> dict[int, MapFunction]:
     truth = probe.with_suffix(".truth.json")
     if truth.is_file():
@@ -187,6 +193,11 @@ def main(argv: list[str] | None = None) -> int:
         if arch is None:
             print(f"{probe.name}: cannot tell the architecture from the name", file=sys.stderr)
             return 1
+        # The VS 2012 and 2013 setup programs have no public PDB to turn into
+        # one; the programs after them are still measured.
+        if not has_truth(probe):
+            print(f"{probe.name}: no linker map or truth file to compare with; skipped")
+            continue
         tree = "elf" if probe.read_bytes()[:4] == b"\x7fELF" else "pe"
         source = (f"--sig-base={args.signatures}" if args.auto
                   else f"--sig-dir={args.signatures / tree / directories[arch]}")

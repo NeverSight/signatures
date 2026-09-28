@@ -1,23 +1,23 @@
 {
   "file": "elf/x86/64/ubuntu-libc6.pat",
   "generator": {
-    "neverd_ref": "bd2979cb7c504afcc906c1a68c320c19f76add4b",
+    "neverd_ref": "4428327d9344f12f84123206a05b87c328fccb6a",
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 57935,
+  "lines": 57968,
   "parts": [
     {
       "file": "elf/x86/64/ubuntu-libc6.pat",
-      "lines": 15175
+      "lines": 15181
     },
     {
       "file": "elf/x86/64/ubuntu-libc6.part2.pat",
-      "lines": 23592
+      "lines": 23621
     },
     {
       "file": "elf/x86/64/ubuntu-libc6.part3.pat",
-      "lines": 19168
+      "lines": 19166
     }
   ],
   "sources": [

@@ -1,19 +1,19 @@
 {
   "file": "elf/arm/64/android-ndk.pat",
   "generator": {
-    "neverd_ref": "bd2979cb7c504afcc906c1a68c320c19f76add4b",
+    "neverd_ref": "4428327d9344f12f84123206a05b87c328fccb6a",
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 58196,
+  "lines": 58278,
   "parts": [
     {
       "file": "elf/arm/64/android-ndk.pat",
-      "lines": 37169
+      "lines": 37174
     },
     {
       "file": "elf/arm/64/android-ndk.part2.pat",
-      "lines": 21027
+      "lines": 21104
     }
   ],
   "sources": [
