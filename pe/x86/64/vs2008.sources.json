@@ -1,0 +1,25 @@
+{
+  "file": "pe/x86/64/vs2008.pat",
+  "generator": {
+    "neverd_ref": "22d94b450c945f8dee0b511bd8cfea23e43a5c93",
+    "release": "msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 22089,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "2972d3425df4915ac7d323e806f0389c507d4e80fd20111324693628a54aca6c",
+      "asset": "vs2008-9.0.21022-x64",
+      "kind": "toolset",
+      "sigmaker": "Generated 99324 signatures \u2192 /home/ad/code/neverd-msvc-sigs/exp/ci-replay/x64/neverd-msvc-sigs-sj35ca7d/vs2008-9.0.21022-x64.pat (4749 objects, 10534 for another machine skipped, 59845 non-object members, 1815 functions below --min-size, 24243 functions stating too few exact bytes)",
+      "toolset_version": "9.0.21022"
+    },
+    {
+      "archive_sha256": "c781944a702c2caa8c64539062bd626ac2f208b05d9b3ea4d9e10253fa926a95",
+      "asset": "vs2008.imported",
+      "kind": "imported",
+      "lines": 3
+    }
+  ]
+}

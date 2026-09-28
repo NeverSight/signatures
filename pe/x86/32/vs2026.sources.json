@@ -1,11 +1,11 @@
 {
   "file": "pe/x86/32/vs2026.pat",
   "generator": {
-    "neverd_ref": "f6ac98c003e7e2c1c85c3d6c582ef77722eb64dd",
-    "release": "msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "neverd_ref": "22d94b450c945f8dee0b511bd8cfea23e43a5c93",
+    "release": "msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 48200,
+  "lines": 59445,
   "sources": [
     {
       "arch": "x86",
@@ -13,7 +13,7 @@
       "asset": "vs2026-14.50.35717-x86",
       "compiler_version": "19.50.35738.0",
       "kind": "toolset",
-      "sigmaker": "Generated 329756 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-9qq_7xy2/vs2026-14.50.35717-x86.pat (8061 objects, 16002 for another machine skipped, 71207 non-object members, 21731 functions below --min-size, 131199 functions stating too few exact bytes)",
+      "sigmaker": "Generated 329756 signatures \u2192 /home/ad/code/neverd-msvc-sigs/exp/ci-replay/x86/neverd-msvc-sigs-wu4l9z15/vs2026-14.50.35717-x86.pat (8061 objects, 16002 for another machine skipped, 71207 non-object members, 21731 functions below --min-size, 131199 functions stating too few exact bytes)",
       "toolset_version": "14.50.35717"
     },
     {
@@ -22,7 +22,7 @@
       "asset": "vs2026-14.51.36231-x86",
       "compiler_version": "19.51.36257.0",
       "kind": "toolset",
-      "sigmaker": "Generated 427289 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-9qq_7xy2/vs2026-14.51.36231-x86.pat (8843 objects, 17060 for another machine skipped, 78313 non-object members, 21887 functions below --min-size, 161431 functions stating too few exact bytes)",
+      "sigmaker": "Generated 427289 signatures \u2192 /home/ad/code/neverd-msvc-sigs/exp/ci-replay/x86/neverd-msvc-sigs-wu4l9z15/vs2026-14.51.36231-x86.pat (8843 objects, 17060 for another machine skipped, 78313 non-object members, 21887 functions below --min-size, 161431 functions stating too few exact bytes)",
       "toolset_version": "14.51.36231"
     }
   ]
