@@ -3,10 +3,12 @@
 # pinned revision.
 #
 # One job builds neverd-sigmaker against the published prebuilt LLVM
-# package; one job per architecture turns that architecture's archives into
-# lines and merges them into the files already here; a final job commits the
-# result, and only when a manual run asks it to. A pull request that edits
-# this workflow only builds the generator.
+# package; one job per architecture rebuilds every file of that architecture
+# that has library archives, from those archives alone; a final job commits
+# the result, and only when a manual run asks it to. Files with no archives
+# behind them (the imported vs2005-vs2013, masm32 and mingw32-zlib files) are
+# left as they are. A pull request that edits this workflow only builds the
+# generator.
 
 name: Build MSVC signatures
 
@@ -14,11 +16,16 @@ on:
   workflow_dispatch:
     inputs:
       release:
-        description: Library release tag (default the newest msvc-libs-* release, drafts included)
+        description: Library release tags, space separated (default every msvc-libs-* release, drafts included). A file is rebuilt from the archives of these releases alone.
         required: false
         type: string
       publish:
         description: Commit the regenerated files to the branch this runs on
+        required: false
+        type: boolean
+        default: false
+      migrate_imported:
+        description: First move the files imported from rizin's sigdb-source to NeverD's rules again, starting from the imported text (scripts/migrate_imported_signatures.py)
         required: false
         type: boolean
         default: false
@@ -38,7 +45,7 @@ env:
   # produce these files. Pinning it is what makes a regenerated file
   # attributable to a known generator.
   NEVERD_REPO: NeverSight/NeverD
-  NEVERD_REF: 87f2f57e437995bddfe425c39c697a9039346f9f
+  NEVERD_REF: f6ac98c003e7e2c1c85c3d6c582ef77722eb64dd
 
 jobs:
   sigmaker:
@@ -110,6 +117,9 @@ jobs:
     steps:
       - name: Check out the signature database
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The migration lists the imported files from the import commit.
+          fetch-depth: 0
 
       - name: Download the generator
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
@@ -117,37 +127,61 @@ jobs:
           name: neverd-sigmaker
           path: generator
 
-      - name: Resolve the library release
+      - name: Download this architecture's archives
         id: release
         env:
           GH_TOKEN: ${{ github.token }}
           REQUESTED: ${{ inputs.release }}
-        run: |
-          set -euo pipefail
-          tag="${REQUESTED:-}"
-          if [ -z "$tag" ]; then
-            tag="$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
-              --jq '[.[] | select(.tag_name | startswith("msvc-libs-"))] | sort_by(.created_at) | last | .tag_name')"
-          fi
-          if [ -z "$tag" ] || [ "$tag" = "null" ]; then
-            echo "no msvc-libs-* release to build from" >&2
-            exit 1
-          fi
-          echo "tag=$tag" >> "$GITHUB_OUTPUT"
-          echo "building from $tag"
-
-      - name: Download this architecture's archives
-        env:
-          GH_TOKEN: ${{ github.token }}
-          TAG: ${{ steps.release.outputs.tag }}
           ARCH: ${{ matrix.arch }}
         run: |
           set -euo pipefail
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir assets \
-            --pattern "*-${ARCH}.tar.zst" --pattern "*-${ARCH}.json"
+          if [ -n "${REQUESTED:-}" ]; then
+            tags="$REQUESTED"
+          else
+            # Every library release, newest first; an asset a newer release
+            # already supplied is not fetched again.
+            tags="$(gh api "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
+              --jq '[.[] | select(.tag_name | startswith("msvc-libs-"))] | sort_by(.created_at) | reverse | .[].tag_name')"
+          fi
+          if [ -z "$tags" ]; then
+            echo "no msvc-libs-* release to build from" >&2
+            exit 1
+          fi
+          mkdir -p assets
+          for tag in $tags; do
+            for name in $(gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
+                --jq ".assets[].name | select(endswith(\"-${ARCH}.json\"))"); do
+              stem="${name%.json}"
+              [ -f "assets/$name" ] && continue
+              gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir assets \
+                --pattern "$name" --pattern "$stem.tar.zst"
+              echo "$tag: $stem"
+            done
+          done
+          echo "tag=$(echo "$tags" | tr '\n' ' ' | sed 's/ *$//')" >> "$GITHUB_OUTPUT"
           ls -la assets
 
-      - name: Generate and merge
+      # Only pe/x86 received imported files; the ARM directories hold none.
+      - name: Rename the imported lines
+        if: inputs.migrate_imported && (matrix.arch == 'x86' || matrix.arch == 'x64')
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: |
+          set -euo pipefail
+          chmod +x generator/neverd-sigmaker
+          # Every rewritten file is read back with the loader's parser, which
+          # rejects a whole directory for one bad line.
+          python3 scripts/migrate_imported_signatures.py \
+            --sigmaker generator/neverd-sigmaker \
+            --verify-with generator/neverd-sigmaker \
+            --assets assets \
+            --arch "$ARCH" \
+            --report "migration-$ARCH.json" \
+            --work "$RUNNER_TEMP"
+
+      # Every archive of the architecture goes in at once: the builder drops
+      # bytes that any file of a directory finds ambiguous from all of them.
+      - name: Generate
         env:
           TAG: ${{ steps.release.outputs.tag }}
         run: |
@@ -157,7 +191,6 @@ jobs:
             --sigmaker generator/neverd-sigmaker \
             --assets assets \
             --output . \
-            --merge-existing \
             --neverd-ref "$NEVERD_REF" \
             --release "$TAG" \
             --work "$RUNNER_TEMP"
@@ -175,6 +208,10 @@ jobs:
           esac
           mkdir -p "staged/$dir"
           cp "$dir"/*.pat "$dir"/*.sources.json "staged/$dir/"
+          if [ -f "migration-$ARCH.json" ]; then
+            mkdir -p staged/reports
+            cp "migration-$ARCH.json" staged/reports/
+          fi
           git status --short -- "$dir"
           du -h "staged/$dir"/*
 
@@ -212,13 +249,15 @@ jobs:
           set -euo pipefail
           cp -R staged/. .
           rm -rf staged
-          if [ -z "$(git status --porcelain -- pe)" ]; then
+          if [ -z "$(git status --porcelain -- pe reports)" ]; then
             echo "the signatures are unchanged"
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- pe
+          # The migration reports list every line it removed or could not
+          # rename; they belong beside the files they describe.
+          git add -- pe reports
           git commit \
             -m 'signatures: regenerate pe/ from MSVC and Windows SDK libraries' \
             -m "Produced by neverd-sigmaker at ${NEVERD_REPO}@${NEVERD_REF}, run ${GITHUB_RUN_ID}."
