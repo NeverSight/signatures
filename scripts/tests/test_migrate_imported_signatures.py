@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
+import json
+import os
 import shutil
 import subprocess
 import sys
+import tarfile
 import tempfile
+import textwrap
 import unittest
 from pathlib import Path
 
@@ -523,6 +527,47 @@ class CollectedReleaseTests(unittest.TestCase):
                              {"vs2013": True, "masm32": True, "mingw32-zlib": False})
         self.assertEqual(migrate.release_of(Path("pe/x86/32/vs2013.pat")), "vs2013")
         self.assertEqual(migrate.release_of(Path("pe/x86/32/masm32.pat")), "masm32")
+
+
+# Writes one whole-function line per library it is given, named after it.
+FAKE_SIGMAKER = textwrap.dedent(
+    """\
+    #!{python}
+    import sys
+    from pathlib import Path
+
+    args = sys.argv[1:]
+    output = Path(args[args.index("-o") + 1])
+    stems = [Path(a).stem for a in args[: args.index("-o")]]
+    output.write_text("".join(f"AABBCCDD 00 0000 0004 :0000 {{s}}\\n" for s in stems))
+    """
+)
+
+
+@unittest.skipUnless(os.name == "posix" and shutil.which("zstd"), "needs POSIX and zstd")
+class ReferenceTests(unittest.TestCase):
+    def test_mingw_archives_are_read_like_msvc_libraries(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            sigmaker = root / "neverd-sigmaker"
+            sigmaker.write_text(FAKE_SIGMAKER.format(python=sys.executable))
+            sigmaker.chmod(0o755)
+            assets = root / "assets"
+            assets.mkdir()
+            library = root / "libz.a"
+            library.write_bytes(b"!<arch>\n")
+            archive = assets / "mingw32-zlib-1.3-x86.tar"
+            with tarfile.open(archive, "w") as bundle:
+                bundle.add(library, "mingw32-zlib/x86/libz.a")
+            subprocess.run(["zstd", "-q", "--rm", str(archive)], check=True)
+            (assets / "mingw32-zlib-1.3-x86.json").write_text(json.dumps({
+                "asset": "mingw32-zlib-1.3-x86", "kind": "library",
+                "library": "mingw32-zlib", "archive": {"name": archive.name + ".zst"}}))
+            work = root / "work"
+            work.mkdir()
+            reference = migrate.build_pe_reference(sigmaker, assets, "x86", work)
+        self.assertIn("libz", reference.names)
+        self.assertEqual(reference.functions, 1)
 
 
 class ImportedFilesTests(unittest.TestCase):

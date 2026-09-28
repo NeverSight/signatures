@@ -824,6 +824,11 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
     return output
 
 
+# MSVC's archives and objects, and the GNU ar archives and objects MinGW
+# builds; both hold COFF objects. NeverD's builder reads the same.
+LIBRARY_SUFFIXES = (".lib", ".obj", ".a", ".o")
+
+
 def build_pe_reference(sigmaker: Path, assets: Path, arch: str, work: Path) -> Reference:
     reference = Reference("pe")
     reference.callee_cleanup = arch == "x86"
@@ -841,7 +846,7 @@ def build_pe_reference(sigmaker: Path, assets: Path, arch: str, work: Path) -> R
         )
         libraries = sorted(
             str(path) for path in unpacked.rglob("*")
-            if path.is_file() and path.suffix.lower() in (".lib", ".obj")
+            if path.is_file() and path.suffix.lower() in LIBRARY_SUFFIXES
         )
         release = asset_release(manifest)
         for library in libraries:
