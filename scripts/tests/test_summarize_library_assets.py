@@ -89,6 +89,32 @@ class SummarizeTests(unittest.TestCase):
         self.assertIn("| `mingw32-zlib-1.3-x86` | mingw32-zlib | 1 "
                       "| https://example.org/zlib-1.3.tar.gz |", notes)
 
+    def test_notes_name_only_what_the_release_holds(self) -> None:
+        summarize.main([str(self.assets), "--tag", "t", "--commit", "c"])
+        notes = (self.assets / "RELEASE.md").read_text()
+        self.assertIn("unmodified Microsoft", notes)
+        self.assertNotIn("## Toolsets", notes)
+        self.assertNotIn("sigdb-source", notes)
+
+        elf = self.assets.parent / "elf"
+        elf.mkdir()
+        library = self.assets.parent / "libc.a"
+        library.write_bytes(b"!<arch>\n")
+        collector.emit_asset(
+            output=elf, asset="ubuntu-libc6-x64", kind="library", arch="x64",
+            files=[collector.CollectedFile(library, Path("lib/libc.a"))],
+            extra={"library": "ubuntu-libc6", "format": "elf",
+                   "sources": [{"package": "a.deb"}], "unavailable": []},
+            level=3,
+        )
+        summarize.main([str(elf), "--tag", "t", "--commit", "c"])
+        notes = (elf / "RELEASE.md").read_text()
+        self.assertIn("rizin's sigdb-source records", notes)
+        self.assertNotIn("Microsoft", notes)
+        self.assertNotIn("## Toolsets", notes)
+        self.assertNotIn("## Windows SDKs", notes)
+        self.assertIn("| `ubuntu-libc6-x64` | ubuntu-libc6 |", notes)
+
     def test_archive_that_disagrees_with_its_manifest_fails(self) -> None:
         archive = self.assets / "winsdk-10.0.26100.0-x64.tar.zst"
         archive.write_bytes(archive.read_bytes() + b"tampered")

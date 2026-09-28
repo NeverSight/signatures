@@ -22,13 +22,24 @@ import json
 import sys
 from pathlib import Path
 
-LICENSE_NOTE = """\
-These archives hold unmodified static libraries from Microsoft Visual Studio
-and the Windows SDK, collected from GitHub-hosted runner images so that the
-NeverD signature files in this repository can be traced to, and regenerated
-from, the exact bytes they were made from. They remain subject to the license
-terms of the products they come from; they are kept here as signature-build
-inputs, not as a redistribution of those products.
+PURPOSE = """\
+These archives hold static libraries so that the NeverD signature files in
+this repository can be traced to, and regenerated from, the exact bytes they
+were made from.
+"""
+
+MICROSOFT_NOTE = """\
+The Visual Studio and Windows SDK archives hold unmodified Microsoft
+libraries. They remain subject to the license terms of the products they come
+from; they are kept here as signature-build inputs, not as a redistribution of
+those products.
+"""
+
+ELF_NOTE = """\
+The ELF archives hold the unmodified static libraries of the Ubuntu packages
+and Android NDK releases that rizin's sigdb-source records as the sources of
+its ELF pattern files, each package checked against the SHA-1 recorded there.
+They remain under the licenses of the packages they come from.
 """
 
 
@@ -67,12 +78,19 @@ def index_entry(manifest: dict) -> dict:
 
 
 def release_notes(manifests: list[dict], tag: str, commit: str) -> str:
-    lines = [f"# {tag}", "", LICENSE_NOTE, "## Toolsets", ""]
-    lines.append("| Asset | Visual Studio | Toolset | Compiler | ATL/MFC | Files |")
-    lines.append("| --- | --- | --- | --- | --- | --- |")
-    for manifest in manifests:
-        if manifest["kind"] != "toolset":
-            continue
+    lines = [f"# {tag}", "", PURPOSE]
+    # A release notes the terms of what it holds, and lists only the kinds
+    # of archive it has: an ELF release holds no Microsoft library.
+    if any(manifest["kind"] in ("toolset", "winsdk") for manifest in manifests):
+        lines.append(MICROSOFT_NOTE)
+    if any(manifest.get("format") == "elf" for manifest in manifests):
+        lines.append(ELF_NOTE)
+    toolsets = [manifest for manifest in manifests if manifest["kind"] == "toolset"]
+    if toolsets:
+        lines += ["## Toolsets", ""]
+        lines.append("| Asset | Visual Studio | Toolset | Compiler | ATL/MFC | Files |")
+        lines.append("| --- | --- | --- | --- | --- | --- |")
+    for manifest in toolsets:
         studio = manifest.get("visual_studio") or {}
         product = studio.get("product_display_version") or studio.get("installation_version") or ""
         lines.append(
@@ -82,12 +100,12 @@ def release_notes(manifests: list[dict], tag: str, commit: str) -> str:
             f"| {'yes' if manifest.get('atlmfc') else 'no'} "
             f"| {len(manifest['files'])} |"
         )
-    lines += ["", "## Windows SDKs", ""]
-    lines.append("| Asset | SDK | Files |")
-    lines.append("| --- | --- | --- |")
-    for manifest in manifests:
-        if manifest["kind"] != "winsdk":
-            continue
+    sdks = [manifest for manifest in manifests if manifest["kind"] == "winsdk"]
+    if sdks:
+        lines += ["", "## Windows SDKs", ""]
+        lines.append("| Asset | SDK | Files |")
+        lines.append("| --- | --- | --- |")
+    for manifest in sdks:
         lines.append(
             f"| `{manifest['asset']}` | {manifest.get('windows_sdk_version', '')} "
             f"| {len(manifest['files'])} |"

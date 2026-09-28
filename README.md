@@ -70,12 +70,14 @@ A line is kept only if its bytes identify one routine. Lines that state the
 same bytes under names they share are one routine's, under the symbols each
 build of the library defines, and become one line with all of their names.
 When lines state the same bytes under names with nothing in common, all of
-them are dropped, because any one name would be a guess, unless the file's lines name different routines at a
-branch they all make: then the one whose branch NeverD confirms is taken. NeverD may apply every file of a directory together, so
-this holds across the directory. A line is also dropped when a routine of
-another name, at least as long, states every byte the line states: NeverD
-compares a line only as far as the line's own length and accepts any byte
-where the line has a wildcard, so the line would name that routine too.
+them are dropped, because any one name would be a guess, unless the file's
+lines name different routines at a branch they all make: then the one whose
+branch NeverD confirms is taken. NeverD may apply every file of a directory
+together, so this holds across the directory. A line is also dropped when a
+routine of another name, at least as long, states every byte the line
+states: NeverD compares a line only as far as the line's own length and
+accepts any byte where the line has a wildcard, so the line would name that
+routine too.
 
 ## Windows (pe/) signatures
 
