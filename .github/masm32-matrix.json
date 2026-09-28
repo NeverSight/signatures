@@ -1,0 +1,30 @@
+[
+  {
+    "name": "masm32-11r",
+    "version": "11r",
+    "media": "http://www.oby.ro/masm32/masm32v11r.zip",
+    "sha256": "362a88632cd646d46d580d3da8342e0b95bc666a8f54764e5c4153b6d8c7fdeb",
+    "build": ["m32lib", "fpulib", "datetime"]
+  },
+  {
+    "name": "masm32-10r",
+    "version": "10r",
+    "media": "http://www.oby.ro/masm32/m32v10r.zip",
+    "sha256": "032837d7189cf7c7bb084d1c03a61c825acf4c12fcc0ff3ac39aee2484358555",
+    "build": ["m32lib", "fpulib", "datetime"]
+  },
+  {
+    "name": "masm32-9r",
+    "version": "9r",
+    "media": "http://www.oby.ro/masm32/m32v9r.zip",
+    "sha256": "000a660fce59e619ea608a889b9ae1e43ad1dfcb81ef79ca22a0d67503cd0205",
+    "build": ["m32lib", "fpulib"]
+  },
+  {
+    "name": "masm32-8.2",
+    "version": "8.2",
+    "media": "http://www.codingcrew.de/masm32/download/m32v82r.zip",
+    "sha256": "11e260d9ef28e2500d0d1d47a0c31da0a95988f46e99c644d6fd9885b4f1a77e",
+    "build": ["m32lib", "fpulib"]
+  }
+]

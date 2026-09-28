@@ -29,6 +29,9 @@ DEFAULT_MATRIX = Path(__file__).resolve().parents[1] / ".github" / "msvc-matrix.
 DEFAULT_LEGACY_MATRIX = (
     Path(__file__).resolve().parents[1] / ".github" / "msvc-legacy-matrix.json"
 )
+DEFAULT_MASM32_MATRIX = (
+    Path(__file__).resolve().parents[1] / ".github" / "masm32-matrix.json"
+)
 
 FIELDS = {
     "name": str,
@@ -57,6 +60,15 @@ LEGACY_FIELDS = {
     "atlmfc": bool,
     "arches": list,
     "extra_directories": list,
+}
+
+
+MASM32_FIELDS = {
+    "name": str,
+    "version": str,
+    "media": str,
+    "sha256": str,
+    "build": list,
 }
 
 
@@ -110,17 +122,23 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     parser.add_argument("--matrix", type=Path, default=DEFAULT_MATRIX)
     parser.add_argument("--legacy-matrix", type=Path, default=DEFAULT_LEGACY_MATRIX)
+    parser.add_argument("--masm32-matrix", type=Path, default=DEFAULT_MASM32_MATRIX)
     parser.add_argument("--rows", default="", help="row names to keep, comma or space separated")
     parser.add_argument("--github-output", type=Path, help="append matrix=<json> to this file")
     args = parser.parse_args(argv)
 
     windows = load(args.matrix)
     legacy = load(args.legacy_matrix, LEGACY_FIELDS)
-    rows = select(windows, args.rows, legacy)
-    legacy_rows = select(legacy, args.rows, windows)
+    masm32 = load(args.masm32_matrix, MASM32_FIELDS)
+    rows = select(windows, args.rows, legacy + masm32)
+    legacy_rows = select(legacy, args.rows, windows + masm32)
+    masm32_rows = select(masm32, args.rows, windows + legacy)
     matrix = json.dumps({"include": [for_workflow(row) for row in rows]}, separators=(",", ":"))
     legacy_matrix = json.dumps(
         {"include": [{"name": row["name"]} for row in legacy_rows]}, separators=(",", ":")
+    )
+    masm32_matrix = json.dumps(
+        {"include": [{"name": row["name"]} for row in masm32_rows]}, separators=(",", ":")
     )
     if args.github_output:
         with args.github_output.open("a", encoding="utf-8") as out:
@@ -128,7 +146,9 @@ def main(argv: list[str] | None = None) -> int:
             out.write(f"rows={len(rows)}\n")
             out.write(f"legacy_matrix={legacy_matrix}\n")
             out.write(f"legacy_rows={len(legacy_rows)}\n")
-    print("\n".join(row["name"] for row in rows + legacy_rows))
+            out.write(f"masm32_matrix={masm32_matrix}\n")
+            out.write(f"masm32_rows={len(masm32_rows)}\n")
+    print("\n".join(row["name"] for row in rows + legacy_rows + masm32_rows))
     return 0
 
 

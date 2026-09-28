@@ -55,6 +55,8 @@ on:
       - .github/msvc-legacy-matrix.json
       - scripts/extract_legacy_toolset.py
       - scripts/collect_legacy_media.py
+      - scripts/collect_masm32.py
+      - .github/masm32-matrix.json
       - scripts/tests/**
       - validation/**
 
@@ -75,6 +77,8 @@ jobs:
       rows: ${{ steps.matrix.outputs.rows }}
       legacy_matrix: ${{ steps.matrix.outputs.legacy_matrix }}
       legacy_rows: ${{ steps.matrix.outputs.legacy_rows }}
+      masm32_matrix: ${{ steps.matrix.outputs.masm32_matrix }}
+      masm32_rows: ${{ steps.matrix.outputs.masm32_rows }}
     steps:
       - name: Check out
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -264,13 +268,66 @@ jobs:
           compression-level: 0
           retention-days: 7
 
+  # The MASM32 SDK builds its libraries at install time with its own ML.EXE
+  # and LINK.EXE, which run here under Wine; see scripts/collect_masm32.py.
+  collect-masm32:
+    name: Collect ${{ matrix.name }}
+    needs: verify
+    if: github.event_name == 'workflow_dispatch' && inputs.from_run == '' && needs.verify.outputs.masm32_rows != '0'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.verify.outputs.masm32_matrix) }}
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install Wine and the unpacking tools
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends p7zip-full zstd wine wine32:i386 wine64
+
+      - name: Download the SDK
+        env:
+          NAME: ${{ matrix.name }}
+        run: |
+          set -euo pipefail
+          url="$(python3 -c 'import json, os
+          rows = json.load(open(".github/masm32-matrix.json"))
+          print(next(row["media"] for row in rows if row["name"] == os.environ["NAME"]))')"
+          curl -fsSL --retry 10 --retry-all-errors --retry-delay 15 \
+            -o "$RUNNER_TEMP/sdk.zip" "$url"
+
+      - name: Build and collect
+        env:
+          NAME: ${{ matrix.name }}
+        run: >-
+          python3 scripts/collect_masm32.py
+          --name "$NAME"
+          --zip "$RUNNER_TEMP/sdk.zip"
+          --wine wine
+          --work "$RUNNER_TEMP/work"
+          --output "$RUNNER_TEMP/assets"
+
+      - name: Upload assets
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: msvc-libs-${{ matrix.name }}
+          path: ${{ runner.temp }}/assets
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+
   # A row that fails does not hold the others back: the release carries every
   # row that succeeded, its notes name the run's overall result, and the
   # signature workflow reads the union of all msvc-libs-* releases, so a
   # later run only has to supply what this one missed.
   release:
     name: Create library release
-    needs: [collect, collect-legacy]
+    needs: [collect, collect-legacy, collect-masm32]
     if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 120
@@ -296,6 +353,7 @@ jobs:
           INPUT_TAG: ${{ inputs.tag }}
           COLLECT_RESULT: ${{ needs.collect.result }}
           LEGACY_RESULT: ${{ needs.collect-legacy.result }}
+          MASM32_RESULT: ${{ needs.collect-masm32.result }}
           FROM_RUN: ${{ inputs.from_run }}
         run: |
           set -euo pipefail
@@ -305,10 +363,11 @@ jobs:
           if [ -n "$FROM_RUN" ]; then
             printf '\nThe archives were collected by run %s.\n' "$FROM_RUN" >> assets/RELEASE.md
           elif { [ "$COLLECT_RESULT" != "success" ] && [ "$COLLECT_RESULT" != "skipped" ]; } \
-              || { [ "$LEGACY_RESULT" != "success" ] && [ "$LEGACY_RESULT" != "skipped" ]; }; then
+              || { [ "$LEGACY_RESULT" != "success" ] && [ "$LEGACY_RESULT" != "skipped" ]; } \
+              || { [ "$MASM32_RESULT" != "success" ] && [ "$MASM32_RESULT" != "skipped" ]; }; then
             {
               echo
-              echo "> Not every collection row succeeded in run $GITHUB_RUN_ID ($COLLECT_RESULT, legacy $LEGACY_RESULT);"
+              echo "> Not every collection row succeeded in run $GITHUB_RUN_ID ($COLLECT_RESULT, legacy $LEGACY_RESULT, masm32 $MASM32_RESULT);"
               echo "> this release holds the rows listed above. Rerun the workflow to add the rest."
             } >> assets/RELEASE.md
           fi

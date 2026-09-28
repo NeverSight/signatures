@@ -460,6 +460,19 @@ class CollectedReleaseTests(unittest.TestCase):
         self.assertEqual(lines, [])
         self.assertEqual(report.superseded, 1)
 
+    def test_another_build_supersedes_only_what_its_bytes_reproduce(self) -> None:
+        # zlib compiled here defines deflate too, but not with these bytes:
+        # the imported line is rizin's build of it and stays.
+        reference = pe_reference(reference_line("_deflate", "5589E5" + "90" * 16 + "5DC3"))
+        imported = "5589E5" + "CC" * 16 + "5DC3"
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "mingw32-zlib.pat"
+            path.write_text(f"{imported} 00 0000 0015 :0000 _deflate\n")
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, reference, report, defined=set())
+        self.assertEqual(lines, [f"{imported} 00 0000 0015 :0000 _deflate"])
+        self.assertEqual(report.superseded, 0)
+
     def test_unresolved_lines_of_a_collected_release_are_kept_as_comments(self) -> None:
         reference = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28" * 5 + "C3"))
         unknown = "AABBCCDD" * 5
@@ -477,9 +490,14 @@ class CollectedReleaseTests(unittest.TestCase):
             (assets / "vs2013-12.0.21005-x86.json").write_text(
                 '{"kind": "toolset", "visual_studio": {"year": 2013}}')
             (assets / "winsdk-10.0.26100.0-x86.json").write_text('{"kind": "winsdk"}')
-            self.assertEqual(migrate.collected_releases(assets, "x86"), {2013})
-        self.assertEqual(migrate.release_of(Path("pe/x86/32/vs2013.pat")), 2013)
-        self.assertIsNone(migrate.release_of(Path("pe/x86/32/masm32.pat")))
+            (assets / "masm32-11r-x86.json").write_text(
+                '{"kind": "library", "library": "masm32", "reproduces_import": true}')
+            (assets / "zlib-1.3-gcc13-x86.json").write_text(
+                '{"kind": "library", "library": "mingw32-zlib", "reproduces_import": false}')
+            self.assertEqual(migrate.collected_releases(assets, "x86"),
+                             {"vs2013": True, "masm32": True, "mingw32-zlib": False})
+        self.assertEqual(migrate.release_of(Path("pe/x86/32/vs2013.pat")), "vs2013")
+        self.assertEqual(migrate.release_of(Path("pe/x86/32/masm32.pat")), "masm32")
 
 
 class ImportedFilesTests(unittest.TestCase):

@@ -45,7 +45,7 @@ env:
   # produce these files. Pinning it is what makes a regenerated file
   # attributable to a known generator.
   NEVERD_REPO: NeverSight/NeverD
-  NEVERD_REF: 22d94b450c945f8dee0b511bd8cfea23e43a5c93
+  NEVERD_REF: 5338f26368b58fa02b34c10b26d493c88ebe8d5c
 
 jobs:
   sigmaker:

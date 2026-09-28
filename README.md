@@ -251,10 +251,14 @@ downloads and checks against rizin's SHA-1s. For each line:
 6. A line named after a section, label or data object, which no library
    function explained, is removed.
 7. An ELF line of the other pointer width's code moves to that directory.
-8. In a file whose release's libraries were collected, a line those
-   libraries reproduce, or whose routine they define at all, is left out:
-   the line `neverd-sigmaker` made for that routine, or its decision to make
-   none, stands. The rest go to `<name>.imported`.
+8. In a file whose libraries were collected, a line those libraries
+   reproduce is left out, and the rest go to `<name>.imported`. When the
+   collected libraries are the very build the import was made from (a Visual
+   Studio release's RTM libraries, the MASM32 SDK's libraries built from its
+   sources with its own assembler), a line whose routine they define at all is
+   left out too: the line `neverd-sigmaker` made for that routine, or its
+   decision to make none, stands. A library asset states which it is
+   (`reproduces_import`).
 9. A line with no linkage name is kept as a `; unresolved:` comment, which
    NeverD does not read.
 
