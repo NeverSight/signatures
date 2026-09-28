@@ -144,6 +144,10 @@ Two workflows produce the generated files:
      Ubuntu's MinGW-w64 cross compilers, and archives it in ar's
      deterministic mode, recording the compiler and header packages
      ([`scripts/collect_mingw_library.py`](scripts/collect_mingw_library.py)).
+   - One Ubuntu job per row of
+     [`.github/elf-matrix.json`](.github/elf-matrix.json) collects the static
+     libraries of an ELF file's packages; see
+     [Linux and Android (elf/) signatures](#linux-and-android-elf-signatures).
 2. [`msvc-signatures.yml`](.github/workflows/msvc-signatures.yml) builds
    `neverd-sigmaker` at a pinned NeverD revision and runs NeverD's
    [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/278e2f2e98af90ed358e25fcffbc84d82d787cd4/scripts/signatures/build_msvc_signatures.py)
@@ -163,6 +167,52 @@ drafts unless `publish_release` is set. The archives hold unmodified Microsoft
 libraries, which stay under the license terms of Visual Studio and the Windows
 SDK. They are kept so that every line traces back to the exact bytes it came
 from, not to redistribute the libraries.
+
+## Linux and Android (elf/) signatures
+
+| File | Built from |
+| --- | --- |
+| `ubuntu-libc6.pat` | glibc 2.3.2 to 2.36: `libc.a`, `libpthread.a`, `librt.a`, `libanl.a`, `libutil.a` and `libresolv.a` of 338 `libc6-dev` packages (x64) |
+| `ubuntu-libgcc-7.pat` to `ubuntu-libgcc-12.pat` | GCC 7 to 12's `libgcc.a` and `libgcc_eh.a` (x64) |
+| `ubuntu-libstdc++-5.pat` to `ubuntu-libstdc++-12.pat` | GCC 5 to 12's `libstdc++.a`, `libsupc++.a` and `libstdc++fs.a` (x64) |
+| `ubuntu-libc++-7.pat` to `ubuntu-libc++-15.pat` | LLVM 7 to 15's `libc++.a` and `libc++fs.a` (x64) |
+| `ubuntu-musl.pat` | musl 0.9.14 to 1.2.3's `libc.a` (x64) |
+| `ubuntu-openssl.pat` | OpenSSL 0.9.7 to 3.0.5's `libcrypto.a` and `libssl.a` (x64) |
+| `ubuntu-zlib.pat` | zlib 1.2.1 to 1.2.13's `libz.a` (x64) |
+| `ubuntu-libsodium.pat` | libsodium 1.0.0 to 1.0.18's `libsodium.a` (x64) |
+| `ubuntu-libseccomp.pat` | libseccomp up to 2.5.4's `libseccomp.a` (x64) |
+| `android-ndk.pat` | The Android NDK r9d to r25b: bionic for every API level, the C++ runtimes (libc++, GNU libstdc++, STLport, gabi++) and the toolchains' Android runtimes (libgcc, compiler-rt, libunwind, libatomic, OpenMP), but none of the libraries its toolchains run on the host (x86, x64, ARM32, ARM64) |
+| `fedora-zlib.pat` | zlib 1.3 compiled without optimization by Fedora 38's GCC 13.2.1 and clang 16.0.6 (x86, x64) |
+
+Every file but `fedora-zlib.pat` is built from the packages rizin's
+sigdb-source records for it: each `ubuntu-*` file from its library's `-dev`
+package in every Ubuntu release from 4.10 to 22.10 that carried one, and
+`android-ndk.pat` from the NDK releases. One Ubuntu job per row of
+[`.github/elf-matrix.json`](.github/elf-matrix.json)
+([`scripts/collect_elf_packages.py`](scripts/collect_elf_packages.py))
+downloads them, Ubuntu's packages from Launchpad and the NDK from Google,
+checks each against the SHA-1 sigdb-source records, and archives the static
+libraries it holds by their objects' ELF class and machine, in
+`msvc-libs-*` releases like the Windows libraries. A library whose bytes
+another package already supplied is stored once; the manifest still lists
+the package.
+
+`fedora-zlib.pat` has no package behind it: rizin's lines came from
+[signature-builds-zlib](https://github.com/feliwir/signature-builds-zlib),
+which configured zlib 1.3 with CMake and no build type and compiled it with
+a Fedora machine's `gcc` and `clang`. One job per row of
+[`.github/fedora-matrix.json`](.github/fedora-matrix.json)
+([`scripts/collect_fedora_library.py`](scripts/collect_fedora_library.py))
+builds it the same way with the compilers Fedora 38 had when the lines were
+made, unpacked from the packages Koji keeps and checked against their
+SHA-256. Of rizin's 561 lines, that build reproduces 538, and 15 state bytes
+that several of its routines share. The other 8 state a relocated field, or
+a CRC over one, as rizin read it with the object's relocations applied at its
+own load address (`0x08000000`), which no program's bytes match.
+
+An ELF image has no Rich header to name the release of its libraries, so
+`neverd sigs --auto` reads every file of its `elf/` directory, and ambiguous
+lines are dropped across the whole directory, as described above.
 
 ## Accuracy
 
@@ -229,9 +279,67 @@ wrong (2.0%).
   the functions MSVC packs directly after a `ret`. Most of the x86 library
   functions still unnamed are ones it does not find.
 - The Visual Studio 2005 to 2013 files have no validation programs with
-  maps. On the setup programs of their media, the Rich header chooses the
-  file of the linker's release (VS 2005, VS 2008, and VS 2010 SP1 for the VS
-  2012 and 2013 installers), and none of their names is disputed.
+  maps, but the setup programs on their media are linked statically with
+  their release's runtime, and the Rich header chooses the file of the
+  linker's release (VS 2005, VS 2008, and VS 2010 SP1 for the VS 2012 and
+  2013 installers). Microsoft's symbol server keeps the public PDBs of some
+  of them, which [`scripts/pdb_truth.py`](scripts/pdb_truth.py) turns into
+  what `evaluate_probes.py` compares with. A public PDB names only public
+  symbols, so a name at a static function cannot be checked either way.
+  - VS 2008's setup program: NeverD names 231 of the 492 functions the PDB
+    names that the release's libraries define. Of its other names, 34 are at
+    static functions, 2 differ from the PDB only in decoration (an ATL
+    header function the program compiled itself with `/Gz` or
+    `/Zc:wchar_t-`), and 1 is wrong.
+  - VS 2010's: 223 of 429. 29 are at static functions, 14 differ only in
+    decoration, 4 name the MFC instantiation of an ATL `CStringT` member
+    whose code is the same, and 2 are wrong.
+  - VS 2005's: 21 of 480, none wrong. NeverD finds only 85 of the program's
+    747 functions: its linker placed read-only data in the code section.
+  - The symbol server has no PDB for the VS 2012 and 2013 setup programs.
+
+### ELF programs
+
+`validation/elf/` holds C and C++ programs linked statically against the
+very packages the ELF files were made from, as
+[`scripts/build_elf_probes.py`](scripts/build_elf_probes.py) builds them, and
+Android programs built with NDK r25b's own clang. Each is compared with the
+symbol table of the same program before it was stripped: a function is a
+library's when one of the archives the program was linked with defines one of
+its names. For an ELF image NeverD reads every file of the directory. Before
+is what the lines imported from rizin, moved to the rules above, named in the
+same programs.
+
+| Programs | Count | Library functions | Named before | Named | Wrong before | Wrong | Disputed before | Disputed |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| glibc 2.27, 2.31, 2.35, `-O2` and `-O0` | 6 | 6,265 | 3,206 (51%) | 4,944 (79%) | 117 | 14 | 79 | 0 |
+| GNU libstdc++ 11, 12 | 2 | 9,509 | 2,915 (31%) | 3,928 (41%) | 176 | 9 | 54 | 0 |
+| zlib 1.2.11 | 1 | 1,182 | 653 (55%) | 961 (81%) | 25 | 0 | 14 | 0 |
+| OpenSSL 3.0 | 1 | 10,726 | 5,278 (49%) | 6,629 (62%) | 1,510 | 2 | 287 | 0 |
+| musl 1.2.2 | 1 | 160 | 0 | 0 | 0 | 0 | 0 | 0 |
+| NDK r25b x64 | 1 | 1,850 | 767 (41%) | 1,251 (68%) | 16 | 2 | 14 | 0 |
+| NDK r25b x86 | 1 | 1,942 | 177 (9%) | 1,419 (73%) | 10 | 0 | 0 | 0 |
+| NDK r25b ARM64, C and C++ | 2 | 5,794 | 461 (8%) | 3,218 (56%) | 6 | 373 | 0 | 6 |
+
+- Most of the names wrong before were OpenSSL's: its `d2i_*`, `i2d_*`,
+  `*_free` and per-cipher routines are the same code up to the object a
+  relocation names, and rizin's lines named one of them. The rebuilt file
+  drops such lines, as described above; of the 1,510 addresses named wrong
+  before, 2 still are.
+- 365 of the 373 ARM64 names counted wrong are the right names 4 bytes late.
+  bionic's assembly syscall stubs begin with a `bti c` landing pad and open
+  their unwind entry after it, so NeverD starts each such function at its
+  second instruction, where the stub of an older NDK without the landing pad
+  matches.
+- musl builds its library without unwind tables, and NeverD's function
+  discovery does not follow the calls from the entry point: it finds 2 of the
+  program's 167 functions, so the signatures have nothing to name.
+- NeverD cannot load the two ARM32 (Thumb-2) Android programs once they are
+  stripped: it decodes the bytes after every call as code, and after a call
+  that does not return, such as `bl abort`, those are the function's literal
+  pool, which decodes as Thumb across the real instructions that follow.
+- There are no other ARM ELF programs, so the ARM32 file has not been
+  measured.
 
 ## Lines imported from rizin
 
@@ -261,15 +369,15 @@ package, and a pattern file per library object. For Visual Studio 2005 to
 release-to-manufacturing builds on the media Microsoft still publishes, and
 for Visual Studio 2010 the very disc sigdb-source names, so the PE files for
 Visual Studio 2005 to 2022 and the Windows SDK are now built from collected
-libraries, as are `masm32.pat` and `mingw32-zlib.pat`.
+libraries, as are `masm32.pat` and `mingw32-zlib.pat`, and every ELF file:
+from the packages sigdb-source records, and `fedora-zlib.pat` from the
+compilers its lines were made with.
 
 [`scripts/migrate_imported_signatures.py`](scripts/migrate_imported_signatures.py)
 moves what remains to the rules above. It starts from the text of the import
 commit every time, and compares each line with every function of the
-libraries it can read: the collected MSVC and SDK libraries for `pe/`, and for
-`elf/` the packages rizin recorded in sigdb-source, which
-[`scripts/fetch_imported_sources.py`](scripts/fetch_imported_sources.py)
-downloads and checks against rizin's SHA-1s. For each line:
+libraries it can read: the collected MSVC and SDK libraries for `pe/`, and
+the collected ELF libraries for `elf/`. For each line:
 
 1. A tail stated from the end of the leading bytes is moved to start after
    the CRC span. A line that then states fewer than 16 bytes is removed.
@@ -290,7 +398,16 @@ downloads and checks against rizin's SHA-1s. For each line:
    `ret N`.
 6. A line named after a section, label or data object, which no library
    function explained, is removed.
-7. An ELF line of the other pointer width's code moves to that directory.
+7. rizin filed some ELF lines under the other pointer width: 32-bit code
+   among the 64-bit NDK lines, and some 64-bit code among the ARM32 ones. A
+   line whose bytes this width's libraries do not state, but a function of
+   the other width's libraries does, is that width's. So is one whose name
+   only the other width's libraries define, when both widths' files are
+   built from the very build the import was made from: rizin read some
+   objects with their relocations applied, so their bytes match no
+   function. When that width's file is built anew from that build, the line
+   is left out, as that file holds the routine; otherwise it moves to that
+   directory.
 8. In a file whose libraries were collected, a line those libraries
    reproduce is left out, and the rest go to `<name>.imported`. A line is
    reproduced when a collected function of its name states every byte the
@@ -302,16 +419,28 @@ downloads and checks against rizin's SHA-1s. For each line:
    sources with its own assembler), a line whose routine they define at all is
    left out too: the line `neverd-sigmaker` made for that routine, or its
    decision to make none, stands. A library asset states which it is
-   (`reproduces_import`): zlib compiled here is not rizin's build, so only
-   the `mingw32-zlib` lines it reproduces are left out.
+   (`reproduces_import`): the ELF packages rizin recorded are, and so is
+   `fedora-zlib` built with the Fedora compilers rizin's lines were made
+   with, but `mingw32-zlib` compiled with Ubuntu's MinGW-w64 GCC is not
+   rizin's build, so only the `mingw32-zlib` lines it reproduces are left
+   out.
 9. A line with no linkage name is kept as a `; unresolved:` comment, which
    NeverD does not read.
 
-Of the 265,631 imported PE lines, 64 are left unresolved: C++/CLI catch
-funclets and labels whose rizin names are not linkage names, and VS 2005
-lines from test-harness objects on no collected library. The MASM32 SDK's
-libraries, built from its sources, reproduce or supersede every imported
-`masm32` line, and the Visual Studio 2010 disc's libraries every x64 `vs2010`
-line, so those files keep none. In `elf/`, 374 lines are left unresolved,
-where the packages rizin recorded are gone or two routines spell the same.
-[`reports/`](reports) lists, per file, every removed and unresolved name.
+The migration reads a file's imported lines for as long as its libraries
+leave any of them. In `pe/` those are 233,561 lines of the Visual Studio 2005
+to 2013 files and `mingw32-zlib.pat`: the libraries of every other PE file
+reproduce or supersede all of its imported lines -- the MASM32 SDK's
+libraries, built from its sources, every `masm32` line, and the Visual Studio
+2010 disc's libraries every x64 `vs2010` line. Of those 233,561 lines, 64 are
+left unresolved: C++/CLI catch funclets and labels whose rizin names are not
+linkage names, and VS 2005 lines from test-harness objects on no collected
+library. Of the 215,550 lines imported into `elf/`, 143,942 are reproduced
+and 38,557 superseded by the collected packages, 1,893 are the other pointer
+width's code, and 31,136 are removed (ambiguous, opening a longer routine, or
+naming no function). 16 are left unresolved, rizin's spellings of ARM32
+libc++ templates that no linkage name spells the same way, and 6 are kept:
+two libc++abi routines in each of `ubuntu-libc++-12.pat` to
+`ubuntu-libc++-14.pat`, which rizin named but no package it recorded defines.
+[`reports/`](reports) lists, per file the migration reads, every removed and
+unresolved name.
