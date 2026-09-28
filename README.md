@@ -243,7 +243,7 @@ downloads and checks against rizin's SHA-1s. For each line:
 
 Of the 265,631 imported PE lines, 502 are left unresolved. Most are VS 2010
 ATL/MFC routines whose names are on no collected library, and masm32 stdcall
-routines whose `ret N` falls where the line states no bytes. In `elf/`, 406
+routines whose `ret N` falls where the line states no bytes. In `elf/`, 374
 lines are, where the packages rizin recorded are gone or two routines spell
-the same, such as zlib's `crc32_combine` and `crc32_combine_`.
+the same.
 [`reports/`](reports) lists, per file, every removed and unresolved name.
