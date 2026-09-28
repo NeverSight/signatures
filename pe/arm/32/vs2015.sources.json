@@ -1,0 +1,20 @@
+{
+  "file": "pe/arm/32/vs2015.pat",
+  "generator": {
+    "neverd_ref": "f6ac98c003e7e2c1c85c3d6c582ef77722eb64dd",
+    "release": "msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 7139,
+  "sources": [
+    {
+      "arch": "arm",
+      "archive_sha256": "9619f35642654e44186f80ccf103d2e6ad73142a36c0cd4f5aa7a9c6b566cd40",
+      "asset": "vs2015-14.0-arm",
+      "compiler_version": "19.00.24247.2 built by: VCTOOLSD14ULDR",
+      "kind": "toolset",
+      "sigmaker": "Generated 110652 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-4251edz0/vs2015-14.0-arm.pat (1824 objects, 2196 for another machine skipped, 7940 non-object members, 2 functions below --min-size, 23316 functions stating too few exact bytes)",
+      "toolset_version": "14.0"
+    }
+  ]
+}

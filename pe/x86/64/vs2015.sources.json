@@ -1,19 +1,19 @@
 {
   "file": "pe/x86/64/vs2015.pat",
   "generator": {
-    "neverd_ref": "b91a639d87fe8b795b1e327f8c54a35743a777a2",
-    "release": "msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "neverd_ref": "f6ac98c003e7e2c1c85c3d6c582ef77722eb64dd",
+    "release": "msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 42994,
+  "lines": 35170,
   "sources": [
     {
       "arch": "x64",
-      "archive_sha256": "f28719e779c312a9af6e6a71ef4757c2bc8baf63841246949bd27267e4b054e0",
+      "archive_sha256": "0a6c3c7ff08897e57ee2c28b23bdb449165af576dfbf2d9cc1642a8da49527b2",
       "asset": "vs2015-14.0-x64",
       "compiler_version": "19.00.24247.2 built by: VCTOOLSD14ULDR",
       "kind": "toolset",
-      "sigmaker": "Generated 104344 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-yriuxu9j/vs2015-14.0-x64.pat (2559 objects, 2182 for another machine skipped, 8028 non-object members, 1927 functions below --min-size, 24851 functions stating too few exact bytes)",
+      "sigmaker": "Generated 303457 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-s2qlavl1/vs2015-14.0-x64.pat (4298 objects, 15398 for another machine skipped, 69445 non-object members, 9969 functions below --min-size, 88198 functions stating too few exact bytes)",
       "toolset_version": "14.0"
     }
   ]
