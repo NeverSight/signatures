@@ -308,7 +308,12 @@ symbol table of the same program before it was stripped: a function is a
 library's when one of the archives the program was linked with defines one of
 its names. For an ELF image NeverD reads every file of the directory. Before
 is what the lines imported from rizin, moved to the rules above, named in the
-same programs.
+same programs. The ARM rows were measured with NeverD at
+[b08a55bb](https://github.com/NeverSight/NeverD/commit/b08a55bbc8b804f5308721451b6b31d25fe32444),
+which starts an AArch64 function at the landing pad before its unwind entry
+(NeverSight/NeverD#191) and loads a stripped ARM32 program whose literal pools
+follow calls that do not return (NeverSight/NeverD#192); the others at
+[278e2f2e](https://github.com/NeverSight/NeverD/commit/278e2f2e98af90ed358e25fcffbc84d82d787cd4).
 
 | Programs | Count | Library functions | Named before | Named | Wrong before | Wrong | Disputed before | Disputed |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -319,29 +324,28 @@ same programs.
 | musl 1.2.2 | 1 | 160 | 0 | 0 | 0 | 0 | 0 | 0 |
 | NDK r25b x64 | 1 | 1,850 | 767 (41%) | 1,251 (68%) | 16 | 2 | 14 | 0 |
 | NDK r25b x86 | 1 | 1,942 | 177 (9%) | 1,419 (73%) | 10 | 0 | 0 | 0 |
-| NDK r25b ARM64, C and C++ | 2 | 5,794 | 461 (8%) | 3,218 (56%) | 6 | 373 | 0 | 6 |
-| NDK r25b ARM32, C and C++, unstripped | 2 | 6,024 | 475 (8%) | 3,395 (56%) | 26 | 1 | 0 | 0 |
+| NDK r25b ARM64, C and C++ | 2 | 5,794 | 465 (8%) | 3,647 (63%) | 4 | 0 | 0 | 6 |
+| NDK r25b ARM32, C | 1 | 1,907 | 116 (6%) | 1,208 (63%) | 4 | 0 | 0 | 0 |
 
 - Most of the names wrong before were OpenSSL's: its `d2i_*`, `i2d_*`,
   `*_free` and per-cipher routines are the same code up to the object a
   relocation names, and rizin's lines named one of them. The rebuilt file
   drops such lines, as described above; of the 1,510 addresses named wrong
   before, 2 still are.
-- 365 of the 373 ARM64 names counted wrong are the right names 4 bytes late.
-  bionic's assembly syscall stubs begin with a `bti c` landing pad and open
-  their unwind entry after it, so NeverD starts each such function at its
-  second instruction, where the stub of an older NDK without the landing pad
-  matches.
+- bionic's AArch64 assembly syscall stubs begin with a `bti c` landing pad
+  and open their unwind entry after it. NeverD before NeverSight/NeverD#191
+  started each such function at its second instruction, where the stub of
+  an older NDK without the landing pad matches: 365 of its 373 wrong names on
+  these programs were the right names 4 bytes late.
 - musl builds its library without unwind tables, and NeverD's function
   discovery does not follow the calls from the entry point: it finds 2 of the
   program's 167 functions, so the signatures have nothing to name.
-- NeverD cannot load the two ARM32 (Thumb-2) Android programs once they are
-  stripped: it decodes the bytes after every call as code, and after a call
-  that does not return, such as `bl abort`, those are the function's literal
-  pool, which decodes as Thumb across the real instructions that follow. They
-  are measured before they are stripped, where their symbol table, not
-  NeverD's discovery, says where functions start; the names still come from
-  the signatures alone.
+- NeverD decodes the bytes after every call of a stripped ARM32 program as
+  code. After a call that does not return, such as `bl abort`, they are the
+  caller's literal pool, which NeverD now recognizes by the load that reads
+  it. It still cannot load the ARM32 C++ program: there an ARM `__memcpy_chk`
+  ends in a call that does not return and Thumb `wcslen` follows at once, so
+  only knowing that the callee does not return would stop the decoding.
 
 ## Lines imported from rizin
 
