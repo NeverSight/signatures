@@ -368,6 +368,30 @@ class MoveTests(unittest.TestCase):
         self.assertEqual((report.moved, report.verbatim), (1, 0))
 
 
+    def test_a_name_only_the_other_width_defines_places_the_line(self) -> None:
+        # rizin read the object with its relocations applied: the line's
+        # bytes are no function's, but only the other width defines its name.
+        own = migrate.Reference("elf")
+        own.add_line(reference_line("run", "4883EC28" * 5 + "C3"))
+        own.index_spellings()
+        other = migrate.Reference("elf")
+        other.add_line(reference_line("traceInit", self.OTHER))
+        other.index_spellings()
+        patched = "38B5154600230446036000" + "AD0208B4" + "0A469D0D"
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "android-ndk.pat"
+            path.write_text(f"{patched} 00 0000 0013 :0000 traceInit\n")
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, own, report, other, [], defined={"run"},
+                                         sibling_rebuilt=True, sibling_defined={"traceInit"})
+            kept = migrate.migrate_file(path, own, migrate.FileReport(), other, [],
+                                        defined={"run"}, sibling_rebuilt=True)
+        self.assertEqual(lines, [])
+        self.assertEqual(report.superseded_other_width, 1)
+        # Without both widths rebuilt from the import, the name decides nothing.
+        self.assertEqual(kept, [f"{patched} 00 0000 0013 :0000 traceInit"])
+
+
 class WeakLineTests(unittest.TestCase):
     def test_stated_bytes_follow_the_matcher(self) -> None:
         lead = "".join(f"{i:02X}" for i in range(32))

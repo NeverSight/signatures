@@ -760,7 +760,8 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
                  sibling: Reference | None = None,
                  moved: list[str] | None = None,
                  defined: set[str] | None = None,
-                 sibling_rebuilt: bool = False) -> list[str]:
+                 sibling_rebuilt: bool = False,
+                 sibling_defined: set[str] | None = None) -> list[str]:
     """The migrated lines of an imported file.
 
     `defined` is not None when the file's own libraries were collected; its
@@ -778,7 +779,11 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
     none does, and whose bytes are a function of the other width (`sibling`)
     is that width's: it moves there, or, when that width's file is built
     anew from the very build the import was made from (`sibling_rebuilt`),
-    that file already holds the routine and the line is left out.
+    that file already holds the routine and the line is left out. When both
+    widths' files are (`sibling_defined` holds what the other width's
+    libraries define), a line whose name only those libraries define is the
+    other width's too, whatever its bytes: rizin read some objects with their
+    relocations applied.
 
     A line still unresolved, in any file, is kept as a comment, which the
     loader does not read: a name in rizin's spelling is no linkage name.
@@ -841,6 +846,11 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
                     report.moved += 1
                     moved.append(line.render(other))
                     continue
+            named = other if other is not None else (name if how == "verbatim" else None)
+            if (sibling_defined is not None and named is not None
+                    and named in sibling_defined and named not in (defined or set())):
+                report.superseded_other_width += 1
+                continue
         if name is None:
             report.unresolved += 1
             report.unresolved_names.append(line.name)
@@ -1056,8 +1066,14 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
         # another build leaves out only the lines whose bytes it reproduces.
         defined = ((reference.defined.get(release, set()) if collected[release] else set())
                    if rebuilt else None)
+        # A name can place a line only when both widths' files are built
+        # from the very build the import was made from.
+        both = (sibling is not None and collected.get(release) is True
+                and sibling_collected.get(release) is True)
         lines = migrate_file(path, reference, report, sibling, moved, defined=defined,
-                             sibling_rebuilt=sibling_collected.get(release) is True)
+                             sibling_rebuilt=sibling_collected.get(release) is True,
+                             sibling_defined=(sibling.defined.get(release, set())
+                                              if both else None))
         if moved and moves is not None:
             moves.setdefault(tree / SIBLINGS[directory] / path.name, []).extend(moved)
         # A release whose libraries were collected gets its file built anew;
