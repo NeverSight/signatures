@@ -58,7 +58,7 @@ leading underscores, then the shortest:
   lines.
 
 These rules are NeverD's own:
-[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/78622a59a3f1ea3d04bdfa522a870d1dc63e2102/tools/neverd-sigmaker)
+[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/278e2f2e98af90ed358e25fcffbc84d82d787cd4/tools/neverd-sigmaker)
 produces the lines, and `neverd::sigs::PatternGenerator` defines how many
 bytes each relocation rewrites.
 
@@ -144,7 +144,7 @@ Two workflows produce the generated files:
      ([`scripts/collect_mingw_library.py`](scripts/collect_mingw_library.py)).
 2. [`msvc-signatures.yml`](.github/workflows/msvc-signatures.yml) builds
    `neverd-sigmaker` at a pinned NeverD revision and runs NeverD's
-   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/78622a59a3f1ea3d04bdfa522a870d1dc63e2102/scripts/signatures/build_msvc_signatures.py)
+   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/278e2f2e98af90ed358e25fcffbc84d82d787cd4/scripts/signatures/build_msvc_signatures.py)
    over every `msvc-libs-*` release, one architecture at a time:
    - A file with library archives behind it is rebuilt from them alone, and
      from its `<name>.imported` when it has one.
