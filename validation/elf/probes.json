@@ -1,0 +1,392 @@
+[
+  {
+    "name": "elf-libc6-2.35-x64-o2",
+    "compiler": "gcc",
+    "flags": [
+      "-std=gnu11",
+      "-O2",
+      "-fno-stack-protector",
+      "-fcf-protection=none"
+    ],
+    "program": "probe.c",
+    "packages": [
+      {
+        "package": "ubuntu/jammy/amd64/libc6-dev/2.35-0ubuntu3.1/libc6-dev_2.35-0ubuntu3.1_amd64.deb",
+        "sha1": "57ed6e372553fdfb5262e2364f28a75235c822de"
+      },
+      {
+        "package": "ubuntu/jammy/amd64/libgcc-11-dev/11.2.0-19ubuntu1/libgcc-11-dev_11.2.0-19ubuntu1_amd64.deb",
+        "sha1": "55689cb307650bfd82becc30e1a208c009257ca5"
+      }
+    ],
+    "archives": [
+      "libc.a",
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "elf-libc6-2.35-x64-o0",
+    "compiler": "gcc",
+    "flags": [
+      "-std=gnu11",
+      "-O0",
+      "-fno-stack-protector",
+      "-fcf-protection=none"
+    ],
+    "program": "probe.c",
+    "packages": [
+      {
+        "package": "ubuntu/jammy/amd64/libc6-dev/2.35-0ubuntu3.1/libc6-dev_2.35-0ubuntu3.1_amd64.deb",
+        "sha1": "57ed6e372553fdfb5262e2364f28a75235c822de"
+      },
+      {
+        "package": "ubuntu/jammy/amd64/libgcc-11-dev/11.2.0-19ubuntu1/libgcc-11-dev_11.2.0-19ubuntu1_amd64.deb",
+        "sha1": "55689cb307650bfd82becc30e1a208c009257ca5"
+      }
+    ],
+    "archives": [
+      "libc.a",
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "elf-libc6-2.31-x64-o2",
+    "compiler": "gcc",
+    "flags": [
+      "-std=gnu11",
+      "-O2",
+      "-fno-stack-protector",
+      "-fcf-protection=none"
+    ],
+    "program": "probe.c",
+    "packages": [
+      {
+        "package": "ubuntu/focal/amd64/libc6-dev/2.31-0ubuntu9.9/libc6-dev_2.31-0ubuntu9.9_amd64.deb",
+        "sha1": "6b9e92a7b522d2f4eab7c9008ab1296e312b912c"
+      },
+      {
+        "package": "ubuntu/focal/amd64/libgcc-9-dev/9.3.0-10ubuntu1/libgcc-9-dev_9.3.0-10ubuntu1_amd64.deb",
+        "sha1": "f0c8bfcf856508943098dd4051291a8bb15c5e07"
+      }
+    ],
+    "archives": [
+      "libc.a",
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "elf-libc6-2.31-x64-o0",
+    "compiler": "gcc",
+    "flags": [
+      "-std=gnu11",
+      "-O0",
+      "-fno-stack-protector",
+      "-fcf-protection=none"
+    ],
+    "program": "probe.c",
+    "packages": [
+      {
+        "package": "ubuntu/focal/amd64/libc6-dev/2.31-0ubuntu9.9/libc6-dev_2.31-0ubuntu9.9_amd64.deb",
+        "sha1": "6b9e92a7b522d2f4eab7c9008ab1296e312b912c"
+      },
+      {
+        "package": "ubuntu/focal/amd64/libgcc-9-dev/9.3.0-10ubuntu1/libgcc-9-dev_9.3.0-10ubuntu1_amd64.deb",
+        "sha1": "f0c8bfcf856508943098dd4051291a8bb15c5e07"
+      }
+    ],
+    "archives": [
+      "libc.a",
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "elf-libc6-2.27-x64-o2",
+    "compiler": "gcc",
+    "flags": [
+      "-std=gnu11",
+      "-O2",
+      "-fno-stack-protector",
+      "-fcf-protection=none"
+    ],
+    "program": "probe.c",
+    "packages": [
+      {
+        "package": "ubuntu/bionic/amd64/libc6-dev/2.27-3ubuntu1.6/libc6-dev_2.27-3ubuntu1.6_amd64.deb",
+        "sha1": "fa55654b985640a895918e1b5b1f1abe116ee668"
+      },
+      {
+        "package": "ubuntu/focal/amd64/libgcc-7-dev/7.5.0-3ubuntu1/libgcc-7-dev_7.5.0-3ubuntu1_amd64.deb",
+        "sha1": "8fd0c726a73b6ce99f99d93fbab0f486029799a3"
+      }
+    ],
+    "archives": [
+      "libc.a",
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "elf-libc6-2.27-x64-o0",
+    "compiler": "gcc",
+    "flags": [
+      "-std=gnu11",
+      "-O0",
+      "-fno-stack-protector",
+      "-fcf-protection=none"
+    ],
+    "program": "probe.c",
+    "packages": [
+      {
+        "package": "ubuntu/bionic/amd64/libc6-dev/2.27-3ubuntu1.6/libc6-dev_2.27-3ubuntu1.6_amd64.deb",
+        "sha1": "fa55654b985640a895918e1b5b1f1abe116ee668"
+      },
+      {
+        "package": "ubuntu/focal/amd64/libgcc-7-dev/7.5.0-3ubuntu1/libgcc-7-dev_7.5.0-3ubuntu1_amd64.deb",
+        "sha1": "8fd0c726a73b6ce99f99d93fbab0f486029799a3"
+      }
+    ],
+    "archives": [
+      "libc.a",
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "elf-libstdcxx-11-x64-o2",
+    "compiler": "g++",
+    "flags": [
+      "-O2",
+      "-std=c++17",
+      "-fno-stack-protector",
+      "-fcf-protection=none"
+    ],
+    "program": "probe.cpp",
+    "packages": [
+      {
+        "package": "ubuntu/jammy/amd64/libstdc++-11-dev/11.2.0-19ubuntu1/libstdc++-11-dev_11.2.0-19ubuntu1_amd64.deb",
+        "sha1": "ef862af7c61234d0df6c1fdaf3aea74f3af65aaf"
+      },
+      {
+        "package": "ubuntu/jammy/amd64/libc6-dev/2.35-0ubuntu3.1/libc6-dev_2.35-0ubuntu3.1_amd64.deb",
+        "sha1": "57ed6e372553fdfb5262e2364f28a75235c822de"
+      },
+      {
+        "package": "ubuntu/jammy/amd64/libgcc-11-dev/11.2.0-19ubuntu1/libgcc-11-dev_11.2.0-19ubuntu1_amd64.deb",
+        "sha1": "55689cb307650bfd82becc30e1a208c009257ca5"
+      }
+    ],
+    "includes": [
+      "usr/include/c++/11",
+      "usr/include/x86_64-linux-gnu/c++/11"
+    ],
+    "archives": [
+      "libstdc++.a",
+      "libc.a",
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "elf-libstdcxx-12-x64-o2",
+    "compiler": "g++",
+    "flags": [
+      "-O2",
+      "-std=c++17",
+      "-fno-stack-protector",
+      "-fcf-protection=none"
+    ],
+    "program": "probe.cpp",
+    "packages": [
+      {
+        "package": "ubuntu/kinetic/amd64/libstdc++-12-dev/12.2.0-3ubuntu1/libstdc++-12-dev_12.2.0-3ubuntu1_amd64.deb",
+        "sha1": "6a17db59236073515d62bcc52f461c812ec533ac"
+      },
+      {
+        "package": "ubuntu/kinetic/amd64/libc6-dev/2.36-0ubuntu4/libc6-dev_2.36-0ubuntu4_amd64.deb",
+        "sha1": "94b94157ed70a04e39fc0758283f10c4582d46c9"
+      },
+      {
+        "package": "ubuntu/kinetic/amd64/libgcc-12-dev/12.2.0-3ubuntu1/libgcc-12-dev_12.2.0-3ubuntu1_amd64.deb",
+        "sha1": "2ec5ab487e2640efc52369ed9e11825ba3b6f08c"
+      }
+    ],
+    "includes": [
+      "usr/include/c++/12",
+      "usr/include/x86_64-linux-gnu/c++/12"
+    ],
+    "archives": [
+      "libstdc++.a",
+      "libc.a",
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "elf-zlib-1.2.11-x64-o2",
+    "compiler": "gcc",
+    "flags": [
+      "-std=gnu11",
+      "-O2",
+      "-fno-stack-protector",
+      "-fcf-protection=none"
+    ],
+    "program": "probe_zlib.c",
+    "packages": [
+      {
+        "package": "ubuntu/jammy/amd64/zlib1g-dev/1:1.2.11.dfsg-2ubuntu9/zlib1g-dev_1.2.11.dfsg-2ubuntu9_amd64.deb",
+        "sha1": "2925b77e147d2de9ded7a14abd71a426a0c09c6f"
+      },
+      {
+        "package": "ubuntu/jammy/amd64/libc6-dev/2.35-0ubuntu3.1/libc6-dev_2.35-0ubuntu3.1_amd64.deb",
+        "sha1": "57ed6e372553fdfb5262e2364f28a75235c822de"
+      },
+      {
+        "package": "ubuntu/jammy/amd64/libgcc-11-dev/11.2.0-19ubuntu1/libgcc-11-dev_11.2.0-19ubuntu1_amd64.deb",
+        "sha1": "55689cb307650bfd82becc30e1a208c009257ca5"
+      }
+    ],
+    "archives": [
+      "libz.a",
+      "libc.a",
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "elf-openssl-3.0-x64-o2",
+    "compiler": "gcc",
+    "flags": [
+      "-std=gnu11",
+      "-O2",
+      "-fno-stack-protector",
+      "-fcf-protection=none"
+    ],
+    "program": "probe_openssl.c",
+    "packages": [
+      {
+        "package": "ubuntu/jammy/amd64/libssl-dev/3.0.2-0ubuntu1.6/libssl-dev_3.0.2-0ubuntu1.6_amd64.deb",
+        "sha1": "3054526b55411ceaf7f0c9eada2598de6f4bc575"
+      },
+      {
+        "package": "ubuntu/jammy/amd64/libc6-dev/2.35-0ubuntu3.1/libc6-dev_2.35-0ubuntu3.1_amd64.deb",
+        "sha1": "57ed6e372553fdfb5262e2364f28a75235c822de"
+      },
+      {
+        "package": "ubuntu/jammy/amd64/libgcc-11-dev/11.2.0-19ubuntu1/libgcc-11-dev_11.2.0-19ubuntu1_amd64.deb",
+        "sha1": "55689cb307650bfd82becc30e1a208c009257ca5"
+      }
+    ],
+    "archives": [
+      "libcrypto.a",
+      "libc.a",
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "elf-musl-1.2.2-x64-o2",
+    "compiler": "gcc",
+    "flags": [
+      "-std=gnu11",
+      "-O2",
+      "-fno-stack-protector",
+      "-fcf-protection=none",
+      "-U_FORTIFY_SOURCE"
+    ],
+    "program": "probe.c",
+    "packages": [
+      {
+        "package": "ubuntu/jammy/amd64/musl-dev/1.2.2-4/musl-dev_1.2.2-4_amd64.deb",
+        "sha1": "01c73e59a59bf35597ed3df245cabf0d4cf9bc4d"
+      },
+      {
+        "package": "ubuntu/jammy/amd64/libgcc-11-dev/11.2.0-19ubuntu1/libgcc-11-dev_11.2.0-19ubuntu1_amd64.deb",
+        "sha1": "55689cb307650bfd82becc30e1a208c009257ca5"
+      }
+    ],
+    "includes": [
+      "usr/include/x86_64-linux-musl"
+    ],
+    "archives": [
+      "libc.a",
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "elf-ndk-r25b-arm64-o2",
+    "ndk": {
+      "package": "android-ndk-r25b-linux.zip",
+      "sha1": "e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
+    },
+    "target": "aarch64-linux-android21",
+    "flags": [
+      "-O2"
+    ],
+    "program": "probe.c"
+  },
+  {
+    "name": "elf-ndk-r25b-arm-o2",
+    "ndk": {
+      "package": "android-ndk-r25b-linux.zip",
+      "sha1": "e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
+    },
+    "target": "armv7a-linux-androideabi21",
+    "flags": [
+      "-O2"
+    ],
+    "program": "probe.c"
+  },
+  {
+    "name": "elf-ndk-r25b-x86-o2",
+    "ndk": {
+      "package": "android-ndk-r25b-linux.zip",
+      "sha1": "e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
+    },
+    "target": "i686-linux-android21",
+    "flags": [
+      "-O2"
+    ],
+    "program": "probe.c"
+  },
+  {
+    "name": "elf-ndk-r25b-x64-o2",
+    "ndk": {
+      "package": "android-ndk-r25b-linux.zip",
+      "sha1": "e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
+    },
+    "target": "x86_64-linux-android21",
+    "flags": [
+      "-O2"
+    ],
+    "program": "probe.c"
+  },
+  {
+    "name": "elf-ndk-r25b-arm64-cxx-o2",
+    "ndk": {
+      "package": "android-ndk-r25b-linux.zip",
+      "sha1": "e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
+    },
+    "target": "aarch64-linux-android21",
+    "flags": [
+      "-O2"
+    ],
+    "program": "probe.cpp"
+  },
+  {
+    "name": "elf-ndk-r25b-arm-cxx-o2",
+    "ndk": {
+      "package": "android-ndk-r25b-linux.zip",
+      "sha1": "e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
+    },
+    "target": "armv7a-linux-androideabi21",
+    "flags": [
+      "-O2"
+    ],
+    "program": "probe.cpp"
+  }
+]

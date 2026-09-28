@@ -90,6 +90,13 @@ PE_TARGETS = {
     "arm64": ("pe/arm/64", "arm64"),
 }
 
+# The ELF directory of each architecture, whose library assets say `elf`.
+ELF_TARGETS = {"x86": "elf/x86/32", "x64": "elf/x86/64", "arm": "elf/arm/32",
+               "arm64": "elf/arm/64"}
+
+# The architecture of the other pointer width.
+OTHER_WIDTH = {"x86": "x64", "x64": "x86", "arm": "arm64", "arm64": "arm"}
+
 # Long enough that the leading pattern states the whole function.
 WHOLE_FUNCTION = 65535
 
@@ -215,6 +222,14 @@ def c_linkage_name(line: Line, reference: "Reference") -> str | None:
     if size and size <= 0xFFFF and ending == [0xC2, size & 0xFF, size >> 8]:
         return f"{match.group('stem')}@{size}"
     return None
+
+
+def alias_order(name: str) -> tuple:
+    """Where a name sorts among one routine's aliases: the fewest leading
+    underscores first, then the shorter, then the smaller -- the order NeverD
+    shows them in (preferredAliasOrder in include/neverd/sigs/Signature.h)."""
+
+    return (len(name) - len(name.lstrip("_")), len(name), name)
 
 
 def crc16(data: bytes) -> int:
@@ -366,6 +381,9 @@ class Reference:
         # Functions by their first OPENING bytes, as stated or relocated.
         self.by_opening: dict[tuple[bytes, bytes], list[Function]] = defaultdict(list)
         self.names: set[str] = set()
+        # The names one line gives one routine: an ELF library's symbols that
+        # label one address, such as glibc's puts and _IO_puts.
+        self.aliases: dict[str, frozenset[str]] = {}
         # The names each collected Visual Studio release's libraries define in
         # their code sections, whether or not neverd-sigmaker wrote a line.
         self.defined: dict[str, set[str]] = defaultdict(set)
@@ -377,14 +395,24 @@ class Reference:
 
     def add_line(self, text: str) -> None:
         tokens = text.split()
-        name = tokens[5]
+        # Every name the line gives its routine at offset 0.
+        names = [tokens[index + 1] for index in range(4, len(tokens) - 1)
+                 if tokens[index] == ":0000"]
+        if len(names) > 1:
+            group = frozenset(names)
+            for name in names:
+                self.aliases[name] = self.aliases.get(name, frozenset()) | group
+        for name in names:
+            self._add_function(name, tokens[0], tokens[3])
+
+    def _add_function(self, name: str, lead: str, length: str) -> None:
         # Builds of one library share most functions byte for byte.
-        identity = hash((name, tokens[0], tokens[3]))
+        identity = hash((name, lead, length))
         if identity in self._seen:
             return
         self._seen.add(identity)
-        values, mask = parse_hex(tokens[0])
-        total = int(tokens[3], 16)
+        values, mask = parse_hex(lead)
+        total = int(length, 16)
         self.names.add(name)
         if len(values) < total:
             # Longer than the leading pattern can state; only the name is usable.
@@ -429,13 +457,18 @@ class Reference:
 
         An Itanium constructor or destructor has several symbols (C1/C2,
         D0/D1/D2) that label one definition and demangle identically; any of
-        them names the code correctly, so the smallest is taken.
+        them names the code correctly, so the smallest is taken. Names one
+        reference line gives one routine are its aliases; the name taken is
+        the one NeverD shows (preferredAliasOrder in NeverD's Signature.h).
         """
 
         if len(names) > 1 and self.binary_format == "elf":
             forms = {self.demangled.get(name) for name in names}
             if len(forms) == 1 and None not in forms:
                 return min(names)
+            groups = {self.aliases.get(name) for name in names}
+            if len(groups) == 1 and None not in groups:
+                return min(names, key=alias_order)
         return None
 
     def spelled(self, imported: str) -> set[str]:
@@ -671,6 +704,9 @@ class FileReport:
     removed_openings: int = 0
     reproduced: int = 0
     superseded: int = 0
+    # Lines of the other pointer width's code, whose file is built anew from
+    # the very build the import was made from.
+    superseded_other_width: int = 0
     unresolved: int = 0
     realigned_tails: int = 0
     undecided_tails: int = 0
@@ -723,7 +759,9 @@ def align(line: Line, reference: Reference, default: str | None) -> tuple[Line, 
 def migrate_file(path: Path, reference: Reference, report: FileReport,
                  sibling: Reference | None = None,
                  moved: list[str] | None = None,
-                 defined: set[str] | None = None) -> list[str]:
+                 defined: set[str] | None = None,
+                 sibling_rebuilt: bool = False,
+                 sibling_defined: set[str] | None = None) -> list[str]:
     """The migrated lines of an imported file.
 
     `defined` is not None when the file's own libraries were collected; its
@@ -735,6 +773,18 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
     they hold that routine, and the line neverd-sigmaker made for it -- or
     its decision to make none, for code its rules reject -- stands. For
     another build of the same sources it is empty.
+
+    rizin filed some lines under the other pointer width. A line whose bytes
+    no library of this width states -- one left unresolved, one whose C name
+    is kept only because none does, and one named by its spelling alone --
+    and whose bytes are a function of the other width (`sibling`) is that
+    width's: it moves there, or, when that width's file is built
+    anew from the very build the import was made from (`sibling_rebuilt`),
+    that file already holds the routine and the line is left out. When both
+    widths' files are (`sibling_defined` holds what the other width's
+    libraries define), a line whose name only those libraries define is the
+    other width's too, whatever its bytes: rizin read some objects with their
+    relocations applied.
 
     A line still unresolved, in any file, is kept as a comment, which the
     loader does not read: a name in rizin's spelling is no linkage name.
@@ -779,9 +829,9 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
             report.removed_artifacts += 1
             report.removed_names.append(line.name)
             continue
-        if name is None and sibling is not None and moved is not None:
+        if (name is None or how in ("verbatim", "spelling")) and sibling is not None:
             # Some imported lines were filed under the wrong pointer width;
-            # only the bytes of a function of the other width may move one.
+            # only the bytes of a function of the other width say so.
             other, other_how = resolve(line, sibling)
             if other_how in ("ambiguous", "opening"):
                 # Code of the other width that several routines share names
@@ -790,8 +840,17 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
                 report.ambiguous_names.append(line.name)
                 continue
             if other is not None and other_how == "bytes":
-                report.moved += 1
-                moved.append(line.render(other))
+                if sibling_rebuilt:
+                    report.superseded_other_width += 1
+                    continue
+                if moved is not None:
+                    report.moved += 1
+                    moved.append(line.render(other))
+                    continue
+            named = other if other is not None else name
+            if (sibling_defined is not None and named is not None
+                    and named in sibling_defined and named not in (defined or set())):
+                report.superseded_other_width += 1
                 continue
         if name is None:
             report.unresolved += 1
@@ -829,13 +888,29 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
 LIBRARY_SUFFIXES = (".lib", ".obj", ".a", ".o")
 
 
-def build_pe_reference(sigmaker: Path, assets: Path, arch: str, work: Path) -> Reference:
-    reference = Reference("pe")
-    reference.callee_cleanup = arch == "x86"
+def asset_format(manifest: dict) -> str:
+    """The tree an asset's libraries build files in: `pe` or `elf`."""
+
+    return str(manifest.get("format", "pe"))
+
+
+def manifests_for(assets: Path, arch: str, binary_format: str) -> list[Path]:
+    return [path for path in sorted(assets.glob(f"*-{arch}.json"))
+            if asset_format(json.loads(path.read_text(encoding="utf-8"))) == binary_format]
+
+
+def build_pe_reference(sigmaker: Path, assets: Path, arch: str, work: Path,
+                       binary_format: str = "pe",
+                       releases: set[str] | None = None) -> Reference:
+    reference = Reference(binary_format)
+    reference.callee_cleanup = arch == "x86" and binary_format == "pe"
     machine = PE_TARGETS[arch][1]
-    manifests = sorted(assets.glob(f"*-{arch}.json"))
+    manifests = manifests_for(assets, arch, binary_format)
+    if releases is not None:
+        manifests = [path for path in manifests
+                     if asset_release(json.loads(path.read_text(encoding="utf-8"))) in releases]
     if not manifests:
-        raise SystemExit(f"no {arch} assets in {assets}")
+        raise SystemExit(f"no {binary_format} {arch} assets in {assets}")
     for manifest_path in manifests:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         unpacked = work / manifest["asset"]
@@ -862,13 +937,25 @@ def build_pe_reference(sigmaker: Path, assets: Path, arch: str, work: Path) -> R
              "--leading", str(WHOLE_FUNCTION), "--tail", "0", "--min-size", "1"],
             check=True, stdout=subprocess.DEVNULL,
         )
-        for text in out.read_text(encoding="utf-8").splitlines():
-            if text.strip():
-                reference.add_line(text)
+        # Read as a stream: an asset of many builds, such as glibc's, writes
+        # a million whole-function lines.
+        with out.open(encoding="utf-8") as lines:
+            for text in lines:
+                if text.strip():
+                    reference.add_line(text)
         shutil.rmtree(unpacked)
         out.unlink()
     reference.index_spellings()
     return reference
+
+
+def build_elf_reference(sigmaker: Path, assets: Path, arch: str, work: Path,
+                        releases: set[str] | None = None) -> Reference:
+    """Every function of the ELF library assets for one architecture, or of
+    those that build the named files."""
+
+    return build_pe_reference(sigmaker, assets, arch, work, binary_format="elf",
+                              releases=releases)
 
 
 def load_reference(directory: Path, binary_format: str) -> Reference:
@@ -937,18 +1024,19 @@ def asset_release(manifest: dict) -> str | None:
     return None
 
 
-def collected_releases(assets: Path, arch: str) -> dict[str, bool]:
+def collected_releases(assets: Path, arch: str, binary_format: str = "pe") -> dict[str, bool]:
     """The releases whose libraries the assets hold for arch, and whether
     those libraries are the build the import was made from.
 
     A Visual Studio release's collected libraries are its release-to-
     manufacturing libraries, which rizin's were. A library asset says so
     itself (`reproduces_import`): the MASM32 SDK builds the same sources with
-    the same assembler, but zlib compiled here is not the build rizin made.
+    the same assembler, and fedora-zlib the same source with the same Fedora
+    compilers, but mingw32-zlib compiled here is not the build rizin made.
     """
 
     releases: dict[str, bool] = {}
-    for manifest_path in assets.glob(f"*-{arch}.json"):
+    for manifest_path in manifests_for(assets, arch, binary_format):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         release = asset_release(manifest)
         if release is None:
@@ -963,8 +1051,10 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
                       verify_with: Path | None,
                       sibling: Reference | None = None,
                       moves: dict[Path, list[str]] | None = None,
-                      collected: dict[str, bool] | None = None) -> None:
+                      collected: dict[str, bool] | None = None,
+                      sibling_collected: dict[str, bool] | None = None) -> None:
     collected = collected or {}
+    sibling_collected = sibling_collected or {}
     print(f"{directory}: {reference.functions} reference functions, "
           f"{len(reference.names)} names", flush=True)
     for path in files:
@@ -977,7 +1067,17 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
         # another build leaves out only the lines whose bytes it reproduces.
         defined = ((reference.defined.get(release, set()) if collected[release] else set())
                    if rebuilt else None)
-        lines = migrate_file(path, reference, report, sibling, moved, defined=defined)
+        # A name can place a line only when both widths' files are built
+        # from the very build the import was made from.
+        both = (sibling is not None and collected.get(release) is True
+                and sibling_collected.get(release) is True)
+        # Only a file the other width's libraries build too can hold lines
+        # of that width.
+        file_sibling = sibling if release in sibling_collected or not sibling_collected else None
+        lines = migrate_file(path, reference, report, file_sibling, moved, defined=defined,
+                             sibling_rebuilt=sibling_collected.get(release) is True,
+                             sibling_defined=(sibling.defined.get(release, set())
+                                              if both else None))
         if moved and moves is not None:
             moves.setdefault(tree / SIBLINGS[directory] / path.name, []).extend(moved)
         # A release whose libraries were collected gets its file built anew;
@@ -1008,6 +1108,7 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
             f"removed, {report.removed_openings} whose bytes open a longer routine removed, "
             f"{report.reproduced} reproduced by collected libraries, "
             f"{report.superseded} superseded by what they define, "
+            f"{report.superseded_other_width} by the other width's libraries, "
             f"{report.unresolved} unresolved; {report.realigned_tails} tails realigned, "
             f"{report.undecided_tails} undecided",
             flush=True,
@@ -1029,6 +1130,12 @@ def main(argv: list[str] | None = None) -> int:
     pe.add_argument("--assets", type=Path,
                     help="directory with the library release's archives and manifests")
     pe.add_argument("--arch", action="append", choices=sorted(PE_TARGETS), default=[])
+    pe.add_argument("--elf-arch", action="append", choices=sorted(ELF_TARGETS), default=[],
+                    help="migrate this architecture's ELF directory against the release's "
+                         "ELF library assets (repeatable)")
+    pe.add_argument("--sibling-assets", type=Path,
+                    help="where the other pointer width's ELF library assets are "
+                         "(default: --assets)")
     other = parser.add_argument_group("any directory, referenced from generated lines")
     other.add_argument("--directory", action="append", default=[],
                        help="target directory such as elf/x86/64 (repeatable)")
@@ -1049,6 +1156,32 @@ def main(argv: list[str] | None = None) -> int:
         migrate_directory(args.tree, args.imported_from, directory, files, reference, summary,
                           args.verify_with, collected=collected_releases(args.assets, arch))
     moves: dict[Path, list[str]] = {}
+    for arch in args.elf_arch:
+        if args.sigmaker is None or args.assets is None:
+            parser.error("--elf-arch needs --sigmaker and --assets")
+        directory = ELF_TARGETS[arch]
+        files = imported_files(args.tree, args.imported_from, directory)
+        if not files:
+            continue
+        with tempfile.TemporaryDirectory(dir=args.work) as scratch:
+            reference = build_elf_reference(args.sigmaker, args.assets, arch, Path(scratch))
+        # The other width's libraries that build a file of this directory:
+        # rizin filed some of their lines here.
+        sibling_assets = args.sibling_assets or args.assets
+        names = {release_of(path) for path in files}
+        other = OTHER_WIDTH[arch]
+        sibling = None
+        sibling_collected = {name: same for name, same
+                             in collected_releases(sibling_assets, other, "elf").items()
+                             if name in names}
+        if sibling_collected:
+            with tempfile.TemporaryDirectory(dir=args.work) as scratch:
+                sibling = build_elf_reference(args.sigmaker, sibling_assets, other,
+                                              Path(scratch), releases=set(sibling_collected))
+        migrate_directory(args.tree, args.imported_from, directory, files, reference, summary,
+                          args.verify_with, sibling, moves,
+                          collected=collected_releases(args.assets, arch, "elf"),
+                          sibling_collected=sibling_collected)
     for directory in args.directory:
         if args.references is None:
             parser.error("--directory needs --references")

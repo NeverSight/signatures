@@ -1,0 +1,24 @@
+{
+  "file": "elf/x86/64/ubuntu-libc++-12.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 1740,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "ad198e07139fb52142fc03cfd3d5c5d98488c8427b0252e7afa91119652ccf46",
+      "asset": "ubuntu-libc++-12-x64",
+      "kind": "library",
+      "sigmaker": "Generated 11315 signatures \u2192 ubuntu-libc++-12-x64.pat (403 objects, 716 functions below --min-size, 4273 functions stating too few exact bytes)"
+    },
+    {
+      "archive_sha256": "04124ec2a516a1d6fc8941fc5b1ec5a0729266bce19c52260e912766197dd34f",
+      "asset": "ubuntu-libc++-12.imported",
+      "kind": "imported",
+      "lines": 2
+    }
+  ]
+}

@@ -333,6 +333,83 @@ class MoveTests(unittest.TestCase):
         self.assertEqual(report.removed_ambiguous, 1)
 
 
+    def test_code_of_an_other_width_built_from_the_import_is_left_out(self) -> None:
+        own = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28" * 5 + "C3"))
+        other = pe_reference(reference_line("?Thumb@@YAXXZ", self.THUMB))
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "android-ndk.pat"
+            path.write_text(f"{self.THUMB} 00 0000 0018 :0000 _Thumb__YAXXZ\n")
+            report = migrate.FileReport()
+            moved: list[str] = []
+            lines = migrate.migrate_file(path, own, report, other, moved, defined=set(),
+                                         sibling_rebuilt=True)
+        self.assertEqual((lines, moved), ([], []))
+        self.assertEqual(report.superseded_other_width, 1)
+
+    def test_a_c_name_no_library_of_this_width_explains_is_checked_too(self) -> None:
+        # rizin kept strlen16's plain C name; only its bytes, which are the
+        # other width's, say where it belongs.
+        own = migrate.Reference("elf")
+        own.add_line(reference_line("run", "4883EC28" * 5 + "C3"))
+        own.index_spellings()
+        other = migrate.Reference("elf")
+        other.add_line(reference_line("strlen16", self.OTHER))
+        other.index_spellings()
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "android-ndk.pat"
+            path.write_text(f"{self.OTHER} 00 0000 0012 :0000 strlen16\n")
+            kept = migrate.migrate_file(path, own, migrate.FileReport())
+            report = migrate.FileReport()
+            moved: list[str] = []
+            lines = migrate.migrate_file(path, own, report, other, moved)
+        self.assertEqual(kept, [f"{self.OTHER} 00 0000 0012 :0000 strlen16"])
+        self.assertEqual(lines, [])
+        self.assertEqual(moved, [f"{self.OTHER} 00 0000 0012 :0000 strlen16"])
+        self.assertEqual((report.moved, report.verbatim), (1, 0))
+
+
+    def test_a_name_only_the_other_width_defines_places_the_line(self) -> None:
+        # rizin read the object with its relocations applied: the line's
+        # bytes are no function's, but only the other width defines its name.
+        own = migrate.Reference("elf")
+        own.add_line(reference_line("run", "4883EC28" * 5 + "C3"))
+        own.index_spellings()
+        other = migrate.Reference("elf")
+        other.add_line(reference_line("traceInit", self.OTHER))
+        other.index_spellings()
+        patched = "38B5154600230446036000" + "AD0208B4" + "0A469D0D"
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "android-ndk.pat"
+            path.write_text(f"{patched} 00 0000 0013 :0000 traceInit\n")
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, own, report, other, [], defined={"run"},
+                                         sibling_rebuilt=True, sibling_defined={"traceInit"})
+            kept = migrate.migrate_file(path, own, migrate.FileReport(), other, [],
+                                        defined={"run"}, sibling_rebuilt=True)
+        self.assertEqual(lines, [])
+        self.assertEqual(report.superseded_other_width, 1)
+        # Without both widths rebuilt from the import, the name decides nothing.
+        self.assertEqual(kept, [f"{patched} 00 0000 0013 :0000 traceInit"])
+
+
+    def test_a_name_another_library_of_this_width_spells_does_not_hold_it(self) -> None:
+        # 32-bit bionic's bzero, filed under 64 bits, spells like x64 glibc's.
+        own = migrate.Reference("elf")
+        own.add_line(reference_line("bzero", "4883EC28" * 5 + "C3"))
+        own.index_spellings()
+        other = migrate.Reference("elf")
+        other.add_line(reference_line("bzero", self.OTHER))
+        other.index_spellings()
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "android-ndk.pat"
+            path.write_text(f"{self.OTHER} 00 0000 0012 :0000 bzero\n")
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, own, report, other, [], defined={"memset"},
+                                         sibling_rebuilt=True, sibling_defined={"bzero"})
+        self.assertEqual(lines, [])
+        self.assertEqual(report.superseded_other_width, 1)
+
+
 class WeakLineTests(unittest.TestCase):
     def test_stated_bytes_follow_the_matcher(self) -> None:
         lead = "".join(f"{i:02X}" for i in range(32))
@@ -568,6 +645,52 @@ class ReferenceTests(unittest.TestCase):
             reference = migrate.build_pe_reference(sigmaker, assets, "x86", work)
         self.assertIn("libz", reference.names)
         self.assertEqual(reference.functions, 1)
+
+
+class ELFReferenceTests(unittest.TestCase):
+    def test_names_one_line_gives_a_routine_are_its_aliases(self) -> None:
+        reference = migrate.Reference("elf")
+        body = "F30F1EFA" + "4883EC08" * 5 + "C3"
+        reference.add_line(f"{body} 00 0000 {len(body) // 2:04X} :0000 puts :0000 _IO_puts")
+        reference.index_spellings()
+        self.assertEqual(reference.functions, 2)
+        self.assertEqual(reference.one_routine({"puts", "_IO_puts"}), "puts")
+        self.assertIsNone(reference.one_routine({"puts", "fputs"}))
+        # An imported name that is one of the routine's stays; a label rizin
+        # named the code after takes the name NeverD shows.
+        line = migrate.Line.parse(f"{body} 00 0000 {len(body) // 2:04X} :0000 _IO_puts")
+        self.assertEqual(migrate.resolve(line, reference), ("_IO_puts", "bytes"))
+        label = migrate.Line.parse(f"{body} 00 0000 {len(body) // 2:04X} :0000 obj.puts_0")
+        self.assertEqual(migrate.resolve(label, reference), ("puts", "bytes"))
+
+    def test_pe_and_elf_assets_of_one_architecture_stay_apart(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            assets = Path(scratch)
+            (assets / "vs2022-14.44.35207-x64.json").write_text(
+                '{"kind": "toolset", "visual_studio": {"year": 2022}}')
+            (assets / "ubuntu-libc6-x64.json").write_text(
+                '{"kind": "library", "format": "elf", "library": "ubuntu-libc6", '
+                '"reproduces_import": false}')
+            self.assertEqual(migrate.collected_releases(assets, "x64"), {"vs2022": True})
+            self.assertEqual(migrate.collected_releases(assets, "x64", "elf"),
+                             {"ubuntu-libc6": False})
+
+    @unittest.skipUnless(shutil.which("cc") and shutil.which("ar"), "needs a C compiler")
+    def test_elf_archives_name_their_functions(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            (root / "a.c").write_text(
+                "int answer(void) { return 42; }\n"
+                "static int helper(int x) { return x + 1; }\n"
+                "int use(int x) { return helper(x); }\n"
+                "int data = 1;\n")
+            subprocess.run(["cc", "-O0", "-c", str(root / "a.c"), "-o", str(root / "a.o")],
+                           check=True)
+            subprocess.run(["ar", "rcs", str(root / "liba.a"), str(root / "a.o")], check=True)
+            from coff_symbols import code_symbols
+            names = code_symbols(root / "liba.a")
+        self.assertTrue({"answer", "helper", "use"} <= names)
+        self.assertNotIn("data", names)
 
 
 class ImportedFilesTests(unittest.TestCase):

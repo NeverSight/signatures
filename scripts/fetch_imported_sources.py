@@ -38,8 +38,10 @@ LEGACY_NDK = "https://dl.google.com/android/ndk/"
 # Long enough that the leading pattern states the whole function.
 WHOLE_FUNCTION = 65535
 
-# ELF e_machine -> the directory an image of that machine is filed under.
-ELF_MACHINES = {3: "elf/x86/32", 62: "elf/x86/64", 40: "elf/arm/32", 183: "elf/arm/64"}
+# ELF (e_machine, EI_CLASS) -> the directory an image of that machine is
+# filed under. x86-64 code of 32-bit class (x32) has none.
+ELF_MACHINES = {(3, 1): "elf/x86/32", (62, 2): "elf/x86/64", (40, 1): "elf/arm/32",
+                (183, 2): "elf/arm/64"}
 
 
 def fetch(url: str, destination: Path, attempts: int = 6) -> None:
@@ -49,6 +51,11 @@ def fetch(url: str, destination: Path, attempts: int = 6) -> None:
             with urllib.request.urlopen(request, timeout=300) as response, \
                     destination.open("wb") as out:
                 shutil.copyfileobj(response, out, 1 << 20)
+                expected = response.headers.get("Content-Length")
+            # A connection that closes early raises nothing; the length shows it.
+            received = destination.stat().st_size
+            if expected is not None and received != int(expected):
+                raise OSError(f"received {received} of {expected} bytes")
             return
         except OSError as error:
             if attempt == attempts:
@@ -90,25 +97,39 @@ def source_url(path: str) -> str | None:
 
 
 def unpack(package: Path, destination: Path) -> list[Path]:
-    """The static libraries inside a package."""
+    """The static libraries and object files inside a package."""
 
     destination.mkdir(parents=True, exist_ok=True)
     if package.suffix == ".deb":
         subprocess.run(["dpkg-deb", "-x", str(package), str(destination)], check=True)
     elif package.suffix == ".zip":
-        subprocess.run(["unzip", "-q", "-o", str(package), "*.a", "-d", str(destination)],
-                       check=False)
+        subprocess.run(["unzip", "-q", "-o", str(package), "*.a", "*.o", "-d",
+                        str(destination)], check=False)
     elif package.name.endswith(".tar.bz2"):
         subprocess.run(["tar", "-xjf", str(package), "-C", str(destination),
-                        "--wildcards", "*.a"], check=False)
-    return sorted(path for path in destination.rglob("*.a") if path.is_file())
+                        "--wildcards", "*.a", "*.o"], check=False)
+    return sorted(path for path in destination.rglob("*")
+                  if path.suffix in (".a", ".o") and path.is_file())
+
+
+def elf_directory(head: bytes) -> str | None:
+    """The directory an ELF file of this header is filed under."""
+
+    if head[:4] != b"\x7fELF" or len(head) < 20:
+        return None
+    (machine,) = struct.unpack("<H" if head[5] == 1 else ">H", head[18:20])
+    return ELF_MACHINES.get((machine, head[4]))
 
 
 def archive_machine(path: Path) -> str | None:
-    """The directory the first ELF object in an ar archive is filed under."""
+    """The directory an ELF object, or the first one in an ar archive, is filed
+    under."""
 
     with path.open("rb") as stream:
-        if stream.read(8) != b"!<arch>\n":
+        magic = stream.read(8)
+        if magic[:4] == b"\x7fELF":
+            return elf_directory(magic + stream.read(12))
+        if magic != b"!<arch>\n":
             return None
         while True:
             header = stream.read(60)
@@ -122,9 +143,7 @@ def archive_machine(path: Path) -> str | None:
             if name not in (b"/", b"//", b"/SYM64/", b"__.SYMDEF", b"__.SYMDEF SORTED"):
                 head = stream.read(20)
                 if head[:4] == b"\x7fELF":
-                    little = head[5] == 1
-                    (machine,) = struct.unpack("<H" if little else ">H", head[18:20])
-                    return ELF_MACHINES.get(machine)
+                    return elf_directory(head)
             stream.seek(body_start + size + (size & 1))
 
 

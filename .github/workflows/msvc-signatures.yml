@@ -1,14 +1,13 @@
-# Regenerates pe/<arch>/<bits>/vs<year>.pat and winsdk.pat from a library
-# release made by msvc-libraries.yml, with NeverD's own signature maker at a
-# pinned revision.
+# Regenerates the pe/ and elf/ files from the library releases made by
+# msvc-libraries.yml, with NeverD's own signature maker at a pinned revision.
 #
 # One job builds neverd-sigmaker against the published prebuilt LLVM
-# package; one job per architecture rebuilds every file of that architecture
-# that has library archives, from those archives alone and the lines its
-# <name>.imported keeps from rizin's import; a final job commits the result,
-# and only when a manual run asks it to. Files with no archives behind them
-# (masm32 and mingw32-zlib) are only renamed by the migration step. A pull
-# request that edits this workflow only builds the generator.
+# package; one job per architecture rebuilds every file of that architecture,
+# PE and ELF, that has library archives, from those archives alone and the
+# lines its <name>.imported keeps from rizin's import; a final job commits the
+# result, and only when a manual run asks it to. A file with no archives
+# behind it is only renamed by the migration step. A pull request that edits
+# this workflow only builds the generator.
 
 name: Build MSVC signatures
 
@@ -45,7 +44,7 @@ env:
   # produce these files. Pinning it is what makes a regenerated file
   # attributable to a known generator.
   NEVERD_REPO: NeverSight/NeverD
-  NEVERD_REF: 626e9eea16c0dc8dc49b8bc4fe6d2f46236ac1e4
+  NEVERD_REF: 278e2f2e98af90ed358e25fcffbc84d82d787cd4
 
 jobs:
   sigmaker:
@@ -158,25 +157,67 @@ jobs:
               echo "$tag: $stem"
             done
           done
+          # rizin filed some ELF lines under the other pointer width. The
+          # migration reads that width's ELF libraries for the files of this
+          # directory, to tell its code apart; they build nothing here.
+          case "$ARCH" in
+            x86) other=x64 sub=x86/32 ;;
+            x64) other=x86 sub=x86/64 ;;
+            arm) other=arm64 sub=arm/32 ;;
+            arm64) other=arm sub=arm/64 ;;
+          esac
+          mkdir -p sibling-assets
+          for tag in $tags; do
+            for name in $(gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
+                --jq ".assets[].name | select(endswith(\"-${other}.json\"))"); do
+              stem="${name%.json}"
+              [ -f "sibling-assets/$name" ] && continue
+              gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir sibling-assets \
+                --pattern "$name"
+              library="$(python3 -c 'import json, sys
+          manifest = json.load(open(sys.argv[1]))
+          print(manifest.get("library", "") if manifest.get("format") == "elf" else "")' \
+                "sibling-assets/$name")"
+              if [ -n "$library" ] && [ -f "elf/$sub/$library.pat" ]; then
+                gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir sibling-assets \
+                  --pattern "$stem.tar.zst"
+                echo "$tag: $stem (other width)"
+              else
+                rm "sibling-assets/$name"
+              fi
+            done
+          done
           echo "tag=$(echo "$tags" | tr '\n' ' ' | sed 's/ *$//')" >> "$GITHUB_OUTPUT"
-          ls -la assets
+          ls -la assets sibling-assets
 
-      # Only pe/x86 received imported files; the ARM directories hold none.
+      # pe/x86 and every elf/ directory received imported files; a directory
+      # that holds none is passed over.
       - name: Rename the imported lines
-        if: inputs.migrate_imported && (matrix.arch == 'x86' || matrix.arch == 'x64')
+        if: inputs.migrate_imported
         env:
           ARCH: ${{ matrix.arch }}
         run: |
           set -euo pipefail
           chmod +x generator/neverd-sigmaker
           # Every rewritten file is read back with the loader's parser, which
-          # rejects a whole directory for one bad line.
+          # rejects a whole directory for one bad line. Only pe/x86 holds
+          # imported PE files.
+          if [ "$ARCH" = x86 ] || [ "$ARCH" = x64 ]; then
+            python3 scripts/migrate_imported_signatures.py \
+              --sigmaker generator/neverd-sigmaker \
+              --verify-with generator/neverd-sigmaker \
+              --assets assets \
+              --arch "$ARCH" \
+              --report "migration-$ARCH.json" \
+              --work "$RUNNER_TEMP"
+          fi
           python3 scripts/migrate_imported_signatures.py \
             --sigmaker generator/neverd-sigmaker \
             --verify-with generator/neverd-sigmaker \
             --assets assets \
-            --arch "$ARCH" \
-            --report "migration-$ARCH.json" \
+            --sibling-assets sibling-assets \
+            --elf-arch "$ARCH" \
+            --report "migration-elf-$ARCH.json" \
             --work "$RUNNER_TEMP"
 
       # Every archive of the architecture goes in at once: the builder drops
@@ -201,26 +242,37 @@ jobs:
         run: |
           set -euo pipefail
           case "$ARCH" in
-            x86) dir=pe/x86/32 ;;
-            x64) dir=pe/x86/64 ;;
-            arm) dir=pe/arm/32 ;;
-            arm64) dir=pe/arm/64 ;;
+            x86) sub=x86/32 ;;
+            x64) sub=x86/64 ;;
+            arm) sub=arm/32 ;;
+            arm64) sub=arm/64 ;;
           esac
-          mkdir -p "staged/$dir"
-          cp "$dir"/*.pat "$dir"/*.sources.json "staged/$dir/"
-          # What a release keeps from rizin's import is an input of every
-          # later rebuild, so it is committed beside the file it joins.
           shopt -s nullglob
-          imported=("$dir"/*.imported)
-          if [ "${#imported[@]}" -gt 0 ]; then
-            cp "${imported[@]}" "staged/$dir/"
-          fi
-          if [ -f "migration-$ARCH.json" ]; then
+          mkdir -p staged/removed
+          for dir in "pe/$sub" "elf/$sub"; do
+            [ -d "$dir" ] || continue
+            mkdir -p "staged/$dir"
+            # What a release keeps from rizin's import is an input of every
+            # later rebuild, so it is committed beside the file it joins.
+            files=("$dir"/*.pat "$dir"/*.sources.json "$dir"/*.imported)
+            if [ "${#files[@]}" -gt 0 ]; then
+              cp "${files[@]}" "staged/$dir/"
+            fi
+            # A part a smaller file no longer needs, and an imported file its
+            # libraries now reproduce in full, are gone; so they go from the
+            # branch too.
+            git ls-files --deleted -- "$dir" >> "staged/removed/$ARCH.txt"
+            git status --short -- "$dir"
+            du -h "staged/$dir"/* | tail -5
+          done
+          reports=()
+          for report in "migration-$ARCH.json" "migration-elf-$ARCH.json"; do
+            if [ -f "$report" ]; then reports+=("$report"); fi
+          done
+          if [ "${#reports[@]}" -gt 0 ]; then
             mkdir -p staged/reports
-            cp "migration-$ARCH.json" staged/reports/
+            cp "${reports[@]}" staged/reports/
           fi
-          git status --short -- "$dir"
-          du -h "staged/$dir"/*
 
       - name: Upload this architecture's files
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
@@ -254,9 +306,24 @@ jobs:
       - name: Commit
         run: |
           set -euo pipefail
+          while read -r removed; do
+            git rm --quiet -- "$removed"
+          done < <(cat staged/removed/*.txt 2>/dev/null | sort -u)
+          rm -rf staged/removed
+          # The ELF migration of each architecture is one report of elf/.
+          if compgen -G "staged/reports/migration-elf-*.json" > /dev/null; then
+            python3 - staged/reports/migration-elf-*.json > staged/reports/migration-elf.json <<'PY'
+          import json, sys
+          merged = {}
+          for path in sys.argv[1:]:
+              merged.update(json.load(open(path)))
+          print(json.dumps(merged, indent=2, sort_keys=True))
+          PY
+            rm staged/reports/migration-elf-*.json
+          fi
           cp -R staged/. .
           rm -rf staged
-          if [ -z "$(git status --porcelain -- pe reports)" ]; then
+          if [ -z "$(git status --porcelain -- pe elf reports)" ]; then
             echo "the signatures are unchanged"
             exit 0
           fi
@@ -264,8 +331,8 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           # The migration reports list every line it removed or could not
           # rename; they belong beside the files they describe.
-          git add -- pe reports
+          git add -- pe elf reports
           git commit \
-            -m 'signatures: regenerate pe/ from MSVC and Windows SDK libraries' \
+            -m 'signatures: regenerate pe/ and elf/ from their libraries' \
             -m "Produced by neverd-sigmaker at ${NEVERD_REPO}@${NEVERD_REF}, run ${GITHUB_RUN_ID}."
           git push origin "HEAD:${GITHUB_REF_NAME}"

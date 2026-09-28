@@ -1,0 +1,18 @@
+{
+  "file": "elf/x86/64/ubuntu-libgcc-8.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 1228,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "1118c87c9851863068c0beeb9bface5a0d5c849dbb2510d34b3ef3b4cb5fca92",
+      "asset": "ubuntu-libgcc-8-x64",
+      "kind": "library",
+      "sigmaker": "Generated 17189 signatures \u2192 ubuntu-libgcc-8-x64.pat (8169 objects, 61 functions below --min-size, 4576 functions stating too few exact bytes)"
+    }
+  ]
+}
