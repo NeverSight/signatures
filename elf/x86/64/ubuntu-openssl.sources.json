@@ -1,19 +1,23 @@
 {
   "file": "elf/x86/64/ubuntu-openssl.pat",
   "generator": {
-    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "neverd_ref": "bd2979cb7c504afcc906c1a68c320c19f76add4b",
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 97688,
+  "lines": 101211,
   "parts": [
     {
       "file": "elf/x86/64/ubuntu-openssl.pat",
-      "lines": 31886
+      "lines": 22731
     },
     {
       "file": "elf/x86/64/ubuntu-openssl.part2.pat",
-      "lines": 65802
+      "lines": 30671
+    },
+    {
+      "file": "elf/x86/64/ubuntu-openssl.part3.pat",
+      "lines": 47809
     }
   ],
   "sources": [
