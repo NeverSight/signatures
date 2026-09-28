@@ -26,7 +26,7 @@ Without a usable Rich header it reads every file of the directory.
 ## What a line says
 
 ```
-<leading bytes> <crc length> <crc16> <function length> :0000 <name> [<tail bytes>]
+<leading bytes> <crc length> <crc16> <function length> :0000 <name> [^<offset> <name>]... [<tail bytes>]
 ```
 
 Each line states the bytes of one library function and gives it one name at
@@ -41,9 +41,16 @@ offset 0:
 - Bytes that a relocation rewrites are `..` wildcards.
 - A line states at least 16 bytes exactly. A shorter claim matches far more
   code than the function it came from.
+- Each `^<offset> <name>` names a routine the function branches to directly:
+  at `<offset>` starts the rel32 field of an x86 or x64 `call` or `jmp`, or
+  the ARM64 `B`/`BL` or Thumb-2 `B.W`/`BL`/`BLX` instruction. NeverD follows
+  the branch in the image. A match whose branch reaches a routine NeverD
+  names otherwise is dropped; one whose branches all reach the routines they
+  name is confirmed. NeverD releases older than these references reject such
+  lines.
 
 These rules are NeverD's own:
-[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/a58c002ded16d84301b2c08a57be9789d789346c/tools/neverd-sigmaker)
+[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/22d94b450c945f8dee0b511bd8cfea23e43a5c93/tools/neverd-sigmaker)
 produces the lines, and `neverd::sigs::PatternGenerator` defines how many
 bytes each relocation rewrites.
 
@@ -53,7 +60,8 @@ demangled, sanitized, prefixed or truncated.
 
 A line is kept only if its bytes identify one routine. When lines state the
 same bytes under different names, all of them are dropped, because any one
-name would be a guess. NeverD may apply every file of a directory together, so
+name would be a guess, unless the file's lines name different routines at a
+branch they all make: then the one whose branch NeverD confirms is taken. NeverD may apply every file of a directory together, so
 this holds across the directory. A line is also dropped when a routine of
 another name, at least as long, states every byte the line states: NeverD
 compares a line only as far as the line's own length and accepts any byte
@@ -106,7 +114,7 @@ Two workflows produce the generated files:
      of archive ([`scripts/collect_legacy_media.py`](scripts/collect_legacy_media.py)).
 2. [`msvc-signatures.yml`](.github/workflows/msvc-signatures.yml) builds
    `neverd-sigmaker` at a pinned NeverD revision and runs NeverD's
-   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/a58c002ded16d84301b2c08a57be9789d789346c/scripts/signatures/build_msvc_signatures.py)
+   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/22d94b450c945f8dee0b511bd8cfea23e43a5c93/scripts/signatures/build_msvc_signatures.py)
    over every `msvc-libs-*` release, one architecture at a time:
    - A file with library archives behind it is rebuilt from them alone, and
      from its `<name>.imported` when it has one.
@@ -147,17 +155,19 @@ the map's library functions; wrong is the share of the names NeverD applies.
 
 | Architecture | Programs | Named, optimized | Named, `/Od` | Wrong, optimized | Wrong, `/Od` | Disputed |
 | --- | --- | --- | --- | --- | --- | --- |
-| x86 | 18 | 28% | 51% | <0.1% | 2.7% | 0 |
-| x64 | 18 | 57% | 53% | <0.1% | 2.3% | 0 |
-| ARM32 | 9 | 57% | 56% | 0.1% | 1.4% | 0 |
-| ARM64 | 15 | 57% | 58% | 0.1% | 1.7% | 17 |
+| x86 | 18 | 28% | 53% | <0.1% | 1.7% | 3,041 |
+| x64 | 18 | 59% | 56% | <0.1% | 2.1% | 3,255 |
+| ARM32 | 9 | 59% | 59% | 0.1% | 1.3% | 1,634 |
+| ARM64 | 15 | 58% | 63% | 0.1% | 1.5% | 2,644 |
 
-Across all 60 programs NeverD names 136,986 of 284,642 library functions
-(48%), 612 names are wrong (0.4%), and 17 addresses are disputed. Before the
-Rich header chose the files, before the covering rule, and before the
-Visual Studio 2005 to 2013 files were rebuilt from their libraries, it named
-133,078 (47%), 2,678 names were wrong (2.0%), and 945 addresses were
-disputed.
+Across all 60 programs NeverD names 141,351 of 284,642 library functions
+(50%), 528 names are wrong (0.4%), and 10,574 addresses are disputed. A
+disputed address is one where lines that differ only in their branches all
+match and none of the branches settles which: NeverD leaves it unnamed.
+Before the Rich header chose the files, before the covering rule and the
+branch references, and before the Visual Studio 2005 to 2013 files were
+rebuilt from their libraries, it named 133,078 (47%) and 2,678 names were
+wrong (2.0%).
 
 - Optimized builds (`/O2`, `/MT`, with or without MFC) are the common case,
   and 52 of their names are wrong. On ARM these are mostly short routines
@@ -166,8 +176,9 @@ disputed.
   register.
 - `/Od` builds compile many template instantiations to the same bytes, so
   more of their names are wrong: the program's own instantiations take the
-  names of the library's. Telling them apart needs the names a routine
-  references, which the line format supports and NeverD does not read yet.
+  names of the library's. The branch references drop such a name when the
+  instantiation calls a routine NeverD names otherwise, which it cannot do
+  when the routines it calls are the program's own and unnamed.
 - x86 coverage is bounded by NeverD's function discovery, which since
   `Find packed MSVC hotpatch entries and start them at the no-op` also finds
   the functions MSVC packs directly after a `ret`. Most of the x86 library
