@@ -35,11 +35,16 @@ from; they are kept here as signature-build inputs, not as a redistribution of
 those products.
 """
 
-ELF_NOTE = """\
-The ELF archives hold the unmodified static libraries of the Ubuntu packages
-and Android NDK releases that rizin's sigdb-source records as the sources of
-its ELF pattern files, each package checked against the SHA-1 recorded there.
-They remain under the licenses of the packages they come from.
+PACKAGES_NOTE = """\
+The ELF package archives hold the unmodified static libraries of the Ubuntu
+packages and Android NDK releases that rizin's sigdb-source records as the
+sources of its ELF pattern files, each package checked against the SHA-1
+recorded there. They remain under the licenses of the packages they come from.
+"""
+
+BUILT_NOTE = """\
+The libraries built here from a published source archive record in their
+manifests the archive, the compilers and the flags they were built with.
 """
 
 
@@ -83,8 +88,10 @@ def release_notes(manifests: list[dict], tag: str, commit: str) -> str:
     # of archive it has: an ELF release holds no Microsoft library.
     if any(manifest["kind"] in ("toolset", "winsdk") for manifest in manifests):
         lines.append(MICROSOFT_NOTE)
-    if any(manifest.get("format") == "elf" for manifest in manifests):
-        lines.append(ELF_NOTE)
+    if any("sigdb_source" in manifest for manifest in manifests):
+        lines.append(PACKAGES_NOTE)
+    if any("cflags" in manifest or "builds" in manifest for manifest in manifests):
+        lines.append(BUILT_NOTE)
     toolsets = [manifest for manifest in manifests if manifest["kind"] == "toolset"]
     if toolsets:
         lines += ["## Toolsets", ""]

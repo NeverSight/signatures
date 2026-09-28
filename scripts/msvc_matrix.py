@@ -18,9 +18,10 @@ media and what to unpack from it (see collect_legacy_media.py).  Its rows run
 on Linux and are selected by the same `--rows`, as are the rows of
 .github/masm32-matrix.json (MASM32 SDK releases, built under Wine; see
 collect_masm32.py), .github/mingw-matrix.json (C libraries built with the
-MinGW-w64 cross compilers; see collect_mingw_library.py) and
-.github/elf-matrix.json (the packages rizin's ELF files came from; see
-collect_elf_packages.py).
+MinGW-w64 cross compilers; see collect_mingw_library.py),
+.github/fedora-matrix.json (C libraries built with a Fedora release's own
+compilers; see collect_fedora_library.py) and .github/elf-matrix.json (the
+packages rizin's ELF files came from; see collect_elf_packages.py).
 """
 
 from __future__ import annotations
@@ -39,6 +40,9 @@ DEFAULT_MASM32_MATRIX = (
 )
 DEFAULT_MINGW_MATRIX = (
     Path(__file__).resolve().parents[1] / ".github" / "mingw-matrix.json"
+)
+DEFAULT_FEDORA_MATRIX = (
+    Path(__file__).resolve().parents[1] / ".github" / "fedora-matrix.json"
 )
 DEFAULT_ELF_MATRIX = (
     Path(__file__).resolve().parents[1] / ".github" / "elf-matrix.json"
@@ -108,6 +112,19 @@ MINGW_FIELDS = {
 }
 
 
+FEDORA_FIELDS = {
+    "name": str,
+    "library": str,
+    "version": str,
+    "source": str,
+    "sha256": str,
+    "target": str,
+    "archive": str,
+    "builds": list,
+    "packages": list,
+}
+
+
 def load(path: Path, fields: dict = FIELDS, optional: dict | None = None) -> list[dict]:
     optional = optional or {}
     rows = json.loads(path.read_text(encoding="utf-8"))
@@ -161,6 +178,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--legacy-matrix", type=Path, default=DEFAULT_LEGACY_MATRIX)
     parser.add_argument("--masm32-matrix", type=Path, default=DEFAULT_MASM32_MATRIX)
     parser.add_argument("--mingw-matrix", type=Path, default=DEFAULT_MINGW_MATRIX)
+    parser.add_argument("--fedora-matrix", type=Path, default=DEFAULT_FEDORA_MATRIX)
     parser.add_argument("--elf-matrix", type=Path, default=DEFAULT_ELF_MATRIX)
     parser.add_argument("--rows", default="", help="row names to keep, comma or space separated")
     parser.add_argument("--github-output", type=Path, help="append matrix=<json> to this file")
@@ -170,12 +188,14 @@ def main(argv: list[str] | None = None) -> int:
     legacy = load(args.legacy_matrix, LEGACY_FIELDS)
     masm32 = load(args.masm32_matrix, MASM32_FIELDS)
     mingw = load(args.mingw_matrix, MINGW_FIELDS)
+    fedora = load(args.fedora_matrix, FEDORA_FIELDS)
     elf = load(args.elf_matrix, ELF_FIELDS, ELF_OPTIONAL)
-    rows = select(windows, args.rows, legacy + masm32 + mingw + elf)
-    legacy_rows = select(legacy, args.rows, windows + masm32 + mingw + elf)
-    masm32_rows = select(masm32, args.rows, windows + legacy + mingw + elf)
-    mingw_rows = select(mingw, args.rows, windows + legacy + masm32 + elf)
-    elf_rows = select(elf, args.rows, windows + legacy + masm32 + mingw)
+    rows = select(windows, args.rows, legacy + masm32 + mingw + fedora + elf)
+    legacy_rows = select(legacy, args.rows, windows + masm32 + mingw + fedora + elf)
+    masm32_rows = select(masm32, args.rows, windows + legacy + mingw + fedora + elf)
+    mingw_rows = select(mingw, args.rows, windows + legacy + masm32 + fedora + elf)
+    fedora_rows = select(fedora, args.rows, windows + legacy + masm32 + mingw + elf)
+    elf_rows = select(elf, args.rows, windows + legacy + masm32 + mingw + fedora)
     matrix = json.dumps({"include": [for_workflow(row) for row in rows]}, separators=(",", ":"))
     legacy_matrix = json.dumps(
         {"include": [{"name": row["name"]} for row in legacy_rows]}, separators=(",", ":")
@@ -185,6 +205,9 @@ def main(argv: list[str] | None = None) -> int:
     )
     mingw_matrix = json.dumps(
         {"include": [{"name": row["name"]} for row in mingw_rows]}, separators=(",", ":")
+    )
+    fedora_matrix = json.dumps(
+        {"include": [{"name": row["name"]} for row in fedora_rows]}, separators=(",", ":")
     )
     elf_matrix = json.dumps(
         {"include": [{"name": row["name"]} for row in elf_rows]}, separators=(",", ":")
@@ -199,10 +222,12 @@ def main(argv: list[str] | None = None) -> int:
             out.write(f"masm32_rows={len(masm32_rows)}\n")
             out.write(f"mingw_matrix={mingw_matrix}\n")
             out.write(f"mingw_rows={len(mingw_rows)}\n")
+            out.write(f"fedora_matrix={fedora_matrix}\n")
+            out.write(f"fedora_rows={len(fedora_rows)}\n")
             out.write(f"elf_matrix={elf_matrix}\n")
             out.write(f"elf_rows={len(elf_rows)}\n")
     print("\n".join(row["name"] for row in
-                    rows + legacy_rows + masm32_rows + mingw_rows + elf_rows))
+                    rows + legacy_rows + masm32_rows + mingw_rows + fedora_rows + elf_rows))
     return 0
 
 

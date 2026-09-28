@@ -103,7 +103,7 @@ class SummarizeTests(unittest.TestCase):
         collector.emit_asset(
             output=elf, asset="ubuntu-libc6-x64", kind="library", arch="x64",
             files=[collector.CollectedFile(library, Path("lib/libc.a"))],
-            extra={"library": "ubuntu-libc6", "format": "elf",
+            extra={"library": "ubuntu-libc6", "format": "elf", "sigdb_source": "5f068bb",
                    "sources": [{"package": "a.deb"}], "unavailable": []},
             level=3,
         )

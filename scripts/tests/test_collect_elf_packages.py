@@ -207,7 +207,8 @@ class MatrixTests(unittest.TestCase):
         imported = {path.rsplit("/", 1)[1][:-4] for path in listing.stdout.split()
                     if path.endswith(".pat")}
         rows = {row["library"] for row in json.loads(collect.DEFAULT_MATRIX.read_text())}
-        # fedora-zlib was built from the zlib release archive, not a package.
+        # fedora-zlib was built from the zlib release archive, not a package;
+        # .github/fedora-matrix.json builds it.
         self.assertEqual(imported - rows, {"fedora-zlib"})
 
 

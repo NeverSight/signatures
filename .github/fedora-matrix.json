@@ -1,0 +1,83 @@
+[
+  {
+    "name": "fedora-zlib-1.3",
+    "library": "fedora-zlib",
+    "version": "1.3",
+    "source": "https://www.zlib.net/fossils/zlib-1.3.tar.gz",
+    "sha256": "ff0ba4c292013dbc27530b3a81e1f9a813cd39de01ca5e0f8bf355702efa593e",
+    "target": "zlibstatic",
+    "archive": "libz.a",
+    "builds": [
+      {
+        "arch": "x86",
+        "compiler": "gcc",
+        "cflags": [
+          "-m32"
+        ]
+      },
+      {
+        "arch": "x86",
+        "compiler": "clang",
+        "cflags": [
+          "--target=i686-linux-elf"
+        ]
+      },
+      {
+        "arch": "x64",
+        "compiler": "gcc",
+        "cflags": []
+      },
+      {
+        "arch": "x64",
+        "compiler": "clang",
+        "cflags": []
+      }
+    ],
+    "packages": [
+      {
+        "url": "https://kojipkgs.fedoraproject.org/packages/gcc/13.2.1/1.fc38/x86_64/gcc-13.2.1-1.fc38.x86_64.rpm",
+        "sha256": "356acc261449d763170d47710aad26a0d9535a243f5b4ec6e67e1684e9448184"
+      },
+      {
+        "url": "https://kojipkgs.fedoraproject.org/packages/gcc/13.2.1/1.fc38/x86_64/cpp-13.2.1-1.fc38.x86_64.rpm",
+        "sha256": "35dad2b5cb223c8bd956fbd0d4b44cea3819ee20630d46a007e99c7b53da4c2a"
+      },
+      {
+        "url": "https://kojipkgs.fedoraproject.org/packages/clang/16.0.6/2.fc38/x86_64/clang-16.0.6-2.fc38.x86_64.rpm",
+        "sha256": "399e83b5c5111d10bd66ad0b6fcc7cf7d872203222a179bef4a43c7ed588b95a"
+      },
+      {
+        "url": "https://kojipkgs.fedoraproject.org/packages/clang/16.0.6/2.fc38/x86_64/clang-libs-16.0.6-2.fc38.x86_64.rpm",
+        "sha256": "07b3d3016548139e8a2beedb74a19b121d706106b3a89c60634032a72ea3d8f6"
+      },
+      {
+        "url": "https://kojipkgs.fedoraproject.org/packages/clang/16.0.6/2.fc38/x86_64/clang-resource-filesystem-16.0.6-2.fc38.x86_64.rpm",
+        "sha256": "45c06507aeb2cc8900b0ab6c6b3767bf55b811258056cfeb35a68340fc573b6f"
+      },
+      {
+        "url": "https://kojipkgs.fedoraproject.org/packages/llvm/16.0.6/2.fc38/x86_64/llvm-libs-16.0.6-2.fc38.x86_64.rpm",
+        "sha256": "753999c6e6e56b176f114b3deff9f6ea4d8e791d3900bed68b583161617c8770"
+      },
+      {
+        "url": "https://kojipkgs.fedoraproject.org/packages/libedit/3.1/45.20221030cvs.fc38/x86_64/libedit-3.1-45.20221030cvs.fc38.x86_64.rpm",
+        "sha256": "b5ed1c4da74c0893c0385a3ed18a31eb74fa83d469e8ffd56981289c1d7e8d83"
+      },
+      {
+        "url": "https://kojipkgs.fedoraproject.org/packages/glibc/2.37/4.fc38/x86_64/glibc-devel-2.37-4.fc38.x86_64.rpm",
+        "sha256": "6678d3f5c8f46c4212e6a914766384c5e5fcca757aa8241795dd48da8804f325"
+      },
+      {
+        "url": "https://kojipkgs.fedoraproject.org/packages/glibc/2.37/4.fc38/i686/glibc-devel-2.37-4.fc38.i686.rpm",
+        "sha256": "1971bec0002866a2ef725e21f48cd153e1d0c1e0b027b6dfee9abd4ebfa1b646"
+      },
+      {
+        "url": "https://kojipkgs.fedoraproject.org/packages/glibc/2.37/4.fc38/noarch/glibc-headers-x86-2.37-4.fc38.noarch.rpm",
+        "sha256": "b72e85d5a1a61cc0ad36c506a8081e821a370a6437452d92120caede1640367f"
+      },
+      {
+        "url": "https://kojipkgs.fedoraproject.org/packages/kernel-headers/6.4.4/200.fc38/x86_64/kernel-headers-6.4.4-200.fc38.x86_64.rpm",
+        "sha256": "74a10e3faa83351ee600a2b4e2c266271630d609dd2c3debb612e7278cf441f2"
+      }
+    ]
+  }
+]

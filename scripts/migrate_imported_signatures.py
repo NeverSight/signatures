@@ -998,7 +998,8 @@ def collected_releases(assets: Path, arch: str, binary_format: str = "pe") -> di
     A Visual Studio release's collected libraries are its release-to-
     manufacturing libraries, which rizin's were. A library asset says so
     itself (`reproduces_import`): the MASM32 SDK builds the same sources with
-    the same assembler, but zlib compiled here is not the build rizin made.
+    the same assembler, and fedora-zlib the same source with the same Fedora
+    compilers, but mingw32-zlib compiled here is not the build rizin made.
     """
 
     releases: dict[str, bool] = {}
