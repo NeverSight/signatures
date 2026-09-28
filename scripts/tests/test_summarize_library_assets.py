@@ -77,6 +77,7 @@ class SummarizeTests(unittest.TestCase):
             files=[collector.CollectedFile(library, Path("lib/libz.a"))],
             extra={"library": "ubuntu-zlib", "format": "elf",
                    "sources": [{"package": "a.deb"}, {"package": "b.deb"}],
+                   "without_libraries": [{"package": "d.deb"}],
                    "unavailable": [{"package": "c.deb"}]},
             level=3,
         )
@@ -85,7 +86,8 @@ class SummarizeTests(unittest.TestCase):
         self.assertIn("| `masm32-11r-x86` | masm32 | 1 | http://www.oby.ro/masm32/masm32v11r.zip |",
                       notes)
         self.assertIn("| `ubuntu-zlib-x64` | ubuntu-zlib |  "
-                      "| 2 packages sigdb-source records, 1 of them unavailable |", notes)
+                      "| 4 packages sigdb-source records, 1 of them without a static library, "
+                      "1 of them unavailable |", notes)
         self.assertIn("| `mingw32-zlib-1.3-x86` | mingw32-zlib | 1 "
                       "| https://example.org/zlib-1.3.tar.gz |", notes)
 

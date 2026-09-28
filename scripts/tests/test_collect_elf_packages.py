@@ -117,10 +117,17 @@ class CollectTests(unittest.TestCase):
                 "paths": ["*/platforms/*"]}]))
 
             original_sources, original_obtain = collect.package_sources, collect.obtain
+            # r3 holds no library at all.
+            empty = root / "downloads" / "android-ndk-r3-linux.tar.bz2"
+            with tarfile.open(empty, "w:bz2") as bundle:
+                info = tarfile.TarInfo("ndk/README")
+                bundle.addfile(info, io.BytesIO(b""))
             collect.package_sources = lambda row, cache: [("ab", "android-ndk-r1-linux.tar.bz2"),
-                                                          ("cd", "android-ndk-r2-linux.zip")]
+                                                          ("cd", "android-ndk-r2-linux.zip"),
+                                                          ("ef", "android-ndk-r3-linux.tar.bz2")]
             collect.obtain = lambda digest, path, downloads: (
                 (package, None) if path.endswith("r1-linux.tar.bz2")
+                else (empty, None) if path.endswith("r3-linux.tar.bz2")
                 else (None, "HTTP Error 404: Not Found"))
             try:
                 status = collect.main(["--matrix", str(matrix), "--name", "android-ndk",
@@ -145,6 +152,8 @@ class CollectTests(unittest.TestCase):
                          [("android-ndk-r1-linux.tar.bz2", 2, 1)])
         self.assertEqual([entry["package"] for entry in x64_manifest["unavailable"]],
                          ["android-ndk-r2-linux.zip"])
+        self.assertEqual([entry["package"] for entry in x64_manifest["without_libraries"]],
+                         ["android-ndk-r3-linux.tar.bz2"])
         self.assertFalse(x64_manifest["reproduces_import"])
 
 

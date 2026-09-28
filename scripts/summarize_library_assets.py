@@ -128,9 +128,12 @@ def release_notes(manifests: list[dict], tag: str, commit: str) -> str:
             origin = manifest.get("source") or {}
             source = origin.get("media") or origin.get("url", "")
             if "sources" in manifest:
-                source = (f"{len(manifest['sources'])} packages sigdb-source records"
-                          + (f", {len(manifest['unavailable'])} of them unavailable"
-                             if manifest.get("unavailable") else ""))
+                empty = len(manifest.get("without_libraries", []))
+                missing = len(manifest.get("unavailable", []))
+                total = len(manifest["sources"]) + empty + missing
+                source = (f"{total} packages sigdb-source records"
+                          + (f", {empty} of them without a static library" if empty else "")
+                          + (f", {missing} of them unavailable" if missing else ""))
             lines.append(
                 f"| `{manifest['asset']}` | {manifest.get('library', '')} "
                 f"| {manifest.get('library_version', '')} | {source} "

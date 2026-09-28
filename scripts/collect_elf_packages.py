@@ -136,6 +136,9 @@ def main(argv: list[str] | None = None) -> int:
     # NDK's libraries repeat across API levels -- is stored once.
     placed_digests: dict[str, set[str]] = {d: set() for d in row["directories"]}
     unavailable: list[dict] = []
+    # Packages with no library the row takes: a -dev package that shipped
+    # only the shared library. rizin's lines cannot have come from them.
+    without_libraries: list[dict] = []
     pool = concurrent.futures.ThreadPoolExecutor(args.jobs)
     # At most --jobs packages are fetched ahead of the one being unpacked, so
     # a runner never holds more of them than that (an NDK archive is 1 GB).
@@ -204,6 +207,9 @@ def main(argv: list[str] | None = None) -> int:
                 used[directory].append({"package": path, "sha1": digest,
                                         "url": fetcher.source_url(path), "libraries": count,
                                         "stored": placed[directory]})
+        if not any(held.values()):
+            without_libraries.append({"package": path, "sha1": digest,
+                                      "url": fetcher.source_url(path)})
         shutil.rmtree(unpacked, ignore_errors=True)
         if args.keep_downloads is None:
             package.unlink()
@@ -228,6 +234,7 @@ def main(argv: list[str] | None = None) -> int:
                 "library": row["library"],
                 "sigdb_source": SIGDB_COMMIT,
                 "sources": used[directory],
+                "without_libraries": without_libraries,
                 "unavailable": unavailable,
                 # Every package rizin's lines were made from, or not.
                 "reproduces_import": not unavailable,
