@@ -1,0 +1,28 @@
+{
+  "file": "elf/x86/64/ubuntu-libc6.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 56104,
+  "parts": [
+    {
+      "file": "elf/x86/64/ubuntu-libc6.pat",
+      "lines": 32236
+    },
+    {
+      "file": "elf/x86/64/ubuntu-libc6.part2.pat",
+      "lines": 23868
+    }
+  ],
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "5bf066e121a9dcc114d5b67ae7623744fb7602ec4d965374b2e6e793dcd2120f",
+      "asset": "ubuntu-libc6-x64",
+      "kind": "library",
+      "sigmaker": "Generated 1070268 signatures \u2192 ubuntu-libc6-x64.pat (610044 objects, 11553 functions below --min-size, 138959 functions stating too few exact bytes)"
+    }
+  ]
+}

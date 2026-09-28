@@ -1,0 +1,18 @@
+{
+  "file": "elf/x86/64/ubuntu-libseccomp.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 1324,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "c13753351c6c512442f12a12eb9e78fe00c8f3d38c47387182404d02ce6ddb2d",
+      "asset": "ubuntu-libseccomp-x64",
+      "kind": "library",
+      "sigmaker": "Generated 5569 signatures \u2192 ubuntu-libseccomp-x64.pat (1441 objects, 1144 functions stating too few exact bytes)"
+    }
+  ]
+}

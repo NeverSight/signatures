@@ -1,0 +1,18 @@
+{
+  "file": "elf/x86/64/ubuntu-libsodium.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 2106,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "7bcbe800ee652aa1ba536f86d4e85f4fe0490c455d962ff0c79670825e3a73d7",
+      "asset": "ubuntu-libsodium-x64",
+      "kind": "library",
+      "sigmaker": "Generated 4940 signatures \u2192 ubuntu-libsodium-x64.pat (1822 objects, 128 functions below --min-size, 5108 functions stating too few exact bytes)"
+    }
+  ]
+}

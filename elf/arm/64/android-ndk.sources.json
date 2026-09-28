@@ -1,0 +1,28 @@
+{
+  "file": "elf/arm/64/android-ndk.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 53636,
+  "parts": [
+    {
+      "file": "elf/arm/64/android-ndk.pat",
+      "lines": 34623
+    },
+    {
+      "file": "elf/arm/64/android-ndk.part2.pat",
+      "lines": 19013
+    }
+  ],
+  "sources": [
+    {
+      "arch": "arm64",
+      "archive_sha256": "8ff4be60ded90233b0864536447e2c476e02f5ca9256cb6cd5e6b1484eed95a8",
+      "asset": "android-ndk-arm64",
+      "kind": "library",
+      "sigmaker": "Generated 151630 signatures \u2192 android-ndk-arm64.pat (20395 objects, 44665 functions stating too few exact bytes)"
+    }
+  ]
+}

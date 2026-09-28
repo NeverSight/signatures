@@ -1,0 +1,18 @@
+{
+  "file": "elf/x86/64/ubuntu-libstdc++-12.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 2477,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "81e4a801b48cf3c0b45e066fb593edc766f4a6811ffd30b3f91940264a7d2a8d",
+      "asset": "ubuntu-libstdc++-12-x64",
+      "kind": "library",
+      "sigmaker": "Generated 39586 signatures \u2192 ubuntu-libstdc++-12-x64.pat (2106 objects, 12515 functions stating too few exact bytes)"
+    }
+  ]
+}

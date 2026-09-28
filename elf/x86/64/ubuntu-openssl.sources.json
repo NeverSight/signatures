@@ -1,0 +1,28 @@
+{
+  "file": "elf/x86/64/ubuntu-openssl.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 97688,
+  "parts": [
+    {
+      "file": "elf/x86/64/ubuntu-openssl.pat",
+      "lines": 31886
+    },
+    {
+      "file": "elf/x86/64/ubuntu-openssl.part2.pat",
+      "lines": 65802
+    }
+  ],
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "8472b7c137657ee890e4d6917ab4af6be0c83bbc8ffef9c2a1280717ceff9429",
+      "asset": "ubuntu-openssl-x64",
+      "kind": "library",
+      "sigmaker": "Generated 1446919 signatures \u2192 ubuntu-openssl-x64.pat (238424 objects, 9999 functions below --min-size, 708047 functions stating too few exact bytes)"
+    }
+  ]
+}

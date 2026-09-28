@@ -1,0 +1,18 @@
+{
+  "file": "elf/x86/64/ubuntu-libc++-8.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 762,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "cb5db7eb3cf268f738daa48a509c5f7c99c9501f69d576f33d8ebf01b39c79b4",
+      "asset": "ubuntu-libc++-8-x64",
+      "kind": "library",
+      "sigmaker": "Generated 9944 signatures \u2192 ubuntu-libc++-8-x64.pat (266 objects, 625 functions below --min-size, 3770 functions stating too few exact bytes)"
+    }
+  ]
+}

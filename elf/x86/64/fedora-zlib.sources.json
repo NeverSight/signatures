@@ -1,0 +1,19 @@
+{
+  "file": "elf/x86/64/fedora-zlib.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 285,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "b1bff9e319ce3e541382fa4bb596db7a5c271116363592a825f3ad7278a608c4",
+      "asset": "fedora-zlib-1.3-x64",
+      "kind": "library",
+      "library_version": "1.3",
+      "sigmaker": "Generated 296 signatures \u2192 fedora-zlib-1.3-x64.pat (30 objects, 6 functions stating too few exact bytes)"
+    }
+  ]
+}

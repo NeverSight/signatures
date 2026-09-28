@@ -1,0 +1,18 @@
+{
+  "file": "elf/x86/64/ubuntu-musl.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 10231,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "dbe018351f4cec442dd61daf0321d008af85258eb72ad24c4ef110b930971cf5",
+      "asset": "ubuntu-musl-x64",
+      "kind": "library",
+      "sigmaker": "Generated 36270 signatures \u2192 ubuntu-musl-x64.pat (34923 objects, 1316 functions below --min-size, 11035 functions stating too few exact bytes)"
+    }
+  ]
+}

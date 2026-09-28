@@ -1,0 +1,18 @@
+{
+  "file": "elf/x86/64/ubuntu-libc++-15.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 1736,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "f819fb1933160dfefc0de18d1e8f00213a6a7a244f897ea75b17de47a1aa47d0",
+      "asset": "ubuntu-libc++-15-x64",
+      "kind": "library",
+      "sigmaker": "Generated 9906 signatures \u2192 ubuntu-libc++-15-x64.pat (373 objects, 549 functions below --min-size, 3833 functions stating too few exact bytes)"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "file": "elf/x86/64/ubuntu-libstdc++-7.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 1560,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "933f59a00cfc19ef12f1832943f62c8ae5e022ab318e4d1efae775b6839652a5",
+      "asset": "ubuntu-libstdc++-7-x64",
+      "kind": "library",
+      "sigmaker": "Generated 239683 signatures \u2192 ubuntu-libstdc++-7-x64.pat (14884 objects, 9179 functions below --min-size, 86370 functions stating too few exact bytes)"
+    }
+  ]
+}

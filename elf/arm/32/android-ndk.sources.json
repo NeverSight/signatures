@@ -1,0 +1,24 @@
+{
+  "file": "elf/arm/32/android-ndk.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 75888,
+  "sources": [
+    {
+      "arch": "arm",
+      "archive_sha256": "e735740e996cf92d9bccf527ca74e7d7595610a9e054fb5b4cc9b3bacb6f32b9",
+      "asset": "android-ndk-arm",
+      "kind": "library",
+      "sigmaker": "Generated 316103 signatures \u2192 android-ndk-arm.pat (125897 objects, 5658 functions below --min-size, 122594 functions stating too few exact bytes)"
+    },
+    {
+      "archive_sha256": "6b17fc6f44d2024a1f127d646c84e098dd9c81358eb4e29200619d289ca077a9",
+      "asset": "android-ndk.imported",
+      "kind": "imported",
+      "lines": 0
+    }
+  ]
+}

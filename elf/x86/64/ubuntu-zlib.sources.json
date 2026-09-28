@@ -1,0 +1,18 @@
+{
+  "file": "elf/x86/64/ubuntu-zlib.pat",
+  "generator": {
+    "neverd_ref": "278e2f2e98af90ed358e25fcffbc84d82d787cd4",
+    "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 1935,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "d5e8572fa3d7e3c97bbdbb70d340cc7db380c7a876bc6a24a1bb21303e2c4d9c",
+      "asset": "ubuntu-zlib-x64",
+      "kind": "library",
+      "sigmaker": "Generated 4614 signatures \u2192 ubuntu-zlib-x64.pat (663 objects, 16 functions below --min-size, 482 functions stating too few exact bytes)"
+    }
+  ]
+}
