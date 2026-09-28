@@ -58,17 +58,31 @@ leading underscores, then the shortest:
   undefined symbol, or a function the object defines; a call a linker may
   rewrite, such as `__tls_get_addr` in a TLS sequence it relaxes, is not
   stated.
-- NeverD follows each branch in the image, and on through a linker's
-  long-branch or interworking thunk. A match whose branch reaches a routine
-  NeverD names otherwise, or in an ELF image the PLT stub of another import,
-  is dropped; one whose branches all reach the routines they name is
-  confirmed. What the matches then name is what their callers' branches are
-  checked against in turn, until nothing new is named. NeverD releases older
-  than these references reject such lines, and one before
-  NeverSight/NeverD#208 reads an odd offset as a Thumb-2 branch.
+- Several `^<offset>` with one offset name the routines that one branch may
+  reach, any of which confirms it: a symbol and the alternate name an
+  `/alternatename` directive of the library gives it, which a COFF link
+  resolves the symbol to where no object defines it (the x86 CRT's
+  `__except_handler4` calls `__filter_x86_sse2_floating_point_exception`, and
+  a program without the SSE2 filter reaches
+  `__filter_x86_sse2_floating_point_exception_default`), or the routines that
+  builds of the same bytes call there (the release CRT's `free` where the
+  debug CRT calls `_free_dbg`).
+- NeverD follows each branch in the image. A match whose branch reaches a
+  routine NeverD names as none of the routines the branch may reach, or in
+  an ELF image the PLT stub of another import, is dropped; one whose
+  branches all reach routines they name is confirmed. What the matches then
+  name is what their callers' branches are checked against in turn, until
+  nothing new is named. A branch to a routine that only jumps on -- a
+  linker's thunk, or a routine that tail-calls another, such as the release
+  CRT's `free`, which jumps to `_free_base` -- is followed on, and what it
+  reaches confirms the reference but contradicts nothing.
+- NeverD releases older than these references reject such lines. One before
+  NeverSight/NeverD#208 reads an odd offset as a Thumb-2 branch, and one
+  before NeverSight/NeverD#214 reads the references at one offset as
+  separate branches, each of which the others contradict.
 
 These rules are NeverD's own:
-[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/bd2979cb7c504afcc906c1a68c320c19f76add4b/tools/neverd-sigmaker)
+[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/4428327d9344f12f84123206a05b87c328fccb6a/tools/neverd-sigmaker)
 produces the lines, and `neverd::sigs::PatternGenerator` defines how many
 bytes each relocation rewrites.
 
@@ -160,7 +174,7 @@ Two workflows produce the generated files:
      [Linux and Android (elf/) signatures](#linux-and-android-elf-signatures).
 2. [`msvc-signatures.yml`](.github/workflows/msvc-signatures.yml) builds
    `neverd-sigmaker` at a pinned NeverD revision and runs NeverD's
-   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/bd2979cb7c504afcc906c1a68c320c19f76add4b/scripts/signatures/build_msvc_signatures.py)
+   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/4428327d9344f12f84123206a05b87c328fccb6a/scripts/signatures/build_msvc_signatures.py)
    over every `msvc-libs-*` release, one architecture at a time:
    - A file with library archives behind it is rebuilt from them alone, and
      from its `<name>.imported` when it has one.
@@ -253,26 +267,30 @@ and 2022 (x86, x64, ARM32, ARM64), and 2026 with both its default toolset and
 `neverd sigs --auto` does, by the program's Rich header. Named is the share of
 the map's library functions; wrong is the share of the names NeverD applies.
 Measured with NeverD at
-[bd2979cb](https://github.com/NeverSight/NeverD/commit/bd2979cb7c504afcc906c1a68c320c19f76add4b).
+[4428327d](https://github.com/NeverSight/NeverD/commit/4428327d9344f12f84123206a05b87c328fccb6a).
 
 | Architecture | Programs | Named, optimized | Named, `/Od` | Wrong, optimized | Wrong, `/Od` | Disputed |
 | --- | --- | --- | --- | --- | --- | --- |
-| x86 | 18 | 53% | 57% | <0.1% | 1.8% | 3,104 |
-| x64 | 18 | 60% | 58% | <0.1% | 2.0% | 2,635 |
-| ARM32 | 9 | 60% | 60% | <0.1% | 1.3% | 1,417 |
-| ARM64 | 15 | 63% | 65% | <0.1% | 1.5% | 2,119 |
+| x86 | 18 | 54% | 57% | <0.1% | 1.8% | 3,322 |
+| x64 | 18 | 62% | 59% | <0.1% | 2.0% | 2,709 |
+| ARM32 | 9 | 60% | 61% | <0.1% | 1.3% | 1,453 |
+| ARM64 | 15 | 65% | 66% | <0.1% | 1.5% | 2,330 |
 
-Across all 60 programs NeverD names 166,930 of 284,642 library functions
-(59%), 550 names are wrong (0.3%), and 9,275 addresses are disputed. A
+Across all 60 programs NeverD names 170,024 of 284,642 library functions
+(60%), 550 names are wrong (0.3%), and 9,814 addresses are disputed. A
 disputed address is one where lines that differ only in their branches all
 match and none of the branches settles which: NeverD leaves it unnamed. At
-65 other such addresses a confirmed branch settles it, and 64 of those
+71 other such addresses a confirmed branch settles it, and 70 of those
 names are right. Counting these needs a NeverD that reports each match's
 `confirmed` flag (NeverSight/NeverD#164); with an older one the script
 counts them as disputed. Since NeverSight/NeverD#208 what the branches settle
-is what the branches of the routines' callers are checked against in turn:
-that names 1,431 more of these programs' library functions, leaves 1,694
-fewer addresses disputed, and makes 2 fewer names wrong.
+is what the branches of the routines' callers are checked against in turn,
+which names 1,431 more of these programs' library functions. Since
+NeverSight/NeverD#212 a routine that only jumps on no longer contradicts
+the matches that call it: 2,605 more, which the references had dropped
+because `operator delete` jumps to `free` and `malloc` to `_malloc_base`.
+The alternatives of NeverSight/NeverD#214 name 489 more. None of the three
+names more wrongly.
 Before the Rich header chose the files, before the covering rule and the
 branch references, and before the Visual Studio 2005 to 2013 files were
 rebuilt from their libraries, it named 133,078 (47%) and 2,678 names were
@@ -300,7 +318,7 @@ wrong (2.0%).
   the functions MSVC packs directly after a `ret`. Since NeverSight/NeverD#204
   signatures are also tried at every function NeverD's detector finds, not
   only at those the image's tables state; the optimized x86 programs went
-  from 28% named to 53%.
+  from 28% named to 54%.
 - The Visual Studio 2005 to 2013 files have no validation programs with
   maps, but the setup programs on their media are linked statically with
   their release's runtime, and the Rich header chooses the file of the
@@ -318,7 +336,7 @@ wrong (2.0%).
   - VS 2010's: 277 of 429. 37 are at static functions, 15 differ only in
     decoration, 5 name the MFC instantiation of an ATL `CStringT` member
     whose code is the same, and 2 are wrong.
-  - VS 2005's: 297 of 480. 42 are at static functions, 2 differ only in
+  - VS 2005's: 298 of 480. 42 are at static functions, 2 differ only in
     decoration, and none is wrong. Its linker placed read-only data in the
     code section, where NeverD's function discovery alone finds 85 of the
     program's 747 functions; since NeverSight/NeverD#204 signatures are also
@@ -340,20 +358,20 @@ same programs, as measured with NeverD at
 (ARM) and
 [278e2f2e](https://github.com/NeverSight/NeverD/commit/278e2f2e98af90ed358e25fcffbc84d82d787cd4)
 (the others). The files as they are now were measured with NeverD at
-[bd2979cb](https://github.com/NeverSight/NeverD/commit/bd2979cb7c504afcc906c1a68c320c19f76add4b).
+[4428327d](https://github.com/NeverSight/NeverD/commit/4428327d9344f12f84123206a05b87c328fccb6a).
 
 | Programs | Count | Library functions | Named before | Named | Wrong before | Wrong | Disputed before | Disputed |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | glibc 2.27, 2.31, 2.35, `-O2` and `-O0` | 6 | 6,265 | 3,206 (51%) | 4,974 (79%) | 117 | 14 | 79 | 0 |
-| GNU libstdc++ 11, 12 | 2 | 9,509 | 2,915 (31%) | 4,438 (47%) | 176 | 5 | 54 | 522 |
+| GNU libstdc++ 11, 12 | 2 | 9,509 | 2,915 (31%) | 4,454 (47%) | 176 | 5 | 54 | 618 |
 | zlib 1.2.11 | 1 | 1,182 | 653 (55%) | 968 (82%) | 25 | 0 | 14 | 0 |
-| OpenSSL 3.0 | 1 | 10,726 | 5,278 (49%) | 6,850 (64%) | 1,510 | 2 | 287 | 474 |
+| OpenSSL 3.0 | 1 | 10,726 | 5,278 (49%) | 6,862 (64%) | 1,510 | 2 | 287 | 479 |
 | musl 1.2.2 | 1 | 160 | 0 | 94 (59%) | 0 | 0 | 0 | 0 |
-| NDK r25b x64 | 1 | 1,850 | 767 (41%) | 1,287 (70%) | 16 | 2 | 14 | 11 |
+| NDK r25b x64 | 1 | 1,850 | 767 (41%) | 1,291 (70%) | 16 | 2 | 14 | 13 |
 | NDK r25b x86 | 1 | 1,942 | 177 (9%) | 1,482 (76%) | 10 | 0 | 0 | 17 |
 | NDK r25b ARM64, C and C++ | 2 | 5,794 | 465 (8%) | 3,854 (67%) | 4 | 0 | 0 | 90 |
-| NDK r25b ARM32, C | 1 | 1,907 | 116 (6%) | 1,248 (65%) | 4 | 0 | 0 | 7 |
-| NDK r25b ARM32, C++ | 1 | 4,117 | -- | 2,201 (53%) | -- | 0 | -- | 96 |
+| NDK r25b ARM32, C | 1 | 1,907 | 116 (6%) | 1,255 (66%) | 4 | 0 | 0 | 13 |
+| NDK r25b ARM32, C++ | 1 | 4,117 | -- | 2,233 (54%) | -- | 1 | -- | 104 |
 
 - Most of the names wrong before were OpenSSL's: its `d2i_*`, `i2d_*`,
   `*_free` and per-cipher routines are the same code up to the object a

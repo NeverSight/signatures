@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import io
 import json
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -69,6 +71,26 @@ class FailureTests(unittest.TestCase):
         self.assertEqual(result.failure, "error: failed to load: elf: overlapping")
         self.assertEqual(result.library_functions, 1)
         self.assertEqual(result.correct, 0)
+
+    def test_a_program_with_nothing_to_compare_with_is_skipped(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            neverd = root / "neverd"
+            neverd.write_text("#!/bin/sh\necho '[]'\n")
+            neverd.chmod(0o755)
+            untold = root / "vs2012-x86-setup.exe"
+            untold.write_bytes(b"MZ")
+            told = root / "vs2013-x86-setup.exe"
+            told.write_bytes(b"MZ")
+            told.with_suffix(".truth.json").write_text(json.dumps(
+                [{"address": "0x10", "names": ["_memcpy"], "from_library": True}]))
+            output = io.StringIO()
+            with redirect_stdout(output):
+                status = evaluate_probes.main(
+                    ["--neverd", str(neverd), "--signatures", str(root), str(untold), str(told)])
+        self.assertEqual(status, 0)
+        self.assertIn("vs2012-x86-setup.exe: no linker map or truth file", output.getvalue())
+        self.assertIn("vs2013-x86-setup.exe: 0/1 library functions named", output.getvalue())
 
 
 if __name__ == "__main__":
