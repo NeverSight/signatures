@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import json
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -49,6 +51,24 @@ class SettledNameTests(unittest.TestCase):
         )
         self.assertEqual(names, {})
         self.assertEqual(disputed, {0x20})
+
+
+class FailureTests(unittest.TestCase):
+    def test_a_program_neverd_cannot_read_is_reported_not_raised(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            neverd = root / "neverd"
+            neverd.write_text("#!/bin/sh\necho 'error: failed to load: elf: overlapping' >&2\n"
+                              "exit 1\n")
+            neverd.chmod(0o755)
+            probe = root / "elf-test-arm-o2.elf"
+            probe.write_bytes(b"\x7fELF")
+            probe.with_suffix(".truth.json").write_text(json.dumps(
+                [{"address": "0x10", "names": ["memcpy"], "from_library": True}]))
+            result = evaluate_probes.evaluate(neverd, f"--sig-dir={root}", probe)
+        self.assertEqual(result.failure, "error: failed to load: elf: overlapping")
+        self.assertEqual(result.library_functions, 1)
+        self.assertEqual(result.correct, 0)
 
 
 if __name__ == "__main__":

@@ -316,5 +316,77 @@
       "libgcc.a",
       "libgcc_eh.a"
     ]
+  },
+  {
+    "name": "elf-ndk-r25b-arm64-o2",
+    "ndk": {
+      "package": "android-ndk-r25b-linux.zip",
+      "sha1": "e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
+    },
+    "target": "aarch64-linux-android21",
+    "flags": [
+      "-O2"
+    ],
+    "program": "probe.c"
+  },
+  {
+    "name": "elf-ndk-r25b-arm-o2",
+    "ndk": {
+      "package": "android-ndk-r25b-linux.zip",
+      "sha1": "e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
+    },
+    "target": "armv7a-linux-androideabi21",
+    "flags": [
+      "-O2"
+    ],
+    "program": "probe.c"
+  },
+  {
+    "name": "elf-ndk-r25b-x86-o2",
+    "ndk": {
+      "package": "android-ndk-r25b-linux.zip",
+      "sha1": "e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
+    },
+    "target": "i686-linux-android21",
+    "flags": [
+      "-O2"
+    ],
+    "program": "probe.c"
+  },
+  {
+    "name": "elf-ndk-r25b-x64-o2",
+    "ndk": {
+      "package": "android-ndk-r25b-linux.zip",
+      "sha1": "e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
+    },
+    "target": "x86_64-linux-android21",
+    "flags": [
+      "-O2"
+    ],
+    "program": "probe.c"
+  },
+  {
+    "name": "elf-ndk-r25b-arm64-cxx-o2",
+    "ndk": {
+      "package": "android-ndk-r25b-linux.zip",
+      "sha1": "e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
+    },
+    "target": "aarch64-linux-android21",
+    "flags": [
+      "-O2"
+    ],
+    "program": "probe.cpp"
+  },
+  {
+    "name": "elf-ndk-r25b-arm-cxx-o2",
+    "ndk": {
+      "package": "android-ndk-r25b-linux.zip",
+      "sha1": "e27dcb9c8bcaa77b78ff68c3f23abcf6867959eb"
+    },
+    "target": "armv7a-linux-androideabi21",
+    "flags": [
+      "-O2"
+    ],
+    "program": "probe.cpp"
   }
 ]

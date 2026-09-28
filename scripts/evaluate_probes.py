@@ -130,6 +130,8 @@ class Result:
     wrong: list[tuple[str, str, list[str]]] = field(default_factory=list)
     disputed: int = 0
     unmapped: int = 0
+    # Why NeverD could not read the program, when it could not.
+    failure: str | None = None
 
     @property
     def coverage(self) -> float:
@@ -139,13 +141,18 @@ class Result:
 def evaluate(neverd: Path, source: str, probe: Path) -> Result:
     completed = subprocess.run(
         [str(neverd), "sigs", "--json", "--no-debug", source, str(probe)],
-        check=True, capture_output=True, text=True,
+        capture_output=True, text=True,
     )
-    matches = json.loads(completed.stdout or "[]")
     functions = probe_functions(probe)
-    names, disputed = settled_names(matches)
     result = Result(probe.name)
     result.library_functions = sum(1 for f in functions.values() if f.from_library)
+    if completed.returncode != 0:
+        # A program NeverD refuses to load names nothing; say why.
+        lines = [line.strip() for line in completed.stderr.splitlines() if line.strip()]
+        result.failure = lines[-1] if lines else f"exit status {completed.returncode}"
+        return result
+    matches = json.loads(completed.stdout or "[]")
+    names, disputed = settled_names(matches)
     result.disputed = len(disputed)
     for address, name in sorted(names.items()):
         expected = functions.get(address)
@@ -185,7 +192,10 @@ def main(argv: list[str] | None = None) -> int:
                   else f"--sig-dir={args.signatures / tree / directories[arch]}")
         result = evaluate(args.neverd, source, probe)
         results.append(result)
-        failed |= bool(result.wrong)
+        failed |= bool(result.wrong) or result.failure is not None
+        if result.failure is not None:
+            print(f"{probe.name}: NeverD could not read it: {result.failure}")
+            continue
         print(
             f"{probe.name}: {result.correct}/{result.library_functions} library functions "
             f"named ({result.coverage:.0%}), {len(result.wrong)} wrong, "

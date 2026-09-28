@@ -15,6 +15,10 @@ and writes, next to the stripped program:
 
 which evaluate_probes.py reads in place of a map, beside the stripped
 program `<name>.elf`. The unstripped program is kept as `<name>.debug`.
+
+A row that names an Android NDK release (`ndk`) instead builds the program
+with that NDK's own clang for the row's target, linked statically against the
+NDK's libraries; the archives its linker reports reading are the library.
 """
 
 from __future__ import annotations
@@ -62,7 +66,76 @@ def host_file(compiler: str, name: str) -> str:
                           text=True, check=True).stdout.strip()
 
 
+def elf_machine(path: Path) -> int:
+    header = path.read_bytes()[:20]
+    return int.from_bytes(header[18:20], "little" if header[5] == 1 else "big")
+
+
+def write_truth(program: Path, stripped: Path, library_names: set[str]) -> None:
+    """Every function symbol of the unstripped program: a symbol of type FUNC
+    or IFUNC, not a data object, a section or ARM's $a/$t/$x/$d mapping
+    symbols."""
+
+    functions: dict[int, set[str]] = {}
+    # A Thumb function's symbol has bit 0 set; NeverD names the address
+    # without it.
+    thumb = elf_machine(program) == 40
+    listing = subprocess.run(["readelf", "-sW", str(program)], capture_output=True,
+                             text=True, check=True).stdout
+    for line in listing.splitlines():
+        fields = line.split()
+        if (len(fields) == 8 and fields[0].endswith(":") and fields[3] in ("FUNC", "IFUNC")
+                and fields[6] not in ("UND", "ABS")):
+            address = int(fields[1], 16) & ~1 if thumb else int(fields[1], 16)
+            functions.setdefault(address, set()).add(fields[7])
+    truth = [{"address": hex(address), "names": sorted(names),
+              "from_library": bool(names & library_names)}
+             for address, names in sorted(functions.items())]
+    stripped.with_suffix(".truth.json").write_text(json.dumps(truth, indent=1) + "\n",
+                                                   encoding="utf-8")
+
+
+def ndk_toolchain(row: dict, work: Path, downloads: Path) -> Path:
+    """The NDK release's LLVM toolchain, unpacked once."""
+
+    source = row["ndk"]
+    package, problem = packages.obtain(source["sha1"], source["package"], downloads)
+    if package is None:
+        raise SystemExit(f"{row['name']}: {PurePosixPath(source['package']).name}: {problem}")
+    root = work / package.name.removesuffix(".zip")
+    found = sorted(root.glob("*/toolchains/llvm/prebuilt/linux-x86_64"))
+    if not found:
+        subprocess.run(["unzip", "-q", "-o", str(package),
+                        "*/toolchains/llvm/prebuilt/linux-x86_64/*", "-d", str(root)],
+                       check=True)
+        found = sorted(root.glob("*/toolchains/llvm/prebuilt/linux-x86_64"))
+    return found[0]
+
+
+def build_ndk(row: dict, sources: Path, output: Path, work: Path, downloads: Path) -> Path:
+    toolchain = ndk_toolchain(row, work, downloads)
+    driver = "clang++" if row["program"].endswith(".cpp") else "clang"
+    program = output / f"{row['name']}.debug"
+    linked = subprocess.run(
+        [str(toolchain / "bin" / driver), f"--target={row['target']}", "-static", *row["flags"],
+         str(sources / row["program"]), "-o", str(program), "-Wl,--trace"],
+        capture_output=True, text=True, check=True).stdout
+    # lld lists every input it reads, an archive member as archive(member).
+    archives = sorted({Path(line.split("(", 1)[0]).resolve() for line in linked.splitlines()
+                       if ".a(" in line})
+    stripped = output / f"{row['name']}.elf"
+    subprocess.run([str(toolchain / "bin/llvm-strip"), "-o", str(stripped), str(program)],
+                   check=True)
+    library_names: set[str] = set()
+    for archive in archives:
+        library_names |= code_symbols(archive)
+    write_truth(program, stripped, library_names)
+    return stripped
+
+
 def build(row: dict, sources: Path, output: Path, work: Path, downloads: Path) -> Path:
+    if "ndk" in row:
+        return build_ndk(row, sources, output, work, downloads)
     root = extract(row, work, downloads)
     compiler = row["compiler"]
     # The package's own headers, as its build saw them: a newer glibc's
@@ -95,18 +168,7 @@ def build(row: dict, sources: Path, output: Path, work: Path, downloads: Path) -
     library_names: set[str] = set()
     for archive in archives:
         library_names |= code_symbols(archive)
-    functions: dict[int, set[str]] = {}
-    listing = subprocess.run(["nm", "--defined-only", str(program)], capture_output=True,
-                             text=True, check=True).stdout
-    for line in listing.splitlines():
-        fields = line.split()
-        if len(fields) == 3 and fields[1] in "TtWwi":
-            functions.setdefault(int(fields[0], 16), set()).add(fields[2])
-    truth = [{"address": hex(address), "names": sorted(names),
-              "from_library": bool(names & library_names)}
-             for address, names in sorted(functions.items())]
-    stripped.with_suffix(".truth.json").write_text(json.dumps(truth, indent=1) + "\n",
-                                                   encoding="utf-8")
+    write_truth(program, stripped, library_names)
     return stripped
 
 
