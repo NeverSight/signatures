@@ -1,18 +1,18 @@
 {
   "file": "pe/arm/32/winsdk.pat",
   "generator": {
-    "neverd_ref": "f6ac98c003e7e2c1c85c3d6c582ef77722eb64dd",
-    "release": "msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "neverd_ref": "22d94b450c945f8dee0b511bd8cfea23e43a5c93",
+    "release": "msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 12304,
+  "lines": 17496,
   "sources": [
     {
       "arch": "arm",
       "archive_sha256": "c26197024a21c196fe1a41952c9b4231d0c3fb4064924c534c43e2331b578ad5",
       "asset": "winsdk-10.0.17763.0-arm",
       "kind": "winsdk",
-      "sigmaker": "Generated 29236 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-4251edz0/winsdk-10.0.17763.0-arm.pat (7675 objects, 92387 non-object members, 8297 functions stating too few exact bytes)",
+      "sigmaker": "Generated 29236 signatures \u2192 /home/ad/code/neverd-msvc-sigs/exp/ci-replay/arm/neverd-msvc-sigs-gijzurkt/winsdk-10.0.17763.0-arm.pat (7675 objects, 92387 non-object members, 8297 functions stating too few exact bytes)",
       "windows_sdk_version": "10.0.17763.0"
     },
     {
@@ -20,7 +20,7 @@
       "archive_sha256": "f411dc042a687f7d05128be5c4ae026b560259daa2083edf5d0a0220b3c57f18",
       "asset": "winsdk-10.0.18362.0-arm",
       "kind": "winsdk",
-      "sigmaker": "Generated 29384 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-4251edz0/winsdk-10.0.18362.0-arm.pat (8081 objects, 91086 non-object members, 8207 functions stating too few exact bytes)",
+      "sigmaker": "Generated 29384 signatures \u2192 /home/ad/code/neverd-msvc-sigs/exp/ci-replay/arm/neverd-msvc-sigs-gijzurkt/winsdk-10.0.18362.0-arm.pat (8081 objects, 91086 non-object members, 8207 functions stating too few exact bytes)",
       "windows_sdk_version": "10.0.18362.0"
     },
     {
@@ -28,7 +28,7 @@
       "archive_sha256": "8f1aa8a437a52b941e349ec57172cdb3726d1739141879801f3163fe26c33957",
       "asset": "winsdk-10.0.19041.0-arm",
       "kind": "winsdk",
-      "sigmaker": "Generated 30371 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-4251edz0/winsdk-10.0.19041.0-arm.pat (9611 objects, 109303 non-object members, 8419 functions stating too few exact bytes)",
+      "sigmaker": "Generated 30371 signatures \u2192 /home/ad/code/neverd-msvc-sigs/exp/ci-replay/arm/neverd-msvc-sigs-gijzurkt/winsdk-10.0.19041.0-arm.pat (9611 objects, 109303 non-object members, 8419 functions stating too few exact bytes)",
       "windows_sdk_version": "10.0.19041.0"
     },
     {
@@ -36,7 +36,7 @@
       "archive_sha256": "4d24e81d1c59154e44c9449c40cf9d660fb70200f54f981c77f8a4467e819327",
       "asset": "winsdk-10.0.20348.0-arm",
       "kind": "winsdk",
-      "sigmaker": "Generated 30577 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-4251edz0/winsdk-10.0.20348.0-arm.pat (10554 objects, 6 for another machine skipped, 117242 non-object members, 7886 functions stating too few exact bytes)",
+      "sigmaker": "Generated 30577 signatures \u2192 /home/ad/code/neverd-msvc-sigs/exp/ci-replay/arm/neverd-msvc-sigs-gijzurkt/winsdk-10.0.20348.0-arm.pat (10554 objects, 6 for another machine skipped, 117242 non-object members, 7886 functions stating too few exact bytes)",
       "windows_sdk_version": "10.0.20348.0"
     },
     {
@@ -44,7 +44,7 @@
       "archive_sha256": "2c0167b63d9c47c4e25cab9552cbb9129c0bed1d7bd8392c40128e5de7759516",
       "asset": "winsdk-10.0.22000.0-arm",
       "kind": "winsdk",
-      "sigmaker": "Generated 31225 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-4251edz0/winsdk-10.0.22000.0-arm.pat (10616 objects, 644 for another machine skipped, 118721 non-object members, 8109 functions stating too few exact bytes)",
+      "sigmaker": "Generated 31225 signatures \u2192 /home/ad/code/neverd-msvc-sigs/exp/ci-replay/arm/neverd-msvc-sigs-gijzurkt/winsdk-10.0.22000.0-arm.pat (10616 objects, 644 for another machine skipped, 118721 non-object members, 8109 functions stating too few exact bytes)",
       "windows_sdk_version": "10.0.22000.0"
     },
     {
@@ -52,7 +52,7 @@
       "archive_sha256": "f4416b53a13e867ebc2f5b2e380d5d1386ee9fe77c98157c14b0a3d97f0f4455",
       "asset": "winsdk-10.0.22621.0-arm",
       "kind": "winsdk",
-      "sigmaker": "Generated 31063 signatures \u2192 /home/runner/work/_temp/neverd-msvc-sigs-4251edz0/winsdk-10.0.22621.0-arm.pat (10707 objects, 644 for another machine skipped, 119265 non-object members, 7978 functions stating too few exact bytes)",
+      "sigmaker": "Generated 31063 signatures \u2192 /home/ad/code/neverd-msvc-sigs/exp/ci-replay/arm/neverd-msvc-sigs-gijzurkt/winsdk-10.0.22621.0-arm.pat (10707 objects, 644 for another machine skipped, 119265 non-object members, 7978 functions stating too few exact bytes)",
       "windows_sdk_version": "10.0.22621.0"
     }
   ]

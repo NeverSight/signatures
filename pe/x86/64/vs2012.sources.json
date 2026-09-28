@@ -1,0 +1,25 @@
+{
+  "file": "pe/x86/64/vs2012.pat",
+  "generator": {
+    "neverd_ref": "22d94b450c945f8dee0b511bd8cfea23e43a5c93",
+    "release": "msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 41158,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "ac4640857e41ddbe6c87d735695ceca35f14836ecd3b9123db1bcba87a1bac49",
+      "asset": "vs2012-11.0.50727-x64",
+      "kind": "toolset",
+      "sigmaker": "Generated 265514 signatures \u2192 /home/ad/code/neverd-msvc-sigs/exp/ci-replay/x64/neverd-msvc-sigs-sj35ca7d/vs2012-11.0.50727-x64.pat (5467 objects, 14938 for another machine skipped, 74780 non-object members, 7469 functions below --min-size, 90582 functions stating too few exact bytes)",
+      "toolset_version": "11.0.50727"
+    },
+    {
+      "archive_sha256": "4f51483d0c7d5a09f94f6b084baad579c0b7896faa78b0dcf2bac3df6cc8b0d5",
+      "asset": "vs2012.imported",
+      "kind": "imported",
+      "lines": 2
+    }
+  ]
+}
