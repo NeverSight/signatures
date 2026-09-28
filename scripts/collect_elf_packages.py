@@ -29,8 +29,10 @@ import concurrent.futures
 import fnmatch
 import hashlib
 import json
+import os
 import shutil
 import sys
+import threading
 from pathlib import Path, PurePosixPath
 
 HERE = Path(__file__).resolve().parent
@@ -72,7 +74,8 @@ def package_sources(row: dict, cache: Path) -> list[tuple[str, str]]:
     return [(digest, path) for (_, digest), path in seen.items()]
 
 
-def obtain(digest: str, path: str, downloads: Path) -> tuple[Path | None, str | None]:
+def obtain(digest: str, path: str, downloads: Path,
+           attempts: int = 3) -> tuple[Path | None, str | None]:
     """The package, downloaded and checked, or None and why not."""
 
     filename = PurePosixPath(path).name
@@ -82,15 +85,23 @@ def obtain(digest: str, path: str, downloads: Path) -> tuple[Path | None, str | 
     url = fetcher.source_url(path)
     if url is None:
         return None, "no known download location"
+    # The download goes to a file of its own and takes the package's name
+    # only once it checks out, so a collection sharing --keep-downloads never
+    # reads or overwrites another's half-written package. Launchpad serves
+    # the files rizin recorded; one that differs was damaged in transfer.
+    partial = package.with_name(f"{filename}.{os.getpid()}.{threading.get_ident()}.part")
     try:
-        fetcher.fetch(url, package)
-    except OSError as error:
-        package.unlink(missing_ok=True)
-        return None, str(error)
-    if fetcher.sha1(package) != digest:
-        package.unlink()
+        for _ in range(attempts):
+            try:
+                fetcher.fetch(url, partial)
+            except OSError as error:
+                return None, str(error)
+            if fetcher.sha1(partial) == digest:
+                os.replace(partial, package)
+                return package, None
         return None, "SHA-1 does not match rizin's record"
-    return package, None
+    finally:
+        partial.unlink(missing_ok=True)
 
 
 def main(argv: list[str] | None = None) -> int:

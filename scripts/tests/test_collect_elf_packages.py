@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import io
 import json
 import shutil
@@ -48,6 +49,40 @@ class SourceTests(unittest.TestCase):
             fetcher.source_list = original
         self.assertEqual(sources, [("aa", "android-ndk-r25b-linux.zip"),
                                    ("bb", "android-ndk-r24-linux.zip")])
+
+
+class ObtainTests(unittest.TestCase):
+    def obtain(self, transfers: list[bytes]) -> tuple[Path | None, str | None, list[str]]:
+        """What obtain() makes of these transfers, and the files it leaves."""
+
+        good = hashlib.sha1(b"package").hexdigest()
+        original = fetcher.fetch
+        remaining = iter(transfers)
+
+        def fetch(url: str, destination: Path) -> None:
+            destination.write_bytes(next(remaining))
+
+        fetcher.fetch = fetch
+        try:
+            with tempfile.TemporaryDirectory() as scratch:
+                package, problem = collect.obtain(good, "ubuntu/jammy/amd64/zlib1g-dev/1/z.deb",
+                                                  Path(scratch))
+                left = sorted(path.name for path in Path(scratch).iterdir())
+        finally:
+            fetcher.fetch = original
+        return package, problem, left
+
+    def test_a_damaged_transfer_is_fetched_again(self) -> None:
+        package, problem, left = self.obtain([b"damaged", b"package"])
+        self.assertIsNone(problem)
+        self.assertEqual(package.name, "z.deb")
+        self.assertEqual(left, ["z.deb"])
+
+    def test_a_package_that_never_matches_is_unavailable_and_leaves_nothing(self) -> None:
+        package, problem, left = self.obtain([b"other"] * 3)
+        self.assertIsNone(package)
+        self.assertEqual(problem, "SHA-1 does not match rizin's record")
+        self.assertEqual(left, [])
 
 
 @unittest.skipUnless(shutil.which("zstd") and shutil.which("tar"), "needs zstd and tar")
