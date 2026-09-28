@@ -392,6 +392,24 @@ class MoveTests(unittest.TestCase):
         self.assertEqual(kept, [f"{patched} 00 0000 0013 :0000 traceInit"])
 
 
+    def test_a_name_another_library_of_this_width_spells_does_not_hold_it(self) -> None:
+        # 32-bit bionic's bzero, filed under 64 bits, spells like x64 glibc's.
+        own = migrate.Reference("elf")
+        own.add_line(reference_line("bzero", "4883EC28" * 5 + "C3"))
+        own.index_spellings()
+        other = migrate.Reference("elf")
+        other.add_line(reference_line("bzero", self.OTHER))
+        other.index_spellings()
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "android-ndk.pat"
+            path.write_text(f"{self.OTHER} 00 0000 0012 :0000 bzero\n")
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, own, report, other, [], defined={"memset"},
+                                         sibling_rebuilt=True, sibling_defined={"bzero"})
+        self.assertEqual(lines, [])
+        self.assertEqual(report.superseded_other_width, 1)
+
+
 class WeakLineTests(unittest.TestCase):
     def test_stated_bytes_follow_the_matcher(self) -> None:
         lead = "".join(f"{i:02X}" for i in range(32))

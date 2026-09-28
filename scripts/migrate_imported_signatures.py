@@ -774,10 +774,11 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
     its decision to make none, for code its rules reject -- stands. For
     another build of the same sources it is empty.
 
-    rizin filed some lines under the other pointer width. A line that no
-    library of this width explains, or whose C name is kept only because
-    none does, and whose bytes are a function of the other width (`sibling`)
-    is that width's: it moves there, or, when that width's file is built
+    rizin filed some lines under the other pointer width. A line whose bytes
+    no library of this width states -- one left unresolved, one whose C name
+    is kept only because none does, and one named by its spelling alone --
+    and whose bytes are a function of the other width (`sibling`) is that
+    width's: it moves there, or, when that width's file is built
     anew from the very build the import was made from (`sibling_rebuilt`),
     that file already holds the routine and the line is left out. When both
     widths' files are (`sibling_defined` holds what the other width's
@@ -828,7 +829,7 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
             report.removed_artifacts += 1
             report.removed_names.append(line.name)
             continue
-        if (name is None or how == "verbatim") and sibling is not None:
+        if (name is None or how in ("verbatim", "spelling")) and sibling is not None:
             # Some imported lines were filed under the wrong pointer width;
             # only the bytes of a function of the other width say so.
             other, other_how = resolve(line, sibling)
@@ -846,7 +847,7 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
                     report.moved += 1
                     moved.append(line.render(other))
                     continue
-            named = other if other is not None else (name if how == "verbatim" else None)
+            named = other if other is not None else name
             if (sibling_defined is not None and named is not None
                     and named in sibling_defined and named not in (defined or set())):
                 report.superseded_other_width += 1
@@ -1070,7 +1071,10 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
         # from the very build the import was made from.
         both = (sibling is not None and collected.get(release) is True
                 and sibling_collected.get(release) is True)
-        lines = migrate_file(path, reference, report, sibling, moved, defined=defined,
+        # Only a file the other width's libraries build too can hold lines
+        # of that width.
+        file_sibling = sibling if release in sibling_collected or not sibling_collected else None
+        lines = migrate_file(path, reference, report, file_sibling, moved, defined=defined,
                              sibling_rebuilt=sibling_collected.get(release) is True,
                              sibling_defined=(sibling.defined.get(release, set())
                                               if both else None))
