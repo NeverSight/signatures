@@ -51,14 +51,24 @@ leading underscores, then the shortest:
   code than the function it came from.
 - Each `^<offset> <name>` names a routine the function branches to directly:
   at `<offset>` starts the rel32 field of an x86 or x64 `call` or `jmp`, or
-  the ARM64 `B`/`BL` or Thumb-2 `B.W`/`BL`/`BLX` instruction. NeverD follows
-  the branch in the image. A match whose branch reaches a routine NeverD
-  names otherwise is dropped; one whose branches all reach the routines they
-  name is confirmed. NeverD releases older than these references reject such
-  lines.
+  the ARM64 `B`/`BL` or Thumb-2 `B.W`/`BL`/`BLX` instruction. An ARM-state
+  `B`/`BL`/`BLX` is stated one byte past its instruction, at an odd offset
+  that no Thumb-2 instruction has, so the offset says which instruction set
+  the branch is in. The name is the symbol the object's relocation names: an
+  undefined symbol, or a function the object defines; a call a linker may
+  rewrite, such as `__tls_get_addr` in a TLS sequence it relaxes, is not
+  stated.
+- NeverD follows each branch in the image, and on through a linker's
+  long-branch or interworking thunk. A match whose branch reaches a routine
+  NeverD names otherwise, or in an ELF image the PLT stub of another import,
+  is dropped; one whose branches all reach the routines they name is
+  confirmed. What the matches then name is what their callers' branches are
+  checked against in turn, until nothing new is named. NeverD releases older
+  than these references reject such lines, and one before
+  NeverSight/NeverD#208 reads an odd offset as a Thumb-2 branch.
 
 These rules are NeverD's own:
-[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/278e2f2e98af90ed358e25fcffbc84d82d787cd4/tools/neverd-sigmaker)
+[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/bd2979cb7c504afcc906c1a68c320c19f76add4b/tools/neverd-sigmaker)
 produces the lines, and `neverd::sigs::PatternGenerator` defines how many
 bytes each relocation rewrites.
 
@@ -150,7 +160,7 @@ Two workflows produce the generated files:
      [Linux and Android (elf/) signatures](#linux-and-android-elf-signatures).
 2. [`msvc-signatures.yml`](.github/workflows/msvc-signatures.yml) builds
    `neverd-sigmaker` at a pinned NeverD revision and runs NeverD's
-   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/278e2f2e98af90ed358e25fcffbc84d82d787cd4/scripts/signatures/build_msvc_signatures.py)
+   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/bd2979cb7c504afcc906c1a68c320c19f76add4b/scripts/signatures/build_msvc_signatures.py)
    over every `msvc-libs-*` release, one architecture at a time:
    - A file with library archives behind it is rebuilt from them alone, and
      from its `<name>.imported` when it has one.
@@ -212,7 +222,13 @@ own load address (`0x08000000`), which no program's bytes match.
 
 An ELF image has no Rich header to name the release of its libraries, so
 `neverd sigs --auto` reads every file of its `elf/` directory, and ambiguous
-lines are dropped across the whole directory, as described above.
+lines are dropped across the whole directory, as described above. The ELF
+lines state their branches as the Windows ones do since NeverSight/NeverD#208,
+so lines that differ only in the routines they call are kept and told apart:
+r25b's ARM32 `ctype_byname<wchar_t>::do_toupper` and `do_tolower` are the same
+bytes calling `towupper` and `towlower`, and NeverD takes the one whose call
+reaches the routine it names: the routine NeverD names there, or in a
+dynamically linked program the import whose PLT stub it is.
 
 ## Accuracy
 
@@ -236,29 +252,34 @@ and 2022 (x86, x64, ARM32, ARM64), and 2026 with both its default toolset and
 14.50 (x86, x64, ARM64): 60 programs. NeverD chooses the files as
 `neverd sigs --auto` does, by the program's Rich header. Named is the share of
 the map's library functions; wrong is the share of the names NeverD applies.
+Measured with NeverD at
+[bd2979cb](https://github.com/NeverSight/NeverD/commit/bd2979cb7c504afcc906c1a68c320c19f76add4b).
 
 | Architecture | Programs | Named, optimized | Named, `/Od` | Wrong, optimized | Wrong, `/Od` | Disputed |
 | --- | --- | --- | --- | --- | --- | --- |
-| x86 | 18 | 28% | 53% | <0.1% | 1.8% | 2,862 |
-| x64 | 18 | 59% | 56% | <0.1% | 2.1% | 3,211 |
-| ARM32 | 9 | 59% | 59% | 0.1% | 1.3% | 1,626 |
-| ARM64 | 15 | 58% | 63% | 0.1% | 1.5% | 2,585 |
+| x86 | 18 | 53% | 57% | <0.1% | 1.8% | 3,104 |
+| x64 | 18 | 60% | 58% | <0.1% | 2.0% | 2,635 |
+| ARM32 | 9 | 60% | 60% | <0.1% | 1.3% | 1,417 |
+| ARM64 | 15 | 63% | 65% | <0.1% | 1.5% | 2,119 |
 
-Across all 60 programs NeverD names 141,605 of 284,642 library functions
-(50%), 535 names are wrong (0.4%), and 10,284 addresses are disputed. A
+Across all 60 programs NeverD names 166,930 of 284,642 library functions
+(59%), 550 names are wrong (0.3%), and 9,275 addresses are disputed. A
 disputed address is one where lines that differ only in their branches all
 match and none of the branches settles which: NeverD leaves it unnamed. At
-289 other such addresses a confirmed branch settles it, and 284 of those
+65 other such addresses a confirmed branch settles it, and 64 of those
 names are right. Counting these needs a NeverD that reports each match's
 `confirmed` flag (NeverSight/NeverD#164); with an older one the script
-counts them as disputed.
+counts them as disputed. Since NeverSight/NeverD#208 what the branches settle
+is what the branches of the routines' callers are checked against in turn:
+that names 1,431 more of these programs' library functions, leaves 1,694
+fewer addresses disputed, and makes 2 fewer names wrong.
 Before the Rich header chose the files, before the covering rule and the
 branch references, and before the Visual Studio 2005 to 2013 files were
 rebuilt from their libraries, it named 133,078 (47%) and 2,678 names were
 wrong (2.0%).
 
 - Optimized builds (`/O2`, `/MT`, with or without MFC) are the common case,
-  and 52 of their names are wrong. On ARM these are mostly short routines
+  and 53 of their names are wrong. On ARM these are mostly short routines
   that share their code with other routines except for what a relocation
   rewrites, such as MFC initializers that differ only in the message they
   register.
@@ -276,8 +297,10 @@ wrong (2.0%).
   `_aligned_free`'s line, and its reference has no name to contradict.
 - x86 coverage is bounded by NeverD's function discovery, which since
   `Find packed MSVC hotpatch entries and start them at the no-op` also finds
-  the functions MSVC packs directly after a `ret`. Most of the x86 library
-  functions still unnamed are ones it does not find.
+  the functions MSVC packs directly after a `ret`. Since NeverSight/NeverD#204
+  signatures are also tried at every function NeverD's detector finds, not
+  only at those the image's tables state; the optimized x86 programs went
+  from 28% named to 53%.
 - The Visual Studio 2005 to 2013 files have no validation programs with
   maps, but the setup programs on their media are linked statically with
   their release's runtime, and the Rich header chooses the file of the
@@ -286,16 +309,20 @@ wrong (2.0%).
   of them, which [`scripts/pdb_truth.py`](scripts/pdb_truth.py) turns into
   what `evaluate_probes.py` compares with. A public PDB names only public
   symbols, so a name at a static function cannot be checked either way.
-  - VS 2008's setup program: NeverD names 231 of the 492 functions the PDB
-    names that the release's libraries define. Of its other names, 34 are at
+  - VS 2008's setup program: NeverD names 300 of the 492 functions the PDB
+    names that the release's libraries define. Of its other names, 43 are at
     static functions, 2 differ from the PDB only in decoration (an ATL
     header function the program compiled itself with `/Gz` or
-    `/Zc:wchar_t-`), and 1 is wrong.
-  - VS 2010's: 223 of 429. 29 are at static functions, 14 differ only in
-    decoration, 4 name the MFC instantiation of an ATL `CStringT` member
+    `/Zc:wchar_t-`), and 1 is wrong: MFC's `COccManager::OnEvent` at the
+    program's own callback of the same bytes.
+  - VS 2010's: 277 of 429. 37 are at static functions, 15 differ only in
+    decoration, 5 name the MFC instantiation of an ATL `CStringT` member
     whose code is the same, and 2 are wrong.
-  - VS 2005's: 21 of 480, none wrong. NeverD finds only 85 of the program's
-    747 functions: its linker placed read-only data in the code section.
+  - VS 2005's: 297 of 480. 42 are at static functions, 2 differ only in
+    decoration, and none is wrong. Its linker placed read-only data in the
+    code section, where NeverD's function discovery alone finds 85 of the
+    program's 747 functions; since NeverSight/NeverD#204 signatures are also
+    tried at the functions NeverD's detector finds there.
   - The symbol server has no PDB for the VS 2012 and 2013 setup programs.
 
 ### ELF programs
@@ -308,24 +335,25 @@ symbol table of the same program before it was stripped: a function is a
 library's when one of the archives the program was linked with defines one of
 its names. For an ELF image NeverD reads every file of the directory. Before
 is what the lines imported from rizin, moved to the rules above, named in the
-same programs. The ARM rows were measured with NeverD at
-[b08a55bb](https://github.com/NeverSight/NeverD/commit/b08a55bbc8b804f5308721451b6b31d25fe32444),
-which starts an AArch64 function at the landing pad before its unwind entry
-(NeverSight/NeverD#191) and loads a stripped ARM32 program whose literal pools
-follow calls that do not return (NeverSight/NeverD#192); the others at
-[278e2f2e](https://github.com/NeverSight/NeverD/commit/278e2f2e98af90ed358e25fcffbc84d82d787cd4).
+same programs, as measured with NeverD at
+[b08a55bb](https://github.com/NeverSight/NeverD/commit/b08a55bbc8b804f5308721451b6b31d25fe32444)
+(ARM) and
+[278e2f2e](https://github.com/NeverSight/NeverD/commit/278e2f2e98af90ed358e25fcffbc84d82d787cd4)
+(the others). The files as they are now were measured with NeverD at
+[bd2979cb](https://github.com/NeverSight/NeverD/commit/bd2979cb7c504afcc906c1a68c320c19f76add4b).
 
 | Programs | Count | Library functions | Named before | Named | Wrong before | Wrong | Disputed before | Disputed |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| glibc 2.27, 2.31, 2.35, `-O2` and `-O0` | 6 | 6,265 | 3,206 (51%) | 4,944 (79%) | 117 | 14 | 79 | 0 |
-| GNU libstdc++ 11, 12 | 2 | 9,509 | 2,915 (31%) | 3,928 (41%) | 176 | 9 | 54 | 0 |
-| zlib 1.2.11 | 1 | 1,182 | 653 (55%) | 961 (81%) | 25 | 0 | 14 | 0 |
-| OpenSSL 3.0 | 1 | 10,726 | 5,278 (49%) | 6,629 (62%) | 1,510 | 2 | 287 | 0 |
-| musl 1.2.2 | 1 | 160 | 0 | 0 | 0 | 0 | 0 | 0 |
-| NDK r25b x64 | 1 | 1,850 | 767 (41%) | 1,251 (68%) | 16 | 2 | 14 | 0 |
-| NDK r25b x86 | 1 | 1,942 | 177 (9%) | 1,419 (73%) | 10 | 0 | 0 | 0 |
-| NDK r25b ARM64, C and C++ | 2 | 5,794 | 465 (8%) | 3,647 (63%) | 4 | 0 | 0 | 6 |
-| NDK r25b ARM32, C | 1 | 1,907 | 116 (6%) | 1,208 (63%) | 4 | 0 | 0 | 0 |
+| glibc 2.27, 2.31, 2.35, `-O2` and `-O0` | 6 | 6,265 | 3,206 (51%) | 4,974 (79%) | 117 | 14 | 79 | 0 |
+| GNU libstdc++ 11, 12 | 2 | 9,509 | 2,915 (31%) | 4,438 (47%) | 176 | 5 | 54 | 522 |
+| zlib 1.2.11 | 1 | 1,182 | 653 (55%) | 968 (82%) | 25 | 0 | 14 | 0 |
+| OpenSSL 3.0 | 1 | 10,726 | 5,278 (49%) | 6,850 (64%) | 1,510 | 2 | 287 | 474 |
+| musl 1.2.2 | 1 | 160 | 0 | 94 (59%) | 0 | 0 | 0 | 0 |
+| NDK r25b x64 | 1 | 1,850 | 767 (41%) | 1,287 (70%) | 16 | 2 | 14 | 11 |
+| NDK r25b x86 | 1 | 1,942 | 177 (9%) | 1,482 (76%) | 10 | 0 | 0 | 17 |
+| NDK r25b ARM64, C and C++ | 2 | 5,794 | 465 (8%) | 3,854 (67%) | 4 | 0 | 0 | 90 |
+| NDK r25b ARM32, C | 1 | 1,907 | 116 (6%) | 1,248 (65%) | 4 | 0 | 0 | 7 |
+| NDK r25b ARM32, C++ | 1 | 4,117 | -- | 2,201 (53%) | -- | 0 | -- | 96 |
 
 - Most of the names wrong before were OpenSSL's: its `d2i_*`, `i2d_*`,
   `*_free` and per-cipher routines are the same code up to the object a
@@ -339,13 +367,23 @@ follow calls that do not return (NeverSight/NeverD#192); the others at
   these programs were the right names 4 bytes late.
 - musl builds its library without unwind tables, and NeverD's function
   discovery does not follow the calls from the entry point: it finds 2 of the
-  program's 167 functions, so the signatures have nothing to name.
+  program's 167 functions. Since NeverSight/NeverD#204 signatures are also
+  tried at every function NeverD's detector finds, which names 94.
 - NeverD decodes the bytes after every call of a stripped ARM32 program as
   code. After a call that does not return, such as `bl abort`, they are the
-  caller's literal pool, which NeverD now recognizes by the load that reads
-  it. It still cannot load the ARM32 C++ program: there an ARM `__memcpy_chk`
-  ends in a call that does not return and Thumb `wcslen` follows at once, so
-  only knowing that the callee does not return would stop the decoding.
+  caller's literal pool, which NeverD recognizes by the load that reads it.
+  The ARM32 C++ program also needs to know which calls do not return: an ARM
+  `__memcpy_chk` ends in one and Thumb `wcslen` follows at once. NeverD infers
+  that since NeverSight/NeverD#203, and loads it; the rizin lines were never
+  measured on it.
+- The disputed addresses are routines whose lines the files keep because
+  their branches tell them apart, where this program's branches cannot: C++
+  `char` and `wchar_t` instantiations whose whole call chains are the same
+  bytes (`basic_istream<char>` and `<wchar_t>`'s constructors call
+  `basic_ios<char>::init` and `<wchar_t>::init`, which call the same
+  routine), and OpenSSL's `d2i_*`, `i2d_*` and `*_free` wrappers, which call
+  `*_it` routines that differ only in the data they point to. Before, the
+  files dropped these lines, and NeverD named nothing there either.
 
 ## Lines imported from rizin
 
