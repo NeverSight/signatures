@@ -49,6 +49,11 @@ def fetch(url: str, destination: Path, attempts: int = 6) -> None:
             with urllib.request.urlopen(request, timeout=300) as response, \
                     destination.open("wb") as out:
                 shutil.copyfileobj(response, out, 1 << 20)
+                expected = response.headers.get("Content-Length")
+            # A connection that closes early raises nothing; the length shows it.
+            received = destination.stat().st_size
+            if expected is not None and received != int(expected):
+                raise OSError(f"received {received} of {expected} bytes")
             return
         except OSError as error:
             if attempt == attempts:
