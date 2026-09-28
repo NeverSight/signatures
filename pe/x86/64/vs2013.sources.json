@@ -1,8 +1,8 @@
 {
   "file": "pe/x86/64/vs2013.pat",
   "generator": {
-    "neverd_ref": "22d94b450c945f8dee0b511bd8cfea23e43a5c93",
-    "release": "msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "neverd_ref": "cd6dc926ce06920492213ead58c14e39e890598f",
+    "release": "msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
   "lines": 39942,
@@ -12,7 +12,7 @@
       "archive_sha256": "e0a46893fd349bfa8238da33f5bb1fbf8fc8348c89be8922652ade2010be7699",
       "asset": "vs2013-12.0.21005-x64",
       "kind": "toolset",
-      "sigmaker": "Generated 196867 signatures \u2192 /home/ad/code/neverd-msvc-sigs/exp/ci-replay/x64/neverd-msvc-sigs-sj35ca7d/vs2013-12.0.21005-x64.pat (6125 objects, 13529 for another machine skipped, 64885 non-object members, 9 unreadable members, 4494 functions below --min-size, 62820 functions stating too few exact bytes)",
+      "sigmaker": "Generated 196867 signatures \u2192 vs2013-12.0.21005-x64.pat (6125 objects, 13529 for another machine skipped, 64885 non-object members, 9 unreadable members, 4494 functions below --min-size, 62820 functions stating too few exact bytes)",
       "toolset_version": "12.0.21005"
     },
     {

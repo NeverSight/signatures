@@ -460,6 +460,19 @@ class CollectedReleaseTests(unittest.TestCase):
         self.assertEqual(lines, [])
         self.assertEqual(report.superseded, 1)
 
+    def test_another_build_supersedes_only_what_its_bytes_reproduce(self) -> None:
+        # zlib compiled here defines deflate too, but not with these bytes:
+        # the imported line is rizin's build of it and stays.
+        reference = pe_reference(reference_line("_deflate", "5589E5" + "90" * 16 + "5DC3"))
+        imported = "5589E5" + "CC" * 16 + "5DC3"
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "mingw32-zlib.pat"
+            path.write_text(f"{imported} 00 0000 0015 :0000 _deflate\n")
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, reference, report, defined=set())
+        self.assertEqual(lines, [f"{imported} 00 0000 0015 :0000 _deflate"])
+        self.assertEqual(report.superseded, 0)
+
     def test_unresolved_lines_of_a_collected_release_are_kept_as_comments(self) -> None:
         reference = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28" * 5 + "C3"))
         unknown = "AABBCCDD" * 5
@@ -477,9 +490,14 @@ class CollectedReleaseTests(unittest.TestCase):
             (assets / "vs2013-12.0.21005-x86.json").write_text(
                 '{"kind": "toolset", "visual_studio": {"year": 2013}}')
             (assets / "winsdk-10.0.26100.0-x86.json").write_text('{"kind": "winsdk"}')
-            self.assertEqual(migrate.collected_releases(assets, "x86"), {2013})
-        self.assertEqual(migrate.release_of(Path("pe/x86/32/vs2013.pat")), 2013)
-        self.assertIsNone(migrate.release_of(Path("pe/x86/32/masm32.pat")))
+            (assets / "masm32-11r-x86.json").write_text(
+                '{"kind": "library", "library": "masm32", "reproduces_import": true}')
+            (assets / "zlib-1.3-gcc13-x86.json").write_text(
+                '{"kind": "library", "library": "mingw32-zlib", "reproduces_import": false}')
+            self.assertEqual(migrate.collected_releases(assets, "x86"),
+                             {"vs2013": True, "masm32": True, "mingw32-zlib": False})
+        self.assertEqual(migrate.release_of(Path("pe/x86/32/vs2013.pat")), "vs2013")
+        self.assertEqual(migrate.release_of(Path("pe/x86/32/masm32.pat")), "masm32")
 
 
 class ImportedFilesTests(unittest.TestCase):
@@ -503,6 +521,28 @@ class ImportedFilesTests(unittest.TestCase):
             kept = migrate.imported_files(tree, "HEAD", "pe/x86/64")
         self.assertEqual([path.name for path in files], ["vs2013.pat"])
         self.assertEqual([path.name for path in kept], ["vs2013.pat"])
+
+    @unittest.skipUnless(shutil.which("git"), "needs git")
+    def test_a_file_its_libraries_reproduce_in_full_keeps_no_imported_lines(self) -> None:
+        run = "4883EC28" * 5 + "C3"
+        with tempfile.TemporaryDirectory() as scratch:
+            tree = Path(scratch)
+            path = tree / "pe/x86/64/masm32.pat"
+            path.parent.mkdir(parents=True)
+            path.write_text(f"{run} 00 0000 0015 :0000 Run\n")
+            git = ["git", "-C", str(tree), "-c", "user.name=t", "-c", "user.email=t@t"]
+            subprocess.run([*git, "init", "-q"], check=True)
+            subprocess.run([*git, "add", "."], check=True)
+            subprocess.run([*git, "commit", "-qm", "import"], check=True)
+            # An earlier run kept the line, before the libraries reproduced it.
+            imported = path.with_suffix(".imported")
+            imported.write_text(f"{run} 00 0000 0015 :0000 Run\n")
+            summary: dict[str, dict] = {}
+            migrate.migrate_directory(tree, "HEAD", "pe/x86/64", [path],
+                                      pe_reference(reference_line("Run", run)), summary, None,
+                                      collected={"masm32": True})
+            self.assertFalse(imported.exists())
+        self.assertEqual(summary["pe/x86/64/masm32.imported"]["reproduced"], 1)
 
     @unittest.skipUnless(shutil.which("git"), "needs git")
     def test_a_run_starts_from_the_imported_text(self) -> None:

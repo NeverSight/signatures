@@ -92,6 +92,18 @@ def release_notes(manifests: list[dict], tag: str, commit: str) -> str:
             f"| `{manifest['asset']}` | {manifest.get('windows_sdk_version', '')} "
             f"| {len(manifest['files'])} |"
         )
+    libraries = [manifest for manifest in manifests if manifest["kind"] == "library"]
+    if libraries:
+        lines += ["", "## Other libraries", ""]
+        lines.append("| Asset | Library | Version | Source | Files |")
+        lines.append("| --- | --- | --- | --- | --- |")
+        for manifest in libraries:
+            source = (manifest.get("source") or {}).get("media", "")
+            lines.append(
+                f"| `{manifest['asset']}` | {manifest.get('library', '')} "
+                f"| {manifest.get('library_version', '')} | {source} "
+                f"| {len(manifest['files'])} |"
+            )
     lines += [
         "",
         "Every archive is a zstd-compressed tar; its `.json` manifest lists each",

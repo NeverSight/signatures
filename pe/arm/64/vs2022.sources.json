@@ -1,8 +1,8 @@
 {
   "file": "pe/arm/64/vs2022.pat",
   "generator": {
-    "neverd_ref": "22d94b450c945f8dee0b511bd8cfea23e43a5c93",
-    "release": "msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "neverd_ref": "cd6dc926ce06920492213ead58c14e39e890598f",
+    "release": "msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
   "lines": 49695,
@@ -13,7 +13,7 @@
       "asset": "vs2022-14.44.35207-arm64",
       "compiler_version": "19.44.35229.0",
       "kind": "toolset",
-      "sigmaker": "Generated 403949 signatures \u2192 /home/ad/code/neverd-msvc-sigs/exp/ci-replay/arm64/neverd-msvc-sigs-zt6adgku/vs2022-14.44.35207-arm64.pat (20569 objects, 13414 for another machine skipped, 140337 non-object members, 89940 functions stating too few exact bytes)",
+      "sigmaker": "Generated 403949 signatures \u2192 vs2022-14.44.35207-arm64.pat (20569 objects, 13414 for another machine skipped, 140337 non-object members, 89940 functions stating too few exact bytes)",
       "toolset_version": "14.44.35207"
     }
   ]

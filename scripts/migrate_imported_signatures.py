@@ -368,7 +368,7 @@ class Reference:
         self.names: set[str] = set()
         # The names each collected Visual Studio release's libraries define in
         # their code sections, whether or not neverd-sigmaker wrote a line.
-        self.defined: dict[int, set[str]] = defaultdict(set)
+        self.defined: dict[str, set[str]] = defaultdict(set)
         # 32-bit x86, where the callee-cleanup conventions decorate C names.
         self.callee_cleanup = False
         self._seen: set[int] = set()
@@ -696,13 +696,14 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
                  defined: set[str] | None = None) -> list[str]:
     """The migrated lines of an imported file.
 
-    `defined` holds the names the file's own release's collected libraries
-    define when that release was collected; its file is then built anew
-    from them. A line whose bytes a collected function of the same name
-    states in full is left out as reproduced. So is one whose name those
-    libraries define at all: they hold that routine, and the line
-    neverd-sigmaker made for it -- or its decision to make none, for code
-    its rules reject -- stands.
+    `defined` is not None when the file's own libraries were collected; its
+    file is then built anew from them. A line whose bytes a collected
+    function of the same name states in full is left out as reproduced. When
+    those libraries are the build the import was made from, `defined` holds
+    every name they define, and a line with one of them is left out too:
+    they hold that routine, and the line neverd-sigmaker made for it -- or
+    its decision to make none, for code its rules reject -- stands. For
+    another build of the same sources it is empty.
 
     A line still unresolved, in any file, is kept as a comment, which the
     loader does not read: a name in rizin's spelling is no linkage name.
@@ -810,15 +811,14 @@ def build_pe_reference(sigmaker: Path, assets: Path, arch: str, work: Path) -> R
             str(path) for path in unpacked.rglob("*")
             if path.is_file() and path.suffix.lower() in (".lib", ".obj")
         )
-        release = (manifest["visual_studio"]["year"]
-                   if manifest.get("kind") == "toolset" else None)
+        release = asset_release(manifest)
         for library in libraries:
             names = code_symbols(Path(library))
             # Every name a library defines can be one an import spelled,
             # including those of code neverd-sigmaker writes no line for.
             reference.names |= names
             if release is not None:
-                reference.defined[int(release)] |= names
+                reference.defined[release] |= names
         out = work / f"{manifest['asset']}.ref.pat"
         subprocess.run(
             [str(sigmaker), *libraries, "-o", str(out), "--machine", machine,
@@ -884,21 +884,40 @@ def restore(tree: Path, revision: str, path: Path) -> None:
     path.write_text(text, encoding="utf-8")
 
 
-def release_of(path: Path) -> int | None:
-    """The Visual Studio release a vs<year>.pat file belongs to."""
+def release_of(path: Path) -> str:
+    """The release a file is built for, as asset_release names it: its stem."""
 
-    match = re.fullmatch(r"vs(\d{4})", path.stem)
-    return int(match.group(1)) if match else None
+    return path.stem
 
 
-def collected_releases(assets: Path, arch: str) -> set[int]:
-    """The Visual Studio releases whose libraries the assets hold for arch."""
+def asset_release(manifest: dict) -> str | None:
+    """The file an asset's libraries build: vs<year> or the library's own name."""
 
-    releases = set()
+    if manifest.get("kind") == "toolset":
+        return f"vs{int(manifest['visual_studio']['year'])}"
+    if manifest.get("kind") == "library":
+        return str(manifest["library"])
+    return None
+
+
+def collected_releases(assets: Path, arch: str) -> dict[str, bool]:
+    """The releases whose libraries the assets hold for arch, and whether
+    those libraries are the build the import was made from.
+
+    A Visual Studio release's collected libraries are its release-to-
+    manufacturing libraries, which rizin's were. A library asset says so
+    itself (`reproduces_import`): the MASM32 SDK builds the same sources with
+    the same assembler, but zlib compiled here is not the build rizin made.
+    """
+
+    releases: dict[str, bool] = {}
     for manifest_path in assets.glob(f"*-{arch}.json"):
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-        if manifest.get("kind") == "toolset":
-            releases.add(int(manifest["visual_studio"]["year"]))
+        release = asset_release(manifest)
+        if release is None:
+            continue
+        same = manifest.get("kind") == "toolset" or bool(manifest.get("reproduces_import"))
+        releases[release] = releases.get(release, True) and same
     return releases
 
 
@@ -907,7 +926,8 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
                       verify_with: Path | None,
                       sibling: Reference | None = None,
                       moves: dict[Path, list[str]] | None = None,
-                      collected: set[int] = frozenset()) -> None:
+                      collected: dict[str, bool] | None = None) -> None:
+    collected = collected or {}
     print(f"{directory}: {reference.functions} reference functions, "
           f"{len(reference.names)} names", flush=True)
     for path in files:
@@ -916,18 +936,28 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
         moved: list[str] = []
         release = release_of(path)
         rebuilt = release in collected
-        defined = reference.defined.get(release, set()) if rebuilt else None
+        # Only the build the import was made from supersedes a line by name;
+        # another build leaves out only the lines whose bytes it reproduces.
+        defined = ((reference.defined.get(release, set()) if collected[release] else set())
+                   if rebuilt else None)
         lines = migrate_file(path, reference, report, sibling, moved, defined=defined)
         if moved and moves is not None:
             moves.setdefault(tree / SIBLINGS[directory] / path.name, []).extend(moved)
         # A release whose libraries were collected gets its file built anew;
         # what the libraries cannot reproduce joins it from <name>.imported.
         written = path.with_suffix(".imported") if rebuilt else path
-        written.write_text("\n".join(lines) + "\n", encoding="utf-8")
-        if verify_with is not None:
-            # The loader rejects a whole directory for one bad line.
-            subprocess.run([str(verify_with), "--verify", str(written)], check=True,
-                           stdout=subprocess.DEVNULL)
+        if rebuilt and not any(line.strip() for line in lines):
+            # The libraries reproduce or supersede every imported line, so the
+            # file is built from them alone, like a release rizin never had;
+            # an earlier run's <name>.imported would bring back what they
+            # replace.
+            written.unlink(missing_ok=True)
+        else:
+            written.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            if verify_with is not None:
+                # The loader rejects a whole directory for one bad line.
+                subprocess.run([str(verify_with), "--verify", str(written)], check=True,
+                               stdout=subprocess.DEVNULL)
         key = written.relative_to(tree).as_posix()
         summary[key] = report.__dict__
         print(

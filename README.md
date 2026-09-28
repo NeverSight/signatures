@@ -82,6 +82,7 @@ where the line has a wildcard, so the line would name that routine too.
 | `vs2010.pat` | The Visual C++ 2010 compilers of the Windows SDK 7.1 (10.0.30319) with that SDK's libraries, without ATL/MFC (x86, x64) |
 | `vs2012.pat` | Visual Studio 2012 Professional (11.0.50727) with ATL/MFC (x86, x64, ARM32) |
 | `vs2013.pat` | Visual Studio 2013 Professional (12.0.21005) with ATL/MFC and the Windows SDK 7.1A (x86, x64, ARM32) |
+| `masm32.pat` | The MASM32 SDK 8.2, 9, 10 and 11: `masm32.lib`, `fpu.lib` and `datetime.lib` built from their sources with the SDK's own assembler, and the prebuilt `debug.lib` (x86) |
 
 The Visual Studio 2005 to 2013 libraries come from Microsoft's installation
 media, which no current Windows image can install; they are unpacked on
@@ -90,8 +91,8 @@ the same media rizin's files were made from. The VS 2010 ATL/MFC libraries
 are on no medium Microsoft still publishes, so `vs2010.pat` keeps the
 imported lines for them, renamed to their linkage names, in
 `vs2010.imported`; each `<name>.imported` joins its file when the file is
-built. `masm32` and `mingw32-zlib` have no collected libraries and stay
-imported files. See [Lines imported from rizin](#lines-imported-from-rizin).
+built. `mingw32-zlib` has no collected libraries and stays an imported
+file. See [Lines imported from rizin](#lines-imported-from-rizin).
 
 Two workflows produce the generated files:
 
@@ -112,9 +113,16 @@ Two workflows produce the generated files:
      its SHA-256, unpacks the Windows Installer packages that hold the
      libraries with 7-Zip, cabextract and msitools, and packs the same kind
      of archive ([`scripts/collect_legacy_media.py`](scripts/collect_legacy_media.py)).
+   - One Ubuntu job per row of
+     [`.github/masm32-matrix.json`](.github/masm32-matrix.json) builds a
+     MASM32 SDK release's libraries. The SDK ships them as sources, which
+     its installer assembles with the SDK's own `ML.EXE` and `LINK.EXE`;
+     the job runs the same make files under Wine and clears the time
+     stamps `LINK` writes, so two builds give the same archive
+     ([`scripts/collect_masm32.py`](scripts/collect_masm32.py)).
 2. [`msvc-signatures.yml`](.github/workflows/msvc-signatures.yml) builds
    `neverd-sigmaker` at a pinned NeverD revision and runs NeverD's
-   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/22d94b450c945f8dee0b511bd8cfea23e43a5c93/scripts/signatures/build_msvc_signatures.py)
+   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/cd6dc926ce06920492213ead58c14e39e890598f/scripts/signatures/build_msvc_signatures.py)
    over every `msvc-libs-*` release, one architecture at a time:
    - A file with library archives behind it is rebuilt from them alone, and
      from its `<name>.imported` when it has one.
@@ -251,16 +259,21 @@ downloads and checks against rizin's SHA-1s. For each line:
 6. A line named after a section, label or data object, which no library
    function explained, is removed.
 7. An ELF line of the other pointer width's code moves to that directory.
-8. In a file whose release's libraries were collected, a line those
-   libraries reproduce, or whose routine they define at all, is left out:
-   the line `neverd-sigmaker` made for that routine, or its decision to make
-   none, stands. The rest go to `<name>.imported`.
+8. In a file whose libraries were collected, a line those libraries
+   reproduce is left out, and the rest go to `<name>.imported`. When the
+   collected libraries are the very build the import was made from (a Visual
+   Studio release's RTM libraries, the MASM32 SDK's libraries built from its
+   sources with its own assembler), a line whose routine they define at all is
+   left out too: the line `neverd-sigmaker` made for that routine, or its
+   decision to make none, stands. A library asset states which it is
+   (`reproduces_import`).
 9. A line with no linkage name is kept as a `; unresolved:` comment, which
    NeverD does not read.
 
-Of the 265,631 imported PE lines, 502 are left unresolved. Most are VS 2010
-ATL/MFC routines whose names are on no collected library, and masm32 stdcall
-routines whose `ret N` falls where the line states no bytes. In `elf/`, 374
-lines are, where the packages rizin recorded are gone or two routines spell
-the same.
+Of the 265,631 imported PE lines, 286 are left unresolved. Most are VS 2010
+ATL/MFC routines whose names are on no collected library. The MASM32 SDK's
+libraries, built from its sources, reproduce or supersede every imported
+`masm32` line, so `masm32.pat` keeps none of them. In `elf/`, 374 lines are
+left unresolved, where the packages rizin recorded are gone or two routines
+spell the same.
 [`reports/`](reports) lists, per file, every removed and unresolved name.
