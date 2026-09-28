@@ -320,6 +320,7 @@ same programs.
 | NDK r25b x64 | 1 | 1,850 | 767 (41%) | 1,251 (68%) | 16 | 2 | 14 | 0 |
 | NDK r25b x86 | 1 | 1,942 | 177 (9%) | 1,419 (73%) | 10 | 0 | 0 | 0 |
 | NDK r25b ARM64, C and C++ | 2 | 5,794 | 461 (8%) | 3,218 (56%) | 6 | 373 | 0 | 6 |
+| NDK r25b ARM32, C and C++, unstripped | 2 | 6,024 | 475 (8%) | 3,395 (56%) | 26 | 1 | 0 | 0 |
 
 - Most of the names wrong before were OpenSSL's: its `d2i_*`, `i2d_*`,
   `*_free` and per-cipher routines are the same code up to the object a
@@ -337,9 +338,10 @@ same programs.
 - NeverD cannot load the two ARM32 (Thumb-2) Android programs once they are
   stripped: it decodes the bytes after every call as code, and after a call
   that does not return, such as `bl abort`, those are the function's literal
-  pool, which decodes as Thumb across the real instructions that follow.
-- There are no other ARM ELF programs, so the ARM32 file has not been
-  measured.
+  pool, which decodes as Thumb across the real instructions that follow. They
+  are measured before they are stripped, where their symbol table, not
+  NeverD's discovery, says where functions start; the names still come from
+  the signatures alone.
 
 ## Lines imported from rizin
 
