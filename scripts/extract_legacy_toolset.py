@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Unpack an old Visual C++ toolset's libraries from its installation media.
 
-Microsoft still publishes the installation media of Visual Studio 2005 to 2013,
-and of the Windows SDK 7.1 that carries the Visual C++ 2010 compilers, but no
-current Windows image can install them.  Their libraries sit in Windows
-Installer packages on those discs, and nothing needs installing to read them:
+Microsoft still publishes the installation media of Visual Studio 2005, 2008,
+2012 and 2013; the Visual Studio 2010 disc survives as MSDN published it, on
+the Internet Archive. No current Windows image can install them.  Their
+libraries sit in Windows Installer packages on those discs, and nothing needs
+installing to read them:
 
   * 7-Zip pulls the packages a matrix row names out of the disc image;
   * cabextract opens a self-extracting bundle when the packages sit in one

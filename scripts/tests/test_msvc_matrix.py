@@ -76,7 +76,11 @@ class LegacyMatrixTests(unittest.TestCase):
         rows = msvc_matrix.load(msvc_matrix.DEFAULT_LEGACY_MATRIX, msvc_matrix.LEGACY_FIELDS)
         for row in rows:
             with self.subTest(row=row["name"]):
-                self.assertTrue(row["media"].startswith("https://download.microsoft.com/"))
+                # Microsoft's own download, or, for a disc Microsoft no longer
+                # publishes, the Internet Archive's copy of the MSDN disc, whose
+                # SHA-1 README.md holds against the one MSDN published.
+                self.assertTrue(row["media"].startswith(
+                    ("https://download.microsoft.com/", "https://archive.org/download/")))
                 self.assertRegex(row["sha256"], r"^[0-9a-f]{64}$")
                 self.assertTrue(row["members"] or row["bundle"])
                 for extra in row["extra_directories"]:
