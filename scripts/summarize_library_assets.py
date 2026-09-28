@@ -98,9 +98,14 @@ def release_notes(manifests: list[dict], tag: str, commit: str) -> str:
         lines.append("| Asset | Library | Version | Source | Files |")
         lines.append("| --- | --- | --- | --- | --- |")
         for manifest in libraries:
-            # An installer or disc (MASM32), or a source archive (MinGW builds).
+            # An installer or disc (MASM32), a source archive (MinGW builds), or
+            # the packages rizin's ELF files came from.
             origin = manifest.get("source") or {}
             source = origin.get("media") or origin.get("url", "")
+            if "sources" in manifest:
+                source = (f"{len(manifest['sources'])} packages sigdb-source records"
+                          + (f", {len(manifest['unavailable'])} of them unavailable"
+                             if manifest.get("unavailable") else ""))
             lines.append(
                 f"| `{manifest['asset']}` | {manifest.get('library', '')} "
                 f"| {manifest.get('library_version', '')} | {source} "

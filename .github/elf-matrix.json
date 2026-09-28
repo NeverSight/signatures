@@ -1,0 +1,342 @@
+[
+  {
+    "name": "android-ndk",
+    "library": "android-ndk",
+    "directories": [
+      "elf/arm/32",
+      "elf/arm/64",
+      "elf/x86/32",
+      "elf/x86/64"
+    ],
+    "archives": [
+      "*.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libc++-10",
+    "library": "ubuntu-libc++-10",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libc++.a",
+      "libc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libc++-11",
+    "library": "ubuntu-libc++-11",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libc++.a",
+      "libc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libc++-12",
+    "library": "ubuntu-libc++-12",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libc++.a",
+      "libc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libc++-13",
+    "library": "ubuntu-libc++-13",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libc++.a",
+      "libc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libc++-14",
+    "library": "ubuntu-libc++-14",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libc++.a",
+      "libc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libc++-15",
+    "library": "ubuntu-libc++-15",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libc++.a",
+      "libc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libc++-7",
+    "library": "ubuntu-libc++-7",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libc++.a",
+      "libc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libc++-8",
+    "library": "ubuntu-libc++-8",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libc++.a",
+      "libc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libc++-9",
+    "library": "ubuntu-libc++-9",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libc++.a",
+      "libc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libc6",
+    "library": "ubuntu-libc6",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libc.a",
+      "libpthread.a",
+      "librt.a",
+      "libanl.a",
+      "libutil.a",
+      "libresolv.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libgcc-10",
+    "library": "ubuntu-libgcc-10",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libgcc-11",
+    "library": "ubuntu-libgcc-11",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libgcc-12",
+    "library": "ubuntu-libgcc-12",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libgcc-7",
+    "library": "ubuntu-libgcc-7",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libgcc-8",
+    "library": "ubuntu-libgcc-8",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libgcc-9",
+    "library": "ubuntu-libgcc-9",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libgcc.a",
+      "libgcc_eh.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libseccomp",
+    "library": "ubuntu-libseccomp",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libseccomp.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libsodium",
+    "library": "ubuntu-libsodium",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libsodium.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libstdc++-10",
+    "library": "ubuntu-libstdc++-10",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libstdc++.a",
+      "libsupc++.a",
+      "libstdc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libstdc++-11",
+    "library": "ubuntu-libstdc++-11",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libstdc++.a",
+      "libsupc++.a",
+      "libstdc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libstdc++-12",
+    "library": "ubuntu-libstdc++-12",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libstdc++.a",
+      "libsupc++.a",
+      "libstdc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libstdc++-5",
+    "library": "ubuntu-libstdc++-5",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libstdc++.a",
+      "libsupc++.a",
+      "libstdc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libstdc++-6",
+    "library": "ubuntu-libstdc++-6",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libstdc++.a",
+      "libsupc++.a",
+      "libstdc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libstdc++-7",
+    "library": "ubuntu-libstdc++-7",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libstdc++.a",
+      "libsupc++.a",
+      "libstdc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libstdc++-8",
+    "library": "ubuntu-libstdc++-8",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libstdc++.a",
+      "libsupc++.a",
+      "libstdc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-libstdc++-9",
+    "library": "ubuntu-libstdc++-9",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libstdc++.a",
+      "libsupc++.a",
+      "libstdc++fs.a"
+    ]
+  },
+  {
+    "name": "ubuntu-musl",
+    "library": "ubuntu-musl",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libc.a"
+    ]
+  },
+  {
+    "name": "ubuntu-openssl",
+    "library": "ubuntu-openssl",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libcrypto.a",
+      "libssl.a"
+    ]
+  },
+  {
+    "name": "ubuntu-zlib",
+    "library": "ubuntu-zlib",
+    "directories": [
+      "elf/x86/64"
+    ],
+    "archives": [
+      "libz.a"
+    ]
+  }
+]

@@ -59,6 +59,9 @@ on:
       - .github/masm32-matrix.json
       - scripts/collect_mingw_library.py
       - .github/mingw-matrix.json
+      - scripts/collect_elf_packages.py
+      - scripts/fetch_imported_sources.py
+      - .github/elf-matrix.json
       - scripts/tests/**
       - validation/**
 
@@ -83,6 +86,8 @@ jobs:
       masm32_rows: ${{ steps.matrix.outputs.masm32_rows }}
       mingw_matrix: ${{ steps.matrix.outputs.mingw_matrix }}
       mingw_rows: ${{ steps.matrix.outputs.mingw_rows }}
+      elf_matrix: ${{ steps.matrix.outputs.elf_matrix }}
+      elf_rows: ${{ steps.matrix.outputs.elf_rows }}
     steps:
       - name: Check out
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -376,13 +381,55 @@ jobs:
           compression-level: 0
           retention-days: 7
 
+  # The packages rizin's ELF files were made from, downloaded and checked
+  # against the SHA-1s sigdb-source records; see scripts/collect_elf_packages.py.
+  collect-elf:
+    name: Collect ${{ matrix.name }}
+    needs: verify
+    if: github.event_name == 'workflow_dispatch' && inputs.from_run == '' && needs.verify.outputs.elf_rows != '0'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      # Launchpad serves the old packages; a few rows at a time.
+      max-parallel: 4
+      matrix: ${{ fromJSON(needs.verify.outputs.elf_matrix) }}
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install the unpacking tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends zstd unzip bzip2
+
+      - name: Download and collect
+        env:
+          NAME: ${{ matrix.name }}
+        run: >-
+          python3 scripts/collect_elf_packages.py
+          --name "$NAME"
+          --work "$RUNNER_TEMP/work"
+          --output "$RUNNER_TEMP/assets"
+          --jobs 2
+
+      - name: Upload assets
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: msvc-libs-${{ matrix.name }}
+          path: ${{ runner.temp }}/assets
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+
   # A row that fails does not hold the others back: the release carries every
   # row that succeeded, its notes name the run's overall result, and the
   # signature workflow reads the union of all msvc-libs-* releases, so a
   # later run only has to supply what this one missed.
   release:
     name: Create library release
-    needs: [collect, collect-legacy, collect-masm32, collect-mingw]
+    needs: [collect, collect-legacy, collect-masm32, collect-mingw, collect-elf]
     if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 120
@@ -410,6 +457,7 @@ jobs:
           LEGACY_RESULT: ${{ needs.collect-legacy.result }}
           MASM32_RESULT: ${{ needs.collect-masm32.result }}
           MINGW_RESULT: ${{ needs.collect-mingw.result }}
+          ELF_RESULT: ${{ needs.collect-elf.result }}
           FROM_RUN: ${{ inputs.from_run }}
         run: |
           set -euo pipefail
@@ -421,10 +469,11 @@ jobs:
           elif { [ "$COLLECT_RESULT" != "success" ] && [ "$COLLECT_RESULT" != "skipped" ]; } \
               || { [ "$LEGACY_RESULT" != "success" ] && [ "$LEGACY_RESULT" != "skipped" ]; } \
               || { [ "$MASM32_RESULT" != "success" ] && [ "$MASM32_RESULT" != "skipped" ]; } \
-              || { [ "$MINGW_RESULT" != "success" ] && [ "$MINGW_RESULT" != "skipped" ]; }; then
+              || { [ "$MINGW_RESULT" != "success" ] && [ "$MINGW_RESULT" != "skipped" ]; } \
+              || { [ "$ELF_RESULT" != "success" ] && [ "$ELF_RESULT" != "skipped" ]; }; then
             {
               echo
-              echo "> Not every collection row succeeded in run $GITHUB_RUN_ID ($COLLECT_RESULT, legacy $LEGACY_RESULT, masm32 $MASM32_RESULT, mingw $MINGW_RESULT);"
+              echo "> Not every collection row succeeded in run $GITHUB_RUN_ID ($COLLECT_RESULT, legacy $LEGACY_RESULT, masm32 $MASM32_RESULT, mingw $MINGW_RESULT, elf $ELF_RESULT);"
               echo "> this release holds the rows listed above. Rerun the workflow to add the rest."
             } >> assets/RELEASE.md
           fi
