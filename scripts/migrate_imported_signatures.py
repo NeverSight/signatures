@@ -704,6 +704,9 @@ class FileReport:
     removed_openings: int = 0
     reproduced: int = 0
     superseded: int = 0
+    # Lines of the other pointer width's code, whose file is built anew from
+    # the very build the import was made from.
+    superseded_other_width: int = 0
     unresolved: int = 0
     realigned_tails: int = 0
     undecided_tails: int = 0
@@ -756,7 +759,8 @@ def align(line: Line, reference: Reference, default: str | None) -> tuple[Line, 
 def migrate_file(path: Path, reference: Reference, report: FileReport,
                  sibling: Reference | None = None,
                  moved: list[str] | None = None,
-                 defined: set[str] | None = None) -> list[str]:
+                 defined: set[str] | None = None,
+                 sibling_rebuilt: bool = False) -> list[str]:
     """The migrated lines of an imported file.
 
     `defined` is not None when the file's own libraries were collected; its
@@ -768,6 +772,13 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
     they hold that routine, and the line neverd-sigmaker made for it -- or
     its decision to make none, for code its rules reject -- stands. For
     another build of the same sources it is empty.
+
+    rizin filed some lines under the other pointer width. A line that no
+    library of this width explains, or whose C name is kept only because
+    none does, and whose bytes are a function of the other width (`sibling`)
+    is that width's: it moves there, or, when that width's file is built
+    anew from the very build the import was made from (`sibling_rebuilt`),
+    that file already holds the routine and the line is left out.
 
     A line still unresolved, in any file, is kept as a comment, which the
     loader does not read: a name in rizin's spelling is no linkage name.
@@ -812,9 +823,9 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
             report.removed_artifacts += 1
             report.removed_names.append(line.name)
             continue
-        if name is None and sibling is not None and moved is not None:
+        if (name is None or how == "verbatim") and sibling is not None:
             # Some imported lines were filed under the wrong pointer width;
-            # only the bytes of a function of the other width may move one.
+            # only the bytes of a function of the other width say so.
             other, other_how = resolve(line, sibling)
             if other_how in ("ambiguous", "opening"):
                 # Code of the other width that several routines share names
@@ -823,9 +834,13 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
                 report.ambiguous_names.append(line.name)
                 continue
             if other is not None and other_how == "bytes":
-                report.moved += 1
-                moved.append(line.render(other))
-                continue
+                if sibling_rebuilt:
+                    report.superseded_other_width += 1
+                    continue
+                if moved is not None:
+                    report.moved += 1
+                    moved.append(line.render(other))
+                    continue
         if name is None:
             report.unresolved += 1
             report.unresolved_names.append(line.name)
@@ -874,11 +889,15 @@ def manifests_for(assets: Path, arch: str, binary_format: str) -> list[Path]:
 
 
 def build_pe_reference(sigmaker: Path, assets: Path, arch: str, work: Path,
-                       binary_format: str = "pe") -> Reference:
+                       binary_format: str = "pe",
+                       releases: set[str] | None = None) -> Reference:
     reference = Reference(binary_format)
     reference.callee_cleanup = arch == "x86" and binary_format == "pe"
     machine = PE_TARGETS[arch][1]
     manifests = manifests_for(assets, arch, binary_format)
+    if releases is not None:
+        manifests = [path for path in manifests
+                     if asset_release(json.loads(path.read_text(encoding="utf-8"))) in releases]
     if not manifests:
         raise SystemExit(f"no {binary_format} {arch} assets in {assets}")
     for manifest_path in manifests:
@@ -919,10 +938,13 @@ def build_pe_reference(sigmaker: Path, assets: Path, arch: str, work: Path,
     return reference
 
 
-def build_elf_reference(sigmaker: Path, assets: Path, arch: str, work: Path) -> Reference:
-    """Every function of the ELF library assets for one architecture."""
+def build_elf_reference(sigmaker: Path, assets: Path, arch: str, work: Path,
+                        releases: set[str] | None = None) -> Reference:
+    """Every function of the ELF library assets for one architecture, or of
+    those that build the named files."""
 
-    return build_pe_reference(sigmaker, assets, arch, work, binary_format="elf")
+    return build_pe_reference(sigmaker, assets, arch, work, binary_format="elf",
+                              releases=releases)
 
 
 def load_reference(directory: Path, binary_format: str) -> Reference:
@@ -1018,8 +1040,10 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
                       verify_with: Path | None,
                       sibling: Reference | None = None,
                       moves: dict[Path, list[str]] | None = None,
-                      collected: dict[str, bool] | None = None) -> None:
+                      collected: dict[str, bool] | None = None,
+                      sibling_collected: dict[str, bool] | None = None) -> None:
     collected = collected or {}
+    sibling_collected = sibling_collected or {}
     print(f"{directory}: {reference.functions} reference functions, "
           f"{len(reference.names)} names", flush=True)
     for path in files:
@@ -1032,7 +1056,8 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
         # another build leaves out only the lines whose bytes it reproduces.
         defined = ((reference.defined.get(release, set()) if collected[release] else set())
                    if rebuilt else None)
-        lines = migrate_file(path, reference, report, sibling, moved, defined=defined)
+        lines = migrate_file(path, reference, report, sibling, moved, defined=defined,
+                             sibling_rebuilt=sibling_collected.get(release) is True)
         if moved and moves is not None:
             moves.setdefault(tree / SIBLINGS[directory] / path.name, []).extend(moved)
         # A release whose libraries were collected gets its file built anew;
@@ -1063,6 +1088,7 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
             f"removed, {report.removed_openings} whose bytes open a longer routine removed, "
             f"{report.reproduced} reproduced by collected libraries, "
             f"{report.superseded} superseded by what they define, "
+            f"{report.superseded_other_width} by the other width's libraries, "
             f"{report.unresolved} unresolved; {report.realigned_tails} tails realigned, "
             f"{report.undecided_tails} undecided",
             flush=True,
@@ -1087,6 +1113,9 @@ def main(argv: list[str] | None = None) -> int:
     pe.add_argument("--elf-arch", action="append", choices=sorted(ELF_TARGETS), default=[],
                     help="migrate this architecture's ELF directory against the release's "
                          "ELF library assets (repeatable)")
+    pe.add_argument("--sibling-assets", type=Path,
+                    help="where the other pointer width's ELF library assets are "
+                         "(default: --assets)")
     other = parser.add_argument_group("any directory, referenced from generated lines")
     other.add_argument("--directory", action="append", default=[],
                        help="target directory such as elf/x86/64 (repeatable)")
@@ -1116,14 +1145,23 @@ def main(argv: list[str] | None = None) -> int:
             continue
         with tempfile.TemporaryDirectory(dir=args.work) as scratch:
             reference = build_elf_reference(args.sigmaker, args.assets, arch, Path(scratch))
+        # The other width's libraries that build a file of this directory:
+        # rizin filed some of their lines here.
+        sibling_assets = args.sibling_assets or args.assets
+        names = {release_of(path) for path in files}
+        other = OTHER_WIDTH[arch]
         sibling = None
-        if manifests_for(args.assets, OTHER_WIDTH[arch], "elf"):
+        sibling_collected = {name: same for name, same
+                             in collected_releases(sibling_assets, other, "elf").items()
+                             if name in names}
+        if sibling_collected:
             with tempfile.TemporaryDirectory(dir=args.work) as scratch:
-                sibling = build_elf_reference(args.sigmaker, args.assets, OTHER_WIDTH[arch],
-                                              Path(scratch))
+                sibling = build_elf_reference(args.sigmaker, sibling_assets, other,
+                                              Path(scratch), releases=set(sibling_collected))
         migrate_directory(args.tree, args.imported_from, directory, files, reference, summary,
                           args.verify_with, sibling, moves,
-                          collected=collected_releases(args.assets, arch, "elf"))
+                          collected=collected_releases(args.assets, arch, "elf"),
+                          sibling_collected=sibling_collected)
     for directory in args.directory:
         if args.references is None:
             parser.error("--directory needs --references")

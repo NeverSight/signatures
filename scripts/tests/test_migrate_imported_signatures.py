@@ -333,6 +333,41 @@ class MoveTests(unittest.TestCase):
         self.assertEqual(report.removed_ambiguous, 1)
 
 
+    def test_code_of_an_other_width_built_from_the_import_is_left_out(self) -> None:
+        own = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28" * 5 + "C3"))
+        other = pe_reference(reference_line("?Thumb@@YAXXZ", self.THUMB))
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "android-ndk.pat"
+            path.write_text(f"{self.THUMB} 00 0000 0018 :0000 _Thumb__YAXXZ\n")
+            report = migrate.FileReport()
+            moved: list[str] = []
+            lines = migrate.migrate_file(path, own, report, other, moved, defined=set(),
+                                         sibling_rebuilt=True)
+        self.assertEqual((lines, moved), ([], []))
+        self.assertEqual(report.superseded_other_width, 1)
+
+    def test_a_c_name_no_library_of_this_width_explains_is_checked_too(self) -> None:
+        # rizin kept strlen16's plain C name; only its bytes, which are the
+        # other width's, say where it belongs.
+        own = migrate.Reference("elf")
+        own.add_line(reference_line("run", "4883EC28" * 5 + "C3"))
+        own.index_spellings()
+        other = migrate.Reference("elf")
+        other.add_line(reference_line("strlen16", self.OTHER))
+        other.index_spellings()
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "android-ndk.pat"
+            path.write_text(f"{self.OTHER} 00 0000 0012 :0000 strlen16\n")
+            kept = migrate.migrate_file(path, own, migrate.FileReport())
+            report = migrate.FileReport()
+            moved: list[str] = []
+            lines = migrate.migrate_file(path, own, report, other, moved)
+        self.assertEqual(kept, [f"{self.OTHER} 00 0000 0012 :0000 strlen16"])
+        self.assertEqual(lines, [])
+        self.assertEqual(moved, [f"{self.OTHER} 00 0000 0012 :0000 strlen16"])
+        self.assertEqual((report.moved, report.verbatim), (1, 0))
+
+
 class WeakLineTests(unittest.TestCase):
     def test_stated_bytes_follow_the_matcher(self) -> None:
         lead = "".join(f"{i:02X}" for i in range(32))

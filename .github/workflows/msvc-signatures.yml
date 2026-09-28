@@ -157,8 +157,38 @@ jobs:
               echo "$tag: $stem"
             done
           done
+          # rizin filed some ELF lines under the other pointer width. The
+          # migration reads that width's ELF libraries for the files of this
+          # directory, to tell its code apart; they build nothing here.
+          case "$ARCH" in
+            x86) other=x64 sub=x86/32 ;;
+            x64) other=x86 sub=x86/64 ;;
+            arm) other=arm64 sub=arm/32 ;;
+            arm64) other=arm sub=arm/64 ;;
+          esac
+          mkdir -p sibling-assets
+          for tag in $tags; do
+            for name in $(gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets \
+                --jq ".assets[].name | select(endswith(\"-${other}.json\"))"); do
+              stem="${name%.json}"
+              [ -f "sibling-assets/$name" ] && continue
+              gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir sibling-assets \
+                --pattern "$name"
+              library="$(python3 -c 'import json, sys
+          manifest = json.load(open(sys.argv[1]))
+          print(manifest.get("library", "") if manifest.get("format") == "elf" else "")' \
+                "sibling-assets/$name")"
+              if [ -n "$library" ] && [ -f "elf/$sub/$library.pat" ]; then
+                gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir sibling-assets \
+                  --pattern "$stem.tar.zst"
+                echo "$tag: $stem (other width)"
+              else
+                rm "sibling-assets/$name"
+              fi
+            done
+          done
           echo "tag=$(echo "$tags" | tr '\n' ' ' | sed 's/ *$//')" >> "$GITHUB_OUTPUT"
-          ls -la assets
+          ls -la assets sibling-assets
 
       # pe/x86 and every elf/ directory received imported files; a directory
       # that holds none is passed over.
@@ -185,6 +215,7 @@ jobs:
             --sigmaker generator/neverd-sigmaker \
             --verify-with generator/neverd-sigmaker \
             --assets assets \
+            --sibling-assets sibling-assets \
             --elf-arch "$ARCH" \
             --report "migration-elf-$ARCH.json" \
             --work "$RUNNER_TEMP"
