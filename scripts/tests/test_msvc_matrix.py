@@ -47,18 +47,40 @@ class SelectTests(unittest.TestCase):
 
 
 class OutputTests(unittest.TestCase):
-    def test_github_output_holds_one_matrix_line(self) -> None:
+    def _outputs(self, rows: str) -> dict[str, str]:
         with tempfile.TemporaryDirectory() as scratch:
             output = Path(scratch) / "out"
-            msvc_matrix.main(["--rows", "vs2015,winsdk-10.0.20348.0", "--github-output", str(output)])
-            line = output.read_text().strip()
-        self.assertTrue(line.startswith("matrix="))
-        matrix = json.loads(line[len("matrix="):])
+            msvc_matrix.main(["--rows", rows, "--github-output", str(output)])
+            return dict(line.split("=", 1) for line in output.read_text().splitlines())
+
+    def test_github_output_holds_one_matrix_line(self) -> None:
+        outputs = self._outputs("vs2015,winsdk-10.0.20348.0")
+        self.assertEqual(outputs["rows"], "2")
+        self.assertEqual(outputs["legacy_rows"], "0")
+        matrix = json.loads(outputs["matrix"])
         rows = {row["name"]: row for row in matrix["include"]}
         self.assertEqual(rows["vs2015"]["probe_flags"], "")
         self.assertEqual(rows["vs2015"]["probe_winsdk"], "10.0.17763.0")
         self.assertEqual(rows["winsdk-10.0.20348.0"]["choco"], "windows-sdk-10-version-2104-all")
         self.assertEqual(rows["winsdk-10.0.20348.0"]["components"], "")
+
+
+    def test_legacy_rows_are_selected_by_the_same_names(self) -> None:
+        outputs = self._outputs("vs2013-media vs2026")
+        self.assertEqual(outputs["rows"], "1")
+        self.assertEqual(json.loads(outputs["legacy_matrix"]), {"include": [{"name": "vs2013-media"}]})
+
+
+class LegacyMatrixTests(unittest.TestCase):
+    def test_every_row_pins_microsoft_media(self) -> None:
+        rows = msvc_matrix.load(msvc_matrix.DEFAULT_LEGACY_MATRIX, msvc_matrix.LEGACY_FIELDS)
+        for row in rows:
+            with self.subTest(row=row["name"]):
+                self.assertTrue(row["media"].startswith("https://download.microsoft.com/"))
+                self.assertRegex(row["sha256"], r"^[0-9a-f]{64}$")
+                self.assertTrue(row["members"] or row["bundle"])
+                for extra in row["extra_directories"]:
+                    self.assertIn(extra.split(":", 1)[0], row["arches"])
 
 
 if __name__ == "__main__":

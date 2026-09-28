@@ -1,0 +1,131 @@
+[
+  {
+    "name": "vs2013-media",
+    "vs_year": 2013,
+    "media": "https://download.microsoft.com/download/A/F/1/AF128362-A6A8-4DB3-A39A-C348086472CC/VS2013_RTM_PRO_ENU.iso",
+    "sha256": "3bf357ca41b3c8ee04dcb7eb4151674448627c8c649e817bc225a75172845d60",
+    "members": [
+      "packages/vc_librarycore86/*",
+      "packages/vc_librarycore/*",
+      "packages/vc_libraryDesktop/*",
+      "packages/vc_libraryextended/*",
+      "packages/vc_libraryselectablemfc/*",
+      "packages/XPSupport/*"
+    ],
+    "bundle": "",
+    "vc_directory": "Program Files/Microsoft Visual Studio 12.0/VC",
+    "version_package": "vc_LibraryDesktopX86.msi",
+    "atlmfc": true,
+    "arches": [
+      "x86",
+      "x64",
+      "arm"
+    ],
+    "extra_directories": [
+      "x86:Program Files/Microsoft SDKs/Windows/v7.1A/Lib",
+      "x64:Program Files/Microsoft SDKs/Windows/v7.1A/Lib/x64"
+    ]
+  },
+  {
+    "name": "vs2012-media",
+    "vs_year": 2012,
+    "media": "https://download.microsoft.com/download/D/E/8/DE8E42D8-7598-4F4E-93D4-BB011094E2F9/VS2012_PRO_enu.iso",
+    "sha256": "e5ad0a8b1be3ceca21bef53ae870532dbaa8b50f65fa5a642c2687368acafd05",
+    "members": [
+      "packages/vc_librarycore/*",
+      "packages/vc_libraryextended/*",
+      "packages/vc_libraryselectablemfc/*"
+    ],
+    "bundle": "",
+    "vc_directory": "Program Files/Microsoft Visual Studio 11.0/VC",
+    "version_package": "vc_librarycore.msi",
+    "atlmfc": true,
+    "arches": [
+      "x86",
+      "x64",
+      "arm"
+    ],
+    "extra_directories": []
+  },
+  {
+    "name": "vs2010-sdk71",
+    "vs_year": 2010,
+    "media": "https://download.microsoft.com/download/F/1/0/F10113F5-B750-4969-A255-274341AC6BCE/GRMSDK_EN_DVD.iso",
+    "sha256": "27cb38f76095c0acb9b558109f8693b39cbceb796856c15bd575f9e9d0b316c3",
+    "members": [
+      "Setup/vc_stdx86/*",
+      "Setup/vc_stdamd64/*",
+      "Setup/WinSDKBuild/*"
+    ],
+    "bundle": "",
+    "vc_directory": "Program Files/Microsoft Visual Studio 10.0/VC",
+    "version_package": "vc_stdx86.msi",
+    "atlmfc": false,
+    "arches": [
+      "x86",
+      "x64"
+    ],
+    "extra_directories": [
+      "x86:Program Files/Microsoft SDKs/Windows/v7.1/Lib",
+      "x64:Program Files/Microsoft SDKs/Windows/v7.1/Lib/x64"
+    ]
+  },
+  {
+    "name": "vs2008-media",
+    "vs_year": 2008,
+    "media": "https://download.microsoft.com/download/8/1/d/81d3f35e-fa03-485b-953b-ff952e402520/VS2008ProEdition90dayTrialENUX1435622.iso",
+    "sha256": "380875dc5d266786dd737fe52a9c87bff9f6f4c159ade5b8bb01473b8291fcac",
+    "members": [
+      "vs_setup.msi",
+      "cab*.cab"
+    ],
+    "bundle": "WCU/WinSDK/WinSDK_Build.exe",
+    "vc_directory": "Program Files/Microsoft Visual Studio 9.0/VC",
+    "version_package": "vs_setup.msi",
+    "atlmfc": true,
+    "arches": [
+      "x86",
+      "x64"
+    ],
+    "extra_directories": [
+      "x86:Program Files/Microsoft SDKs/Windows/v6.0A/Lib",
+      "x64:Program Files/Microsoft SDKs/Windows/v6.0A/Lib/x64",
+      "x86:Program Files/Microsoft Visual Studio 9.0/VC/ce/lib/x86",
+      "x86:Program Files/Microsoft Visual Studio 9.0/VC/ce/atlmfc/lib/x86",
+      "x86:Program Files/Microsoft Visual Studio 9.0/VC/crt/src/intel/mt_lib",
+      "x86:Program Files/Microsoft Visual Studio 9.0/VC/crt/src/intel/xmt_lib",
+      "x86:Program Files/Microsoft Visual Studio 9.0/VC/crt/src/intel/dll_lib",
+      "x86:Program Files/Microsoft Visual Studio 9.0/VC/crt/src/intel/xdll_lib",
+      "x64:Program Files/Microsoft Visual Studio 9.0/VC/crt/src/AMD64/mt_lib",
+      "x64:Program Files/Microsoft Visual Studio 9.0/VC/crt/src/AMD64/xmt_lib",
+      "x64:Program Files/Microsoft Visual Studio 9.0/VC/crt/src/AMD64/dll_lib",
+      "x64:Program Files/Microsoft Visual Studio 9.0/VC/crt/src/AMD64/xdll_lib"
+    ]
+  },
+  {
+    "name": "vs2005-media",
+    "vs_year": 2005,
+    "media": "https://download.microsoft.com/download/6/f/5/6f5f7a01-50bb-422d-8742-c099c8896969/En_vs_2005_vsts_180_Trial.img",
+    "sha256": "3ae9f611c60c64d82e1fa9c94714aa6b6c10f6c2c05446e14b5afb5a257f86dc",
+    "members": [
+      "vs/vs_setup.msi",
+      "vs/_*.cab"
+    ],
+    "bundle": "",
+    "vc_directory": "Program Files/Microsoft Visual Studio 8/VC",
+    "version_package": "vs_setup.msi",
+    "atlmfc": true,
+    "arches": [
+      "x86",
+      "x64"
+    ],
+    "extra_directories": [
+      "x86:Program Files/Microsoft Visual Studio 8/VC/PlatformSDK/Lib",
+      "x64:Program Files/Microsoft Visual Studio 8/VC/PlatformSDK/Lib/AMD64",
+      "x86:Program Files/Microsoft Visual Studio 8/VC/ce/lib/x86",
+      "x86:Program Files/Microsoft Visual Studio 8/VC/ce/atlmfc/lib/x86",
+      "x86:Program Files/Microsoft Visual Studio 8/DIA SDK/lib",
+      "x64:Program Files/Microsoft Visual Studio 8/DIA SDK/lib/amd64"
+    ]
+  }
+]

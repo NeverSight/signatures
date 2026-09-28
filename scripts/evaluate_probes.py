@@ -84,9 +84,9 @@ class Result:
         return self.correct / self.library_functions if self.library_functions else 0.0
 
 
-def evaluate(neverd: Path, sig_dir: Path, probe: Path) -> Result:
+def evaluate(neverd: Path, source: str, probe: Path) -> Result:
     completed = subprocess.run(
-        [str(neverd), "sigs", "--json", "--no-debug", f"--sig-dir={sig_dir}", str(probe)],
+        [str(neverd), "sigs", "--json", "--no-debug", source, str(probe)],
         check=True, capture_output=True, text=True,
     )
     matches = json.loads(completed.stdout or "[]")
@@ -114,6 +114,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--signatures", type=Path, required=True,
                         help="signature tree root (holding pe/)")
     parser.add_argument("--report", type=Path)
+    parser.add_argument("--auto", action="store_true",
+                        help="let NeverD choose the files, as `sigs --auto` does, "
+                             "instead of loading the whole directory")
     parser.add_argument("probes", nargs="+", type=Path, help="probe executables")
     args = parser.parse_args(argv)
 
@@ -125,7 +128,9 @@ def main(argv: list[str] | None = None) -> int:
         if arch is None:
             print(f"{probe.name}: cannot tell the architecture from the name", file=sys.stderr)
             return 1
-        result = evaluate(args.neverd, args.signatures / directories[arch], probe)
+        source = (f"--sig-base={args.signatures}" if args.auto
+                  else f"--sig-dir={args.signatures / directories[arch]}")
+        result = evaluate(args.neverd, source, probe)
         results.append(result)
         failed |= bool(result.wrong)
         print(

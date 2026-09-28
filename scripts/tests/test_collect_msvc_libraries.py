@@ -119,14 +119,28 @@ class CollectToolsetTests(TreeTest):
             collector.collect_toolset_files(toolset, "x86", include_atlmfc=False)
 
 
+class LibraryFileTests(TreeTest):
+    def test_only_coff_archives_and_objects_are_collected(self) -> None:
+        directory = self.root / "Lib"
+        _write(directory / "libcmt.lib")
+        _write(directory / "chkstk.obj", b"\x4c\x01\x03\x00" + bytes(16))
+        # A 16-bit OMF import library and object, as old Windows SDKs ship.
+        _write(directory / "MAPI.Lib", b"\xf0\x0d\x00\x00\x2c\x00\x00\x0b")
+        _write(directory / "old.obj", b"\x80\x08\x00\x06old.c")
+        self.assertEqual(
+            [path.name for path in collector.library_files(directory)],
+            ["chkstk.obj", "libcmt.lib"],
+        )
+
+
 class LegacyV140Tests(TreeTest):
     def test_maps_legacy_architecture_directories(self) -> None:
         vc = self.root / "Microsoft Visual Studio 14.0/VC"
         _write(vc / "lib/libcmt.lib")
         _write(vc / "lib/amd64/libcmt.lib")
         _write(vc / "lib/amd64/libcpmt.lib")
-        x86 = collector.collect_legacy_v140_files(vc, "x86", include_atlmfc=False)
-        x64 = collector.collect_legacy_v140_files(vc, "x64", include_atlmfc=False)
+        x86 = collector.collect_legacy_files(vc, "x86", include_atlmfc=False)
+        x64 = collector.collect_legacy_files(vc, "x64", include_atlmfc=False)
         self.assertEqual([str(item.member) for item in x86], ["vc/lib/x86/libcmt.lib"])
         self.assertEqual(
             sorted(str(item.member) for item in x64),
@@ -135,7 +149,7 @@ class LegacyV140Tests(TreeTest):
 
     def test_v140_has_no_arm64(self) -> None:
         with self.assertRaisesRegex(collector.CollectionError, "no 'arm64'"):
-            collector.collect_legacy_v140_files(self.root, "arm64", include_atlmfc=False)
+            collector.collect_legacy_files(self.root, "arm64", include_atlmfc=False)
 
 
 class WinSdkTests(TreeTest):
@@ -232,6 +246,58 @@ class ArchiveTests(TreeTest):
                     f"vc/lib/{arch}/libcmt.lib",
                 ],
             )
+
+    def test_legacy_toolsets_record_their_media(self) -> None:
+        vc = self.root / "installed/Program Files/Microsoft Visual Studio 12.0/VC"
+        _write(vc / "lib/libcmt.lib")
+        _write(vc / "lib/arm/libcmt.lib")
+        _write(vc / "atlmfc/lib/uafxcw.lib")
+        _write(vc / "atlmfc/lib/arm/uafxcw.lib")
+        output = self.root / "out"
+        collector.main(
+            [
+                "toolset-legacy",
+                "--vc-directory", str(vc),
+                "--vs-year", "2013",
+                "--toolset-version", "12.0.21005",
+                "--media", "https://download.microsoft.com/VS2013_RTM_PRO_ENU.iso",
+                "--media-sha256", "3bf357ca",
+                "--arch", "x86",
+                "--arch", "arm",
+                "--zstd-level", "3",
+                "--output", str(output),
+            ]
+        )
+        manifest = json.loads((output / "vs2013-12.0.21005-arm.json").read_text())
+        self.assertEqual(manifest["visual_studio"], {"year": 2013})
+        self.assertEqual(manifest["toolset_version"], "12.0.21005")
+        self.assertEqual(manifest["source"]["sha256"], "3bf357ca")
+        self.assertEqual(
+            [entry["path"] for entry in manifest["files"]],
+            ["vc/atlmfc/lib/arm/uafxcw.lib", "vc/lib/arm/libcmt.lib"],
+        )
+        extra = self.root / "installed/Program Files/Microsoft Visual Studio 12.0/VC/ce/lib/x86"
+        _write(extra / "corelibc.lib")
+        collector.main(
+            [
+                "toolset-legacy", "--vc-directory", str(vc), "--vs-year", "2013",
+                "--toolset-version", "12.0.21005", "--media", "m", "--media-sha256", "s",
+                "--install-root", str(self.root / "installed"),
+                "--extra-directory", "x86:Program Files/Microsoft Visual Studio 12.0/VC/ce/lib/x86",
+                "--arch", "x86", "--zstd-level", "3", "--output", str(output),
+            ]
+        )
+        manifest = json.loads((output / "vs2013-12.0.21005-x86.json").read_text())
+        self.assertIn(
+            "extra/program files/microsoft visual studio 12.0/vc/ce/lib/x86/corelibc.lib",
+            [entry["path"] for entry in manifest["files"]],
+        )
+        with self.assertRaisesRegex(collector.CollectionError, "not arch:path"):
+            collector.parse_extra_directories(["arm64"])
+        with self.assertRaisesRegex(collector.CollectionError, "not a version"):
+            collector.main(["toolset-legacy", "--vc-directory", str(vc), "--vs-year", "2013",
+                            "--toolset-version", "RTM", "--media", "m", "--media-sha256", "s",
+                            "--arch", "x86", "--output", str(output)])
 
 
 if __name__ == "__main__":

@@ -4,11 +4,11 @@
 #
 # One job builds neverd-sigmaker against the published prebuilt LLVM
 # package; one job per architecture rebuilds every file of that architecture
-# that has library archives, from those archives alone; a final job commits
-# the result, and only when a manual run asks it to. Files with no archives
-# behind them (the imported vs2005-vs2013, masm32 and mingw32-zlib files) are
-# left as they are. A pull request that edits this workflow only builds the
-# generator.
+# that has library archives, from those archives alone and the lines its
+# <name>.imported keeps from rizin's import; a final job commits the result,
+# and only when a manual run asks it to. Files with no archives behind them
+# (masm32 and mingw32-zlib) are only renamed by the migration step. A pull
+# request that edits this workflow only builds the generator.
 
 name: Build MSVC signatures
 
@@ -45,7 +45,7 @@ env:
   # produce these files. Pinning it is what makes a regenerated file
   # attributable to a known generator.
   NEVERD_REPO: NeverSight/NeverD
-  NEVERD_REF: f6ac98c003e7e2c1c85c3d6c582ef77722eb64dd
+  NEVERD_REF: 22d94b450c945f8dee0b511bd8cfea23e43a5c93
 
 jobs:
   sigmaker:
@@ -208,6 +208,13 @@ jobs:
           esac
           mkdir -p "staged/$dir"
           cp "$dir"/*.pat "$dir"/*.sources.json "staged/$dir/"
+          # What a release keeps from rizin's import is an input of every
+          # later rebuild, so it is committed beside the file it joins.
+          shopt -s nullglob
+          imported=("$dir"/*.imported)
+          if [ "${#imported[@]}" -gt 0 ]; then
+            cp "${imported[@]}" "staged/$dir/"
+          fi
           if [ -f "migration-$ARCH.json" ]; then
             mkdir -p staged/reports
             cp "migration-$ARCH.json" staged/reports/

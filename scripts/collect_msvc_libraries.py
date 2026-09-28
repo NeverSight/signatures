@@ -55,10 +55,9 @@ SCHEMA_VERSION = 1
 # The directory names MSVC and the Windows SDK use for each target.
 ARCHITECTURES = ("x86", "x64", "arm", "arm64")
 
-# The v140 toolset predates VC/Tools/MSVC/<version>.  It installs beside
-# Visual Studio 2015's own directory and names architectures after the old
-# cross-compiler directories.
-LEGACY_V140_ARCH_DIRECTORIES = {
+# Toolsets up to v140 predate VC/Tools/MSVC/<version>.  Their VC directory
+# names architectures after the old cross-compiler directories.
+LEGACY_ARCH_DIRECTORIES = {
     "x86": PurePosixPath("."),
     "x64": PurePosixPath("amd64"),
     "arm": PurePosixPath("arm"),
@@ -68,6 +67,7 @@ LEGACY_V140_ARCH_DIRECTORIES = {
 # objects (chkstk.obj, setargv.obj, ...) are linked by name, so they are
 # library code as much as the archives are.
 LIBRARY_SUFFIXES = (".lib", ".obj")
+ARCHIVE_MAGIC = b"!<arch>\n"
 
 _VERSION = re.compile(r"^\d+(\.\d+)+$")
 
@@ -156,15 +156,31 @@ def resolve_toolset_directory(installation: Path, toolset: str) -> Path:
     return max(candidates, key=lambda entry: _version_key(entry.name))
 
 
+def is_coff_input(path: Path) -> bool:
+    """Whether a .lib or .obj file is a COFF archive or object.
+
+    Old Windows SDKs still ship 16-bit OMF libraries (MAPI.Lib), which hold no
+    code a PE image can link and which neverd-sigmaker rightly rejects.
+    """
+
+    with path.open("rb") as stream:
+        head = stream.read(len(ARCHIVE_MAGIC))
+    if head.startswith(ARCHIVE_MAGIC):
+        return True
+    # An OMF object begins with a THEADR or LHEADR record.
+    return path.suffix.lower() == ".obj" and head[:1] not in (b"\x80", b"\x82")
+
+
 def library_files(directory: Path) -> list[Path]:
-    return sorted(
-        (
-            entry
-            for entry in directory.iterdir()
-            if entry.is_file() and entry.suffix.lower() in LIBRARY_SUFFIXES
-        ),
-        key=lambda entry: entry.name.lower(),
-    )
+    files = []
+    for entry in directory.iterdir():
+        if not entry.is_file() or entry.suffix.lower() not in LIBRARY_SUFFIXES:
+            continue
+        if not is_coff_input(entry):
+            print(f"skipping {entry}: not a COFF archive or object", file=sys.stderr)
+            continue
+        files.append(entry)
+    return sorted(files, key=lambda entry: entry.name.lower())
 
 
 def _require_libraries(directory: Path, what: str) -> list[Path]:
@@ -201,25 +217,25 @@ def collect_toolset_files(
     return collected
 
 
-def collect_legacy_v140_files(
-    vc_directory: Path, arch: str, include_atlmfc: bool
+def collect_legacy_files(
+    vc_directory: Path, arch: str, include_atlmfc: bool, label: str = "v140"
 ) -> list[CollectedFile]:
-    """List one architecture's libraries from the v140 ``VC`` directory."""
+    """List one architecture's libraries from a pre-2017 ``VC`` directory."""
 
-    if arch not in LEGACY_V140_ARCH_DIRECTORIES:
-        raise CollectionError(f"the v140 layout has no {arch!r} libraries")
-    relative = LEGACY_V140_ARCH_DIRECTORIES[arch]
+    if arch not in LEGACY_ARCH_DIRECTORIES:
+        raise CollectionError(f"the {label} layout has no {arch!r} libraries")
+    relative = LEGACY_ARCH_DIRECTORIES[arch]
     collected = [
         CollectedFile(path, PurePosixPath("vc", "lib", arch, path.name))
         for path in _require_libraries(
-            vc_directory / "lib" / relative, f"the v140 {arch} build tools"
+            vc_directory / "lib" / relative, f"the {label} {arch} build tools"
         )
     ]
     if include_atlmfc:
         collected.extend(
             CollectedFile(path, PurePosixPath("vc", "atlmfc", "lib", arch, path.name))
             for path in _require_libraries(
-                vc_directory / "atlmfc" / "lib" / relative, f"v140 ATL/MFC for {arch}"
+                vc_directory / "atlmfc" / "lib" / relative, f"{label} ATL/MFC for {arch}"
             )
         )
     return collected
@@ -432,7 +448,7 @@ def run_toolset_v140(args: argparse.Namespace) -> None:
         raise CollectionError(f"{vc_directory / 'lib'} does not exist; v140 is not installed")
     compiler = file_version(vc_directory / "bin" / "cl.exe")
     for arch in args.arch:
-        files = collect_legacy_v140_files(vc_directory, arch, args.atlmfc)
+        files = collect_legacy_files(vc_directory, arch, args.atlmfc)
         emit_asset(
             output=args.output,
             asset=f"vs2015-14.0-{arch}",
@@ -444,6 +460,55 @@ def run_toolset_v140(args: argparse.Namespace) -> None:
                 "toolset_request": "v140",
                 "toolset_version": "14.0",
                 "compiler_version": compiler,
+                "atlmfc": args.atlmfc,
+            },
+            level=args.zstd_level,
+        )
+
+
+def parse_extra_directories(values: Sequence[str]) -> dict[str, list[str]]:
+    """Map "arch:relative/path" arguments to the directories of each architecture."""
+
+    extras: dict[str, list[str]] = {}
+    for value in values:
+        arch, separator, relative = value.partition(":")
+        if not separator or arch not in ARCHITECTURES or not relative.strip("/"):
+            raise CollectionError(f"--extra-directory {value!r} is not arch:path")
+        extras.setdefault(arch, []).append(relative.strip("/"))
+    return extras
+
+
+def run_toolset_legacy(args: argparse.Namespace) -> None:
+    """Collect a toolset that extract_legacy_toolset.py unpacked from its media."""
+
+    if not _VERSION.match(args.toolset_version):
+        raise CollectionError(f"{args.toolset_version!r} is not a version")
+    extras = parse_extra_directories(args.extra_directory)
+    if extras and args.install_root is None:
+        raise CollectionError("--extra-directory needs --install-root")
+    for arch in args.arch:
+        files = collect_legacy_files(
+            args.vc_directory, arch, args.atlmfc, label=f"VS {args.vs_year}"
+        )
+        for relative in extras.get(arch, []):
+            member = PurePosixPath("extra", *relative.lower().split("/"))
+            files.extend(
+                CollectedFile(path, member / path.name)
+                for path in _require_libraries(
+                    args.install_root / relative, f"{relative} for {arch}"
+                )
+            )
+        emit_asset(
+            output=args.output,
+            asset=f"vs{args.vs_year}-{args.toolset_version}-{arch}",
+            kind="toolset",
+            arch=arch,
+            files=files,
+            extra={
+                "visual_studio": {"year": args.vs_year},
+                "toolset_request": "legacy",
+                "toolset_version": args.toolset_version,
+                "source": {"media": args.media, "sha256": args.media_sha256},
                 "atlmfc": args.atlmfc,
             },
             level=args.zstd_level,
@@ -513,6 +578,23 @@ def parse_arguments(argv: Iterable[str] | None = None) -> argparse.Namespace:
         default=_program_files_x86() / "Microsoft Visual Studio 14.0" / "VC",
     )
     v140.set_defaults(handler=run_toolset_v140)
+
+    legacy = commands.add_parser(
+        "toolset-legacy", parents=[common, atlmfc],
+        help="collect a VS 2005-2013 toolset unpacked from its installation media",
+    )
+    legacy.add_argument("--vc-directory", type=Path, required=True)
+    legacy.add_argument("--vs-year", type=int, required=True)
+    legacy.add_argument("--toolset-version", required=True,
+                        help="the library package's ProductVersion, e.g. 12.0.21005")
+    legacy.add_argument("--media", required=True, help="URL of the installation media")
+    legacy.add_argument("--media-sha256", required=True)
+    legacy.add_argument("--install-root", type=Path,
+                        help="the directory the media's packages install under")
+    legacy.add_argument("--extra-directory", action="append", default=[],
+                        help="arch:path of another library directory under --install-root, "
+                             "such as the CRT source-build libraries (repeatable)")
+    legacy.set_defaults(handler=run_toolset_legacy)
 
     winsdk = commands.add_parser("winsdk", parents=[common], help="collect Windows SDK libraries")
     winsdk.add_argument("--sdk", action="append", required=True, help="SDK version (repeatable)")
