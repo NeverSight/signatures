@@ -1,0 +1,43 @@
+{
+  "file": "pe/x86/32/masm32.pat",
+  "generator": {
+    "neverd_ref": "cd6dc926ce06920492213ead58c14e39e890598f",
+    "release": "msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 406,
+  "sources": [
+    {
+      "arch": "x86",
+      "archive_sha256": "37ce3b34b3f07bc0b8fe9716232ca0868fadebf4f859418c4644309dee039a05",
+      "asset": "masm32-10r-x86",
+      "kind": "library",
+      "library_version": "10r",
+      "sigmaker": "Generated 307 signatures \u2192 masm32-10r-x86.pat (299 objects, 8 functions stating too few exact bytes)"
+    },
+    {
+      "arch": "x86",
+      "archive_sha256": "652c4feb955182768c1a1c45dfebc105c191fe268554afb008fe2eae6d71bf3d",
+      "asset": "masm32-11r-x86",
+      "kind": "library",
+      "library_version": "11r",
+      "sigmaker": "Generated 326 signatures \u2192 masm32-11r-x86.pat (318 objects, 8 functions stating too few exact bytes)"
+    },
+    {
+      "arch": "x86",
+      "archive_sha256": "f21e4ff2582cc560760f3ceb9bedf8e5cc8f714727382c92796006803b91e430",
+      "asset": "masm32-8.2-x86",
+      "kind": "library",
+      "library_version": "8.2",
+      "sigmaker": "Generated 169 signatures \u2192 masm32-8.2-x86.pat (154 objects, 5 functions stating too few exact bytes)"
+    },
+    {
+      "arch": "x86",
+      "archive_sha256": "b7ce5653ec2c5b02860dba9950c0230a2f94ee32e0b04ea3548e8fb2f19cd93b",
+      "asset": "masm32-9r-x86",
+      "kind": "library",
+      "library_version": "9r",
+      "sigmaker": "Generated 240 signatures \u2192 masm32-9r-x86.pat (230 objects, 7 functions stating too few exact bytes)"
+    }
+  ]
+}

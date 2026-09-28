@@ -1,8 +1,8 @@
 {
   "file": "pe/x86/32/vs2005.pat",
   "generator": {
-    "neverd_ref": "22d94b450c945f8dee0b511bd8cfea23e43a5c93",
-    "release": "msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "neverd_ref": "cd6dc926ce06920492213ead58c14e39e890598f",
+    "release": "msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
   "lines": 30879,
@@ -12,7 +12,7 @@
       "archive_sha256": "91a4b51494006e4fd1e493fac0682e2f1212dd04ae82a7a5c70d022e50c3589b",
       "asset": "vs2005-8.0.50727.42-x86",
       "kind": "toolset",
-      "sigmaker": "Generated 104098 signatures \u2192 /home/ad/code/neverd-msvc-sigs/exp/ci-replay/x86/neverd-msvc-sigs-wu4l9z15/vs2005-8.0.50727.42-x86.pat (8418 objects, 11956 for another machine skipped, 65825 non-object members, 3645 functions below --min-size, 56413 functions stating too few exact bytes)",
+      "sigmaker": "Generated 104098 signatures \u2192 vs2005-8.0.50727.42-x86.pat (8418 objects, 11956 for another machine skipped, 65825 non-object members, 3645 functions below --min-size, 56413 functions stating too few exact bytes)",
       "toolset_version": "8.0.50727.42"
     },
     {
