@@ -159,6 +159,7 @@ def main(argv: list[str] | None = None) -> int:
         stem = filename.removesuffix(".tar.bz2").removesuffix(".zip").removesuffix(".deb")
         unpacked = work / "unpacked" / stem
         shutil.rmtree(unpacked, ignore_errors=True)
+        held = {d: 0 for d in row["directories"]}
         placed = {d: 0 for d in row["directories"]}
         for library in fetcher.unpack(package, unpacked):
             # A package links some archives to where LLVM keeps them
@@ -174,6 +175,7 @@ def main(argv: list[str] | None = None) -> int:
             directory = fetcher.archive_machine(library)
             if directory not in files:
                 continue
+            held[directory] += 1
             content = hashlib.sha256(library.read_bytes()).hexdigest()
             if content in placed_digests[directory]:
                 continue
@@ -185,14 +187,17 @@ def main(argv: list[str] | None = None) -> int:
             library.rename(target)
             files[directory].append(collector.CollectedFile(target, member))
             placed[directory] += 1
-        for directory, count in placed.items():
+        # Every package with libraries for a directory is listed, also one
+        # whose libraries all repeat bytes the asset already stores.
+        for directory, count in held.items():
             if count:
                 used[directory].append({"package": path, "sha1": digest,
-                                        "url": fetcher.source_url(path), "libraries": count})
+                                        "url": fetcher.source_url(path), "libraries": count,
+                                        "stored": placed[directory]})
         shutil.rmtree(unpacked, ignore_errors=True)
         if args.keep_downloads is None:
             package.unlink()
-        print(f"{filename}: " + ", ".join(f"{d} {n}" for d, n in placed.items() if n),
+        print(f"{filename}: " + ", ".join(f"{d} {placed[d]} of {n}" for d, n in held.items() if n),
               flush=True)
 
     pool.shutdown()

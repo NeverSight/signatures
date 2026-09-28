@@ -134,6 +134,10 @@ class CollectTests(unittest.TestCase):
             [entry["path"] for entry in x64_manifest["files"]],
             ["android-ndk/android-ndk-r1-linux/ndk/platforms/android-21/arch-x86_64/usr/lib/libc.a"])
         self.assertEqual(len(x86_manifest["files"]), 1)
+        # The package held two x64 archives of the same bytes; one is stored.
+        self.assertEqual([(entry["package"], entry["libraries"], entry["stored"])
+                          for entry in x64_manifest["sources"]],
+                         [("android-ndk-r1-linux.tar.bz2", 2, 1)])
         self.assertEqual([entry["package"] for entry in x64_manifest["unavailable"]],
                          ["android-ndk-r2-linux.zip"])
         self.assertFalse(x64_manifest["reproduces_import"])
