@@ -1,11 +1,11 @@
 {
   "file": "pe/x86/64/vs2012.pat",
   "generator": {
-    "neverd_ref": "cd6dc926ce06920492213ead58c14e39e890598f",
-    "release": "msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "neverd_ref": "626e9eea16c0dc8dc49b8bc4fe6d2f46236ac1e4",
+    "release": "msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 41158,
+  "lines": 41061,
   "sources": [
     {
       "arch": "x64",
@@ -16,10 +16,10 @@
       "toolset_version": "11.0.50727"
     },
     {
-      "archive_sha256": "4f51483d0c7d5a09f94f6b084baad579c0b7896faa78b0dcf2bac3df6cc8b0d5",
+      "archive_sha256": "dc23f7025158c7033ae71a73ec3232c44bcafca01510c7dfba2d29f9de9ab3ee",
       "asset": "vs2012.imported",
       "kind": "imported",
-      "lines": 2
+      "lines": 1
     }
   ]
 }

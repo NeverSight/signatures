@@ -1,0 +1,25 @@
+{
+  "file": "pe/x86/32/mingw32-zlib.pat",
+  "generator": {
+    "neverd_ref": "626e9eea16c0dc8dc49b8bc4fe6d2f46236ac1e4",
+    "release": "msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
+    "tail": 65535
+  },
+  "lines": 156,
+  "sources": [
+    {
+      "arch": "x86",
+      "archive_sha256": "31f6fea27b343453341de64724c6b3377e59ad3bd6bf7e901d9103f67050837f",
+      "asset": "mingw32-zlib-1.3-x86",
+      "kind": "library",
+      "library_version": "1.3",
+      "sigmaker": "Generated 150 signatures \u2192 mingw32-zlib-1.3-x86.pat (15 objects, 3 functions stating too few exact bytes)"
+    },
+    {
+      "archive_sha256": "c869ee9a14ae3c692981904436a81d326c658320241e8ade7181cfbad9c6142b",
+      "asset": "mingw32-zlib.imported",
+      "kind": "imported",
+      "lines": 7
+    }
+  ]
+}
