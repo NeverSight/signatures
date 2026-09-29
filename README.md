@@ -33,19 +33,22 @@ as one library, and the Rich header chooses a release's parts together.
 ```
 
 Each line states the bytes of one library function and gives it its names at
-offset 0: one, or every symbol an ELF library gives the routine (glibc's
-`puts` is also `_IO_puts`), of which NeverD shows the one with the fewest
+offset 0: one, or every symbol an ELF or Mach-O library gives the routine
+(glibc's `puts` is also `_IO_puts`), of which NeverD shows the one with the fewest
 leading underscores, then the shortest:
 
 - The leading bytes are the first 32 bytes of the function, or all of it
   when it is shorter.
-- The CRC16 covers the bytes after them, up to the first byte a relocation
-  rewrites.
+- The CRC16 covers the bytes after them, up to the first byte a linker may
+  rewrite.
 - The tail states the bytes after the CRC span, starting where the CRC span
   ends.
 - Bytes that a relocation rewrites are `..` wildcards, and so are the bytes an
   ELF linker may rewrite around one: the opcode of a GOT load it relaxes to a
-  `lea` or a direct call, or a whole TLS access sequence in a static link.
+  `lea` or a direct call, or a whole TLS access sequence in a static link. In
+  Mach-O code they are also the `movq` opcode of a GOT load ld64 relaxes to
+  `leaq`, and every arm64 instruction a linker optimization hint names (see
+  [macOS (macho/) signatures](#macos-macho-signatures)).
 - A line states at least 16 bytes exactly. A shorter claim matches far more
   code than the function it came from.
 - Each `^<offset> <name>` names a routine the function branches to directly:
@@ -68,7 +71,7 @@ leading underscores, then the shortest:
   debug CRT calls `_free_dbg`).
 - NeverD follows each branch in the image. A match whose branch reaches a
   routine NeverD names as none of the routines the branch may reach, or in
-  an ELF image the PLT stub of another import, is dropped; one whose
+  an ELF or Mach-O image the stub of another import, is dropped; one whose
   branches all reach routines they name is confirmed. What the matches then
   name is what their callers' branches are checked against in turn, until
   nothing new is named. A branch to a routine that only jumps on -- a
@@ -81,12 +84,12 @@ leading underscores, then the shortest:
   separate branches, each of which the others contradict.
 
 These rules are NeverD's own:
-[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/4428327d9344f12f84123206a05b87c328fccb6a/tools/neverd-sigmaker)
+[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/355abd498769e2f41a93a537b69ef8047e43df5d/tools/neverd-sigmaker)
 produces the lines, and `neverd::sigs::PatternGenerator` defines how many
 bytes each relocation rewrites.
 
 A name is the linkage name the library's symbol table spells, byte for byte:
-`?Close@CFile@@UEAAXXZ`, `_ZNSt6thread4joinEv`, x86 `_memcpy`. Names are never
+`?Close@CFile@@UEAAXXZ`, `_ZNSt6thread4joinEv`, x86 `_memcpy`, Mach-O `_deflate`. Names are never
 demangled, sanitized, prefixed or truncated.
 
 A line is kept only if its bytes identify one routine. Lines that state the
@@ -170,9 +173,13 @@ Two workflows produce the generated files:
      [`.github/elf-matrix.json`](.github/elf-matrix.json) collects the static
      libraries of an ELF file's packages; see
      [Linux and Android (elf/) signatures](#linux-and-android-elf-signatures).
+   - One Ubuntu job per row of
+     [`.github/homebrew-matrix.json`](.github/homebrew-matrix.json) collects
+     the static libraries of a formula's Homebrew bottles; see
+     [macOS (macho/) signatures](#macos-macho-signatures).
 2. [`msvc-signatures.yml`](.github/workflows/msvc-signatures.yml) builds
    `neverd-sigmaker` at a pinned NeverD revision and runs NeverD's
-   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/4428327d9344f12f84123206a05b87c328fccb6a/scripts/signatures/build_msvc_signatures.py)
+   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/355abd498769e2f41a93a537b69ef8047e43df5d/scripts/signatures/build_msvc_signatures.py)
    over every `msvc-libs-*` release, one architecture at a time:
    - A file with library archives behind it is rebuilt from them alone.
    - Each architecture keeps only objects built for it (`--machine`), and
@@ -240,6 +247,41 @@ r25b's ARM32 `ctype_byname<wchar_t>::do_toupper` and `do_tolower` are the same
 bytes calling `towupper` and `towlower`, and NeverD takes the one whose call
 reaches the routine it names: the routine NeverD names there, or in a
 dynamically linked program the import whose PLT stub it is.
+
+## macOS (macho/) signatures
+
+| File | Built from |
+| --- | --- |
+| `homebrew-zlib.pat` | zlib 1.3.2's `libz.a` from Homebrew's `arm64_sonoma`, `arm64_sequoia`, `arm64_tahoe` and `arm64_golden_gate` bottles (arm64) |
+| `homebrew-xz.pat` | xz 5.8.4's `liblzma.a` from the `arm64_sequoia`, `arm64_tahoe` and `arm64_golden_gate` bottles (arm64) |
+| `homebrew-pcre2.pat` | PCRE2 10.49's `libpcre2-8.a`, `libpcre2-16.a`, `libpcre2-32.a` and `libpcre2-posix.a` from the `arm64_sequoia`, `arm64_tahoe` and `arm64_golden_gate` bottles (arm64) |
+
+One Ubuntu job per row of
+[`.github/homebrew-matrix.json`](.github/homebrew-matrix.json)
+([`scripts/collect_homebrew_bottles.py`](scripts/collect_homebrew_bottles.py))
+downloads a formula's bottles from Homebrew's package registry on ghcr.io,
+by the SHA-256 Homebrew publishes for each bottle, which the row pins. It
+archives the static libraries the row names by their objects' Mach-O CPU
+type, in `msvc-libs-*` releases like the other libraries. A library whose
+bytes another bottle already supplied is stored once; the manifest still
+lists the bottle. Each file's `<name>.sources.json` lists the bottles it was
+built from, by tag and SHA-256, so the file can be traced to them without a
+release. The `zlib.pat`, `lzma.pat` and `pcre2.pat` that stood here before
+had no record of what they were built from; these files replace them.
+
+ld64 and lld do more to arm64 code than fill in relocated fields. An object's
+linker optimization hints (`LC_LINKER_OPTIMIZATION_HINT`) name the
+instructions of an address computation, which the linker may fold into
+fewer. It then rewrites the load or store at the end of the computation too,
+although no relocation covers it: in the `arm64_sequoia` probe below, lld
+turned zlib's `ldr x8, [x8, #0x20]` into `ldr x8, [x8, #0x2b8]`. The lines leave
+every instruction a hint names unstated, so `deflate` and PCRE2's
+`compile_regex` match.
+
+A Mach-O image has no Rich header either, so `neverd sigs --auto` reads every
+file of its `macho/` directory, and ambiguous lines are dropped across the
+whole directory. PCRE2 builds each routine three times, for 8-, 16- and
+32-bit code units, and many of the three are the same bytes.
 
 ## Accuracy
 
@@ -399,6 +441,44 @@ same programs, as measured with NeverD at
   routine), and OpenSSL's `d2i_*`, `i2d_*` and `*_free` wrappers, which call
   `*_it` routines that differ only in the data they point to. Before, the
   files dropped these lines, and NeverD named nothing there either.
+
+### Mach-O programs
+
+`validation/macho/` lists programs that link every object of one macOS
+release's bottles, as
+[`scripts/build_macho_probes.py`](scripts/build_macho_probes.py) builds them
+with clang and LLVM's `ld64.lld` against a text stub of libSystem. There is
+one program per bottle tag, binding its imports through chained fixups, and
+the `arm64_sequoia` bottles are linked once more with classic dyld
+information. Each is compared with the linker map of the same program before
+it was stripped. Before is what the `zlib.pat`, `lzma.pat` and `pcre2.pat`
+this directory held named in the same programs. Both were measured with
+NeverD at
+[355abd49](https://github.com/NeverSight/NeverD/commit/355abd498769e2f41a93a537b69ef8047e43df5d).
+
+| Programs | Count | Library functions | Named before | Named | Wrong before | Wrong | Disputed before | Disputed |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| zlib (`arm64_sonoma`) | 1 | 146 | 2 (1%) | 119 (82%) | 0 | 0 | 0 | 0 |
+| zlib, xz and PCRE2 (`arm64_sequoia`; chained fixups and dyld information) | 2 | 6,528 | 134 (2%) | 2,438 (37%) | 1,222 | 0 | 198 | 70 |
+| zlib, xz and PCRE2 (`arm64_tahoe`, `arm64_golden_gate`) | 2 | 6,556 | 118 (2%) | 2,422 (37%) | 1,164 | 0 | 194 | 70 |
+
+- Half of the library functions are PCRE2's `OUTLINED_FUNCTION_<n>`: 1,656 of
+  the `arm64_sequoia` program's 3,264. Each is a fragment of a few
+  instructions that the compiler's machine outliner moved out of PCRE2's
+  routines. Most are too short for a line to state 16 bytes exactly, and
+  many are the same bytes in several objects under different numbers, so 53
+  of them are named. Of the program's other 1,608 functions, 1,166 are named
+  (73%).
+- The files before were made from other builds of the libraries. Most of the
+  names they got wrong were outlined fragments named by the number another
+  build gave them.
+- The disputed addresses are routines whose lines the files keep because
+  their branches tell them apart, where the program's branches cannot:
+  PCRE2's 8-, 16- and 32-bit `*_create` and `*_free` routines, xz's
+  `lzma_easy_encoder_memusage` and `lzma_easy_decoder_memusage`, and the
+  `jit_compile.cold.<n>` fragments the compiler split off.
+- Chained fixups and dyld information give the same result: NeverD checks
+  references through the stubs either kind binds.
 
 ## Lines imported from rizin
 

@@ -33,6 +33,11 @@ _MAP_LINE = re.compile(
 )
 
 
+# The first bytes of an image, and the signature tree that holds its format's
+# files; any other image is PE.
+TREES = {b"\x7fELF": "elf", b"\xcf\xfa\xed\xfe": "macho"}
+
+
 @dataclass
 class MapFunction:
     names: set[str] = field(default_factory=set)
@@ -58,7 +63,8 @@ def parse_truth(path: Path) -> dict[int, MapFunction]:
     whether a library it was linked from defines it.
 
     An ELF probe has no MSVC linker map; build_elf_probes.py writes this from
-    the unstripped program's symbol table and the libraries' own.
+    the unstripped program's symbol table and the libraries' own, and
+    build_macho_probes.py from a Mach-O probe's ld64.lld map.
     """
 
     functions = {}
@@ -198,7 +204,7 @@ def main(argv: list[str] | None = None) -> int:
         if not has_truth(probe):
             print(f"{probe.name}: no linker map or truth file to compare with; skipped")
             continue
-        tree = "elf" if probe.read_bytes()[:4] == b"\x7fELF" else "pe"
+        tree = TREES.get(probe.read_bytes()[:4], "pe")
         source = (f"--sig-base={args.signatures}" if args.auto
                   else f"--sig-dir={args.signatures / tree / directories[arch]}")
         result = evaluate(args.neverd, source, probe)

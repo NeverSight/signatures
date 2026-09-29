@@ -1,0 +1,43 @@
+{
+  "file": "macho/arm/64/homebrew-pcre2.pat",
+  "generator": {
+    "neverd_ref": "355abd498769e2f41a93a537b69ef8047e43df5d",
+    "release": null,
+    "tail": 65535
+  },
+  "lines": 1040,
+  "sources": [
+    {
+      "arch": "arm64",
+      "archive_sha256": "c5f0307fd774212e0f8cd4f45e38a9eca31477374939100b7fbeafec1648a591",
+      "asset": "homebrew-pcre2-arm64",
+      "bottles": [
+        {
+          "libraries": 4,
+          "sha256": "0ec47d18c50f5770db2b3f07b5b85644284cc6ee8e07e23b11d2727e95932b77",
+          "stored": 4,
+          "tag": "arm64_sequoia",
+          "url": "https://ghcr.io/v2/homebrew/core/pcre2/blobs/sha256:0ec47d18c50f5770db2b3f07b5b85644284cc6ee8e07e23b11d2727e95932b77"
+        },
+        {
+          "libraries": 4,
+          "sha256": "475d36ffae1f472554eac1fd96ca3ead3840c3d8fd2d34b257d2d7c4c1e5a17f",
+          "stored": 4,
+          "tag": "arm64_tahoe",
+          "url": "https://ghcr.io/v2/homebrew/core/pcre2/blobs/sha256:475d36ffae1f472554eac1fd96ca3ead3840c3d8fd2d34b257d2d7c4c1e5a17f"
+        },
+        {
+          "libraries": 4,
+          "sha256": "5cac44323243138490ca74a2499fd347fa836df6b5fffa789944be12110e91ff",
+          "stored": 4,
+          "tag": "arm64_golden_gate",
+          "url": "https://ghcr.io/v2/homebrew/core/pcre2/blobs/sha256:5cac44323243138490ca74a2499fd347fa836df6b5fffa789944be12110e91ff"
+        }
+      ],
+      "formula": "pcre2",
+      "kind": "library",
+      "library_version": "10.49",
+      "sigmaker": "Generated 4972 signatures \u2192 homebrew-pcre2-arm64.pat (282 objects, 3339 functions stating too few exact bytes)"
+    }
+  ]
+}

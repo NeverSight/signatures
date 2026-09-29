@@ -42,6 +42,12 @@ sources of its ELF pattern files, each package checked against the SHA-1
 recorded there. They remain under the licenses of the packages they come from.
 """
 
+BOTTLES_NOTE = """\
+The Homebrew archives hold the unmodified static libraries of Homebrew's
+bottles, each bottle checked against the SHA-256 Homebrew publishes for it.
+They remain under the licenses of the projects they come from.
+"""
+
 BUILT_NOTE = """\
 The libraries built here from a published source archive record in their
 manifests the archive, the compilers and the flags they were built with.
@@ -90,6 +96,8 @@ def release_notes(manifests: list[dict], tag: str, commit: str) -> str:
         lines.append(MICROSOFT_NOTE)
     if any("sigdb_source" in manifest for manifest in manifests):
         lines.append(PACKAGES_NOTE)
+    if any("bottles" in manifest for manifest in manifests):
+        lines.append(BOTTLES_NOTE)
     if any("cflags" in manifest or "builds" in manifest for manifest in manifests):
         lines.append(BUILT_NOTE)
     toolsets = [manifest for manifest in manifests if manifest["kind"] == "toolset"]
@@ -123,8 +131,8 @@ def release_notes(manifests: list[dict], tag: str, commit: str) -> str:
         lines.append("| Asset | Library | Version | Source | Files |")
         lines.append("| --- | --- | --- | --- | --- |")
         for manifest in libraries:
-            # An installer or disc (MASM32), a source archive (MinGW builds), or
-            # the packages rizin's ELF files came from.
+            # An installer or disc (MASM32), a source archive (MinGW builds),
+            # the packages rizin's ELF files came from, or Homebrew's bottles.
             origin = manifest.get("source") or {}
             source = origin.get("media") or origin.get("url", "")
             if "sources" in manifest:
@@ -134,6 +142,9 @@ def release_notes(manifests: list[dict], tag: str, commit: str) -> str:
                 source = (f"{total} packages sigdb-source records"
                           + (f", {empty} of them without a static library" if empty else "")
                           + (f", {missing} of them unavailable" if missing else ""))
+            if "bottles" in manifest:
+                tags = ", ".join(bottle["tag"] for bottle in manifest["bottles"])
+                source = f"Homebrew bottles of `{manifest.get('formula', '')}`: {tags}"
             lines.append(
                 f"| `{manifest['asset']}` | {manifest.get('library', '')} "
                 f"| {manifest.get('library_version', '')} | {source} "

@@ -1,13 +1,14 @@
-# Regenerates the pe/ and elf/ files from the library releases made by
-# msvc-libraries.yml, with NeverD's own signature maker at a pinned revision.
+# Regenerates the pe/, elf/ and macho/ files from the library releases made
+# by msvc-libraries.yml, with NeverD's own signature maker at a pinned
+# revision.
 #
 # One job builds neverd-sigmaker against the published prebuilt LLVM
 # package; one job per architecture rebuilds every file of that architecture,
-# PE and ELF, that has library archives, from those archives alone and the
-# lines its <name>.imported keeps from rizin's import; a final job commits the
-# result, and only when a manual run asks it to. A file with no archives
-# behind it is only renamed by the migration step. A pull request that edits
-# this workflow only builds the generator.
+# PE, ELF and Mach-O, that has library archives, from those archives alone
+# and the lines its <name>.imported keeps from rizin's import; a final job
+# commits the result, and only when a manual run asks it to. A file with no
+# archives behind it is only renamed by the migration step. A pull request
+# that edits this workflow only builds the generator.
 
 name: Build MSVC signatures
 
@@ -44,7 +45,7 @@ env:
   # produce these files. Pinning it is what makes a regenerated file
   # attributable to a known generator.
   NEVERD_REPO: NeverSight/NeverD
-  NEVERD_REF: 4428327d9344f12f84123206a05b87c328fccb6a
+  NEVERD_REF: 355abd498769e2f41a93a537b69ef8047e43df5d
 
 jobs:
   sigmaker:
@@ -249,7 +250,7 @@ jobs:
           esac
           shopt -s nullglob
           mkdir -p staged/removed
-          for dir in "pe/$sub" "elf/$sub"; do
+          for dir in "pe/$sub" "elf/$sub" "macho/$sub"; do
             [ -d "$dir" ] || continue
             mkdir -p "staged/$dir"
             # What a release keeps from rizin's import is an input of every
@@ -323,7 +324,7 @@ jobs:
           fi
           cp -R staged/. .
           rm -rf staged
-          if [ -z "$(git status --porcelain -- pe elf reports)" ]; then
+          if [ -z "$(git status --porcelain -- pe elf macho reports)" ]; then
             echo "the signatures are unchanged"
             exit 0
           fi
@@ -331,8 +332,8 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           # The migration reports list every line it removed or could not
           # rename; they belong beside the files they describe.
-          git add -- pe elf reports
+          git add -- pe elf macho reports
           git commit \
-            -m 'signatures: regenerate pe/ and elf/ from their libraries' \
+            -m 'signatures: regenerate pe/, elf/ and macho/ from their libraries' \
             -m "Produced by neverd-sigmaker at ${NEVERD_REPO}@${NEVERD_REF}, run ${GITHUB_RUN_ID}."
           git push origin "HEAD:${GITHUB_REF_NAME}"
