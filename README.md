@@ -15,8 +15,7 @@ ARM32 (Thumb-2) images use `pe/arm/32`.
 NeverD copies this tree to `build/bin/signatures/` at build time. Use
 `neverd sigs --auto` to apply the set that matches the loaded binary. It reads
 the `.pat` files of the matching directory and ignores other files, such as the
-`<name>.sources.json` provenance records and `<name>.imported` inputs that sit
-next to generated files. For a PE image whose Rich header names the Visual
+`<name>.sources.json` provenance records that sit next to generated files. For a PE image whose Rich header names the Visual
 Studio release of its linker, it reads only that release's `vs<year>.pat` and
 the files that belong to no release (`winsdk.pat`, `masm32.pat`,
 `mingw32-zlib.pat`). A static runtime library comes from the linker's own
@@ -130,9 +129,8 @@ of the MSDN Professional disc, `en_visual_studio_2010_professional_x86_dvd_50972
 whose SHA-1 `f0ed50712d83bf0eda7d284da76df49e4c88cef7` is the one MSDN listed
 for it and the one rizin's sigdb-source records. (The Windows SDK 7.1, which
 Microsoft does publish, carries the same Visual C++ 2010 CRT libraries byte
-for byte, but no ATL/MFC.) A file whose libraries do not reproduce every
-line rizin had for it keeps the rest, renamed to their linkage names, in
-`<name>.imported`, which joins the file when it is built. See
+for byte, but no ATL/MFC.) Every file is built from its libraries alone: no
+line rizin had for it remains. See
 [Lines imported from rizin](#lines-imported-from-rizin).
 
 Two workflows produce the generated files:
@@ -176,8 +174,7 @@ Two workflows produce the generated files:
    `neverd-sigmaker` at a pinned NeverD revision and runs NeverD's
    [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/4428327d9344f12f84123206a05b87c328fccb6a/scripts/signatures/build_msvc_signatures.py)
    over every `msvc-libs-*` release, one architecture at a time:
-   - A file with library archives behind it is rebuilt from them alone, and
-     from its `<name>.imported` when it has one.
+   - A file with library archives behind it is rebuilt from them alone.
    - Each architecture keeps only objects built for it (`--machine`), and
      lines cover every byte of every function.
    - Ambiguous lines are dropped across the directory, as described above.
@@ -436,10 +433,11 @@ from the packages sigdb-source records, and `fedora-zlib.pat` from the
 compilers its lines were made with.
 
 [`scripts/migrate_imported_signatures.py`](scripts/migrate_imported_signatures.py)
-moves what remains to the rules above. It starts from the text of the import
-commit every time, and compares each line with every function of the
-libraries it can read: the collected MSVC and SDK libraries for `pe/`, and
-the collected ELF libraries for `elf/`. For each line:
+accounts for every imported line. It starts from the text of the import
+commit every time, reads every file the import held, and compares each line
+with every function of the libraries it can read: the collected MSVC and SDK
+libraries for `pe/`, and the collected ELF libraries for `elf/`. For each
+line:
 
 1. A tail stated from the end of the leading bytes is moved to start after
    the CRC span. A line that then states fewer than 16 bytes is removed.
@@ -470,39 +468,33 @@ the collected ELF libraries for `elf/`. For each line:
    function. When that width's file is built anew from that build, the line
    is left out, as that file holds the routine; otherwise it moves to that
    directory.
-8. In a file whose libraries were collected, a line those libraries
-   reproduce is left out, and the rest go to `<name>.imported`. A line is
-   reproduced when a collected function of its name states every byte the
-   line states, also when the function runs on past the line's end only into
-   the NOPs or INT3s that pad its section: rizin measured a function to its
-   last instruction, `neverd-sigmaker` to the next symbol. When the
-   collected libraries are the very build the import was made from (a Visual
-   Studio release's RTM libraries, the MASM32 SDK's libraries built from its
-   sources with its own assembler), a line whose routine they define at all is
-   left out too: the line `neverd-sigmaker` made for that routine, or its
-   decision to make none, stands. A library asset states which it is
-   (`reproduces_import`): the ELF packages rizin recorded are, and so is
-   `fedora-zlib` built with the Fedora compilers rizin's lines were made
-   with, but `mingw32-zlib` compiled with Ubuntu's MinGW-w64 GCC is not
-   rizin's build, so only the `mingw32-zlib` lines it reproduces are left
-   out.
-9. A line with no linkage name is kept as a `; unresolved:` comment, which
-   NeverD does not read.
+8. Every file the import held is now built from collected libraries alone,
+   so no imported line stays in any of them; the report still sorts each
+   one. A line is reproduced when a collected function of its name states
+   every byte the line states, also when the function runs on past the
+   line's end only into the NOPs or INT3s that pad its section: rizin
+   measured a function to its last instruction, `neverd-sigmaker` to the
+   next symbol. When the collected libraries are the very build the import
+   was made from (a Visual Studio release's RTM libraries, the MASM32 SDK's
+   libraries built from its sources with its own assembler), a line whose
+   routine they define at all is superseded: the line `neverd-sigmaker` made
+   for that routine, or its decision to make none, stands. A library asset
+   states which it is (`reproduces_import`): the ELF packages rizin recorded
+   are, and so is `fedora-zlib` built with the Fedora compilers rizin's
+   lines were made with, but `mingw32-zlib` compiled with Ubuntu's
+   MinGW-w64 GCC and the Windows SDK's libraries are other builds. Any other
+   line is not reproduced.
+9. A line with no linkage name is unresolved.
 
-The migration reads a file's imported lines for as long as its libraries
-leave any of them. In `pe/` those are 233,561 lines of the Visual Studio 2005
-to 2013 files and `mingw32-zlib.pat`: the libraries of every other PE file
-reproduce or supersede all of its imported lines -- the MASM32 SDK's
-libraries, built from its sources, every `masm32` line, and the Visual Studio
-2010 disc's libraries every x64 `vs2010` line. Of those 233,561 lines, 64 are
-left unresolved: C++/CLI catch funclets and labels whose rizin names are not
-linkage names, and VS 2005 lines from test-harness objects on no collected
-library. Of the 215,550 lines imported into `elf/`, 143,942 are reproduced
-and 38,557 superseded by the collected packages, 1,893 are the other pointer
-width's code, and 31,136 are removed (ambiguous, opening a longer routine, or
-naming no function). 16 are left unresolved, rizin's spellings of ARM32
-libc++ templates that no linkage name spells the same way, and 6 are kept:
-two libc++abi routines in each of `ubuntu-libc++-12.pat` to
-`ubuntu-libc++-14.pat`, which rizin named but no package it recorded defines.
-[`reports/`](reports) lists, per file the migration reads, every removed and
-unresolved name.
+The import held 866,083 lines: 339,431 in `pe/x86/32`, 311,102 in
+`pe/x86/64` and 215,550 in `elf/`. 522,494 are reproduced by the collected
+libraries and 109,000 superseded by what they define, and 1,893 are the
+other pointer width's code. 190,136 are removed as rules 2 and 6 say:
+165,269 whose bytes several library routines share, 23,621 whose bytes open
+a longer routine, and 1,246 naming no function. 18,677 have no linkage name,
+and 23,883 name a routine no collected library reproduces: labels, C++/CLI
+code, objects only the runtime DLLs link, test harnesses, the DIA SDK, which
+no asset collects, and rizin's reading of routines the libraries state
+themselves. None of them is in any file: every file is built from its
+libraries alone. [`reports/`](reports) lists, per file the import held,
+every line removed, not reproduced or unresolved.
