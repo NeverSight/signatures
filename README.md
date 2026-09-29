@@ -84,7 +84,7 @@ leading underscores, then the shortest:
   separate branches, each of which the others contradict.
 
 These rules are NeverD's own:
-[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/355abd498769e2f41a93a537b69ef8047e43df5d/tools/neverd-sigmaker)
+[`neverd-sigmaker`](https://github.com/NeverSight/NeverD/tree/6228f29bb61f0b684687b1935d4f89a6dc254e40/tools/neverd-sigmaker)
 produces the lines, and `neverd::sigs::PatternGenerator` defines how many
 bytes each relocation rewrites.
 
@@ -179,7 +179,7 @@ Two workflows produce the generated files:
      [macOS (macho/) signatures](#macos-macho-signatures).
 2. [`msvc-signatures.yml`](.github/workflows/msvc-signatures.yml) builds
    `neverd-sigmaker` at a pinned NeverD revision and runs NeverD's
-   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/355abd498769e2f41a93a537b69ef8047e43df5d/scripts/signatures/build_msvc_signatures.py)
+   [`build_msvc_signatures.py`](https://github.com/NeverSight/NeverD/blob/6228f29bb61f0b684687b1935d4f89a6dc254e40/scripts/signatures/build_msvc_signatures.py)
    over every `msvc-libs-*` release, one architecture at a time:
    - A file with library archives behind it is rebuilt from them alone.
    - Each architecture keeps only objects built for it (`--machine`), and
@@ -252,7 +252,7 @@ dynamically linked program the import whose PLT stub it is.
 
 | File | Built from |
 | --- | --- |
-| `homebrew-zlib.pat` | zlib 1.3.2's `libz.a` from Homebrew's `arm64_sonoma`, `arm64_sequoia`, `arm64_tahoe` and `arm64_golden_gate` bottles (arm64) |
+| `homebrew-zlib.pat` | zlib 1.3.2's `libz.a` from Homebrew's `arm64_sonoma`, `arm64_sequoia`, `arm64_tahoe` and `arm64_golden_gate` bottles (arm64), and from its `sonoma` bottle (x64) |
 | `homebrew-xz.pat` | xz 5.8.4's `liblzma.a` from the `arm64_sequoia`, `arm64_tahoe` and `arm64_golden_gate` bottles (arm64) |
 | `homebrew-pcre2.pat` | PCRE2 10.49's `libpcre2-8.a`, `libpcre2-16.a`, `libpcre2-32.a` and `libpcre2-posix.a` from the `arm64_sequoia`, `arm64_tahoe` and `arm64_golden_gate` bottles (arm64) |
 
@@ -276,7 +276,18 @@ fewer. It then rewrites the load or store at the end of the computation too,
 although no relocation covers it: in the `arm64_sequoia` probe below, lld
 turned zlib's `ldr x8, [x8, #0x20]` into `ldr x8, [x8, #0x2b8]`. The lines leave
 every instruction a hint names unstated, so `deflate` and PCRE2's
-`compile_regex` match.
+`compile_regex` match. On x86-64 they turn a GOT load of a routine the
+program defines from `movq` into `leaq`, two bytes ahead of the relocated
+field, which the lines leave unstated too: in the `sonoma` x64 probe lld
+rewrote 3 of zlib's 9 GOT loads. In both probes every other byte that
+changed between an object and the program lies in a relocated field.
+
+PCRE2's bottles are built with LLVM's machine outliner, which moves
+instruction sequences several functions repeat into `OUTLINED_FUNCTION_<n>`
+routines and numbers them anew in each object. The number says nothing about
+the code another build numbers alike, so no line is named after such a
+routine and no reference names one (NeverSight/NeverD@518dee92): the routine
+only ends the function before it.
 
 A Mach-O image has no Rich header either, so `neverd sigs --auto` reads every
 file of its `macho/` directory, and ambiguous lines are dropped across the
@@ -454,29 +465,26 @@ information. Each is compared with the linker map of the same program before
 it was stripped. Before is what the `zlib.pat`, `lzma.pat` and `pcre2.pat`
 this directory held named in the same programs. Both were measured with
 NeverD at
-[355abd49](https://github.com/NeverSight/NeverD/commit/355abd498769e2f41a93a537b69ef8047e43df5d).
+[6228f29b](https://github.com/NeverSight/NeverD/commit/6228f29bb61f0b684687b1935d4f89a6dc254e40).
 
 | Programs | Count | Library functions | Named before | Named | Wrong before | Wrong | Disputed before | Disputed |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | zlib (`arm64_sonoma`) | 1 | 146 | 2 (1%) | 119 (82%) | 0 | 0 | 0 | 0 |
-| zlib, xz and PCRE2 (`arm64_sequoia`; chained fixups and dyld information) | 2 | 6,528 | 134 (2%) | 2,438 (37%) | 1,222 | 0 | 198 | 70 |
-| zlib, xz and PCRE2 (`arm64_tahoe`, `arm64_golden_gate`) | 2 | 6,556 | 118 (2%) | 2,422 (37%) | 1,164 | 0 | 194 | 70 |
+| zlib, xz and PCRE2 (`arm64_sequoia`; chained fixups and dyld information) | 2 | 6,528 | 134 (2%) | 2,332 (36%) | 1,222 | 0 | 198 | 46 |
+| zlib, xz and PCRE2 (`arm64_tahoe`, `arm64_golden_gate`) | 2 | 6,556 | 118 (2%) | 2,328 (36%) | 1,164 | 0 | 194 | 46 |
+| zlib (`sonoma`, x64; chained fixups and dyld information) | 2 | 288 | -- | 238 (83%) | -- | 0 | -- | 0 |
 
 - Half of the library functions are PCRE2's `OUTLINED_FUNCTION_<n>`: 1,656 of
-  the `arm64_sequoia` program's 3,264. Each is a fragment of a few
-  instructions that the compiler's machine outliner moved out of PCRE2's
-  routines. Most are too short for a line to state 16 bytes exactly, and
-  many are the same bytes in several objects under different numbers, so 53
-  of them are named. Of the program's other 1,608 functions, 1,166 are named
-  (73%).
+  the `arm64_sequoia` program's 3,264. No line names them, as described
+  above. Of the program's other 1,608 functions, 1,166 are named (73%).
+- There was no x64 file before.
 - The files before were made from other builds of the libraries. Most of the
   names they got wrong were outlined fragments named by the number another
   build gave them.
 - The disputed addresses are routines whose lines the files keep because
   their branches tell them apart, where the program's branches cannot:
-  PCRE2's 8-, 16- and 32-bit `*_create` and `*_free` routines, xz's
-  `lzma_easy_encoder_memusage` and `lzma_easy_decoder_memusage`, and the
-  `jit_compile.cold.<n>` fragments the compiler split off.
+  PCRE2's 8-, 16- and 32-bit `*_create` and `*_free` routines, and xz's
+  `lzma_easy_encoder_memusage` and `lzma_easy_decoder_memusage`.
 - Chained fixups and dyld information give the same result: NeverD checks
   references through the stubs either kind binds.
 

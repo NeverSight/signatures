@@ -4,14 +4,16 @@
 Each row of .github/homebrew-matrix.json names one library of the macho/
 tree, the Homebrew formula whose bottles carry it, the formula's version, the
 archives to take from each bottle's keg (`lib/libz.a`), and the bottles
-themselves: one per macOS release Homebrew builds the formula for, by bottle
-tag and the SHA-256 Homebrew publishes for it. This downloads every bottle
-from Homebrew's package registry on ghcr.io, anonymously, by the SHA-256 that
-names the blob, checks it, and files each archive under the directory its
-objects' Mach-O CPU type belongs to, as one `library` asset per directory,
-for NeverD's builder:
+themselves: one per macOS release and processor Homebrew builds the formula
+for (`arm64_sequoia`, or `sonoma` for Intel), by bottle tag and the SHA-256
+Homebrew publishes for it. This downloads every bottle from Homebrew's
+package registry on ghcr.io, anonymously, by the SHA-256 that names the blob,
+checks it, and files each archive under the directory its objects' Mach-O
+CPU type belongs to, as one `library` asset per directory, for NeverD's
+builder:
 
     macho/arm/64  ->  <library>-arm64.tar.zst and its manifest
+    macho/x86/64  ->  <library>-x64.tar.zst and its manifest
 
 An archive byte for byte like one another bottle already supplied is stored
 once; the manifest still lists the bottle. A bottle that cannot be

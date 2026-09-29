@@ -2,10 +2,11 @@
 """Build the Mach-O validation probes, and what each one's functions are.
 
 A Mach-O probe is a program that links every object of the Homebrew bottles
-one macOS release's bottle tag names, so each function their archives define
-is in it. Each row of validation/macho/probes.json names the tag, the rows of
-.github/homebrew-matrix.json whose bottles it takes, and how the program binds
-its imports: `chained` fixups or classic `dyld` information. This downloads
+one bottle tag names, so each function their archives define is in it. Each
+row of validation/macho/probes.json names the tag and its processor (`arm64`
+or `x86_64`), the rows of .github/homebrew-matrix.json whose bottles it
+takes, and how the program binds its imports: `chained` fixups or classic
+`dyld` information. This downloads
 and checks the bottles as collect_homebrew_bottles.py does, compiles the
 program with clang, links it with LLVM's ld64.lld against a text stub of
 libSystem that exports what the objects import, and writes, next to the
@@ -36,11 +37,10 @@ import collect_homebrew_bottles as bottles  # noqa: E402
 
 DEFAULT_PROBES = HERE.parent / "validation" / "macho" / "probes.json"
 
-# The link each probe is: an arm64 macOS program, whose imports bind through
-# libSystem.
-ARCH = "arm64"
-TARGET = "arm64-apple-macos15"
-PLATFORM_VERSION = ("15.0", "15.0")
+# The link each probe is: a macOS program for one of these processors, as
+# clang and ld64.lld name them, whose imports bind through libSystem.
+ARCHES = ("arm64", "x86_64")
+MACOS_VERSION = "15.0"
 LIBSYSTEM = "/usr/lib/libSystem.B.dylib"
 # What ld64.lld binds classic dyld information's lazy imports through.
 STUB_BINDER = "dyld_stub_binder"
@@ -89,16 +89,16 @@ def imports(nm: str, archives: list[Path]) -> list[str]:
     return sorted(undefined - defined)
 
 
-def libsystem_stub(symbols: list[str], path: Path) -> None:
-    """A text-based stub of libSystem that exports `symbols`."""
+def libsystem_stub(symbols: list[str], arch: str, path: Path) -> None:
+    """A text-based stub of libSystem for `arch` that exports `symbols`."""
 
     exported = ", ".join([*symbols, STUB_BINDER])
     path.write_text("--- !tapi-tbd\n"
                     "tbd-version: 4\n"
-                    f"targets: [ {ARCH}-macos ]\n"
+                    f"targets: [ {arch}-macos ]\n"
                     f"install-name: '{LIBSYSTEM}'\n"
                     "exports:\n"
-                    f"  - targets: [ {ARCH}-macos ]\n"
+                    f"  - targets: [ {arch}-macos ]\n"
                     f"    symbols: [ {exported} ]\n"
                     "...\n", encoding="utf-8")
 
@@ -144,18 +144,21 @@ def write_truth(map_path: Path, stripped: Path) -> None:
 def build(row: dict, args: argparse.Namespace, work: Path, downloads: Path) -> Path:
     if row["fixups"] not in FIXUPS:
         raise SystemExit(f"{row['name']}: fixups must be one of {sorted(FIXUPS)}")
+    arch = row["arch"]
+    if arch not in ARCHES:
+        raise SystemExit(f"{row['name']}: arch must be one of {list(ARCHES)}")
     archives = bottle_archives(row, args.matrix, work, downloads)
     scratch = work / row["name"]
     obj = scratch / "probe.o"
-    subprocess.run([args.clang, f"--target={TARGET}", "-O2", "-c",
+    subprocess.run([args.clang, f"--target={arch}-apple-macos{MACOS_VERSION}", "-O2", "-c",
                     str(args.probes.parent / row["program"]), "-o", str(obj)], check=True)
     stub = scratch / "libSystem.tbd"
-    libsystem_stub(imports(args.nm, archives), stub)
+    libsystem_stub(imports(args.nm, archives), arch, stub)
     output = args.output.resolve()
     program = output / f"{row['name']}.debug"
     map_path = output / f"{row['name']}.map"
     linked = subprocess.run(
-        [args.lld, "-arch", ARCH, "-platform_version", "macos", *PLATFORM_VERSION,
+        [args.lld, "-arch", arch, "-platform_version", "macos", MACOS_VERSION, MACOS_VERSION,
          FIXUPS[row["fixups"]], "-o", str(program), "-map", str(map_path), str(obj),
          *[argument for archive in archives for argument in ("-force_load", str(archive))],
          str(stub)],
