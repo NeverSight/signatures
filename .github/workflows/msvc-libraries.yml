@@ -14,6 +14,10 @@
 # .github/msvc-legacy-matrix.json downloads the media, checks its SHA-256, and
 # unpacks the library packages with 7-Zip, cabextract and msitools.
 #
+# The macho/ files come from Homebrew's bottles: one Linux job per row of
+# .github/homebrew-matrix.json downloads a formula's bottles by the SHA-256
+# the row pins and keeps the static libraries they hold.
+#
 # A pull request only runs the collector's unit tests: the rows occupy a
 # dozen Windows runners, and GitHub evaluates a pull request's path filter
 # against its whole diff, so every push would restart them. A manual run
@@ -64,6 +68,8 @@ on:
       - scripts/collect_elf_packages.py
       - scripts/fetch_imported_sources.py
       - .github/elf-matrix.json
+      - scripts/collect_homebrew_bottles.py
+      - .github/homebrew-matrix.json
       - scripts/tests/**
       - validation/**
 
@@ -92,6 +98,8 @@ jobs:
       fedora_rows: ${{ steps.matrix.outputs.fedora_rows }}
       elf_matrix: ${{ steps.matrix.outputs.elf_matrix }}
       elf_rows: ${{ steps.matrix.outputs.elf_rows }}
+      homebrew_matrix: ${{ steps.matrix.outputs.homebrew_matrix }}
+      homebrew_rows: ${{ steps.matrix.outputs.homebrew_rows }}
     steps:
       - name: Check out
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -479,13 +487,53 @@ jobs:
           compression-level: 0
           retention-days: 7
 
+  # A formula's Homebrew bottles, downloaded from ghcr.io and checked against
+  # the SHA-256s the row pins; see scripts/collect_homebrew_bottles.py.
+  collect-homebrew:
+    name: Collect ${{ matrix.name }}
+    needs: verify
+    if: github.event_name == 'workflow_dispatch' && inputs.from_run == '' && needs.verify.outputs.homebrew_rows != '0'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.verify.outputs.homebrew_matrix) }}
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install the archiving tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes --no-install-recommends zstd
+
+      - name: Download and collect
+        env:
+          NAME: ${{ matrix.name }}
+        run: >-
+          python3 scripts/collect_homebrew_bottles.py
+          --name "$NAME"
+          --work "$RUNNER_TEMP/work"
+          --output "$RUNNER_TEMP/assets"
+
+      - name: Upload assets
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: msvc-libs-${{ matrix.name }}
+          path: ${{ runner.temp }}/assets
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7
+
   # A row that fails does not hold the others back: the release carries every
   # row that succeeded, its notes name the run's overall result, and the
   # signature workflow reads the union of all msvc-libs-* releases, so a
   # later run only has to supply what this one missed.
   release:
     name: Create library release
-    needs: [collect, collect-legacy, collect-masm32, collect-mingw, collect-fedora, collect-elf]
+    needs: [collect, collect-legacy, collect-masm32, collect-mingw, collect-fedora, collect-elf,
+            collect-homebrew]
     if: ${{ !cancelled() && github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-24.04
     timeout-minutes: 120
@@ -515,6 +563,7 @@ jobs:
           MINGW_RESULT: ${{ needs.collect-mingw.result }}
           FEDORA_RESULT: ${{ needs.collect-fedora.result }}
           ELF_RESULT: ${{ needs.collect-elf.result }}
+          HOMEBREW_RESULT: ${{ needs.collect-homebrew.result }}
           FROM_RUN: ${{ inputs.from_run }}
         run: |
           set -euo pipefail
@@ -528,10 +577,11 @@ jobs:
               || { [ "$MASM32_RESULT" != "success" ] && [ "$MASM32_RESULT" != "skipped" ]; } \
               || { [ "$MINGW_RESULT" != "success" ] && [ "$MINGW_RESULT" != "skipped" ]; } \
               || { [ "$FEDORA_RESULT" != "success" ] && [ "$FEDORA_RESULT" != "skipped" ]; } \
-              || { [ "$ELF_RESULT" != "success" ] && [ "$ELF_RESULT" != "skipped" ]; }; then
+              || { [ "$ELF_RESULT" != "success" ] && [ "$ELF_RESULT" != "skipped" ]; } \
+              || { [ "$HOMEBREW_RESULT" != "success" ] && [ "$HOMEBREW_RESULT" != "skipped" ]; }; then
             {
               echo
-              echo "> Not every collection row succeeded in run $GITHUB_RUN_ID ($COLLECT_RESULT, legacy $LEGACY_RESULT, masm32 $MASM32_RESULT, mingw $MINGW_RESULT, fedora $FEDORA_RESULT, elf $ELF_RESULT);"
+              echo "> Not every collection row succeeded in run $GITHUB_RUN_ID ($COLLECT_RESULT, legacy $LEGACY_RESULT, masm32 $MASM32_RESULT, mingw $MINGW_RESULT, fedora $FEDORA_RESULT, elf $ELF_RESULT, homebrew $HOMEBREW_RESULT);"
               echo "> this release holds the rows listed above. Rerun the workflow to add the rest."
             } >> assets/RELEASE.md
           fi

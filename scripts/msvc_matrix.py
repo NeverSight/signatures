@@ -20,8 +20,10 @@ on Linux and are selected by the same `--rows`, as are the rows of
 collect_masm32.py), .github/mingw-matrix.json (C libraries built with the
 MinGW-w64 cross compilers; see collect_mingw_library.py),
 .github/fedora-matrix.json (C libraries built with a Fedora release's own
-compilers; see collect_fedora_library.py) and .github/elf-matrix.json (the
-packages rizin's ELF files came from; see collect_elf_packages.py).
+compilers; see collect_fedora_library.py), .github/elf-matrix.json (the
+packages rizin's ELF files came from; see collect_elf_packages.py) and
+.github/homebrew-matrix.json (the Homebrew bottles the macho/ files are built
+from; see collect_homebrew_bottles.py).
 """
 
 from __future__ import annotations
@@ -46,6 +48,9 @@ DEFAULT_FEDORA_MATRIX = (
 )
 DEFAULT_ELF_MATRIX = (
     Path(__file__).resolve().parents[1] / ".github" / "elf-matrix.json"
+)
+DEFAULT_HOMEBREW_MATRIX = (
+    Path(__file__).resolve().parents[1] / ".github" / "homebrew-matrix.json"
 )
 
 FIELDS = {
@@ -109,6 +114,16 @@ MINGW_FIELDS = {
     "archive": str,
     "cflags": list,
     "arches": list,
+}
+
+
+HOMEBREW_FIELDS = {
+    "name": str,
+    "library": str,
+    "formula": str,
+    "version": str,
+    "archives": list,
+    "bottles": list,
 }
 
 
@@ -180,6 +195,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--mingw-matrix", type=Path, default=DEFAULT_MINGW_MATRIX)
     parser.add_argument("--fedora-matrix", type=Path, default=DEFAULT_FEDORA_MATRIX)
     parser.add_argument("--elf-matrix", type=Path, default=DEFAULT_ELF_MATRIX)
+    parser.add_argument("--homebrew-matrix", type=Path, default=DEFAULT_HOMEBREW_MATRIX)
     parser.add_argument("--rows", default="", help="row names to keep, comma or space separated")
     parser.add_argument("--github-output", type=Path, help="append matrix=<json> to this file")
     args = parser.parse_args(argv)
@@ -190,12 +206,14 @@ def main(argv: list[str] | None = None) -> int:
     mingw = load(args.mingw_matrix, MINGW_FIELDS)
     fedora = load(args.fedora_matrix, FEDORA_FIELDS)
     elf = load(args.elf_matrix, ELF_FIELDS, ELF_OPTIONAL)
-    rows = select(windows, args.rows, legacy + masm32 + mingw + fedora + elf)
-    legacy_rows = select(legacy, args.rows, windows + masm32 + mingw + fedora + elf)
-    masm32_rows = select(masm32, args.rows, windows + legacy + mingw + fedora + elf)
-    mingw_rows = select(mingw, args.rows, windows + legacy + masm32 + fedora + elf)
-    fedora_rows = select(fedora, args.rows, windows + legacy + masm32 + mingw + elf)
-    elf_rows = select(elf, args.rows, windows + legacy + masm32 + mingw + fedora)
+    homebrew = load(args.homebrew_matrix, HOMEBREW_FIELDS)
+    rows = select(windows, args.rows, legacy + masm32 + mingw + fedora + elf + homebrew)
+    legacy_rows = select(legacy, args.rows, windows + masm32 + mingw + fedora + elf + homebrew)
+    masm32_rows = select(masm32, args.rows, windows + legacy + mingw + fedora + elf + homebrew)
+    mingw_rows = select(mingw, args.rows, windows + legacy + masm32 + fedora + elf + homebrew)
+    fedora_rows = select(fedora, args.rows, windows + legacy + masm32 + mingw + elf + homebrew)
+    elf_rows = select(elf, args.rows, windows + legacy + masm32 + mingw + fedora + homebrew)
+    homebrew_rows = select(homebrew, args.rows, windows + legacy + masm32 + mingw + fedora + elf)
     matrix = json.dumps({"include": [for_workflow(row) for row in rows]}, separators=(",", ":"))
     legacy_matrix = json.dumps(
         {"include": [{"name": row["name"]} for row in legacy_rows]}, separators=(",", ":")
@@ -212,6 +230,9 @@ def main(argv: list[str] | None = None) -> int:
     elf_matrix = json.dumps(
         {"include": [{"name": row["name"]} for row in elf_rows]}, separators=(",", ":")
     )
+    homebrew_matrix = json.dumps(
+        {"include": [{"name": row["name"]} for row in homebrew_rows]}, separators=(",", ":")
+    )
     if args.github_output:
         with args.github_output.open("a", encoding="utf-8") as out:
             out.write(f"matrix={matrix}\n")
@@ -226,8 +247,10 @@ def main(argv: list[str] | None = None) -> int:
             out.write(f"fedora_rows={len(fedora_rows)}\n")
             out.write(f"elf_matrix={elf_matrix}\n")
             out.write(f"elf_rows={len(elf_rows)}\n")
-    print("\n".join(row["name"] for row in
-                    rows + legacy_rows + masm32_rows + mingw_rows + fedora_rows + elf_rows))
+            out.write(f"homebrew_matrix={homebrew_matrix}\n")
+            out.write(f"homebrew_rows={len(homebrew_rows)}\n")
+    print("\n".join(row["name"] for row in rows + legacy_rows + masm32_rows + mingw_rows
+                    + fedora_rows + elf_rows + homebrew_rows))
     return 0
 
 

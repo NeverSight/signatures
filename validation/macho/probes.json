@@ -1,0 +1,55 @@
+[
+  {
+    "name": "macho-homebrew-sonoma-arm64-chained",
+    "tag": "arm64_sonoma",
+    "libraries": [
+      "homebrew-zlib"
+    ],
+    "program": "probe.c",
+    "fixups": "chained"
+  },
+  {
+    "name": "macho-homebrew-sequoia-arm64-chained",
+    "tag": "arm64_sequoia",
+    "libraries": [
+      "homebrew-zlib",
+      "homebrew-xz",
+      "homebrew-pcre2"
+    ],
+    "program": "probe.c",
+    "fixups": "chained"
+  },
+  {
+    "name": "macho-homebrew-sequoia-arm64-dyld",
+    "tag": "arm64_sequoia",
+    "libraries": [
+      "homebrew-zlib",
+      "homebrew-xz",
+      "homebrew-pcre2"
+    ],
+    "program": "probe.c",
+    "fixups": "dyld"
+  },
+  {
+    "name": "macho-homebrew-tahoe-arm64-chained",
+    "tag": "arm64_tahoe",
+    "libraries": [
+      "homebrew-zlib",
+      "homebrew-xz",
+      "homebrew-pcre2"
+    ],
+    "program": "probe.c",
+    "fixups": "chained"
+  },
+  {
+    "name": "macho-homebrew-golden_gate-arm64-chained",
+    "tag": "arm64_golden_gate",
+    "libraries": [
+      "homebrew-zlib",
+      "homebrew-xz",
+      "homebrew-pcre2"
+    ],
+    "program": "probe.c",
+    "fixups": "chained"
+  }
+]

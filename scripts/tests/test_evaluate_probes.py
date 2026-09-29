@@ -93,5 +93,34 @@ class FailureTests(unittest.TestCase):
         self.assertIn("vs2013-x86-setup.exe: 0/1 library functions named", output.getvalue())
 
 
+class TreeTests(unittest.TestCase):
+    def test_each_format_reads_its_own_tree(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            neverd = root / "neverd"
+            # The fake reports the directory it was pointed at as a name.
+            neverd.write_text("#!/bin/sh\n"
+                              "printf '[{\"addr\":\"0x10\",\"name\":\"%s\"}]' "
+                              "\"$(basename $(dirname $(dirname ${4#--sig-dir=})))\"\n")
+            neverd.chmod(0o755)
+            probes = []
+            for name, magic in (("macho-t-arm64-chained.macho", b"\xcf\xfa\xed\xfe"),
+                                ("elf-t-arm64-o2.elf", b"\x7fELF"),
+                                ("vs-t-arm64-o2.exe", b"MZ")):
+                probe = root / name
+                probe.write_bytes(magic)
+                tree = {"macho": "macho", "elf": "elf", "vs": "pe"}[name.split("-")[0]]
+                probe.with_suffix(".truth.json").write_text(json.dumps(
+                    [{"address": "0x10", "names": [tree], "from_library": True}]))
+                probes.append(str(probe))
+            output = io.StringIO()
+            with redirect_stdout(output):
+                status = evaluate_probes.main(
+                    ["--neverd", str(neverd), "--signatures", str(root), *probes])
+        self.assertEqual(status, 0, output.getvalue())
+        self.assertEqual(output.getvalue().count("1/1 library functions named"), 3,
+                         output.getvalue())
+
+
 if __name__ == "__main__":
     unittest.main()

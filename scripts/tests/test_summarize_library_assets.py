@@ -90,6 +90,25 @@ class SummarizeTests(unittest.TestCase):
                       "1 of them unavailable |", notes)
         self.assertIn("| `mingw32-zlib-1.3-x86` | mingw32-zlib | 1 "
                       "| https://example.org/zlib-1.3.tar.gz |", notes)
+        self.assertNotIn("Homebrew", notes)
+
+    def test_homebrew_libraries_name_their_bottles(self) -> None:
+        library = self.assets.parent / "libz.a"
+        library.write_bytes(b"!<arch>\n")
+        collector.emit_asset(
+            output=self.assets, asset="homebrew-zlib-arm64", kind="library", arch="arm64",
+            files=[collector.CollectedFile(library, Path("lib/libz.a"))],
+            extra={"library": "homebrew-zlib", "library_version": "1.3.2", "format": "macho",
+                   "formula": "zlib",
+                   "bottles": [{"tag": "arm64_sequoia", "sha256": "a"},
+                               {"tag": "arm64_tahoe", "sha256": "b"}]},
+            level=3,
+        )
+        summarize.main([str(self.assets), "--tag", "t", "--commit", "c"])
+        notes = (self.assets / "RELEASE.md").read_text()
+        self.assertIn("Homebrew's\nbottles", notes)
+        self.assertIn("| `homebrew-zlib-arm64` | homebrew-zlib | 1.3.2 "
+                      "| Homebrew bottles of `zlib`: arm64_sequoia, arm64_tahoe | 1 |", notes)
 
     def test_notes_name_only_what_the_release_holds(self) -> None:
         summarize.main([str(self.assets), "--tag", "t", "--commit", "c"])
