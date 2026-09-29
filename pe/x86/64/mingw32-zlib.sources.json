@@ -5,7 +5,7 @@
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 152,
+  "lines": 149,
   "sources": [
     {
       "arch": "x64",
@@ -14,12 +14,6 @@
       "kind": "library",
       "library_version": "1.3",
       "sigmaker": "Generated 150 signatures \u2192 mingw32-zlib-1.3-x64.pat (15 objects, 3 functions stating too few exact bytes)"
-    },
-    {
-      "archive_sha256": "43324a180a88d0f0cfa1420ddfeff6bd224cd8ce916bac915b31c4044205f78b",
-      "asset": "mingw32-zlib.imported",
-      "kind": "imported",
-      "lines": 3
     }
   ]
 }

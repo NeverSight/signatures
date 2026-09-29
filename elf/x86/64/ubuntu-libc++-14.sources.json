@@ -5,7 +5,7 @@
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 1888,
+  "lines": 1886,
   "sources": [
     {
       "arch": "x64",
@@ -13,12 +13,6 @@
       "asset": "ubuntu-libc++-14-x64",
       "kind": "library",
       "sigmaker": "Generated 14204 signatures \u2192 ubuntu-libc++-14-x64.pat (525 objects, 810 functions below --min-size, 5472 functions stating too few exact bytes)"
-    },
-    {
-      "archive_sha256": "8eb9cf3f85fd62e4a5b127d7e54cc86c591abbd25fdcbdad2f409a3ca176e2df",
-      "asset": "ubuntu-libc++-14.imported",
-      "kind": "imported",
-      "lines": 2
     }
   ]
 }

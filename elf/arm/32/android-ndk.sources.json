@@ -23,12 +23,6 @@
       "asset": "android-ndk-arm",
       "kind": "library",
       "sigmaker": "Generated 316103 signatures \u2192 android-ndk-arm.pat (125897 objects, 5658 functions below --min-size, 122594 functions stating too few exact bytes)"
-    },
-    {
-      "archive_sha256": "6b17fc6f44d2024a1f127d646c84e098dd9c81358eb4e29200619d289ca077a9",
-      "asset": "android-ndk.imported",
-      "kind": "imported",
-      "lines": 0
     }
   ]
 }

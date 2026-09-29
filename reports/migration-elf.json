@@ -1181,6 +1181,8 @@
     "from_section": 0,
     "lines": 14203,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "unsigned_int_std::__ndk1::__sort4_std::__ndk1::__less_long_double__long_double____long_double___long_double___long_double___long_double___long_double___std::__ndk1::__less_long_double__long_double",
       "_anonymous_namespace_::itanium_demangle::AbstractManglingParser__anonymous_namespace_::itanium_demangle::ManglingParser__anonymous_namespace_::DefaultAllocator____anonymous_namespace_::DefaultAllocator_::parseCallOffset",
@@ -1763,6 +1765,8 @@
     "from_section": 0,
     "lines": 14798,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "arena_decay_init",
       "method.std::__ndk1::__stdinbuf_char_.___stdinbuf",
@@ -4149,6 +4153,8 @@
     "from_section": 0,
     "lines": 13490,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "std::istrstream::istrstream_char___int",
       "__res_ndestroy",
@@ -4261,6 +4267,8 @@
     "from_section": 0,
     "lines": 282,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [],
     "realigned_tails": 0,
     "removed_ambiguous": 7,
@@ -5477,6 +5485,8 @@
     "from_section": 0,
     "lines": 6915,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "std::__ndk1::money_get_wchar_t__std::__ndk1::istreambuf_iterator_wchar_t__std::__ndk1::char_traits_wchar_t_____::__do_get_std::__ndk1::istreambuf_iterator_wchar_t__std::__ndk1::char_traits_wchar_t______std::__ndk1::istreambuf_iterator_wchar_t__std::__ndk1::char_traits_wchar_t_____bool__std::__ndk1::locale_const___unsigned_int__unsigned_int___bool___std::__ndk1::ctype_wchar_t__const___std::__ndk1::unique_ptr_wchar_t__void_____void______wchar_t____wchar_t",
       "std::__ndk1::numpunct_byname_char_::__init_char_const",
@@ -5981,6 +5991,8 @@
     "from_section": 0,
     "lines": 279,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [],
     "realigned_tails": 0,
     "removed_ambiguous": 8,
@@ -6277,6 +6289,8 @@
     "from_section": 0,
     "lines": 704,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "method.std::__1::basic_ostream_char__std::__1::char_traits_char___.operator___float",
       "method.std::__1::basic_ostream_wchar_t__std::__1::char_traits_wchar_t___.operator___void_const",
@@ -6801,6 +6815,8 @@
     "from_section": 0,
     "lines": 724,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "method.std::__1::ios_base.imbue_std::__1::locale_const",
       "method.std::__1::basic_istream_char__std::__1::char_traits_char___.readsome_char___long",
@@ -7651,10 +7667,15 @@
       "method.std::__1.__cxx_atomic_notify_all_std::__1::__cxx_atomic_impl_int__std::__1::__cxx_atomic_base_impl_int____const_volatile"
     ],
     "by_bytes": 0,
-    "by_spelling": 2,
+    "by_spelling": 0,
     "from_section": 0,
     "lines": 2212,
     "moved": 0,
+    "not_reproduced": 2,
+    "not_reproduced_names": [
+      "_ZN10__cxxabiv127dependent_exception_cleanupE19_Unwind_Reason_CodeP17_Unwind_Exception",
+      "_ZN10__cxxabiv114call_terminateEbP17_Unwind_Exception"
+    ],
     "opening_names": [
       "std::__1::moneypunct_byname_char__true_::init_char_const",
       "std::__1::basic_istream_char__std::__1::char_traits_char_____std::__1::__input_arithmetic_void___char__std::__1::char_traits_char____std::__1::basic_istream_char__std::__1::char_traits_char______void",
@@ -8847,10 +8868,15 @@
       "std::__1::strstreambuf::seekpos_std::__1::fpos___mbstate_t___unsigned_int"
     ],
     "by_bytes": 0,
-    "by_spelling": 2,
+    "by_spelling": 0,
     "from_section": 0,
     "lines": 2038,
     "moved": 0,
+    "not_reproduced": 2,
+    "not_reproduced_names": [
+      "_ZN10__cxxabiv114call_terminateEbP17_Unwind_Exception",
+      "_ZN10__cxxabiv127dependent_exception_cleanupE19_Unwind_Reason_CodeP17_Unwind_Exception"
+    ],
     "opening_names": [
       "std::__1::__libcpp_debug_info::what___const",
       "method.std::__1.to_string_double",
@@ -9942,10 +9968,15 @@
       "_anonymous_namespace_::itanium_demangle::PODSmallVector__anonymous_namespace_::itanium_demangle::PODSmallVector__anonymous_namespace_::itanium_demangle::Node___8ul____4ul_::operator___anonymous_namespace_::itanium_demangle::PODSmallVector__anonymous_namespace_::itanium_demangle::PODSmallVector__anonymous_namespace_::itanium_demangle::Node___8ul____4ul"
     ],
     "by_bytes": 0,
-    "by_spelling": 2,
+    "by_spelling": 0,
     "from_section": 0,
     "lines": 2104,
     "moved": 0,
+    "not_reproduced": 2,
+    "not_reproduced_names": [
+      "_ZN10__cxxabiv114call_terminateEbP17_Unwind_Exception",
+      "_ZN10__cxxabiv127dependent_exception_cleanupE19_Unwind_Reason_CodeP17_Unwind_Exception"
+    ],
     "opening_names": [
       "method.std::__1::__fs::filesystem::_FilesystemClock.now",
       "method.std::__1::basic_ostream_char__std::__1::char_traits_char___.seekp_long_long__std::__1::ios_base::seekdir",
@@ -11007,6 +11038,8 @@
     "from_section": 0,
     "lines": 2135,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "std::__1::collate_byname_char_::do_transform_char_const___char_const___const",
       "std::__1::enable_if___is_cpp17_forward_iterator_wchar_t__::value__std::__1::basic_string_wchar_t__std::__1::char_traits_wchar_t___std::__1::allocator_wchar_t_____::type_std::__1::basic_string_wchar_t__std::__1::char_traits_wchar_t___std::__1::allocator_wchar_t___::append_wchar_t___wchar_t___wchar_t",
@@ -11826,6 +11859,8 @@
     "from_section": 0,
     "lines": 794,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "method.std::__1::basic_ostream_char__std::__1::char_traits_char___.operator___int",
       "method.std::__1::locale.locale_std::__1::locale_const___std::__1::basic_string_char__std::__1::char_traits_char___std::__1::allocator_char____const___int",
@@ -12630,6 +12665,8 @@
     "from_section": 0,
     "lines": 1135,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "method.std::__1::basic_ostream_wchar_t__std::__1::char_traits_wchar_t___.operator___int",
       "method.std::__1::basic_istream_char__std::__1::char_traits_char___.get_char___long",
@@ -13446,6 +13483,8 @@
     "from_section": 0,
     "lines": 1243,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "std::__1::basic_istream_char__std::__1::char_traits_char___::get",
       "std::__1::istreambuf_iterator_char__std::__1::char_traits_char____std::__1::num_get_char__std::__1::istreambuf_iterator_char__std::__1::char_traits_char_____::__do_get_floating_point_long_double__std::__1::istreambuf_iterator_char__std::__1::char_traits_char_____std::__1::istreambuf_iterator_char__std::__1::char_traits_char_____std::__1::ios_base___unsigned_int___long_double___const",
@@ -17375,6 +17414,8 @@
     "from_section": 0,
     "lines": 40061,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "__isoc99_wscanf",
       "_IO_fread",
@@ -18076,6 +18117,8 @@
     "from_section": 0,
     "lines": 824,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "__bid128_quiet_not_less",
       "__bid128_to_binary64",
@@ -18167,6 +18210,8 @@
     "from_section": 0,
     "lines": 451,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "__bid128_signaling_greater_unordered",
       "__bid128_quiet_greater_unordered",
@@ -18244,6 +18289,8 @@
     "from_section": 0,
     "lines": 419,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "__bid128_signaling_not_less",
       "__bid128_signaling_greater",
@@ -18309,6 +18356,8 @@
     "from_section": 0,
     "lines": 323,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [],
     "realigned_tails": 193,
     "removed_ambiguous": 29,
@@ -18412,6 +18461,8 @@
     "from_section": 0,
     "lines": 744,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "__letf2",
       "__bid128_to_binary64"
@@ -18519,6 +18570,8 @@
     "from_section": 0,
     "lines": 730,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "__bid128_to_binary64"
     ],
@@ -18633,6 +18686,8 @@
     "from_section": 0,
     "lines": 1027,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "x86_rule_add",
       "x86_rule_add",
@@ -18852,6 +18907,8 @@
     "from_section": 0,
     "lines": 1863,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "ge25519_madd",
       "crypto_core_curve25519_ref10_ge_scalarmult_base",
@@ -19664,6 +19721,8 @@
     "from_section": 0,
     "lines": 4204,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "__gnu_cxx::__pool_alloc_base::_M_allocate_chunk_unsigned_long__int____clone_.localalias",
       "method.std::basic_ostringstream_char__std::char_traits_char___std::allocator_char___.basic_ostringstream",
@@ -20642,6 +20701,8 @@
     "from_section": 0,
     "lines": 2621,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "method.std::__cxx11::moneypunct_wchar_t__true_._M_initialize_moneypunct___locale_struct___char_const____clone_.cold",
       "method.__gnu_cxx::__pool_alloc_base._M_allocate_chunk_unsigned_long__int____clone_.localalias",
@@ -21359,6 +21420,8 @@
     "from_section": 0,
     "lines": 2563,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "method.std::__cxx11::basic_ostringstream_wchar_t__std::char_traits_wchar_t___std::allocator_wchar_t___.basic_ostringstream_std::_Ios_Openmode",
       "std::__cxx11::basic_ostringstream_wchar_t__std::char_traits_wchar_t___std::allocator_wchar_t___::basic_ostringstream_std::_Ios_Openmode__std::allocator_wchar_t__const",
@@ -22008,6 +22071,8 @@
     "from_section": 0,
     "lines": 2134,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "std::istreambuf_iterator_wchar_t__std::char_traits_wchar_t____std::num_get_wchar_t__std::istreambuf_iterator_wchar_t__std::char_traits_wchar_t_____::_M_extract_int_unsigned_int__std::istreambuf_iterator_wchar_t__std::char_traits_wchar_t_____std::istreambuf_iterator_wchar_t__std::char_traits_wchar_t_____std::ios_base___std::_Ios_Iostate___unsigned_int___const",
       "method.std::basic_ostringstream_wchar_t__std::char_traits_wchar_t___std::allocator_wchar_t___.swap_std::basic_ostringstream_wchar_t__std::char_traits_wchar_t___std::allocator_wchar_t",
@@ -22806,6 +22871,8 @@
     "from_section": 0,
     "lines": 2016,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "method.std::istreambuf_iterator_wchar_t__std::char_traits_wchar_t____std::__facet_shims.__money_get_wchar_t__std::integral_constant_bool__true___std::locale::facet_const___std::istreambuf_iterator_wchar_t__std::char_traits_wchar_t_____std::istreambuf_iterator_wchar_t__std::char_traits_wchar_t_____bool__std::ios_base___std::_Ios_Iostate___long_double___std::__facet_shims::__any_string",
       "method.std::__cxx11::basic_ostringstream_wchar_t__std::char_traits_wchar_t___std::allocator_wchar_t___.operator__std::__cxx11::basic_ostringstream_wchar_t__std::char_traits_wchar_t___std::allocator_wchar_t",
@@ -23500,6 +23567,8 @@
     "from_section": 0,
     "lines": 1635,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "std::__cxx11::money_get_char__std::istreambuf_iterator_char__std::char_traits_char_____::do_get_std::istreambuf_iterator_char__std::char_traits_char_____std::istreambuf_iterator_char__std::char_traits_char_____bool__std::ios_base___std::_Ios_Iostate___long_double___const",
       "method.std::__cxx11::basic_stringstream_char__std::char_traits_char___std::allocator_char___.basic_stringstream_std::_Ios_Openmode",
@@ -24524,6 +24593,8 @@
     "from_section": 0,
     "lines": 3618,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "std::istreambuf_iterator_wchar_t__std::char_traits_wchar_t____std::num_get_wchar_t__std::istreambuf_iterator_wchar_t__std::char_traits_wchar_t_____::_M_extract_int_long__std::istreambuf_iterator_wchar_t__std::char_traits_wchar_t_____std::istreambuf_iterator_wchar_t__std::char_traits_wchar_t_____std::ios_base___std::_Ios_Iostate___long___const",
       "method.std::istream.tellg",
@@ -26040,6 +26111,8 @@
     "from_section": 0,
     "lines": 4783,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "method.std::basic_istringstream_wchar_t__std::char_traits_wchar_t___std::allocator_wchar_t___.operator__std::basic_istringstream_wchar_t__std::char_traits_wchar_t___std::allocator_wchar_t",
       "method.std::istream.operator___std::basic_streambuf_char__std::char_traits_char",
@@ -27433,6 +27506,8 @@
     "from_section": 0,
     "lines": 8833,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "log",
       "pthread_exit",
@@ -31470,6 +31545,8 @@
     "from_section": 0,
     "lines": 71902,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "BIO_printf",
       "blake2_mac_dup",
@@ -32045,6 +32122,8 @@
     "from_section": 0,
     "lines": 1743,
     "moved": 0,
+    "not_reproduced": 0,
+    "not_reproduced_names": [],
     "opening_names": [
       "deflate_fast"
     ],

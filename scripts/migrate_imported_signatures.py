@@ -54,14 +54,17 @@ leaves the rest untouched. For each line, in order:
    rizin left as it was. On 32-bit x86, "_name_N" is also how rizin spelled
    the stdcall "_name@N"; it becomes that only when the routine ends in
    `ret N`, and otherwise stays unresolved.
-5. Every other line is kept as a comment, which the loader does not read,
-   and is listed in the report.
+5. A file whose libraries were collected is built anew from them, and holds
+   only the lines neverd-sigmaker makes from them: an imported line they do
+   not reproduce is left out too, and listed in the report.  In a file no
+   collected library builds, every other line is kept as a comment, which
+   the loader does not read, and is listed in the report.
 
-Every run starts from the text of the import commit, so what a file holds
-depends only on the import, the reference libraries and these rules, and the
-report describes a single pass. A file with a provenance record
-(`<name>.sources.json`) is rebuilt from collected libraries and holds no
-imported line, so it is left alone.
+Every run starts from the text of the import commit and reads every file
+it imported, so what a file holds depends only on the import, the reference
+libraries and these rules, and the report accounts for every imported line
+in a single pass. A file whose libraries were collected is neverd-sigmaker's:
+its imported text is read from a copy, and the run never writes over it.
 
 Knowledge of rizin's conventions lives here and nowhere else. This script
 exists to undo one import; NeverD itself never needs it.
@@ -707,10 +710,14 @@ class FileReport:
     # Lines of the other pointer width's code, whose file is built anew from
     # the very build the import was made from.
     superseded_other_width: int = 0
+    # Lines of a file built from collected libraries that those libraries do
+    # not reproduce: the file holds only what neverd-sigmaker makes from them.
+    not_reproduced: int = 0
     unresolved: int = 0
     realigned_tails: int = 0
     undecided_tails: int = 0
     unresolved_names: list[str] = field(default_factory=list)
+    not_reproduced_names: list[str] = field(default_factory=list)
     removed_names: list[str] = field(default_factory=list)
     weak_names: list[str] = field(default_factory=list)
     ambiguous_names: list[str] = field(default_factory=list)
@@ -786,8 +793,14 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
     other width's too, whatever its bytes: rizin read some objects with their
     relocations applied.
 
-    A line still unresolved, in any file, is kept as a comment, which the
-    loader does not read: a name in rizin's spelling is no linkage name.
+    A file built anew from collected libraries holds only the lines
+    neverd-sigmaker makes from them, so a line of it they do not reproduce is
+    left out too, whatever its name: what remained were the names of labels,
+    managed code, objects that only the runtime DLLs link, test harnesses, a
+    library no asset collects, and rizin's reading of routines the libraries
+    state themselves.  In a file no collected library builds, a line still
+    unresolved is kept as a comment, which the loader does not read: a name in
+    rizin's spelling is no linkage name.
     """
 
     texts = path.read_text(encoding="utf-8").splitlines()
@@ -855,7 +868,8 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
         if name is None:
             report.unresolved += 1
             report.unresolved_names.append(line.name)
-            output.append(f"{UNRESOLVED} {text}")
+            if defined is None:
+                output.append(f"{UNRESOLVED} {text}")
             continue
         if defined is not None:
             strong, _ = agreeing_names(line, reference)
@@ -866,6 +880,9 @@ def migrate_file(path: Path, reference: Reference, report: FileReport,
             if name in defined:
                 report.superseded += 1
                 continue
+            report.not_reproduced += 1
+            report.not_reproduced_names.append(name)
+            continue
         if how == "verbatim":
             report.verbatim += 1
         elif how == "stdcall":
@@ -982,30 +999,22 @@ def imported_files(tree: Path, revision: str, directory: str) -> list[Path]:
         ).stdout.split()
     except subprocess.CalledProcessError:
         return []
-    # A file with a provenance record is rebuilt from collected libraries.
-    # It holds no imported line any more, unless its release keeps the lines
-    # those libraries do not define in <name>.imported, which the migration
-    # writes anew.
-    return [
-        tree / directory / name
-        for name in listing
-        if name.endswith(".pat")
-        and (
-            not (tree / directory / name).with_suffix(".sources.json").exists()
-            or (tree / directory / name).with_suffix(".imported").exists()
-        )
-    ]
+    # Every file the import holds is read, also one rebuilt from collected
+    # libraries since: the report accounts for each imported line.
+    return [tree / directory / name for name in listing if name.endswith(".pat")]
 
 
-def restore(tree: Path, revision: str, path: Path) -> None:
-    """Put a file's imported text back, so that every run starts from it."""
+def restore(tree: Path, revision: str, path: Path,
+            destination: Path | None = None) -> None:
+    """Write a file's imported text to `destination` (by default, back to the
+    file itself), so that every run starts from it."""
 
     relative = path.relative_to(tree).as_posix()
     text = subprocess.run(
         ["git", "-C", str(tree), "show", f"{revision}:{relative}"],
         check=True, capture_output=True, text=True,
     ).stdout
-    path.write_text(text, encoding="utf-8")
+    (destination or path).write_text(text, encoding="utf-8")
 
 
 def release_of(path: Path) -> str:
@@ -1015,10 +1024,13 @@ def release_of(path: Path) -> str:
 
 
 def asset_release(manifest: dict) -> str | None:
-    """The file an asset's libraries build: vs<year> or the library's own name."""
+    """The file an asset's libraries build: vs<year>, winsdk, or the library's
+    own name, as the builder names it."""
 
     if manifest.get("kind") == "toolset":
         return f"vs{int(manifest['visual_studio']['year'])}"
+    if manifest.get("kind") == "winsdk":
+        return "winsdk"
     if manifest.get("kind") == "library":
         return str(manifest["library"])
     return None
@@ -1058,14 +1070,15 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
     print(f"{directory}: {reference.functions} reference functions, "
           f"{len(reference.names)} names", flush=True)
     for path in files:
-        restore(tree, revision, path)
         report = FileReport()
         moved: list[str] = []
         release = release_of(path)
-        rebuilt = release in collected
+        # A file with a provenance record is built from collected libraries,
+        # whichever assets this run was given: the run never writes it.
+        rebuilt = release in collected or path.with_suffix(".sources.json").exists()
         # Only the build the import was made from supersedes a line by name;
         # another build leaves out only the lines whose bytes it reproduces.
-        defined = ((reference.defined.get(release, set()) if collected[release] else set())
+        defined = ((reference.defined.get(release, set()) if collected.get(release) else set())
                    if rebuilt else None)
         # A name can place a line only when both widths' files are built
         # from the very build the import was made from.
@@ -1074,20 +1087,26 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
         # Only a file the other width's libraries build too can hold lines
         # of that width.
         file_sibling = sibling if release in sibling_collected or not sibling_collected else None
-        lines = migrate_file(path, reference, report, file_sibling, moved, defined=defined,
-                             sibling_rebuilt=sibling_collected.get(release) is True,
-                             sibling_defined=(sibling.defined.get(release, set())
-                                              if both else None))
+        with tempfile.TemporaryDirectory() as scratch:
+            # A rebuilt file is neverd-sigmaker's; its imported text is read
+            # from a copy and never written over it.
+            source = Path(scratch) / path.name if rebuilt else path
+            restore(tree, revision, path, source)
+            lines = migrate_file(source, reference, report, file_sibling, moved,
+                                 defined=defined,
+                                 sibling_rebuilt=sibling_collected.get(release) is True,
+                                 sibling_defined=(sibling.defined.get(release, set())
+                                                  if both else None))
         if moved and moves is not None:
             moves.setdefault(tree / SIBLINGS[directory] / path.name, []).extend(moved)
-        # A release whose libraries were collected gets its file built anew;
-        # what the libraries cannot reproduce joins it from <name>.imported.
+        # A release whose libraries were collected gets its file built anew
+        # from them alone, and keeps no <name>.imported; a release with none
+        # keeps its migrated lines in place.
         written = path.with_suffix(".imported") if rebuilt else path
         if rebuilt and not any(line.strip() for line in lines):
-            # The libraries reproduce or supersede every imported line, so the
-            # file is built from them alone, like a release rizin never had;
-            # an earlier run's <name>.imported would bring back what they
-            # replace.
+            # The file is built from the libraries alone, like a release rizin
+            # never had; an earlier run's <name>.imported would bring back
+            # imported lines into it.
             written.unlink(missing_ok=True)
         else:
             written.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -1109,6 +1128,7 @@ def migrate_directory(tree: Path, revision: str, directory: str, files: list[Pat
             f"{report.reproduced} reproduced by collected libraries, "
             f"{report.superseded} superseded by what they define, "
             f"{report.superseded_other_width} by the other width's libraries, "
+            f"{report.not_reproduced} not reproduced by the collected libraries, "
             f"{report.unresolved} unresolved; {report.realigned_tails} tails realigned, "
             f"{report.undecided_tails} undecided",
             flush=True,
@@ -1219,7 +1239,7 @@ def main(argv: list[str] | None = None) -> int:
         for key in ("lines", "by_bytes", "by_spelling", "from_section", "moved",
                     "already_conforming", "verbatim", "removed_artifacts", "removed_weak",
                     "removed_ambiguous", "removed_openings", "reproduced", "superseded",
-                    "unresolved",
+                    "superseded_other_width", "not_reproduced", "unresolved",
                     "realigned_tails", "undecided_tails"):
             totals[key] += report.get(key, 0)
     print(f"total: {dict(totals)}")

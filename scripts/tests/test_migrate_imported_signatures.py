@@ -385,7 +385,7 @@ class MoveTests(unittest.TestCase):
             lines = migrate.migrate_file(path, own, report, other, [], defined={"run"},
                                          sibling_rebuilt=True, sibling_defined={"traceInit"})
             kept = migrate.migrate_file(path, own, migrate.FileReport(), other, [],
-                                        defined={"run"}, sibling_rebuilt=True)
+                                        sibling_rebuilt=True)
         self.assertEqual(lines, [])
         self.assertEqual(report.superseded_other_width, 1)
         # Without both widths rebuilt from the import, the name decides nothing.
@@ -475,6 +475,31 @@ class MigrateFileTests(unittest.TestCase):
         self.assertEqual(report.unresolved_names, ["_unknown_thing__YAXXZ"])
 
 
+class CollectedFileTests(unittest.TestCase):
+    def test_a_file_built_from_collected_libraries_keeps_no_imported_line(self) -> None:
+        # What remained were labels, managed code and routines of libraries no
+        # asset collects: the rebuilt file holds only what the libraries give.
+        run = "4883EC28" * 5 + "C3"
+        reference = pe_reference(reference_line("?Run@@YAXXZ", run))
+        label = "8B45DC8947FC" * 4
+        unknown = "AABBCCDD" * 5
+        with tempfile.TemporaryDirectory() as scratch:
+            path = Path(scratch) / "vs2005.pat"
+            path.write_text(
+                f"{run} 00 0000 0015 :0000 _Run__YAXXZ\n"
+                f"{label} 00 0000 0018 :0000 _LN16_1\n"
+                f"{unknown} 00 0000 0014 :0000 _unknown_thing__YAXXZ\n"
+            )
+            report = migrate.FileReport()
+            lines = migrate.migrate_file(path, reference, report, defined=set())
+        self.assertEqual(lines, [])
+        self.assertEqual(report.reproduced, 1)
+        self.assertEqual((report.not_reproduced, report.not_reproduced_names),
+                         (1, ["_LN16_1"]))
+        self.assertEqual((report.unresolved, report.unresolved_names),
+                         (1, ["_unknown_thing__YAXXZ"]))
+
+
 class CNameTests(unittest.TestCase):
     @staticmethod
     def line(name: str, data: str) -> migrate.Line:
@@ -522,8 +547,11 @@ class CollectedReleaseTests(unittest.TestCase):
             )
             report = migrate.FileReport()
             lines = migrate.migrate_file(path, reference, report, defined=set())
-        self.assertEqual(lines, [f"{other} 00 0000 0014 :0000 ?Only@CInImportedLibs@@QAEXXZ"])
+        # The rebuilt file keeps no imported line; the one its libraries do
+        # not reproduce is listed as such.
+        self.assertEqual(lines, [])
         self.assertEqual(report.reproduced, 1)
+        self.assertEqual(report.not_reproduced_names, ["?Only@CInImportedLibs@@QAEXXZ"])
 
     def test_lines_for_routines_the_collected_libraries_define_are_superseded(self) -> None:
         # The collected libraries define ?Skip@@YAXXZ, but neverd-sigmaker
@@ -551,8 +579,8 @@ class CollectedReleaseTests(unittest.TestCase):
             path.write_text(f"{imported} 00 0000 0015 :0000 _deflate\n")
             report = migrate.FileReport()
             lines = migrate.migrate_file(path, reference, report, defined=set())
-        self.assertEqual(lines, [f"{imported} 00 0000 0015 :0000 _deflate"])
-        self.assertEqual(report.superseded, 0)
+        self.assertEqual(lines, [])
+        self.assertEqual((report.superseded, report.not_reproduced), (0, 1))
 
     def test_a_build_that_pads_the_routine_after_it_still_reproduces_it(self) -> None:
         # rizin measured zcfree to its ret; neverd-sigmaker takes in the NOPs
@@ -576,10 +604,10 @@ class CollectedReleaseTests(unittest.TestCase):
             path.write_text(imported + "\n")
             report = migrate.FileReport()
             lines = migrate.migrate_file(path, reference, report, defined=set())
-        self.assertEqual(lines, [imported])
-        self.assertEqual(report.reproduced, 0)
+        self.assertEqual(lines, [])
+        self.assertEqual((report.reproduced, report.not_reproduced), (0, 1))
 
-    def test_unresolved_lines_of_a_collected_release_are_kept_as_comments(self) -> None:
+    def test_unresolved_lines_of_a_collected_release_are_left_out(self) -> None:
         reference = pe_reference(reference_line("?Run@@YAXXZ", "4883EC28" * 5 + "C3"))
         unknown = "AABBCCDD" * 5
         with tempfile.TemporaryDirectory() as scratch:
@@ -587,10 +615,13 @@ class CollectedReleaseTests(unittest.TestCase):
             path.write_text(f"{unknown} 00 0000 0014 :0000 _unknown_thing__YAXXZ\n")
             report = migrate.FileReport()
             lines = migrate.migrate_file(path, reference, report, defined=set())
-        self.assertEqual(lines, [f"; unresolved: {unknown} 00 0000 0014 :0000 _unknown_thing__YAXXZ"])
-        self.assertEqual(report.unresolved, 1)
+        self.assertEqual(lines, [])
+        self.assertEqual((report.unresolved, report.unresolved_names),
+                         (1, ["_unknown_thing__YAXXZ"]))
 
     def test_releases_come_from_toolset_manifests(self) -> None:
+        # The Windows SDK's libraries are collected too, but not from the
+        # build rizin's lines were made from.
         with tempfile.TemporaryDirectory() as scratch:
             assets = Path(scratch)
             (assets / "vs2013-12.0.21005-x86.json").write_text(
@@ -601,7 +632,8 @@ class CollectedReleaseTests(unittest.TestCase):
             (assets / "zlib-1.3-gcc13-x86.json").write_text(
                 '{"kind": "library", "library": "mingw32-zlib", "reproduces_import": false}')
             self.assertEqual(migrate.collected_releases(assets, "x86"),
-                             {"vs2013": True, "masm32": True, "mingw32-zlib": False})
+                             {"vs2013": True, "masm32": True, "mingw32-zlib": False,
+                              "winsdk": False})
         self.assertEqual(migrate.release_of(Path("pe/x86/32/vs2013.pat")), "vs2013")
         self.assertEqual(migrate.release_of(Path("pe/x86/32/masm32.pat")), "masm32")
 
@@ -695,7 +727,7 @@ class ELFReferenceTests(unittest.TestCase):
 
 class ImportedFilesTests(unittest.TestCase):
     @unittest.skipUnless(shutil.which("git"), "needs git")
-    def test_files_rebuilt_from_libraries_are_not_imported_any_more(self) -> None:
+    def test_every_imported_file_is_read_also_one_rebuilt_since(self) -> None:
         with tempfile.TemporaryDirectory() as scratch:
             tree = Path(scratch)
             directory = tree / "pe/x86/64"
@@ -707,13 +739,10 @@ class ImportedFilesTests(unittest.TestCase):
             subprocess.run([*git, "add", "."], check=True)
             subprocess.run([*git, "commit", "-qm", "import"], check=True)
             (directory / "vs2022.sources.json").write_text("{}\n")
+            (directory / "vs2026.pat").write_text("AABBCCDD 00 0000 0004 :0000 g\n")
             files = migrate.imported_files(tree, "HEAD", "pe/x86/64")
-            # A rebuilt release that keeps imported lines is migrated again.
-            (directory / "vs2013.sources.json").write_text("{}\n")
-            (directory / "vs2013.imported").write_text("")
-            kept = migrate.imported_files(tree, "HEAD", "pe/x86/64")
-        self.assertEqual([path.name for path in files], ["vs2013.pat"])
-        self.assertEqual([path.name for path in kept], ["vs2013.pat"])
+        # A file the import did not hold is no imported file.
+        self.assertEqual([path.name for path in files], ["vs2013.pat", "vs2022.pat"])
 
     @unittest.skipUnless(shutil.which("git"), "needs git")
     def test_a_file_its_libraries_reproduce_in_full_keeps_no_imported_lines(self) -> None:
@@ -730,12 +759,45 @@ class ImportedFilesTests(unittest.TestCase):
             # An earlier run kept the line, before the libraries reproduced it.
             imported = path.with_suffix(".imported")
             imported.write_text(f"{run} 00 0000 0015 :0000 Run\n")
+            built = f"{run} 00 0000 0015 :0000 Run\n; built by neverd-sigmaker\n"
+            path.write_text(built)
             summary: dict[str, dict] = {}
             migrate.migrate_directory(tree, "HEAD", "pe/x86/64", [path],
                                       pe_reference(reference_line("Run", run)), summary, None,
                                       collected={"masm32": True})
             self.assertFalse(imported.exists())
+            # The file its libraries build is theirs; the run reads the
+            # imported text from a copy.
+            self.assertEqual(path.read_text(), built)
         self.assertEqual(summary["pe/x86/64/masm32.imported"]["reproduced"], 1)
+
+    @unittest.skipUnless(shutil.which("git"), "needs git")
+    def test_a_file_with_a_provenance_record_is_never_written(self) -> None:
+        # The release is not among the collected ones (its assets were not
+        # given), but the builder built the file: it keeps what it holds.
+        run = "4883EC28" * 5 + "C3"
+        with tempfile.TemporaryDirectory() as scratch:
+            tree = Path(scratch)
+            path = tree / "pe/x86/64/winsdk.pat"
+            path.parent.mkdir(parents=True)
+            path.write_text(f"{run} 00 0000 0015 :0000 _Run\n")
+            git = ["git", "-C", str(tree), "-c", "user.name=t", "-c", "user.email=t@t"]
+            subprocess.run([*git, "init", "-q"], check=True)
+            subprocess.run([*git, "add", "."], check=True)
+            subprocess.run([*git, "commit", "-qm", "import"], check=True)
+            built = f"{run} 00 0000 0015 :0000 Run\n"
+            path.write_text(built)
+            path.with_suffix(".sources.json").write_text("{}\n")
+            summary: dict[str, dict] = {}
+            migrate.migrate_directory(tree, "HEAD", "pe/x86/64", [path],
+                                      pe_reference(reference_line("Other", "90" * 21)),
+                                      summary, None, collected={})
+            self.assertEqual(path.read_text(), built)
+            self.assertFalse(path.with_suffix(".imported").exists())
+        self.assertEqual(summary["pe/x86/64/winsdk.imported"]["not_reproduced"], 1)
+
+    def test_an_sdk_asset_builds_winsdk(self) -> None:
+        self.assertEqual(migrate.asset_release({"kind": "winsdk"}), "winsdk")
 
     @unittest.skipUnless(shutil.which("git"), "needs git")
     def test_a_run_starts_from_the_imported_text(self) -> None:

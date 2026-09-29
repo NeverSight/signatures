@@ -5,7 +5,7 @@
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 40765,
+  "lines": 40753,
   "sources": [
     {
       "arch": "x86",
@@ -14,12 +14,6 @@
       "kind": "toolset",
       "sigmaker": "Generated 248544 signatures \u2192 vs2012-11.0.50727-x86.pat (5605 objects, 15564 for another machine skipped, 76538 non-object members, 9599 functions below --min-size, 125816 functions stating too few exact bytes)",
       "toolset_version": "11.0.50727"
-    },
-    {
-      "archive_sha256": "59658e094fac6d1ef52e1922133d61b8e45b30ded7703f608c1396435f30216d",
-      "asset": "vs2012.imported",
-      "kind": "imported",
-      "lines": 13
     }
   ]
 }
