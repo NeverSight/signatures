@@ -1,0 +1,29 @@
+{
+  "file": "macho/x86/64/homebrew-zlib.pat",
+  "generator": {
+    "neverd_ref": "6228f29bb61f0b684687b1935d4f89a6dc254e40",
+    "release": "msvc-libs-20260929-homebrew",
+    "tail": 65535
+  },
+  "lines": 119,
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "7eb6d5b8d7c36ea4427bbedbe45ef39bd8acc302d635846c0350357cf1aeaa70",
+      "asset": "homebrew-zlib-x64",
+      "bottles": [
+        {
+          "libraries": 1,
+          "sha256": "14940211b29d719bcabe03e43d7c06086c9c436c391c5b33f273763c3110f8e4",
+          "stored": 1,
+          "tag": "sonoma",
+          "url": "https://ghcr.io/v2/homebrew/core/zlib/blobs/sha256:14940211b29d719bcabe03e43d7c06086c9c436c391c5b33f273763c3110f8e4"
+        }
+      ],
+      "formula": "zlib",
+      "kind": "library",
+      "library_version": "1.3.2",
+      "sigmaker": "Generated 125 signatures \u2192 homebrew-zlib-x64.pat (15 objects, 19 functions stating too few exact bytes)"
+    }
+  ]
+}

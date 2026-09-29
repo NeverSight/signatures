@@ -1,8 +1,8 @@
 {
   "file": "macho/arm/64/homebrew-xz.pat",
   "generator": {
-    "neverd_ref": "355abd498769e2f41a93a537b69ef8047e43df5d",
-    "release": null,
+    "neverd_ref": "6228f29bb61f0b684687b1935d4f89a6dc254e40",
+    "release": "msvc-libs-20260929-homebrew",
     "tail": 65535
   },
   "lines": 386,

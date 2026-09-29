@@ -1,11 +1,11 @@
 {
   "file": "macho/arm/64/homebrew-pcre2.pat",
   "generator": {
-    "neverd_ref": "355abd498769e2f41a93a537b69ef8047e43df5d",
-    "release": null,
+    "neverd_ref": "6228f29bb61f0b684687b1935d4f89a6dc254e40",
+    "release": "msvc-libs-20260929-homebrew",
     "tail": 65535
   },
-  "lines": 1040,
+  "lines": 964,
   "sources": [
     {
       "arch": "arm64",
@@ -37,7 +37,7 @@
       "formula": "pcre2",
       "kind": "library",
       "library_version": "10.49",
-      "sigmaker": "Generated 4972 signatures \u2192 homebrew-pcre2-arm64.pat (282 objects, 3339 functions stating too few exact bytes)"
+      "sigmaker": "Generated 3078 signatures \u2192 homebrew-pcre2-arm64.pat (282 objects, 237 functions stating too few exact bytes, 4996 compiler-synthesized routines left unnamed)"
     }
   ]
 }

@@ -234,7 +234,11 @@ class MatrixTests(unittest.TestCase):
                 tags = [entry["tag"] for entry in row["bottles"]]
                 self.assertTrue(tags)
                 self.assertEqual(len(tags), len(set(tags)))
-                self.assertTrue(all(tag.startswith("arm64_") for tag in tags))
+                # macOS bottles: `<release>` on Intel, `arm64_<release>` on
+                # Apple silicon; a `*_linux` bottle holds ELF libraries.
+                for tag in tags:
+                    self.assertRegex(tag, r"^(arm64_)?[a-z]+(_[a-z]+)*$")
+                    self.assertFalse(tag.endswith("_linux"), tag)
                 for entry in row["bottles"]:
                     self.assertEqual(set(entry), {"tag", "sha256"})
                     self.assertRegex(entry["sha256"], re.compile(r"^[0-9a-f]{64}$"))

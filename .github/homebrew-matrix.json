@@ -23,6 +23,10 @@
       {
         "tag": "arm64_golden_gate",
         "sha256": "4c6a3c45500d0d1e91c6a6cdc1e889dc5776decd0fe5aa0bec1fbabae7311453"
+      },
+      {
+        "tag": "sonoma",
+        "sha256": "14940211b29d719bcabe03e43d7c06086c9c436c391c5b33f273763c3110f8e4"
       }
     ]
   },
