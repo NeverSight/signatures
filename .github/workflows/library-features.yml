@@ -1,0 +1,61 @@
+name: Library feature evidence
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/issue-495-library-features]
+    paths:
+      - .github/workflows/library-features.yml
+      - scripts/build_library_feature_probes.py
+      - scripts/Build-LibraryFeatureProbes.ps1
+      - scripts/tests/test_library_feature_probes.py
+      - validation/library-features/**
+  pull_request:
+    paths:
+      - features/**
+      - scripts/*library*feature*
+      - scripts/Build-LibraryFeatureProbes.ps1
+      - scripts/tests/test_library_feature*.py
+      - validation/library-features/**
+      - .github/workflows/library-features.yml
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: |
+            scripts
+            validation
+            .github
+            features
+      - run: python3 -m unittest discover -s scripts/tests -v
+
+  windows:
+    runs-on: windows-2022
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          sparse-checkout: |
+            scripts
+            validation
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - name: Compile STL and ATL evidence
+        shell: pwsh
+        run: ./scripts/Build-LibraryFeatureProbes.ps1 -OutputDirectory "$env:RUNNER_TEMP/library-features"
+      - name: Retain complete or partial evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: msvc-library-feature-evidence
+          path: ${{ runner.temp }}/library-features
+          if-no-files-found: error
+          retention-days: 90
