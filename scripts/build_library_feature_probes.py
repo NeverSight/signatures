@@ -31,6 +31,7 @@ MACROS = (
     "_MSVC_STL_VERSION", "_MSVC_STL_UPDATE", "_ITERATOR_DEBUG_LEVEL",
     "_DEBUG", "_DLL", "_MT", "__SIZEOF_POINTER__", "__SIZEOF_WCHAR_T__",
     "__BYTE_ORDER__", "__ORDER_LITTLE_ENDIAN__", "_M_X64", "__aarch64__",
+    "_NATIVE_WCHAR_T_DEFINED", "_ATL_VER", "_ATL_FREE_THREADED", "_ATL_APARTMENT_THREADED",
 )
 
 
@@ -48,10 +49,10 @@ def write_json(path: Path, data: object) -> None:
 
 
 def command(argv: list[str], output: Path, stem: str, *, keep_stdout: bool = True,
-            allowed_codes: tuple[int, ...] = (0,)) -> str:
+            allowed_codes: tuple[int, ...] = (0,), cwd: Path | None = None) -> str:
     """Retain diagnostics before failing, including timeout and partial output."""
     try:
-        result = subprocess.run(argv, cwd=output, capture_output=True, timeout=180)
+        result = subprocess.run(argv, cwd=cwd or output, capture_output=True, timeout=180)
     except subprocess.TimeoutExpired as error:
         (output / f"{stem}.stderr.txt").write_bytes(error.stderr or b"")
         if keep_stdout:
@@ -105,6 +106,9 @@ def verify_object(path: Path, target: str) -> None:
         valid = head[:8] == bytes.fromhex("cffaedfe0c000001")
     elif target == "x86_64-coff":
         valid = head[:2] == bytes.fromhex("6486")
+    elif target == "x86_64-elf":
+        data = path.read_bytes()[:20]
+        valid = data[:6] == b"\x7fELF\x02\x01" and data[18:20] == b"\x3e\x00"
     else:
         raise ProbeError(f"unsupported probe target {target}")
     if not valid:
@@ -113,6 +117,7 @@ def verify_object(path: Path, target: str) -> None:
 
 def config_source() -> str:
     lines = ["#include <string>", "#include <vector>",
+             "#if defined(_MSC_VER)", "#include <atlbase.h>", "#endif",
              "#define ND_TEXT_I(x) #x", "#define ND_TEXT(x) ND_TEXT_I(x)"]
     for macro in MACROS:
         lines += [f"#ifdef {macro}", f'ND_CONFIG "{macro}" ND_TEXT({macro})', "#endif"]

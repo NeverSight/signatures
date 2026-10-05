@@ -40,3 +40,32 @@ ND_EXPORT void nd_user_com_release(UserComOwner *p) {
 ND_EXPORT void nd_user_assign(UserComOwner *target, const UserComOwner *source) {
   target->pointer = source->pointer;
 }
+
+// Adjacent but semantically different ownership sequences. A type annotation
+// cannot excuse these differences when checking the compiled operation.
+ND_EXPORT void nd_user_release_then_clear(UserComOwner *p) {
+  if (p->pointer) {
+    p->pointer->Release();
+    p->pointer = nullptr;
+  }
+}
+ND_EXPORT void nd_user_release_without_guard(UserComOwner *p) {
+  IUnknown *old = p->pointer;
+  p->pointer = nullptr;
+  old->Release();
+}
+ND_EXPORT void nd_user_clear_then_addref(UserComOwner *p) {
+  if (p->pointer) {
+    IUnknown *old = p->pointer;
+    p->pointer = nullptr;
+    old->AddRef();
+  }
+}
+ND_EXPORT void nd_user_assign_release_first(UserComOwner *target,
+                                          const UserComOwner *source) {
+  if (target->pointer)
+    target->pointer->Release();
+  target->pointer = source->pointer;
+  if (target->pointer)
+    target->pointer->AddRef();
+}
