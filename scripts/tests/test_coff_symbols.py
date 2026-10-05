@@ -64,6 +64,30 @@ def archive(*members: bytes) -> bytes:
 
 
 class CodeSymbolTests(unittest.TestCase):
+    @staticmethod
+    def bsd_member(name: bytes, body: bytes) -> bytes:
+        name += b"\x00" * (-len(name) % 4)
+        payload = name + body
+        header = (f"#1/{len(name)}".encode().ljust(16) + b"0".ljust(12)
+                  + b"".ljust(6) * 2 + b"644".ljust(8)
+                  + str(len(payload)).encode().ljust(10) + b"`\n")
+        return header + payload + (b"\n" if len(payload) & 1 else b"")
+
+    def test_bsd_extended_names_and_symbol_tables(self) -> None:
+        data = (coff_symbols.ARCHIVE_MAGIC
+                + self.bsd_member(b"__.SYMDEF SORTED", b"index, not object code")
+                + self.bsd_member(b"long-object-name.obj", coff_object()))
+        members = list(coff_symbols.archive_members(data))
+        self.assertEqual(members, [coff_object()])
+        self.assertEqual(coff_symbols.object_symbols(members[0]),
+                         {"?Run@@YAXXZ", "_static"})
+
+    def test_truncated_bsd_members_and_names_are_rejected(self) -> None:
+        member = self.bsd_member(b"name.obj", coff_object())
+        for broken in (member[:-10], b"#1/999".ljust(16) + member[16:]):
+            with self.subTest(broken=broken[:16]), self.assertRaises(ValueError):
+                list(coff_symbols.archive_members(coff_symbols.ARCHIVE_MAGIC + broken))
+
     def test_names_defined_in_code_sections(self) -> None:
         for bigobj in (False, True):
             with self.subTest(bigobj=bigobj):

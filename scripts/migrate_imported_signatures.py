@@ -265,15 +265,21 @@ def parse_hex(text: str) -> tuple[bytes, bytes]:
 def demangle(names: list[str]) -> list[str]:
     """Demangle Itanium names the way rizin's demangler printed them.
 
-    That is libiberty without DMGL_VERBOSE: `std::string::rbegin() const`,
-    not `std::basic_string<char, ...>::rbegin() const`, which is what plain
-    c++filt prints. `c++filt -i` turns the verbose expansion off.
+    Use the compact `std::string::rbegin() const` spelling. GNU c++filt
+    needs `-i` to disable DMGL_VERBOSE expansion; LLVM's demangler already
+    uses that spelling. ELF names must retain their leading underscore.
     """
 
     if not names:
         return []
+    help_text = subprocess.run(
+        ["c++filt", "--help"], capture_output=True, text=True, check=True,
+    ).stdout
+    options = ["-n"]
+    if "--no-verbose" in help_text:
+        options.append("-i")
     completed = subprocess.run(
-        ["c++filt", "-i"], input="\n".join(names) + "\n", capture_output=True, text=True,
+        ["c++filt", *options], input="\n".join(names) + "\n", capture_output=True, text=True,
         check=True,
     )
     lines = completed.stdout.split("\n")

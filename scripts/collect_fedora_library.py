@@ -101,7 +101,16 @@ def unpack_rpm(package: Path, root: Path) -> None:
     if command is None:
         raise BuildError(f"{package.name}: unknown payload compression")
     archive = subprocess.run(command, input=payload, capture_output=True, check=True).stdout
-    subprocess.run(["cpio", "-idm", "--quiet", "--no-absolute-filenames"], input=archive,
+    version = subprocess.run(["cpio", "--version"], capture_output=True,
+                             text=True, check=True).stdout
+    if "GNU cpio" in version:
+        path_options = ["--no-absolute-filenames"]
+    elif "bsdcpio" in version:
+        # BSD cpio rejects absolute paths and traversal unless --insecure is set.
+        path_options = []
+    else:
+        raise BuildError("unsupported cpio implementation")
+    subprocess.run(["cpio", "-idm", "--quiet", *path_options], input=archive,
                    cwd=root, check=True)
 
 

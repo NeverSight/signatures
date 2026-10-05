@@ -11,6 +11,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path, PurePosixPath
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -30,6 +31,38 @@ def rpm(payload: bytes, signature_store: bytes = b"") -> bytes:
     signature = header(signature_store)
     padding = bytes(-(96 + len(signature)) % 8)
     return bytes(96) + signature + padding + header(b"main") + payload
+
+
+class CpioOptionsTests(unittest.TestCase):
+    def test_each_supported_tool_keeps_its_path_checks(self) -> None:
+        for version, options in (("cpio (GNU cpio) 2.15", ["--no-absolute-filenames"]),
+                                 ("bsdcpio 3.5.3", [])):
+            with self.subTest(version=version), tempfile.TemporaryDirectory() as scratch:
+                root = Path(scratch)
+                package = root / "test.rpm"
+                package.write_bytes(rpm(gzip.compress(b"cpio payload")))
+                with mock.patch.object(collect.subprocess, "run", side_effect=[
+                    subprocess.CompletedProcess([], 0, stdout=b"cpio payload"),
+                    subprocess.CompletedProcess([], 0, stdout=version),
+                    subprocess.CompletedProcess([], 0),
+                ]) as run:
+                    collect.unpack_rpm(package, root)
+                self.assertEqual(run.call_args_list[-1].args[0],
+                                 ["cpio", "-idm", "--quiet", *options])
+                self.assertEqual(run.call_args_list[-1].kwargs["input"], b"cpio payload")
+
+    def test_unknown_tool_fails_before_extraction(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            package = root / "test.rpm"
+            package.write_bytes(rpm(gzip.compress(b"cpio payload")))
+            with mock.patch.object(collect.subprocess, "run", side_effect=[
+                subprocess.CompletedProcess([], 0, stdout=b"cpio payload"),
+                subprocess.CompletedProcess([], 0, stdout="unknown cpio"),
+            ]) as run:
+                with self.assertRaisesRegex(collect.BuildError, "unsupported cpio"):
+                    collect.unpack_rpm(package, root)
+            self.assertEqual(run.call_count, 2)
 
 
 @unittest.skipUnless(shutil.which("cpio"), "needs cpio")

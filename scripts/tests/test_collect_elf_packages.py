@@ -52,6 +52,49 @@ class SourceTests(unittest.TestCase):
                                    ("bb", "android-ndk-r24-linux.zip")])
 
 
+class UnpackTests(unittest.TestCase):
+    def test_tar_members_and_hardlinks_retain_their_bytes(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            package = root / "fixture.tar.bz2"
+            with tarfile.open(package, "w:bz2") as archive:
+                for name, data in (("pkg/lib.a", b"archive bytes"),
+                                   ("pkg/unit.o", b"object bytes"),
+                                   ("pkg/README", b"unrelated")):
+                    member = tarfile.TarInfo(name)
+                    member.size = len(data)
+                    archive.addfile(member, io.BytesIO(data))
+                link = tarfile.TarInfo("pkg/copy.a")
+                link.type = tarfile.LNKTYPE
+                link.linkname = "pkg/lib.a"
+                archive.addfile(link)
+                link = tarfile.TarInfo("pkg/symlink.a")
+                link.type = tarfile.SYMTYPE
+                link.linkname = "lib.a"
+                archive.addfile(link)
+            destination = root / "unpacked"
+            files = fetcher.unpack(package, destination)
+            self.assertEqual({p.name: p.read_bytes() for p in files}, {
+                "lib.a": b"archive bytes", "copy.a": b"archive bytes",
+                "unit.o": b"object bytes",
+            })
+            self.assertFalse((destination / "pkg/README").exists())
+            self.assertFalse((destination / "pkg/symlink.a").exists())
+
+    def test_tar_members_cannot_escape_the_destination(self) -> None:
+        for name in ("../outside.a", "/outside.a"):
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as scratch:
+                root = Path(scratch)
+                package = root / "fixture.tar.bz2"
+                with tarfile.open(package, "w:bz2") as archive:
+                    member = tarfile.TarInfo(name)
+                    member.size = 1
+                    archive.addfile(member, io.BytesIO(b"x"))
+                with self.assertRaisesRegex(ValueError, "unsafe archive member"):
+                    fetcher.unpack(package, root / "unpacked")
+                self.assertFalse((root / "outside.a").exists())
+
+
 class ObtainTests(unittest.TestCase):
     def obtain(self, transfers: list[bytes]) -> tuple[Path | None, str | None, list[str]]:
         """What obtain() makes of these transfers, and the files it leaves."""

@@ -40,11 +40,21 @@ def archive_members(data: bytes):
             raise ValueError(f"archive member header at {offset:#x} is malformed")
         name = header[:16].rstrip()
         size = int(header[48:58].decode("ascii").strip())
+        if size < 0 or offset + 60 + size > len(data):
+            raise ValueError(f"archive member at {offset:#x} is truncated")
         body = data[offset + 60 : offset + 60 + size]
+        if name.startswith(b"#1/"):
+            # BSD ar prefixes the object with its padded, extended filename.
+            length = int(name[3:])
+            if length <= 0 or length > len(body):
+                raise ValueError(f"archive member name at {offset:#x} is malformed")
+            name, body = body[:length].rstrip(b"\x00"), body[length:]
         # "/" and "//" are the linker and long-name members, "/<ECSYMBOLS>/"
         # the ARM64EC symbol map, "/SYM64/" GNU ar's 64-bit symbol table;
         # "/123" is a member with a long name.
-        if name not in (b"/", b"//", b"/SYM64/") and not name.startswith(b"/<"):
+        if (name not in (b"/", b"//", b"/SYM64/") and not name.startswith(b"/<")
+                and name.rstrip(b"/") not in (b"__.SYMDEF", b"__.SYMDEF SORTED",
+                                              b"__.SYMDEF_64", b"__.SYMDEF_64 SORTED")):
             yield body
         offset += 60 + size + (size & 1)
 
