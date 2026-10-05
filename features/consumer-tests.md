@@ -1,15 +1,17 @@
 # NeverD consumer test receipt
 
-The feature data in `21d88205a978b6bb71b3ee1b55eab5c38db0dcaa`
-(merged by signatures PR #16) was exercised by
-[NeverD PR #537](https://github.com/NeverSight/NeverD/pull/537), implementing
+The five feature packs contain 59 rules and retain their original compiler evidence.
+[NeverD PR #537](https://github.com/NeverSight/NeverD/pull/537) integrated the consumer for
 [issue #495](https://github.com/NeverSight/NeverD/issues/495).
-The tested consumer revision is
-[`7f148368679dcb7bd765f537318165770c96ecd2`](https://github.com/NeverSight/NeverD/commit/7f148368679dcb7bd765f537318165770c96ecd2).
-The [machine-readable receipt](consumer-results.json) records counts, toolchain
-and baseline failures for the macOS arm64 Release run on 2026-10-05. This receipt does not change any rule, profile or evidence
-digest. The rule files retain `consumer_verified: false` pending separate
-review of this receipt and the engine implementation.
+[NeverD PR #547](https://github.com/NeverSight/NeverD/pull/547) fixes the validation gaps
+found during the integration. This receipt records the subsequent macOS arm64 Release
+validation through NeverD revision `e917305086dd3eb4c3b3f9999d383ed286a14ccd`
+and feature/tooling revision `3477edde46545ba8396f77d04110f617f09baae5`.
+
+The [machine-readable receipt](consumer-results.json) keeps the earlier aggregate and
+baseline measurements as history. Pack-level `consumer_verified: false` remains the
+producer's data-only declaration; independent consumer results belong in this receipt.
+No matching rule, profile or compiler-evidence digest changes with this update.
 
 ## Coverage exercised
 
@@ -50,52 +52,79 @@ caller sites; it does not rewrite the historical measurement.
 
 ## Results and limits
 
-The consumer checks passed: 34 library-recognition cases cover all 59 rules;
-65 session, 132 signature, 99 debug-info and 56 PDB-identity cases passed.
-Both C routes passed 1,764 source regressions and 59 LLVMC value-semantic cases.
-Three real CLI/worker integrations and all 23 desktop/worker tests passed.
-The 230 documentation/capability checks, 28 feature Python tests, profile
-validation, pinned formatting and GUI localization validation also passed.
+The stable-build Release aggregate at `de953b4a9` ran 15,651 registered CTest
+entries: 15,566 passed, 77 were skipped and eight failed. The failure list contained
+seven distinct test names because the pointer-relocation case is registered in two
+binaries. This initial run is retained unchanged in the machine-readable receipt.
 
-The full aggregate is **not green**: the initial integrated run executed
-15,572 CTest entries with 113 failures. Lower-concurrency replay and a separate
-build of dev `c32e0a31c` reproduced 88 distinct failures on both revisions.
-Two regressions in tests that parsed JSON using a fixed-field-order regex were
-corrected and passed. A Swift compiler timeout also passed on retry. The
-receipt lists the baseline failures; it does not claim a final all-green
-aggregate. Existing dev benchmark reports also fail the repository-wide
-private-path check; the changed files pass the same checker separately.
+The aggregate repairs at `46a564bae` passed all nine entries in the targeted replay,
+including both registered control-flow and pointer-relocation variants. Four actual
+Objective-C runtime fixtures now preserve floating/record setters, nested enumeration
+selectors, CoreData properties and constant-object graphs. The constant-object fixture
+uses Apple Clang's constant-literal extension; the Darwin LLVM link uses the selected
+macOS SDK. Swift compilation and a control-flow runtime timeout passed unchanged at
+lower concurrency. No failure from the aggregate remains unresolved.
 
-CPU/driver emulation, Unicorn semantic tests and the external binary corpus
-were disabled. The full signatures Python suite previously had 7 macOS
-host/tool compatibility errors among 173 tests in existing collector/migration
-code; all 28 focused feature tests passed. These limits are distinct from
-successful feature matching and presentation checks.
+The complete affected source-recovery suite passed all 1,782 tests at `46a564bae`,
+including the new integer-forwarding and private-selector-spill regressions and the
+existing contradictory declaration, alias, overlap, unknown-call and outgoing-storage
+refusals.
+
+Integration with `dev` revision `71059f7f3` then passed 1,786 source-recovery cases,
+34 library-recognition cases, 65 session cases and all four affected Objective-C runtime
+fixtures. It exposed two global-address failures and one memory-copy spelling assertion
+in the pointer/exception suite. The address regression reproduced a crash in all four
+O0/O2 and memory-mode program variants before the fix.
+
+The global-address repair at `8d3cee425` passes all four memory execution tests, 63 LLVMC
+execution/value tests, three CLI/worker integrations and the three initial failed cases.
+The final pointer/exception/ABI suite passes 876 cases, with 20 documented corpus skips
+and no failures. Its last assertion update distinguishes an observable global store
+from a redundant local copy. The code repair and subsequent test-only revision are
+recorded separately in the receipt; no initial failures remain unresolved.
+
+These results combine the complete aggregate with its repaired failure replay and
+affected-suite verification. They are not a claim of a single all-green aggregate at
+the final revision. The 77 platform, corpus and optional solver/oracle skips remain
+unexecuted coverage.
+
+The signature tooling suite passes all 181 tests after the portability fixes in
+[signatures PR #18](https://github.com/NeverSight/signatures/pull/18). The pack validator
+accepts all five packs and 59 rules. Previously reported collector compatibility errors
+and benchmark-path provenance failures have been corrected; the historical measurements
+remain available in the receipt.
+
+Focused checks also exercise 358 jump-table cases, 85 LowIR instruction-boundary cases,
+81 Block source-proof cases, and 63 LLVMC execution/value cases. The Block runtime oracle
+compiles and executes all eight ownership, fixup and profiling combinations. The i386
+wide-argument and frame-address fixes pass both C routes against independent arithmetic
+oracles. The full test run uses a stable build; compilation and runtime checks are not
+counted as complete when skipped or interrupted.
+
+CPU/driver emulation, Unicorn semantic tests and external binary corpus coverage remain
+disabled in this local configuration. PDB/ATL analysis coverage does not authorize
+execution of unresolved platform calls or expand native exception support. Earlier GUI,
+localization and documentation checks are recorded separately from the final engine run.
 
 ## Reproduction
 
-Use the fixed NeverD revision and its signatures gitlink. Configure a Release
-test build with the NeverD LLVM toolchain, Clang and `lld-link`; the latter links
-the original `/Z7` objects to local PE/PDB fixtures. Follow NeverD's
-`docs/testing.md` for dependency and build-profile requirements.
+Use the recorded NeverD revision and its signatures gitlink. Configure a Release test
+build with the NeverD LLVM toolchain, Clang and `lld-link`; the latter links the archived
+MSVC objects to matching PE/PDB fixtures. Follow NeverD's `docs/testing.md` for toolchain
+and build requirements.
 
 ```sh
 python3 scripts/validate_library_features.py
-python3 -m unittest discover -s scripts/tests -p 'test_library*.py' -q
+python3 -m unittest discover -s scripts/tests -v
 ```
 
-From the NeverD checkout:
+From the NeverD checkout, finish the build before running tests:
 
 ```sh
-cmake --build build-release --target NeverDLibraryRecognitionTests \
-  NeverDSessionCAPITests NeverDSignatureTests NeverDDebugInfoTests \
-  NeverDPDBIdentityTests NeverDObjCSourceCallTests NeverDLLVMCValueTests \
-  neverd neverd-worker --parallel 4
-ctest --test-dir build-release -R 'LibraryRecognition|LibraryFeature|WorkerLibrary' \
-  --output-on-failure
+cmake --build build-release --parallel 4
+ctest --test-dir build-release --output-on-failure --parallel 8
 ```
 
-The GUI tests require a separate Qt/KDDockWidgets build. Missing tools omit
-coverage; they do not count as successful profile validation. This receipt
-does not expand the supported profile matrix to other architectures,
-allocators, traits, LTO or debug/hardening configurations.
+The GUI tests require a separate Qt/KDDockWidgets build. Missing tools omit coverage;
+they do not count as successful profile validation. This receipt does not expand the
+supported profiles to other architectures, allocators, traits, LTO or hardening modes.
