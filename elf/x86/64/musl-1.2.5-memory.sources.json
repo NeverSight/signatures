@@ -1,0 +1,40 @@
+{
+  "evidence": {
+    "path": "features/evidence/musl-1.2.5-x64-clang22-memory.json",
+    "sha256": "31617b9832e13f41184946f98fc0b621a697e872b24461fe4673cfcc49dc538c",
+    "size": 27088
+  },
+  "family": "libc",
+  "feature_pack": {
+    "path": "features/rules/musl-1.2.5-x64-clang22-memory.json",
+    "sha256": "a10487ca98a6ed7f6878df1148f81bbfd71d5430ccb969ff704ecc07397be573",
+    "size": 5834
+  },
+  "file": "elf/x86/64/musl-1.2.5-memory.pat",
+  "generator": {
+    "neverd_ref": "cf8cfa4085ad0215bbd3b933ec31d1defa49e6d8",
+    "release": "musl-1.2.5-source",
+    "tail": 65536,
+    "tool": {
+      "path": "neverd-sigmaker",
+      "sha256": "0ba72700764b1ab7a1d5f2f39d34309ace0743c938ba1004d7142273743db499",
+      "size": 9645504
+    }
+  },
+  "lines": 5,
+  "pattern": {
+    "path": "elf/x86/64/musl-1.2.5-memory.pat",
+    "sha256": "4c235bec1fd36555ee27023803342d3db9a54dcf3a7b4f3545f4b7b0ef5b92a6",
+    "size": 456
+  },
+  "sources": [
+    {
+      "arch": "x64",
+      "archive_sha256": "a9a118bbe84d8764da0ea0d28b3ab3fae8477fc7e4085d90102b8596fc7c75e4",
+      "asset": "musl-1.2.5-x64-clang22-memory",
+      "kind": "library",
+      "origin": "https://musl.libc.org/releases/musl-1.2.5.tar.gz",
+      "revision": "1.2.5"
+    }
+  ]
+}

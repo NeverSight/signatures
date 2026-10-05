@@ -17,3 +17,21 @@ identities and hashes appear in the evidence manifest; SDK source headers are
 not copied into this repository. Clang's version and executable hash and the
 SDK settings hash identify the compilation environment independently of the
 libc++ source revision.
+
+The MSVC STL and ATL profiles use toolset 14.44.35207, compiler 19.44.35229.0,
+and Windows SDK 10.0.26100.0 from a licensed Visual Studio 2022 installation
+on the GitHub `windows-2022` runner. These Microsoft components retain their
+own copyright and Visual Studio / Windows SDK license terms. The evidence
+contains compiler-generated objects, disassembly and layout observations,
+original probes, and input-header hashes. It does not redistribute installed
+headers, SDK archives or preprocessed translation units. The recorded ATL
+string infrastructure is shared with MFC; it does not establish that a target
+application uses either framework.
+
+The libc memory/string profile uses the official
+[musl 1.2.5 source release](https://musl.libc.org/releases/musl-1.2.5.tar.gz).
+The release archive SHA-256 is recorded in its manifest. Its complete
+copyright/permission notices are retained in
+[musl-COPYRIGHT.txt](notices/musl-COPYRIGHT.txt), including notices for the
+individual implementations. Objects and signatures are derived from those
+unmodified sources. musl data remains a separate family from C++ libraries.

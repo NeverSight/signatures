@@ -20,7 +20,7 @@ def verify(first: Path, second: Path) -> dict:
     stable = []
     artifacts = [{entry["path"]: entry for entry in m["artifacts"]} for m in (a, b)]
     for name in sorted(artifacts[0]):
-        if not name.endswith((".o", ".obj", ".s", ".asm", ".ll")):
+        if not name.endswith((".o", ".obj", ".s", ".asm", ".ll", ".debug", ".elf", ".pat")):
             continue
         require("/" not in name and "\\" not in name and name in artifacts[1], "missing rebuilt artifact")
         records = [describe(p / name) for p in (first, second)]
@@ -44,6 +44,6 @@ if __name__ == "__main__":
         result = verify(args.first, args.second)
         if args.report:
             write_json(args.report, result)
-        print(f"reproduced {len(result['artifacts'])} object/assembly/IR artifacts")
+        print(f"reproduced {len(result['artifacts'])} compiled/pattern artifacts")
     except (FeatureError, OSError, KeyError, ValueError) as error:
         parser.exit(1, f"library feature rebuild: {error}\n")

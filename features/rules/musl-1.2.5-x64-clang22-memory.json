@@ -1,0 +1,226 @@
+{
+  "id": "musl-1.2.5-x64-clang22-memory",
+  "kind": "library-feature-pack",
+  "profile": {
+    "path": "features/profiles/musl-1.2.5-x64-clang22-memory.json",
+    "sha256": "624a6f44784e8571d25c426348664340fef147319d62c7f12c8b93f1ce845df3",
+    "size": 19191
+  },
+  "rules": [
+    {
+      "family": "libc",
+      "id": "musl.memcpy",
+      "identity_evidence": "byte-signature",
+      "layout": "c-function",
+      "negative": [
+        {
+          "build": "library-memory",
+          "expectation": "extra-effects",
+          "symbol": "nd_builtin_copy16"
+        },
+        {
+          "build": "library-memory",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_copy"
+        }
+      ],
+      "operation": "memcpy",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/musl.memcpy.pat.txt",
+          "sha256": "f6abe5e2138f5ba3794edaf74d31a7e81cb416c64f3ce3306ea8c239cedbe025",
+          "size": 95
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "memcpy"
+      },
+      "positive": [
+        {
+          "build": "library-memory",
+          "expectation": "whole-function",
+          "symbol": "memcpy"
+        }
+      ],
+      "receiver_type": null,
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    },
+    {
+      "family": "libc",
+      "id": "musl.memmove",
+      "identity_evidence": "byte-signature",
+      "layout": "c-function",
+      "negative": [
+        {
+          "build": "library-memory",
+          "expectation": "extra-effects",
+          "symbol": "nd_builtin_copy16"
+        },
+        {
+          "build": "library-memory",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_copy"
+        }
+      ],
+      "operation": "memmove",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/musl.memmove.pat.txt",
+          "sha256": "9eca51c7a5b0aad9aba1d4fa52f42537caa60f0df66fb6eb70f198d7abe11b0b",
+          "size": 96
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "memmove"
+      },
+      "positive": [
+        {
+          "build": "library-memory",
+          "expectation": "whole-function",
+          "symbol": "memmove"
+        }
+      ],
+      "receiver_type": null,
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    },
+    {
+      "family": "libc",
+      "id": "musl.memset",
+      "identity_evidence": "byte-signature",
+      "layout": "c-function",
+      "negative": [
+        {
+          "build": "library-memory",
+          "expectation": "extra-effects",
+          "symbol": "nd_builtin_copy16"
+        },
+        {
+          "build": "library-memory",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_copy"
+        }
+      ],
+      "operation": "memset",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/musl.memset.pat.txt",
+          "sha256": "9730863bf545f80035c1ecf3d485e986cb3f51ce9386561ac4d72c26093f4b52",
+          "size": 95
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "memset"
+      },
+      "positive": [
+        {
+          "build": "library-memory",
+          "expectation": "whole-function",
+          "symbol": "memset"
+        }
+      ],
+      "receiver_type": null,
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    },
+    {
+      "family": "libc",
+      "id": "musl.memcmp",
+      "identity_evidence": "byte-signature",
+      "layout": "c-function",
+      "negative": [
+        {
+          "build": "library-memory",
+          "expectation": "extra-effects",
+          "symbol": "nd_builtin_copy16"
+        },
+        {
+          "build": "library-memory",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_copy"
+        }
+      ],
+      "operation": "memcmp",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/musl.memcmp.pat.txt",
+          "sha256": "4eb2cc897e427d0756b3bcfb74d96a7f6a29c05e6789afafa5f89c4e46ff242f",
+          "size": 95
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "memcmp"
+      },
+      "positive": [
+        {
+          "build": "library-memory",
+          "expectation": "whole-function",
+          "symbol": "memcmp"
+        }
+      ],
+      "receiver_type": null,
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    },
+    {
+      "family": "libc",
+      "id": "musl.strlen",
+      "identity_evidence": "byte-signature",
+      "layout": "c-function",
+      "negative": [
+        {
+          "build": "library-memory",
+          "expectation": "extra-effects",
+          "symbol": "nd_builtin_copy16"
+        },
+        {
+          "build": "library-memory",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_copy"
+        }
+      ],
+      "operation": "strlen",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/musl.strlen.pat.txt",
+          "sha256": "8fdf4c392510d1bf6ece97637533ec016b85e2892c230ffa5980791e713ff312",
+          "size": 95
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "strlen"
+      },
+      "positive": [
+        {
+          "build": "library-memory",
+          "expectation": "whole-function",
+          "symbol": "strlen"
+        }
+      ],
+      "receiver_type": null,
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "verification": {
+    "consumer_verified": false,
+    "data_verified": true
+  }
+}

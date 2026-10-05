@@ -1,0 +1,764 @@
+{
+  "id": "msvc-14.44.35207-x64-release-atl-mfc-string",
+  "kind": "library-feature-pack",
+  "profile": {
+    "path": "features/profiles/msvc-14.44.35207-x64-release-atl-mfc-string.json",
+    "sha256": "34c00dbb696bebb248587ebbf62989a02b77f0813f9a0b36eb02730065835749",
+    "size": 50017
+  },
+  "rules": [
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.cstring-char.construct",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "cstring-char",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_GetLength"
+        }
+      ],
+      "operation": "construct",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/msvc.cstring-char.construct.pat.txt",
+          "sha256": "b134e6caa311d05c38abfee08a3e8e5b17939c7ea39ef233b59baee5842ddd3a",
+          "size": 267
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "??0?$CStringT@DV?$StrTraitATL@DV?$ChTraitsCRT@D@ATL@@@ATL@@@ATL@@QEAA@XZ"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "??0?$CStringT@DV?$StrTraitATL@DV?$ChTraitsCRT@D@ATL@@@ATL@@@ATL@@QEAA@XZ"
+        }
+      ],
+      "receiver_type": "ATL::CStringT<char, ATL::StrTraitATL<char, ATL::ChTraitsCRT<char>>>",
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.cstring-char.copy",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "cstring-char",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_GetLength"
+        }
+      ],
+      "operation": "copy",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/msvc.cstring-char.copy.pat.txt",
+          "sha256": "5560bfc8028b1ccb4344ebc3b245fe88ee682157c54bd979a650265d877e1599",
+          "size": 243
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "??0?$CStringT@DV?$StrTraitATL@DV?$ChTraitsCRT@D@ATL@@@ATL@@@ATL@@QEAA@AEBV01@@Z"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "??0?$CStringT@DV?$StrTraitATL@DV?$ChTraitsCRT@D@ATL@@@ATL@@@ATL@@QEAA@AEBV01@@Z"
+        }
+      ],
+      "receiver_type": "ATL::CStringT<char, ATL::StrTraitATL<char, ATL::ChTraitsCRT<char>>>",
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.cstring-char.assign",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "cstring-char",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_GetLength"
+        }
+      ],
+      "operation": "assign",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/msvc.cstring-char.assign.pat.txt",
+          "sha256": "18c7a245f1451757b1da29cad7259bcaecd416002260636294d17e5dd840b240",
+          "size": 482
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "??4?$CStringT@DV?$StrTraitATL@DV?$ChTraitsCRT@D@ATL@@@ATL@@@ATL@@QEAAAEAV01@AEBV01@@Z"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "??4?$CStringT@DV?$StrTraitATL@DV?$ChTraitsCRT@D@ATL@@@ATL@@@ATL@@QEAAAEAV01@AEBV01@@Z"
+        }
+      ],
+      "receiver_type": "ATL::CStringT<char, ATL::StrTraitATL<char, ATL::ChTraitsCRT<char>>>",
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.simplestring-char.getlength",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "simplestring-char",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_GetLength"
+        }
+      ],
+      "operation": "GetLength",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "data",
+            "offset": 0,
+            "op": "load"
+          },
+          {
+            "args": [
+              "data"
+            ],
+            "bits": 32,
+            "id": "length",
+            "offset": -16,
+            "op": "load"
+          }
+        ],
+        "result": "length"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "?GetLength@?$CSimpleStringT@D$0A@@ATL@@QEBAHXZ"
+        },
+        {
+          "build": "atl_string-inline",
+          "expectation": "inline-expression",
+          "symbol": "nd_cstring_char_length_inline"
+        }
+      ],
+      "receiver_type": "ATL::CSimpleStringT<char, false>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.simplestring-char.isempty",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "simplestring-char",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_IsEmpty"
+        }
+      ],
+      "operation": "IsEmpty",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "data",
+            "offset": 0,
+            "op": "load"
+          },
+          {
+            "args": [
+              "data"
+            ],
+            "bits": 32,
+            "id": "length",
+            "offset": -16,
+            "op": "load"
+          },
+          {
+            "bits": 32,
+            "id": "zero",
+            "op": "constant",
+            "value": "0x0"
+          },
+          {
+            "args": [
+              "length",
+              "zero"
+            ],
+            "bits": 8,
+            "id": "empty",
+            "op": "eq"
+          }
+        ],
+        "result": "empty"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "?IsEmpty@?$CSimpleStringT@D$0A@@ATL@@QEBA_NXZ"
+        },
+        {
+          "build": "atl_string-inline",
+          "expectation": "inline-expression",
+          "symbol": "nd_cstring_char_empty_inline"
+        }
+      ],
+      "receiver_type": "ATL::CSimpleStringT<char, false>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.simplestring-char.getstring",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "simplestring-char",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_GetLength"
+        }
+      ],
+      "operation": "GetString",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "data",
+            "offset": 0,
+            "op": "load"
+          }
+        ],
+        "result": "data"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "?GetString@?$CSimpleStringT@D$0A@@ATL@@QEBAPEBDXZ"
+        },
+        {
+          "build": "atl_string-inline",
+          "expectation": "inline-expression",
+          "symbol": "nd_cstring_char_data_inline"
+        }
+      ],
+      "receiver_type": "ATL::CSimpleStringT<char, false>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.simplestring-char.getbuffer",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "simplestring-char",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_GetLength"
+        }
+      ],
+      "operation": "GetBuffer",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/msvc.simplestring-char.getbuffer.pat.txt",
+          "sha256": "bf285c02778a2bb878992edb05eb96058409b888a208706acb7309c08f62a12d",
+          "size": 278
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "?GetBuffer@?$CSimpleStringT@D$0A@@ATL@@QEAAPEADH@Z"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "?GetBuffer@?$CSimpleStringT@D$0A@@ATL@@QEAAPEADH@Z"
+        }
+      ],
+      "receiver_type": "ATL::CSimpleStringT<char, false>",
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.simplestring-char.releasebuffer",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "simplestring-char",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_GetLength"
+        }
+      ],
+      "operation": "ReleaseBuffer",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/msvc.simplestring-char.releasebuffer.pat.txt",
+          "sha256": "d287aac749893bb24e75f85b9303000c19157ce3346a2acaa2b1b234eedf9112",
+          "size": 279
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "?ReleaseBuffer@?$CSimpleStringT@D$0A@@ATL@@QEAAXH@Z"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "?ReleaseBuffer@?$CSimpleStringT@D$0A@@ATL@@QEAAXH@Z"
+        }
+      ],
+      "receiver_type": "ATL::CSimpleStringT<char, false>",
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.cstring-wchar.construct",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "cstring-wchar",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_GetLength"
+        }
+      ],
+      "operation": "construct",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/msvc.cstring-wchar.construct.pat.txt",
+          "sha256": "2b807e18479034e593e2a901f363835c86579f27419b560fba2c76a04b1c576f",
+          "size": 270
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "??0?$CStringT@_WV?$StrTraitATL@_WV?$ChTraitsCRT@_W@ATL@@@ATL@@@ATL@@QEAA@XZ"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "??0?$CStringT@_WV?$StrTraitATL@_WV?$ChTraitsCRT@_W@ATL@@@ATL@@@ATL@@QEAA@XZ"
+        }
+      ],
+      "receiver_type": "ATL::CStringT<wchar_t, ATL::StrTraitATL<wchar_t, ATL::ChTraitsCRT<wchar_t>>>",
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.cstring-wchar.copy",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "cstring-wchar",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_GetLength"
+        }
+      ],
+      "operation": "copy",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/msvc.cstring-wchar.copy.pat.txt",
+          "sha256": "37cf7cb7566a5952e7d8bda39f8230c06fc58b899ffd7865c3c803dd3e21d56a",
+          "size": 247
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "??0?$CStringT@_WV?$StrTraitATL@_WV?$ChTraitsCRT@_W@ATL@@@ATL@@@ATL@@QEAA@AEBV01@@Z"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "??0?$CStringT@_WV?$StrTraitATL@_WV?$ChTraitsCRT@_W@ATL@@@ATL@@@ATL@@QEAA@AEBV01@@Z"
+        }
+      ],
+      "receiver_type": "ATL::CStringT<wchar_t, ATL::StrTraitATL<wchar_t, ATL::ChTraitsCRT<wchar_t>>>",
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.cstring-wchar.assign",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "cstring-wchar",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_GetLength"
+        }
+      ],
+      "operation": "assign",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/msvc.cstring-wchar.assign.pat.txt",
+          "sha256": "65cba5c4d430a8036c4312d5dc043b69185cb092a126c020bca3044a3363da48",
+          "size": 488
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "??4?$CStringT@_WV?$StrTraitATL@_WV?$ChTraitsCRT@_W@ATL@@@ATL@@@ATL@@QEAAAEAV01@AEBV01@@Z"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "??4?$CStringT@_WV?$StrTraitATL@_WV?$ChTraitsCRT@_W@ATL@@@ATL@@@ATL@@QEAAAEAV01@AEBV01@@Z"
+        }
+      ],
+      "receiver_type": "ATL::CStringT<wchar_t, ATL::StrTraitATL<wchar_t, ATL::ChTraitsCRT<wchar_t>>>",
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.simplestring-wchar.getlength",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "simplestring-wchar",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_GetLength"
+        }
+      ],
+      "operation": "GetLength",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "data",
+            "offset": 0,
+            "op": "load"
+          },
+          {
+            "args": [
+              "data"
+            ],
+            "bits": 32,
+            "id": "length",
+            "offset": -16,
+            "op": "load"
+          }
+        ],
+        "result": "length"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "?GetLength@?$CSimpleStringT@_W$0A@@ATL@@QEBAHXZ"
+        },
+        {
+          "build": "atl_string-inline",
+          "expectation": "inline-expression",
+          "symbol": "nd_cstring_wide_length_inline"
+        }
+      ],
+      "receiver_type": "ATL::CSimpleStringT<wchar_t, false>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.simplestring-wchar.isempty",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "simplestring-wchar",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_IsEmpty"
+        }
+      ],
+      "operation": "IsEmpty",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "data",
+            "offset": 0,
+            "op": "load"
+          },
+          {
+            "args": [
+              "data"
+            ],
+            "bits": 32,
+            "id": "length",
+            "offset": -16,
+            "op": "load"
+          },
+          {
+            "bits": 32,
+            "id": "zero",
+            "op": "constant",
+            "value": "0x0"
+          },
+          {
+            "args": [
+              "length",
+              "zero"
+            ],
+            "bits": 8,
+            "id": "empty",
+            "op": "eq"
+          }
+        ],
+        "result": "empty"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "?IsEmpty@?$CSimpleStringT@_W$0A@@ATL@@QEBA_NXZ"
+        },
+        {
+          "build": "atl_string-inline",
+          "expectation": "inline-expression",
+          "symbol": "nd_cstring_wide_empty_inline"
+        }
+      ],
+      "receiver_type": "ATL::CSimpleStringT<wchar_t, false>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.simplestring-wchar.getstring",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "simplestring-wchar",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_GetLength"
+        }
+      ],
+      "operation": "GetString",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "data",
+            "offset": 0,
+            "op": "load"
+          }
+        ],
+        "result": "data"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "?GetString@?$CSimpleStringT@_W$0A@@ATL@@QEBAPEB_WXZ"
+        },
+        {
+          "build": "atl_string-inline",
+          "expectation": "inline-expression",
+          "symbol": "nd_cstring_wide_data_inline"
+        }
+      ],
+      "receiver_type": "ATL::CSimpleStringT<wchar_t, false>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.simplestring-wchar.getbuffer",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "simplestring-wchar",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_GetLength"
+        }
+      ],
+      "operation": "GetBuffer",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/msvc.simplestring-wchar.getbuffer.pat.txt",
+          "sha256": "12654b1727e170c211bdc35b9cd51808889694367bed14d5d57ec79ea49e43ea",
+          "size": 281
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "?GetBuffer@?$CSimpleStringT@_W$0A@@ATL@@QEAAPEA_WH@Z"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "?GetBuffer@?$CSimpleStringT@_W$0A@@ATL@@QEAAPEA_WH@Z"
+        }
+      ],
+      "receiver_type": "ATL::CSimpleStringT<wchar_t, false>",
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    },
+    {
+      "family": "atl-mfc-string",
+      "id": "msvc.simplestring-wchar.releasebuffer",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "simplestring-wchar",
+      "negative": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_GetLength"
+        }
+      ],
+      "operation": "ReleaseBuffer",
+      "pattern": {
+        "file": {
+          "path": "features/patterns/msvc.simplestring-wchar.releasebuffer.pat.txt",
+          "sha256": "5ef568e7a0a1bb4bd25cf21e7d288820e3d070883c3c9af7516d658379834f14",
+          "size": 290
+        },
+        "fixed_bytes_min": 16,
+        "generator": "neverd-sigmaker",
+        "kind": "byte-pattern",
+        "symbol": "?ReleaseBuffer@?$CSimpleStringT@_W$0A@@ATL@@QEAAXH@Z"
+      },
+      "positive": [
+        {
+          "build": "atl_string-inline",
+          "expectation": "whole-function",
+          "symbol": "?ReleaseBuffer@?$CSimpleStringT@_W$0A@@ATL@@QEAAXH@Z"
+        }
+      ],
+      "receiver_type": "ATL::CSimpleStringT<wchar_t, false>",
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "verification": {
+    "consumer_verified": false,
+    "data_verified": true
+  }
+}

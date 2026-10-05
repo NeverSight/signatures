@@ -1,0 +1,77 @@
+{
+  "generator": {
+    "path": "neverd-sigmaker",
+    "sha256": "0ba72700764b1ab7a1d5f2f39d34309ace0743c938ba1004d7142273743db499",
+    "size": 9645504
+  },
+  "input": {
+    "path": "atl_string-inline.obj",
+    "sha256": "34b041bf513e31df5572661051f6fcdadc6516760fa3d2480d62e6fd7ef7a542",
+    "size": 428015
+  },
+  "kind": "byte-feature-generation",
+  "neverd_revision": "cf8cfa4085ad0215bbd3b933ec31d1defa49e6d8",
+  "options": [
+    "--machine=x64",
+    "--tail=65536",
+    "--references",
+    "--name=msvc-14.44.35207-x64-release"
+  ],
+  "parser": {
+    "path": "build_eh_signatures.py",
+    "sha256": "18779c752c68d65c31dd0e0660f2660e9d7e9515cd8a1838e0580720ae198db2",
+    "size": 17544
+  },
+  "patterns": [
+    {
+      "path": "features/patterns/msvc.cstring-char.construct.pat.txt",
+      "sha256": "b134e6caa311d05c38abfee08a3e8e5b17939c7ea39ef233b59baee5842ddd3a",
+      "size": 267
+    },
+    {
+      "path": "features/patterns/msvc.cstring-char.copy.pat.txt",
+      "sha256": "5560bfc8028b1ccb4344ebc3b245fe88ee682157c54bd979a650265d877e1599",
+      "size": 243
+    },
+    {
+      "path": "features/patterns/msvc.cstring-char.assign.pat.txt",
+      "sha256": "18c7a245f1451757b1da29cad7259bcaecd416002260636294d17e5dd840b240",
+      "size": 482
+    },
+    {
+      "path": "features/patterns/msvc.simplestring-char.getbuffer.pat.txt",
+      "sha256": "bf285c02778a2bb878992edb05eb96058409b888a208706acb7309c08f62a12d",
+      "size": 278
+    },
+    {
+      "path": "features/patterns/msvc.simplestring-char.releasebuffer.pat.txt",
+      "sha256": "d287aac749893bb24e75f85b9303000c19157ce3346a2acaa2b1b234eedf9112",
+      "size": 279
+    },
+    {
+      "path": "features/patterns/msvc.cstring-wchar.construct.pat.txt",
+      "sha256": "2b807e18479034e593e2a901f363835c86579f27419b560fba2c76a04b1c576f",
+      "size": 270
+    },
+    {
+      "path": "features/patterns/msvc.cstring-wchar.copy.pat.txt",
+      "sha256": "37cf7cb7566a5952e7d8bda39f8230c06fc58b899ffd7865c3c803dd3e21d56a",
+      "size": 247
+    },
+    {
+      "path": "features/patterns/msvc.cstring-wchar.assign.pat.txt",
+      "sha256": "65cba5c4d430a8036c4312d5dc043b69185cb092a126c020bca3044a3363da48",
+      "size": 488
+    },
+    {
+      "path": "features/patterns/msvc.simplestring-wchar.getbuffer.pat.txt",
+      "sha256": "12654b1727e170c211bdc35b9cd51808889694367bed14d5d57ec79ea49e43ea",
+      "size": 281
+    },
+    {
+      "path": "features/patterns/msvc.simplestring-wchar.releasebuffer.pat.txt",
+      "sha256": "5ef568e7a0a1bb4bd25cf21e7d288820e3d070883c3c9af7516d658379834f14",
+      "size": 290
+    }
+  ]
+}

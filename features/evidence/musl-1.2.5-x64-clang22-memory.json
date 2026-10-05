@@ -1,0 +1,707 @@
+{
+  "artifacts": [
+    {
+      "path": "byte-matcher-report.json",
+      "sha256": "01bff45e6be983680e02e8fed652ac799c5c253b22fdf3643b0c1bdea9ae9f24",
+      "size": 496
+    },
+    {
+      "path": "compiler.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "compiler.stdout.txt",
+      "sha256": "60cf89441c7dfe10888d65377b3b22dbb034bbead7681ab26decf548c86d20c2",
+      "size": 134
+    },
+    {
+      "path": "configure.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "configure.stdout.txt",
+      "sha256": "c1096e7dd718554e7d55b82ecc1e4335a04c045f468d88f29f486f22fcb92ba5",
+      "size": 3976
+    },
+    {
+      "path": "dependencies-3.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "dependencies-3.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "dependencies-4.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "dependencies-4.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "libc-probe.o",
+      "sha256": "b94fac8d66c428a3e86d51ff472b8a3c1794f6f7d9ae959ecd4be2b6a265fee6",
+      "size": 7296
+    },
+    {
+      "path": "libc-probe.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "libc-probe.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "libc.c",
+      "sha256": "0ac75757682b51eee2b075c629999ff10b8258fdaf7a0bba32615b68f8b0af1f",
+      "size": 1425
+    },
+    {
+      "path": "library-memory-symbols.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "library-memory-symbols.stdout.txt",
+      "sha256": "92dc7aeb25ebb3221803ca192e3f43fc48773bea47fb53a2629ed66de02bbfa5",
+      "size": 649
+    },
+    {
+      "path": "library-memory.debug",
+      "sha256": "23268e5d958e558b8f43b78997fc3703681929760c6078ede9f71de70c6e2365",
+      "size": 8152
+    },
+    {
+      "path": "library-memory.elf",
+      "sha256": "8f7ee217b272665638a56253148b6aa754a960b571d5cd94ce058a8e05194801",
+      "size": 2048
+    },
+    {
+      "path": "library-memory.truth.json",
+      "sha256": "db96bfe2e64a464ae62247d88afa654b81635b6585950731e9248681ad7de082",
+      "size": 1157
+    },
+    {
+      "path": "link.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "link.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "make.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "make.stdout.txt",
+      "sha256": "1fa1f76d402ad857731d0f8184e1f0d84ee1b02fee6d9c2342372f80285af8cb",
+      "size": 6989
+    },
+    {
+      "path": "memcmp-disassembly.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "memcmp-disassembly.stdout.txt",
+      "sha256": "be0c6d99ece257e1f09d848d54409b4405eac7c6713e67ce9363cdac720f6b05",
+      "size": 953
+    },
+    {
+      "path": "memcmp.o",
+      "sha256": "d274bbb3f34c42fdc243e0f95cc5385bce30500b2b901f8a9a03e9491abb6383",
+      "size": 3552
+    },
+    {
+      "path": "memcpy-disassembly.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "memcpy-disassembly.stdout.txt",
+      "sha256": "71fe3995fda6f9eaa63fd788f9fd85b0839344e196b343bd84fe3fb80db41784",
+      "size": 1146
+    },
+    {
+      "path": "memcpy.o",
+      "sha256": "e88617ce914aa2cb925c6762976b6d5e4193e554ff7f836f240c9b4247db9299",
+      "size": 1384
+    },
+    {
+      "path": "memmove-disassembly.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "memmove-disassembly.stdout.txt",
+      "sha256": "54f0581b3abab7073a8cda80df82e2541f6a5601499b92d78dc877d9a12bc74c",
+      "size": 834
+    },
+    {
+      "path": "memmove.o",
+      "sha256": "c84781cec90dbd890d888c6b5e2a30d105ec905e2857d0b11d9ac4211ebc1c6c",
+      "size": 1456
+    },
+    {
+      "path": "memset-disassembly.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "memset-disassembly.stdout.txt",
+      "sha256": "cd58a8a36dc92db8ecfbe0771e02286c1e4ad958683c44887665dfd1ca4e17ef",
+      "size": 3513
+    },
+    {
+      "path": "memset.o",
+      "sha256": "e1edc2bc33f053e3d976e00694a52c2f9917efd18ff74782e35d773b28e48d8c",
+      "size": 1536
+    },
+    {
+      "path": "musl-1.2.5-memory.pat",
+      "sha256": "4c235bec1fd36555ee27023803342d3db9a54dcf3a7b4f3545f4b7b0ef5b92a6",
+      "size": 456
+    },
+    {
+      "path": "musl-config.mak",
+      "sha256": "4615aeb47a4a7c033c7d55baaeac2140b548bd7b47442537a2435793531fdf23",
+      "size": 1906
+    },
+    {
+      "path": "sigmaker.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "sigmaker.stdout.txt",
+      "sha256": "ae97494822ddee4a2726ae8f5ec5f256fa4198b20757784e61577ebefacb7a5c",
+      "size": 61
+    },
+    {
+      "path": "strip.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "strip.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "strlen-disassembly.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "strlen-disassembly.stdout.txt",
+      "sha256": "868e3232eba06927fee905f27fcc536683b26b77047749ddd38cab4a7473bb1a",
+      "size": 4323
+    },
+    {
+      "path": "strlen.o",
+      "sha256": "c6bce6a6c2ff72a2c41e01c4385430cea7bcdfa779e9b01f5de5caae80d57604",
+      "size": 3832
+    },
+    {
+      "path": "verify-patterns.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "verify-patterns.stdout.txt",
+      "sha256": "606db5bad953b2e6899b595eedd4c8de3f43a71cc7f4d99640e488bed7c6823d",
+      "size": 33
+    }
+  ],
+  "builds": [
+    {
+      "arguments": {
+        "configure": [
+          "sh",
+          "./configure",
+          "--target=x86_64-linux-musl",
+          "--disable-shared",
+          "CC=${compiler} --no-default-config --target=x86_64-linux-musl",
+          "AR=${llvm-bin}/llvm-ar",
+          "RANLIB=${llvm-bin}/llvm-ranlib",
+          "CFLAGS=-O2 -g -ffile-prefix-map=${musl}=/src/musl -fdebug-compilation-dir=/src/musl"
+        ],
+        "library": [
+          [
+            "${compiler}",
+            "--no-default-config",
+            "--target=x86_64-linux-musl",
+            "-std=c99",
+            "-nostdinc",
+            "-ffreestanding",
+            "-fexcess-precision=standard",
+            "-frounding-math",
+            "-fno-strict-aliasing",
+            "-Wa,--noexecstack",
+            "-D_XOPEN_SOURCE=700",
+            "-I./arch/x86_64",
+            "-I./arch/generic",
+            "-Iobj/src/internal",
+            "-I./src/include",
+            "-I./src/internal",
+            "-Iobj/include",
+            "-I./include",
+            "-pipe",
+            "-fno-unwind-tables",
+            "-fno-asynchronous-unwind-tables",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-w",
+            "-Wno-pointer-to-int-cast",
+            "-Werror=implicit-function-declaration",
+            "-Werror=implicit-int",
+            "-Werror=pointer-sign",
+            "-Werror=pointer-arith",
+            "-Werror=int-conversion",
+            "-Werror=incompatible-pointer-types",
+            "-Qunused-arguments",
+            "-Waddress",
+            "-Warray-bounds",
+            "-Wchar-subscripts",
+            "-Wduplicate-decl-specifier",
+            "-Winit-self",
+            "-Wreturn-type",
+            "-Wsequence-point",
+            "-Wstrict-aliasing",
+            "-Wunused-function",
+            "-Wunused-label",
+            "-Wunused-variable",
+            "-O2",
+            "-g",
+            "-ffile-prefix-map=${musl}=/src/musl",
+            "-fdebug-compilation-dir=/src/musl",
+            "-fno-stack-protector",
+            "-x",
+            "assembler",
+            "-c",
+            "-o",
+            "obj/src/string/x86_64/memcpy.o",
+            "-"
+          ],
+          [
+            "${compiler}",
+            "--no-default-config",
+            "--target=x86_64-linux-musl",
+            "-std=c99",
+            "-nostdinc",
+            "-ffreestanding",
+            "-fexcess-precision=standard",
+            "-frounding-math",
+            "-fno-strict-aliasing",
+            "-Wa,--noexecstack",
+            "-D_XOPEN_SOURCE=700",
+            "-I./arch/x86_64",
+            "-I./arch/generic",
+            "-Iobj/src/internal",
+            "-I./src/include",
+            "-I./src/internal",
+            "-Iobj/include",
+            "-I./include",
+            "-pipe",
+            "-fno-unwind-tables",
+            "-fno-asynchronous-unwind-tables",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-w",
+            "-Wno-pointer-to-int-cast",
+            "-Werror=implicit-function-declaration",
+            "-Werror=implicit-int",
+            "-Werror=pointer-sign",
+            "-Werror=pointer-arith",
+            "-Werror=int-conversion",
+            "-Werror=incompatible-pointer-types",
+            "-Qunused-arguments",
+            "-Waddress",
+            "-Warray-bounds",
+            "-Wchar-subscripts",
+            "-Wduplicate-decl-specifier",
+            "-Winit-self",
+            "-Wreturn-type",
+            "-Wsequence-point",
+            "-Wstrict-aliasing",
+            "-Wunused-function",
+            "-Wunused-label",
+            "-Wunused-variable",
+            "-O2",
+            "-g",
+            "-ffile-prefix-map=${musl}=/src/musl",
+            "-fdebug-compilation-dir=/src/musl",
+            "-x",
+            "assembler",
+            "-c",
+            "-o",
+            "obj/src/string/x86_64/memmove.o",
+            "-"
+          ],
+          [
+            "${compiler}",
+            "--no-default-config",
+            "--target=x86_64-linux-musl",
+            "-std=c99",
+            "-nostdinc",
+            "-ffreestanding",
+            "-fexcess-precision=standard",
+            "-frounding-math",
+            "-fno-strict-aliasing",
+            "-Wa,--noexecstack",
+            "-D_XOPEN_SOURCE=700",
+            "-I./arch/x86_64",
+            "-I./arch/generic",
+            "-Iobj/src/internal",
+            "-I./src/include",
+            "-I./src/internal",
+            "-Iobj/include",
+            "-I./include",
+            "-pipe",
+            "-fno-unwind-tables",
+            "-fno-asynchronous-unwind-tables",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-w",
+            "-Wno-pointer-to-int-cast",
+            "-Werror=implicit-function-declaration",
+            "-Werror=implicit-int",
+            "-Werror=pointer-sign",
+            "-Werror=pointer-arith",
+            "-Werror=int-conversion",
+            "-Werror=incompatible-pointer-types",
+            "-Qunused-arguments",
+            "-Waddress",
+            "-Warray-bounds",
+            "-Wchar-subscripts",
+            "-Wduplicate-decl-specifier",
+            "-Winit-self",
+            "-Wreturn-type",
+            "-Wsequence-point",
+            "-Wstrict-aliasing",
+            "-Wunused-function",
+            "-Wunused-label",
+            "-Wunused-variable",
+            "-O2",
+            "-g",
+            "-ffile-prefix-map=${musl}=/src/musl",
+            "-fdebug-compilation-dir=/src/musl",
+            "-fno-stack-protector",
+            "-x",
+            "assembler",
+            "-c",
+            "-o",
+            "obj/src/string/x86_64/memset.o",
+            "-"
+          ],
+          [
+            "${compiler}",
+            "--no-default-config",
+            "--target=x86_64-linux-musl",
+            "-std=c99",
+            "-nostdinc",
+            "-ffreestanding",
+            "-fexcess-precision=standard",
+            "-frounding-math",
+            "-fno-strict-aliasing",
+            "-Wa,--noexecstack",
+            "-D_XOPEN_SOURCE=700",
+            "-I./arch/x86_64",
+            "-I./arch/generic",
+            "-Iobj/src/internal",
+            "-I./src/include",
+            "-I./src/internal",
+            "-Iobj/include",
+            "-I./include",
+            "-pipe",
+            "-fno-unwind-tables",
+            "-fno-asynchronous-unwind-tables",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-w",
+            "-Wno-pointer-to-int-cast",
+            "-Werror=implicit-function-declaration",
+            "-Werror=implicit-int",
+            "-Werror=pointer-sign",
+            "-Werror=pointer-arith",
+            "-Werror=int-conversion",
+            "-Werror=incompatible-pointer-types",
+            "-Qunused-arguments",
+            "-Waddress",
+            "-Warray-bounds",
+            "-Wchar-subscripts",
+            "-Wduplicate-decl-specifier",
+            "-Winit-self",
+            "-Wreturn-type",
+            "-Wsequence-point",
+            "-Wstrict-aliasing",
+            "-Wunused-function",
+            "-Wunused-label",
+            "-Wunused-variable",
+            "-O2",
+            "-g",
+            "-ffile-prefix-map=${musl}=/src/musl",
+            "-fdebug-compilation-dir=/src/musl",
+            "-c",
+            "-o",
+            "obj/src/string/memcmp.o",
+            "src/string/memcmp.c"
+          ],
+          [
+            "${compiler}",
+            "--no-default-config",
+            "--target=x86_64-linux-musl",
+            "-std=c99",
+            "-nostdinc",
+            "-ffreestanding",
+            "-fexcess-precision=standard",
+            "-frounding-math",
+            "-fno-strict-aliasing",
+            "-Wa,--noexecstack",
+            "-D_XOPEN_SOURCE=700",
+            "-I./arch/x86_64",
+            "-I./arch/generic",
+            "-Iobj/src/internal",
+            "-I./src/include",
+            "-I./src/internal",
+            "-Iobj/include",
+            "-I./include",
+            "-pipe",
+            "-fno-unwind-tables",
+            "-fno-asynchronous-unwind-tables",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-w",
+            "-Wno-pointer-to-int-cast",
+            "-Werror=implicit-function-declaration",
+            "-Werror=implicit-int",
+            "-Werror=pointer-sign",
+            "-Werror=pointer-arith",
+            "-Werror=int-conversion",
+            "-Werror=incompatible-pointer-types",
+            "-Qunused-arguments",
+            "-Waddress",
+            "-Warray-bounds",
+            "-Wchar-subscripts",
+            "-Wduplicate-decl-specifier",
+            "-Winit-self",
+            "-Wreturn-type",
+            "-Wsequence-point",
+            "-Wstrict-aliasing",
+            "-Wunused-function",
+            "-Wunused-label",
+            "-Wunused-variable",
+            "-O2",
+            "-g",
+            "-ffile-prefix-map=${musl}=/src/musl",
+            "-fdebug-compilation-dir=/src/musl",
+            "-c",
+            "-o",
+            "obj/src/string/strlen.o",
+            "src/string/strlen.c"
+          ]
+        ],
+        "link": [
+          "/opt/homebrew/opt/lld/bin/ld.lld",
+          "-static",
+          "--build-id=sha1",
+          "-e",
+          "nd_libc_probe",
+          "-o",
+          "library-memory.debug",
+          "libc-probe.o",
+          "memcpy.o",
+          "memmove.o",
+          "memset.o",
+          "memcmp.o",
+          "strlen.o"
+        ],
+        "make_commands": [
+          "LC_ALL=C awk -f ./tools/add-cfi.common.awk -f ./tools/add-cfi.x86_64.awk src/string/x86_64/memcpy.s | ${compiler} --no-default-config --target=x86_64-linux-musl -std=c99 -nostdinc -ffreestanding -fexcess-precision=standard -frounding-math -fno-strict-aliasing -Wa,--noexecstack -D_XOPEN_SOURCE=700 -I./arch/x86_64 -I./arch/generic -Iobj/src/internal -I./src/include -I./src/internal -Iobj/include -I./include  -pipe -fno-unwind-tables -fno-asynchronous-unwind-tables -ffunction-sections -fdata-sections -w -Wno-pointer-to-int-cast -Werror=implicit-function-declaration -Werror=implicit-int -Werror=pointer-sign -Werror=pointer-arith -Werror=int-conversion -Werror=incompatible-pointer-types -Qunused-arguments -Waddress -Warray-bounds -Wchar-subscripts -Wduplicate-decl-specifier -Winit-self -Wreturn-type -Wsequence-point -Wstrict-aliasing -Wunused-function -Wunused-label -Wunused-variable -O2 -g -ffile-prefix-map=${musl}=/src/musl -fdebug-compilation-dir=/src/musl  -fno-stack-protector -x assembler -c -o obj/src/string/x86_64/memcpy.o -",
+          "LC_ALL=C awk -f ./tools/add-cfi.common.awk -f ./tools/add-cfi.x86_64.awk src/string/x86_64/memmove.s | ${compiler} --no-default-config --target=x86_64-linux-musl -std=c99 -nostdinc -ffreestanding -fexcess-precision=standard -frounding-math -fno-strict-aliasing -Wa,--noexecstack -D_XOPEN_SOURCE=700 -I./arch/x86_64 -I./arch/generic -Iobj/src/internal -I./src/include -I./src/internal -Iobj/include -I./include  -pipe -fno-unwind-tables -fno-asynchronous-unwind-tables -ffunction-sections -fdata-sections -w -Wno-pointer-to-int-cast -Werror=implicit-function-declaration -Werror=implicit-int -Werror=pointer-sign -Werror=pointer-arith -Werror=int-conversion -Werror=incompatible-pointer-types -Qunused-arguments -Waddress -Warray-bounds -Wchar-subscripts -Wduplicate-decl-specifier -Winit-self -Wreturn-type -Wsequence-point -Wstrict-aliasing -Wunused-function -Wunused-label -Wunused-variable -O2 -g -ffile-prefix-map=${musl}=/src/musl -fdebug-compilation-dir=/src/musl  -x assembler -c -o obj/src/string/x86_64/memmove.o -",
+          "LC_ALL=C awk -f ./tools/add-cfi.common.awk -f ./tools/add-cfi.x86_64.awk src/string/x86_64/memset.s | ${compiler} --no-default-config --target=x86_64-linux-musl -std=c99 -nostdinc -ffreestanding -fexcess-precision=standard -frounding-math -fno-strict-aliasing -Wa,--noexecstack -D_XOPEN_SOURCE=700 -I./arch/x86_64 -I./arch/generic -Iobj/src/internal -I./src/include -I./src/internal -Iobj/include -I./include  -pipe -fno-unwind-tables -fno-asynchronous-unwind-tables -ffunction-sections -fdata-sections -w -Wno-pointer-to-int-cast -Werror=implicit-function-declaration -Werror=implicit-int -Werror=pointer-sign -Werror=pointer-arith -Werror=int-conversion -Werror=incompatible-pointer-types -Qunused-arguments -Waddress -Warray-bounds -Wchar-subscripts -Wduplicate-decl-specifier -Winit-self -Wreturn-type -Wsequence-point -Wstrict-aliasing -Wunused-function -Wunused-label -Wunused-variable -O2 -g -ffile-prefix-map=${musl}=/src/musl -fdebug-compilation-dir=/src/musl  -fno-stack-protector -x assembler -c -o obj/src/string/x86_64/memset.o -",
+          "${compiler} --no-default-config --target=x86_64-linux-musl -std=c99 -nostdinc -ffreestanding -fexcess-precision=standard -frounding-math -fno-strict-aliasing -Wa,--noexecstack -D_XOPEN_SOURCE=700 -I./arch/x86_64 -I./arch/generic -Iobj/src/internal -I./src/include -I./src/internal -Iobj/include -I./include  -pipe -fno-unwind-tables -fno-asynchronous-unwind-tables -ffunction-sections -fdata-sections -w -Wno-pointer-to-int-cast -Werror=implicit-function-declaration -Werror=implicit-int -Werror=pointer-sign -Werror=pointer-arith -Werror=int-conversion -Werror=incompatible-pointer-types -Qunused-arguments -Waddress -Warray-bounds -Wchar-subscripts -Wduplicate-decl-specifier -Winit-self -Wreturn-type -Wsequence-point -Wstrict-aliasing -Wunused-function -Wunused-label -Wunused-variable -O2 -g -ffile-prefix-map=${musl}=/src/musl -fdebug-compilation-dir=/src/musl  -c -o obj/src/string/memcmp.o src/string/memcmp.c",
+          "${compiler} --no-default-config --target=x86_64-linux-musl -std=c99 -nostdinc -ffreestanding -fexcess-precision=standard -frounding-math -fno-strict-aliasing -Wa,--noexecstack -D_XOPEN_SOURCE=700 -I./arch/x86_64 -I./arch/generic -Iobj/src/internal -I./src/include -I./src/internal -Iobj/include -I./include  -pipe -fno-unwind-tables -fno-asynchronous-unwind-tables -ffunction-sections -fdata-sections -w -Wno-pointer-to-int-cast -Werror=implicit-function-declaration -Werror=implicit-int -Werror=pointer-sign -Werror=pointer-arith -Werror=int-conversion -Werror=incompatible-pointer-types -Qunused-arguments -Waddress -Warray-bounds -Wchar-subscripts -Wduplicate-decl-specifier -Winit-self -Wreturn-type -Wsequence-point -Wstrict-aliasing -Wunused-function -Wunused-label -Wunused-variable -O2 -g -ffile-prefix-map=${musl}=/src/musl -fdebug-compilation-dir=/src/musl -c -o obj/src/string/strlen.o src/string/strlen.c"
+        ],
+        "probe": [
+          "${compiler}",
+          "--no-default-config",
+          "--target=x86_64-linux-musl",
+          "-std=c99",
+          "-O2",
+          "-g",
+          "-fno-builtin",
+          "-fno-stack-protector",
+          "-fno-optimize-sibling-calls",
+          "-fdebug-compilation-dir=/src/probe",
+          "-ffile-prefix-map=${output}=/src/probe",
+          "-nostdinc",
+          "-I${musl}/arch/x86_64",
+          "-I${musl}/arch/generic",
+          "-I${musl}/obj/include",
+          "-I${musl}/include",
+          "-c",
+          "libc.c",
+          "-o",
+          "libc-probe.o"
+        ]
+      },
+      "configuration": {
+        "builtin_calls": "disabled",
+        "target": "x86_64-linux-musl"
+      },
+      "headers": [
+        {
+          "path": "musl/COPYRIGHT",
+          "sha256": "f9bc4423732350eb0b3f7ed7e91d530298476f8fec0c6c427a1c04ade22655af",
+          "size": 6204
+        },
+        {
+          "path": "musl/Makefile",
+          "sha256": "58c8b95c68d5326c747e26e7b4ff51560d72fc881fa5492d85f8dcf9af17ab9e",
+          "size": 7515
+        },
+        {
+          "path": "musl/arch/x86_64/bits/limits.h",
+          "sha256": "1cf68647701c5ccf850d6f092f1dbd1460c2b25931699b423cd3b6a98081885f",
+          "size": 22
+        },
+        {
+          "path": "musl/arch/x86_64/bits/stdint.h",
+          "sha256": "a901e488e09ba0e5d796d2db619ef834e120e6e3c38de8fb8e763eb148780728",
+          "size": 540
+        },
+        {
+          "path": "musl/configure",
+          "sha256": "aa6574f8049f80f3b0a464bc20ab377a57bc0d3464478ac7ccb500f10002cd78",
+          "size": 26407
+        },
+        {
+          "path": "musl/include/features.h",
+          "sha256": "6d228e77b88b69f70f9157548b6ec673ffc6b998ce6035fbbee0caddb8442903",
+          "size": 865
+        },
+        {
+          "path": "musl/include/limits.h",
+          "sha256": "d6fb743478f7a8dd27f057db844a806165709641b0d0e78fbf0cabf5c88f1e12",
+          "size": 4179
+        },
+        {
+          "path": "musl/include/stdint.h",
+          "sha256": "b6e77f1611e56cf499233172cab8bc09c0f7d937f3daa5ad552e1712fc6663e5",
+          "size": 2578
+        },
+        {
+          "path": "musl/include/string.h",
+          "sha256": "714a7724b0051be159c0fb7ec7f97c4ff9dd16c22e1be926c957f747cc6a8906",
+          "size": 3013
+        },
+        {
+          "path": "musl/obj/include/bits/alltypes.h",
+          "sha256": "a8990c268ef62ec2e6963e757a0efad856ed4fd3611f6c28e7df17962697cc4c",
+          "size": 11446
+        },
+        {
+          "path": "musl/src/include/features.h",
+          "sha256": "9b199f92f5949f23a224995e0e1578b2f1be0e95879fbc1c4abfa2784658490c",
+          "size": 280
+        },
+        {
+          "path": "musl/src/include/string.h",
+          "sha256": "93a9f37d69566fe060496888e32ce151592340ceebe541014dd2276eab71e8b7",
+          "size": 273
+        },
+        {
+          "path": "musl/src/string/memcmp.c",
+          "sha256": "826b1b5e84d3c0fb68be827c051f6dc0d67da17ee3a444e94be0e5360586916f",
+          "size": 175
+        },
+        {
+          "path": "musl/src/string/strlen.c",
+          "sha256": "cf9359c1bcee96df1f3a7ef0fb969339b7ed87b202d80dc7e7fcd6d1239b7484",
+          "size": 514
+        },
+        {
+          "path": "musl/src/string/x86_64/memcpy.s",
+          "sha256": "790bdd75f7736c83ed7a21f8813b20454ead1ccfc49e806a88692d2a471024eb",
+          "size": 295
+        },
+        {
+          "path": "musl/src/string/x86_64/memmove.s",
+          "sha256": "d954e18e94bf276f8117e3bf5d67089018ed20fce837c8f8ebb5bda2d18a8373",
+          "size": 240
+        },
+        {
+          "path": "musl/src/string/x86_64/memset.s",
+          "sha256": "aa843bcfb5b75e232df8d26dab6e5cec4f7123b33bebe655ce957f95f839f2e1",
+          "size": 1128
+        },
+        {
+          "path": "musl/tools/add-cfi.common.awk",
+          "sha256": "42d794af3da089a64965c55536ce47cf781a1d485aeb0ee2ee92f8ba1d85779e",
+          "size": 482
+        },
+        {
+          "path": "musl/tools/add-cfi.x86_64.awk",
+          "sha256": "b639516afd29ccd161fa3b1ff1afd329ef78c0fbff16a870d077f00cb71bd76a",
+          "size": 5681
+        }
+      ],
+      "id": "library-memory",
+      "mode": "standalone-and-callers",
+      "source": {
+        "path": "libc.c",
+        "sha256": "0ac75757682b51eee2b075c629999ff10b8258fdaf7a0bba32615b68f8b0af1f",
+        "size": 1425
+      }
+    }
+  ],
+  "byte_generator": {
+    "neverd_revision": "cf8cfa4085ad0215bbd3b933ec31d1defa49e6d8",
+    "tool": {
+      "path": "neverd-sigmaker",
+      "sha256": "0ba72700764b1ab7a1d5f2f39d34309ace0743c938ba1004d7142273743db499",
+      "size": 9645504
+    }
+  },
+  "compiler": {
+    "path": "clang",
+    "sha256": "3ec747aca494276d2720e742d95efc5850b8c31aa93bcd0e4d0a5bbb4bc79d0c",
+    "size": 138568
+  },
+  "compiler_version": "Homebrew clang version 22.1.6\nTarget: arm64-apple-darwin24.6.0\nThread model: posix\nInstalledDir: /opt/homebrew/Cellar/llvm/22.1.6/bin",
+  "generator": {
+    "path": "build_musl_features.py",
+    "sha256": "b6b7a988ceb5311cbe31af267413a0e19c561d715a279211d63031c29fdcce57",
+    "size": 13573
+  },
+  "kind": "library-feature-evidence",
+  "recognition_verified": false,
+  "schema_version": 1,
+  "source": {
+    "archive": {
+      "path": "musl-1.2.5.tar.gz",
+      "sha256": "a9a118bbe84d8764da0ea0d28b3ab3fae8477fc7e4085d90102b8596fc7c75e4",
+      "size": 1080786
+    },
+    "implementation": "musl",
+    "license": "MIT (see musl COPYRIGHT)",
+    "origin": "https://musl.libc.org/releases/musl-1.2.5.tar.gz",
+    "revision": "1.2.5"
+  },
+  "status": "produced",
+  "target": "x86_64-elf"
+}

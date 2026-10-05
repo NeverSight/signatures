@@ -94,6 +94,41 @@ The `Library feature evidence` workflow uploads Windows build artifacts,
 including partial diagnostics when a compilation fails. This workflow does
 not overwrite `.pat` files or claim that structural recognition has passed.
 
+Author the retained Windows capture into rules with the fixed NeverD source
+and its built signature generator:
+
+```sh
+python3 scripts/build_msvc_features.py --evidence "$PROBE_OUTPUT" \
+  --neverd-source "$NEVERD_SOURCE" --sigmaker "$NEVERD_SIGMAKER"
+```
+
+`build_libcxx_features.py --evidence "$PROBE_OUTPUT" --repeat "$REPEAT_OUTPUT"`
+authors the libc++ pack. `verify_library_feature_repeat.py FIRST SECOND`
+compares the actual objects/assembly/IR in two fresh runs against both
+manifests. A failed comparison is not a successful reproduction.
+
+## musl memory/string on x64 ELF
+
+Download the official musl 1.2.5 archive from the URL in
+`scripts/build_musl_features.py`; the producer enforces its SHA-256 before
+extracting. It uses Clang 22.1.6, musl's own configure/Makefile and headers,
+LLVM inspection tools and an explicit ELF lld linker. No system libc headers
+or target execution are required. The linked ELF is an analysis fixture,
+not an executable startup environment.
+
+```sh
+python3 scripts/build_musl_features.py \
+  --archive "$MUSL_ARCHIVE" --output "$PROBE_OUTPUT" \
+  --compiler "$LLVM_BIN/clang" --llvm-bin "$LLVM_BIN" \
+  --linker "$LLD_BIN/ld.lld" --neverd-source "$NEVERD_SOURCE" \
+  --sigmaker "$NEVERD_SIGMAKER" --neverd "$NEVERD_CLI"
+```
+
+The script retains source hashes, actual compile flags, library/probe
+objects, linked and stripped images, symbol truth, generated patterns, and
+byte matching results. See `features/COVERAGE.md` for the retained stripped
+function-discovery miss. Do not drop that fixture or call it a matcher pass.
+
 ## Producer checks
 
 ```sh

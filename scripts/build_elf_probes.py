@@ -71,7 +71,7 @@ def elf_machine(path: Path) -> int:
     return int.from_bytes(header[18:20], "little" if header[5] == 1 else "big")
 
 
-def write_truth(program: Path, stripped: Path, library_names: set[str]) -> None:
+def write_truth(program: Path, stripped: Path, library_names: set[str], *, readelf: str = "readelf") -> None:
     """Every function symbol of the unstripped program: a symbol of type FUNC
     or IFUNC, not a data object, a section or ARM's $a/$t/$x/$d mapping
     symbols."""
@@ -80,7 +80,7 @@ def write_truth(program: Path, stripped: Path, library_names: set[str]) -> None:
     # A Thumb function's symbol has bit 0 set; NeverD names the address
     # without it.
     thumb = elf_machine(program) == 40
-    listing = subprocess.run(["readelf", "-sW", str(program)], capture_output=True,
+    listing = subprocess.run([readelf, "-sW", str(program)], capture_output=True,
                              text=True, check=True).stdout
     for line in listing.splitlines():
         fields = line.split()

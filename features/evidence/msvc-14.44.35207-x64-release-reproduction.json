@@ -1,0 +1,85 @@
+{
+  "artifacts": [
+    {
+      "path": "accessors-inline.asm",
+      "sha256": "110779651eb640829935ce1769a5d8719ff310e2919ca3045af58a8b2ae66f80",
+      "size": 41735
+    },
+    {
+      "path": "accessors-inline.obj",
+      "sha256": "0f03e1a72e2ae0c1ba644e72947017fd97c0f797b488744e98d38ce2c3cb312d",
+      "size": 213077
+    },
+    {
+      "path": "accessors-negative-configuration.asm",
+      "sha256": "2d496806fb7ea843f677bad354b770b9a20596fc43d5f6a9d4331aeac6177cde",
+      "size": 41795
+    },
+    {
+      "path": "accessors-negative-configuration.obj",
+      "sha256": "ac7bb09c4036fb45956b8e9b1f4a032a24c351e39300c821455710ae0353c3c4",
+      "size": 215021
+    },
+    {
+      "path": "accessors-standalone.asm",
+      "sha256": "389bb26048752e9996e2271a897089e9268a8f8b81f7198f4bf0dcb2e7bb2d9d",
+      "size": 64464
+    },
+    {
+      "path": "accessors-standalone.obj",
+      "sha256": "a6d792cfa3df8338ed53291e6f144925f98f621f02f29655fa80f9ef3ef4aff1",
+      "size": 215534
+    },
+    {
+      "path": "atl_com-inline.asm",
+      "sha256": "8366aa29a9408f4b002b308213637deebb28561fe3122015ee1ff625e84115a5",
+      "size": 125030
+    },
+    {
+      "path": "atl_com-inline.obj",
+      "sha256": "8cd0627fee21e4cc74eee06a3ab9c6aeff7a5371cee977aaa5eb18b9f070f683",
+      "size": 271814
+    },
+    {
+      "path": "atl_com-standalone.asm",
+      "sha256": "15814e2fa07e6c70c3937974cb40aefcc8486519d132e632b6cd23c586212195",
+      "size": 131683
+    },
+    {
+      "path": "atl_com-standalone.obj",
+      "sha256": "09ac9294dbbf6d945a727c9511286834e8d3d1d0409671c74254f8066d2da192",
+      "size": 271723
+    },
+    {
+      "path": "atl_string-inline.asm",
+      "sha256": "b743f5ffba541dc549eafa8c40367d61f52ca35c1e78dc094503e77c3ef1c3b1",
+      "size": 284202
+    },
+    {
+      "path": "atl_string-inline.obj",
+      "sha256": "34b041bf513e31df5572661051f6fcdadc6516760fa3d2480d62e6fd7ef7a542",
+      "size": 428015
+    },
+    {
+      "path": "atl_string-standalone.asm",
+      "sha256": "5a72dd0581fa48df81d7297f299bb6b5a31ae1af442c1a52886aa451ee5aee2c",
+      "size": 300246
+    },
+    {
+      "path": "atl_string-standalone.obj",
+      "sha256": "6568d0a8e004141e431b531b37eecf477a8e3b7fddf222b77238c4e9927a0303",
+      "size": 406570
+    }
+  ],
+  "first_manifest": {
+    "path": "manifest.json",
+    "sha256": "b5d26a1d4ef12ef242d7d41fd794ee0430b6db95ca50ffdc18f872f03d691ca5",
+    "size": 269902
+  },
+  "kind": "library-feature-reproduction",
+  "second_manifest": {
+    "path": "manifest.json",
+    "sha256": "669732d5558eecbcdcc1410d650ae1e077575bc618bf4f95e57b38f650980d2b",
+    "size": 269902
+  }
+}

@@ -11,18 +11,26 @@ on:
       - scripts/tests/test_library_feature_probes.py
       - scripts/build_libcxx_features.py
       - scripts/build_msvc_features.py
+      - scripts/build_musl_features.py
       - scripts/verify_library_feature_repeat.py
       - scripts/validate_library_features.py
       - scripts/tests/test_library_features.py
       - features/**
+      - elf/x86/64/musl-1.2.5-memory.*
       - validation/library-features/**
   pull_request:
     paths:
       - features/**
       - scripts/*library*feature*
+      - scripts/build_libcxx_features.py
+      - scripts/build_msvc_features.py
+      - scripts/build_musl_features.py
+      - scripts/verify_library_feature_repeat.py
+      - scripts/build_elf_probes.py
       - scripts/Build-LibraryFeatureProbes.ps1
       - scripts/tests/test_library_feature*.py
       - validation/library-features/**
+      - elf/x86/64/musl-1.2.5-memory.*
       - .github/workflows/library-features.yml
 
 permissions:
