@@ -5,7 +5,7 @@ The five feature packs contain 59 rules and retain their original compiler evide
 [issue #495](https://github.com/NeverSight/NeverD/issues/495).
 [NeverD PR #547](https://github.com/NeverSight/NeverD/pull/547) fixes the validation gaps
 found during the integration. This receipt records the subsequent macOS arm64 Release
-validation against NeverD revision `46a564bae74fd6d245dab82846dd3a688b29be09`
+validation through NeverD revision `e917305086dd3eb4c3b3f9999d383ed286a14ccd`
 and feature/tooling revision `3477edde46545ba8396f77d04110f617f09baae5`.
 
 The [machine-readable receipt](consumer-results.json) keeps the earlier aggregate and
@@ -57,7 +57,7 @@ entries: 15,566 passed, 77 were skipped and eight failed. The failure list conta
 seven distinct test names because the pointer-relocation case is registered in two
 binaries. This initial run is retained unchanged in the machine-readable receipt.
 
-The final repairs at `46a564bae` passed all nine entries in the targeted replay,
+The aggregate repairs at `46a564bae` passed all nine entries in the targeted replay,
 including both registered control-flow and pointer-relocation variants. Four actual
 Objective-C runtime fixtures now preserve floating/record setters, nested enumeration
 selectors, CoreData properties and constant-object graphs. The constant-object fixture
@@ -69,6 +69,19 @@ The complete affected source-recovery suite passed all 1,782 tests at `46a564bae
 including the new integer-forwarding and private-selector-spill regressions and the
 existing contradictory declaration, alias, overlap, unknown-call and outgoing-storage
 refusals.
+
+Integration with `dev` revision `71059f7f3` then passed 1,786 source-recovery cases,
+34 library-recognition cases, 65 session cases and all four affected Objective-C runtime
+fixtures. It exposed two global-address failures and one memory-copy spelling assertion
+in the pointer/exception suite. The address regression reproduced a crash in all four
+O0/O2 and memory-mode program variants before the fix.
+
+The global-address repair at `8d3cee425` passes all four memory execution tests, 63 LLVMC
+execution/value tests, three CLI/worker integrations and the three initial failed cases.
+The final pointer/exception/ABI suite passes 876 cases, with 20 documented corpus skips
+and no failures. Its last assertion update distinguishes an observable global store
+from a redundant local copy. The code repair and subsequent test-only revision are
+recorded separately in the receipt; no initial failures remain unresolved.
 
 These results combine the complete aggregate with its repaired failure replay and
 affected-suite verification. They are not a claim of a single all-green aggregate at

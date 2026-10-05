@@ -5,7 +5,7 @@
   "consumer_validation_status": "passed_with_documented_skips_after_targeted_repairs",
   "feature_data_revision": "3477edde46545ba8396f77d04110f617f09baae5",
   "consumer_repository": "https://github.com/NeverSight/NeverD",
-  "consumer_revision": "46a564bae74fd6d245dab82846dd3a688b29be09",
+  "consumer_revision": "e917305086dd3eb4c3b3f9999d383ed286a14ccd",
   "consumer_pull_request": "https://github.com/NeverSight/NeverD/pull/547",
   "integration_pull_request": "https://github.com/NeverSight/NeverD/pull/537",
   "host": "macOS arm64",
@@ -149,7 +149,7 @@
     "llvmc_execution_value_cases": 63,
     "compiled_block_lifetime_combinations": 8,
     "provenance_unit_tests": 38,
-    "tracked_provenance_files": 5635,
+    "tracked_provenance_files": 5654,
     "objc_source_recovery": {
       "engine_revision": "46a564bae74fd6d245dab82846dd3a688b29be09",
       "tests": 1782,
@@ -340,5 +340,176 @@
         "consumer_verified remains false until separate review; no rule/profile/evidence digest changed."
       ]
     }
-  ]
+  ],
+  "integrated_dev_validation": {
+    "dev_revision": "71059f7f3d8d74c817ae205953b6bc07fbf1547f",
+    "initial_run": {
+      "engine_revision": "04066ffe718948c3a7ff4cd8b65a5fa475b460d4",
+      "dev_revision": "71059f7f3d8d74c817ae205953b6bc07fbf1547f",
+      "suites": [
+        {
+          "name": "memory-copy",
+          "binary": "NeverDCMemoryCopyTests",
+          "filter": null,
+          "exit_code": 0,
+          "tests": 3,
+          "failures": 0,
+          "disabled": 0,
+          "skipped": 0,
+          "time": "7.312s",
+          "passed": 3
+        },
+        {
+          "name": "llvmc-values",
+          "binary": "NeverDLLVMCValueTests",
+          "filter": null,
+          "exit_code": 0,
+          "tests": 63,
+          "failures": 0,
+          "disabled": 0,
+          "skipped": 0,
+          "time": "123.599s",
+          "passed": 63
+        },
+        {
+          "name": "pointer-eh",
+          "binary": "NeverDLiftTests",
+          "filter": "HighCPointerAddresses.*:LLVMCPointerAddresses.*:COFFExceptionIR.*:COFFARMHighC.*",
+          "exit_code": 1,
+          "tests": 896,
+          "failures": 3,
+          "disabled": 0,
+          "skipped": 20,
+          "time": "67.332s",
+          "passed": 873
+        },
+        {
+          "name": "library",
+          "binary": "NeverDLibraryRecognitionTests",
+          "filter": null,
+          "exit_code": 0,
+          "tests": 34,
+          "failures": 0,
+          "disabled": 0,
+          "skipped": 0,
+          "time": "2.619s",
+          "passed": 34
+        },
+        {
+          "name": "session",
+          "binary": "NeverDSessionCAPITests",
+          "filter": null,
+          "exit_code": 0,
+          "tests": 65,
+          "failures": 0,
+          "disabled": 0,
+          "skipped": 0,
+          "time": "1.724s",
+          "passed": 65
+        },
+        {
+          "name": "objc-runtime",
+          "binary": "NeverDObjCRuntimeSourceTests",
+          "filter": "ObjCRuntimeSource.RecompiledConstantObjectsPreserveGraphsAndConcurrentIdentity:ObjCRuntimeSource.DynamicPropertyAccessorsExecuteAgainstCoreData:ObjCRuntimeSource.InvariantLoopValuesPreserveClassChecksAndGetterEffects:ObjCRuntimeSource.SharedFrameworkCallsPreserveScalarsRecordsAndObjects",
+          "exit_code": 0,
+          "tests": 4,
+          "failures": 0,
+          "disabled": 0,
+          "skipped": 0,
+          "time": "37.84s",
+          "passed": 4
+        },
+        {
+          "name": "objc-source",
+          "binary": "NeverDObjCSourceCallTests",
+          "filter": null,
+          "exit_code": 0,
+          "tests": 1786,
+          "failures": 0,
+          "disabled": 0,
+          "skipped": 0,
+          "time": "339.069s",
+          "passed": 1786
+        }
+      ]
+    },
+    "global_address_regression_before_fix": {
+      "engine_revision": "04066ffe718948c3a7ff4cd8b65a5fa475b460d4",
+      "tests": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "time": "3.61s",
+      "result_sha256": "8315e651fe7b3f142ecbb532a821df72895467cf2e4cd99ca6a4f759c2dc703a",
+      "failed_tests": [
+        "CMemoryCopy.LLVMCGlobalAccessesUseObjectStorage"
+      ],
+      "test_harness_revision": "8d3cee425dbd14c03ef5b72c0d1ea7af4c076bb3",
+      "note": "The new regression harness ran against the pre-repair engine; only the test source was added to that checkout."
+    },
+    "pointer_suite_before_assertion_update": {
+      "engine_revision": "8d3cee425dbd14c03ef5b72c0d1ea7af4c076bb3",
+      "tests": 896,
+      "passed": 875,
+      "failed": 1,
+      "skipped": 20,
+      "time": "62.719s",
+      "result_sha256": "3a917b8d0250fc529ae94d7eb1fe3f07d98df086ad6b73958b63da960d90d10f",
+      "failed_tests": [
+        "LLVMCPointerAddresses.PrintsDefaultColorOnCursorMiss"
+      ]
+    },
+    "final_checks": {
+      "global_memory_execution": {
+        "engine_revision": "8d3cee425dbd14c03ef5b72c0d1ea7af4c076bb3",
+        "tests": 4,
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0,
+        "time": "9.715s",
+        "result_sha256": "19855659393c74c1f77eeb668976d3d7445fa45ebf0b4aefa18b92ddb2b58199"
+      },
+      "initial_three_failure_replay": {
+        "engine_revision": "8d3cee425dbd14c03ef5b72c0d1ea7af4c076bb3",
+        "tests": 3,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0,
+        "time": "0.058s",
+        "result_sha256": "6bef6ece561636e35faaa4ca88e60148782422f98ea2c6ac8c74b8997b4146c8"
+      },
+      "llvmc_execution_values": {
+        "engine_revision": "8d3cee425dbd14c03ef5b72c0d1ea7af4c076bb3",
+        "tests": 63,
+        "passed": 63,
+        "failed": 0,
+        "skipped": 0,
+        "time": "115.19s",
+        "result_sha256": "363c07083d0479fbf6d4af4ccb0b93b7d601792b602d7b7f10f1486f6e65605c"
+      },
+      "pointer_exception_abi": {
+        "engine_revision": "e917305086dd3eb4c3b3f9999d383ed286a14ccd",
+        "tests": 896,
+        "passed": 876,
+        "failed": 0,
+        "skipped": 20,
+        "time": "92.535s",
+        "result_sha256": "9db9ff54976e31703b8acc25b58d24f2bbf835f79efccb53e23e98eaf960af1e"
+      },
+      "cli_worker": {
+        "engine_revision": "8d3cee425dbd14c03ef5b72c0d1ea7af4c076bb3",
+        "tests": 3,
+        "passed": 3,
+        "failed": 0,
+        "junit_sha256": "cc591f57cab01c6966543ef7890f4b8aead8bc3a695378d0d62338caf59f847a"
+      }
+    },
+    "all_initial_integration_failures_resolved": true,
+    "changes": [
+      "Keep exact-type named global accesses as object reads/writes and pass the address of global storage to differently typed byte copies.",
+      "Execute integer, floating, pointer and offset global accesses at O0/O2 under UBSan through both memory-access modes; all four program variants failed before the address repair and pass afterward.",
+      "Match the shared memory-copy cast spelling and distinguish observable global stores from redundant local copies in pointer presentation assertions."
+    ],
+    "note": "The final commit after the global address repair changes only a test assertion. Counts describe separate runs and must not be summed as unique tests. The 1786-case source-recovery suite, 34 library cases, 65 session cases and four Objective-C runtime fixtures passed at the recorded initial integration revision."
+  }
 }
