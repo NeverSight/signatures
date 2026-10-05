@@ -1,0 +1,5 @@
+# These files are content-addressed by profiles and receipts. Preserve the
+# captured bytes on every host, including CRLF in raw Windows manifests.
+/features/** -text
+/features/evidence/*.json whitespace=cr-at-eol
+/elf/x86/64/musl-1.2.5-memory.* -text
