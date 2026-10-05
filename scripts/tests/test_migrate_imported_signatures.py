@@ -237,7 +237,11 @@ class ResolveTests(unittest.TestCase):
 
 
 @unittest.skipUnless(shutil.which("c++filt"), "needs c++filt")
-class ELFReferenceTests(unittest.TestCase):
+class ELFSpellingIndexTests(unittest.TestCase):
+    def test_compact_string_spelling_and_elf_underscores(self) -> None:
+        self.assertEqual(migrate.demangle(["_ZNKSs6rbeginEv", "_Z3foov", "puts"]),
+                         ["std::string::rbegin() const", "foo()", "puts"])
+
     def test_spelling_index_maps_imports_back_to_mangled_names(self) -> None:
         reference = migrate.Reference("elf")
         reference.add_line(reference_line("_ZNSt6thread4joinEv", "4883EC08C3"))
@@ -707,7 +711,7 @@ class ELFReferenceTests(unittest.TestCase):
             self.assertEqual(migrate.collected_releases(assets, "x64", "elf"),
                              {"ubuntu-libc6": False})
 
-    @unittest.skipUnless(shutil.which("cc") and shutil.which("ar"), "needs a C compiler")
+    @unittest.skipUnless(shutil.which("clang") and shutil.which("ar"), "needs Clang and ar")
     def test_elf_archives_name_their_functions(self) -> None:
         with tempfile.TemporaryDirectory() as scratch:
             root = Path(scratch)
@@ -716,7 +720,8 @@ class ELFReferenceTests(unittest.TestCase):
                 "static int helper(int x) { return x + 1; }\n"
                 "int use(int x) { return helper(x); }\n"
                 "int data = 1;\n")
-            subprocess.run(["cc", "-O0", "-c", str(root / "a.c"), "-o", str(root / "a.o")],
+            subprocess.run(["clang", "-target", "x86_64-unknown-linux-gnu", "-O0", "-c",
+                            str(root / "a.c"), "-o", str(root / "a.o")],
                            check=True)
             subprocess.run(["ar", "rcs", str(root / "liba.a"), str(root / "a.o")], check=True)
             from coff_symbols import code_symbols

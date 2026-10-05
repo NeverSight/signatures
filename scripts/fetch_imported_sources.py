@@ -24,11 +24,12 @@ import shutil
 import struct
 import subprocess
 import sys
+import tarfile
 import tempfile
 import time
 import urllib.parse
 import urllib.request
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 SIGDB_RAW = "https://raw.githubusercontent.com/rizinorg/sigdb-source"
 LAUNCHPAD = "https://launchpad.net/ubuntu/+archive/primary/+files/"
@@ -106,8 +107,20 @@ def unpack(package: Path, destination: Path) -> list[Path]:
         subprocess.run(["unzip", "-q", "-o", str(package), "*.a", "*.o", "-d",
                         str(destination)], check=False)
     elif package.name.endswith(".tar.bz2"):
-        subprocess.run(["tar", "-xjf", str(package), "-C", str(destination),
-                        "--wildcards", "*.a", "*.o"], check=False)
+        # Extract only the bytes consumed by the collector. GNU tar's
+        # --wildcards is unavailable in the macOS tar implementation.
+        with tarfile.open(package, "r:bz2") as archive:
+            for member in archive:
+                name = PurePosixPath(member.name)
+                if name.suffix not in (".a", ".o") or not (member.isfile() or member.islnk()):
+                    continue
+                if name.is_absolute() or ".." in name.parts:
+                    raise ValueError(f"unsafe archive member: {member.name}")
+                target = destination.joinpath(*name.parts)
+                target.resolve().relative_to(destination.resolve())
+                target.parent.mkdir(parents=True, exist_ok=True)
+                with archive.extractfile(member) as source, target.open("wb") as output:
+                    shutil.copyfileobj(source, output)
     return sorted(path for path in destination.rglob("*")
                   if path.suffix in (".a", ".o") and path.is_file())
 

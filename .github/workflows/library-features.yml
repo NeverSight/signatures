@@ -20,6 +20,14 @@ on:
       - validation/library-features/**
   pull_request:
     paths:
+      - scripts/coff_symbols.py
+      - scripts/collect_fedora_library.py
+      - scripts/fetch_imported_sources.py
+      - scripts/migrate_imported_signatures.py
+      - scripts/tests/test_coff_symbols.py
+      - scripts/tests/test_collect_elf_packages.py
+      - scripts/tests/test_collect_fedora_library.py
+      - scripts/tests/test_migrate_imported_signatures.py
       - features/**
       - scripts/*library*feature*
       - scripts/build_libcxx_features.py
@@ -38,7 +46,11 @@ permissions:
 
 jobs:
   verify:
-    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-15]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
