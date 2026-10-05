@@ -12,8 +12,11 @@ from validate_library_features import FeatureError, read_json, require
 def verify(first: Path, second: Path) -> dict:
     a, b = (read_json(p / "manifest.json") for p in (first, second))
     require(a["status"] == b["status"] == "produced", "incomplete compiler run")
-    for key in ("target", "source", "compiler", "compiler_version", "generator", "builds"):
+    for key in ("target", "source", "compiler", "compiler_version", "generator"):
         require(a[key] == b[key], f"rebuild used different {key}")
+    inputs = [[{k: v for k, v in build.items() if k not in ("object", "assembly")}
+               for build in manifest["builds"]] for manifest in (a, b)]
+    require(inputs[0] == inputs[1], "rebuild used different build inputs")
     stable = []
     artifacts = [{entry["path"]: entry for entry in m["artifacts"]} for m in (a, b)]
     for name in sorted(artifacts[0]):

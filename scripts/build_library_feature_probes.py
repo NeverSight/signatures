@@ -162,7 +162,7 @@ def produce(args: argparse.Namespace) -> dict:
         version += (output / "compiler.stderr.txt").read_text(encoding="utf-8", errors="replace")
         target = "x86_64-coff"
         base = [str(compiler), "/nologo", "/std:c++17", "/EHsc", "/W3",
-                "/Brepro", "/Z7", f"/pathmap:{SOURCES}=/src/neverd-probes",
+                "/Brepro", "/experimental:deterministic", "/Z7", f"/pathmap:{SOURCES}=/src/neverd-probes",
                 f"/pathmap:{output}=/build/neverd-probes"]
         families = ("accessors", "atl_string", "atl_com")
     else:
@@ -240,6 +240,10 @@ def produce(args: argparse.Namespace) -> dict:
                 argv = base + flags + ["-c", probe.name, "-o", str(obj), "-MD", "-MF", str(deps),
                                       "-Xclang", "-fdump-record-layouts"]
             command(argv, output, stem)
+            if msvc:
+                diagnostics = (output / (stem + ".stderr.txt")).read_text(errors="replace")
+                if re.search(r"\bD900[27]\b", diagnostics):
+                    raise ProbeError("compiler ignored a requested option; see retained diagnostics")
             verify_object(obj, target)
             headers = header_evidence(dependency_paths(deps, msvc), roots)
             # Keep the normalized hashes, not absolute dependency paths or
