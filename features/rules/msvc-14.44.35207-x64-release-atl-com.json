@@ -1,0 +1,315 @@
+{
+  "id": "msvc-14.44.35207-x64-release-atl-com",
+  "kind": "library-feature-pack",
+  "profile": {
+    "path": "features/profiles/msvc-14.44.35207-x64-release-atl-com.json",
+    "sha256": "365d537331cb35e5eb963f3c458aded73881ef30c954665e62bbbc35f367ba4a",
+    "size": 47963
+  },
+  "rules": [
+    {
+      "family": "atl-com",
+      "id": "msvc.ccomptr-iunknown.construct",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "ccomptr-iunknown",
+      "negative": [
+        {
+          "build": "atl_com-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_com_release"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_unknown_release"
+        }
+      ],
+      "operation": "construct",
+      "pattern": {
+        "addref_slot": 1,
+        "interface_type": "IUnknown",
+        "kind": "com-lifetime",
+        "pointer_offset": 0,
+        "policy": "zero-initialize",
+        "release_slot": 2,
+        "self_assignment": "not-applicable"
+      },
+      "positive": [
+        {
+          "build": "atl_com-inline",
+          "expectation": "whole-function",
+          "symbol": "??0?$CComPtr@UIUnknown@@@ATL@@QEAA@XZ"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "inline-region",
+          "symbol": "nd_com_construct"
+        }
+      ],
+      "receiver_type": "ATL::CComPtr<IUnknown>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-region"
+      ]
+    },
+    {
+      "family": "atl-com",
+      "id": "msvc.ccomptr-iunknown.copy",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "ccomptr-iunknown",
+      "negative": [
+        {
+          "build": "atl_com-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_com_release"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_unknown_release"
+        }
+      ],
+      "operation": "copy",
+      "pattern": {
+        "addref_slot": 1,
+        "interface_type": "IUnknown",
+        "kind": "com-lifetime",
+        "pointer_offset": 0,
+        "policy": "store-before-addref",
+        "release_slot": 2,
+        "self_assignment": "not-applicable"
+      },
+      "positive": [
+        {
+          "build": "atl_com-inline",
+          "expectation": "whole-function",
+          "symbol": "??0?$CComPtr@UIUnknown@@@ATL@@QEAA@AEBV01@@Z"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "inline-region",
+          "symbol": "nd_com_copy"
+        }
+      ],
+      "receiver_type": "ATL::CComPtr<IUnknown>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-region"
+      ]
+    },
+    {
+      "family": "atl-com",
+      "id": "msvc.ccomptr-iunknown.assign",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "ccomptr-iunknown",
+      "negative": [
+        {
+          "build": "atl_com-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_com_release"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_unknown_release"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "wrong-call-order",
+          "symbol": "nd_user_assign_release_first"
+        }
+      ],
+      "operation": "assign",
+      "pattern": {
+        "addref_slot": 1,
+        "interface_type": "IUnknown",
+        "kind": "com-lifetime",
+        "pointer_offset": 0,
+        "policy": "addref-publish-release",
+        "release_slot": 2,
+        "self_assignment": "skip-equal-pointer"
+      },
+      "positive": [
+        {
+          "build": "atl_com-inline",
+          "expectation": "whole-function",
+          "symbol": "??4?$CComPtr@UIUnknown@@@ATL@@QEAAPEAUIUnknown@@AEBV01@@Z"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "inline-region",
+          "symbol": "nd_com_assign_inline"
+        }
+      ],
+      "receiver_type": "ATL::CComPtr<IUnknown>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-region"
+      ]
+    },
+    {
+      "family": "atl-com",
+      "id": "msvc.ccomptr-iunknown.release",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "ccomptr-iunknown",
+      "negative": [
+        {
+          "build": "atl_com-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_com_release"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_unknown_release"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "wrong-call-order",
+          "symbol": "nd_user_release_then_clear"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "missing-null-guard",
+          "symbol": "nd_user_release_without_guard"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "wrong-interface-slot",
+          "symbol": "nd_user_clear_then_addref"
+        }
+      ],
+      "operation": "Release",
+      "pattern": {
+        "addref_slot": 1,
+        "interface_type": "IUnknown",
+        "kind": "com-lifetime",
+        "pointer_offset": 0,
+        "policy": "clear-before-release",
+        "release_slot": 2,
+        "self_assignment": "not-applicable"
+      },
+      "positive": [
+        {
+          "build": "atl_com-inline",
+          "expectation": "inline-region",
+          "symbol": "nd_com_release_inline"
+        }
+      ],
+      "receiver_type": "ATL::CComPtr<IUnknown>",
+      "revision": 1,
+      "scope": [
+        "inline-region"
+      ]
+    },
+    {
+      "family": "atl-com",
+      "id": "msvc.ccomptr-iunknown.destroy",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "ccomptr-iunknown",
+      "negative": [
+        {
+          "build": "atl_com-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_com_release"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_unknown_release"
+        }
+      ],
+      "operation": "destroy",
+      "pattern": {
+        "addref_slot": 1,
+        "interface_type": "IUnknown",
+        "kind": "com-lifetime",
+        "pointer_offset": 0,
+        "policy": "release-without-clear",
+        "release_slot": 2,
+        "self_assignment": "not-applicable"
+      },
+      "positive": [
+        {
+          "build": "atl_com-inline",
+          "expectation": "whole-function",
+          "symbol": "??1?$CComPtr@UIUnknown@@@ATL@@QEAA@XZ"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "inline-region",
+          "symbol": "nd_com_destroy"
+        }
+      ],
+      "receiver_type": "ATL::CComPtr<IUnknown>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-region"
+      ]
+    },
+    {
+      "family": "atl-com",
+      "id": "msvc.ccomptrbase-iunknown.release",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "ccomptrbase-iunknown",
+      "negative": [
+        {
+          "build": "atl_com-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_user_com_release"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "nd_unknown_release"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "wrong-call-order",
+          "symbol": "nd_user_release_then_clear"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "missing-null-guard",
+          "symbol": "nd_user_release_without_guard"
+        },
+        {
+          "build": "atl_com-inline",
+          "expectation": "wrong-interface-slot",
+          "symbol": "nd_user_clear_then_addref"
+        }
+      ],
+      "operation": "Release",
+      "pattern": {
+        "addref_slot": 1,
+        "interface_type": "IUnknown",
+        "kind": "com-lifetime",
+        "pointer_offset": 0,
+        "policy": "clear-before-release",
+        "release_slot": 2,
+        "self_assignment": "not-applicable"
+      },
+      "positive": [
+        {
+          "build": "atl_com-inline",
+          "expectation": "whole-function",
+          "symbol": "?Release@?$CComPtrBase@UIUnknown@@@ATL@@QEAAXXZ"
+        }
+      ],
+      "receiver_type": "ATL::CComPtrBase<IUnknown>",
+      "revision": 1,
+      "scope": [
+        "whole-function"
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "verification": {
+    "consumer_verified": false,
+    "data_verified": true
+  }
+}

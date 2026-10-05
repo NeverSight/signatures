@@ -1,0 +1,60 @@
+{
+  "artifacts": [
+    {
+      "path": "accessors-inline.ll",
+      "sha256": "9f3b8f2be9e0e6ccf592e2b71ba399e1b1187cbefb709b4d916ec3de346d7119",
+      "size": 592747
+    },
+    {
+      "path": "accessors-inline.o",
+      "sha256": "c974e21f915b08c430646eb597726b2b355d94cc9a284bba31dbcb82e7052445",
+      "size": 151440
+    },
+    {
+      "path": "accessors-inline.s",
+      "sha256": "7c6430763cc4422a03914f597da92e283f335a52aaa92b546be64f657b0a8994",
+      "size": 2021278
+    },
+    {
+      "path": "accessors-negative-configuration.ll",
+      "sha256": "68e3c3b08279a971574e35964b78c085d99ec6bae8a76ad8fffde35e4e813b03",
+      "size": 641014
+    },
+    {
+      "path": "accessors-negative-configuration.o",
+      "sha256": "60972f68cd47fac5f66fb9f4aa43abc4c19a1a18cc9f14ea7c1273062b0e8caa",
+      "size": 163432
+    },
+    {
+      "path": "accessors-negative-configuration.s",
+      "sha256": "facf4917cb90eb1aaa4a3eccad99c5ab257d4a1f69665d2a9d4a99332dd5de0e",
+      "size": 2153719
+    },
+    {
+      "path": "accessors-standalone.ll",
+      "sha256": "83d7d572c5915e4c21cb0c21468ac161e6f51e595327d4fcafc4782af76c6944",
+      "size": 572224
+    },
+    {
+      "path": "accessors-standalone.o",
+      "sha256": "232f74dcfa08d61ebba75242704aeeba417c38cfff48365127273de6b9e7087b",
+      "size": 153040
+    },
+    {
+      "path": "accessors-standalone.s",
+      "sha256": "bc044af9075fafbbee43d422a62ffd4c0da2a882f72e4b360c63c10cadb99c55",
+      "size": 1903956
+    }
+  ],
+  "first_manifest": {
+    "path": "manifest.json",
+    "sha256": "9c08b247dc7abe64fefe2b06041e10734db7f4598a075fec15d6de18ca265265",
+    "size": 461925
+  },
+  "kind": "library-feature-reproduction",
+  "second_manifest": {
+    "path": "manifest.json",
+    "sha256": "8b98cf8b9164602dc318743fbaae5c85fcbc6a196b032ba3f5bc6651f1493541",
+    "size": 461925
+  }
+}

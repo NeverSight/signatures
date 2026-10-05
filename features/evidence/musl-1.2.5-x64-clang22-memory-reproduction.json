@@ -1,0 +1,60 @@
+{
+  "artifacts": [
+    {
+      "path": "libc-probe.o",
+      "sha256": "b94fac8d66c428a3e86d51ff472b8a3c1794f6f7d9ae959ecd4be2b6a265fee6",
+      "size": 7296
+    },
+    {
+      "path": "library-memory.debug",
+      "sha256": "23268e5d958e558b8f43b78997fc3703681929760c6078ede9f71de70c6e2365",
+      "size": 8152
+    },
+    {
+      "path": "library-memory.elf",
+      "sha256": "8f7ee217b272665638a56253148b6aa754a960b571d5cd94ce058a8e05194801",
+      "size": 2048
+    },
+    {
+      "path": "memcmp.o",
+      "sha256": "d274bbb3f34c42fdc243e0f95cc5385bce30500b2b901f8a9a03e9491abb6383",
+      "size": 3552
+    },
+    {
+      "path": "memcpy.o",
+      "sha256": "e88617ce914aa2cb925c6762976b6d5e4193e554ff7f836f240c9b4247db9299",
+      "size": 1384
+    },
+    {
+      "path": "memmove.o",
+      "sha256": "c84781cec90dbd890d888c6b5e2a30d105ec905e2857d0b11d9ac4211ebc1c6c",
+      "size": 1456
+    },
+    {
+      "path": "memset.o",
+      "sha256": "e1edc2bc33f053e3d976e00694a52c2f9917efd18ff74782e35d773b28e48d8c",
+      "size": 1536
+    },
+    {
+      "path": "musl-1.2.5-memory.pat",
+      "sha256": "4c235bec1fd36555ee27023803342d3db9a54dcf3a7b4f3545f4b7b0ef5b92a6",
+      "size": 456
+    },
+    {
+      "path": "strlen.o",
+      "sha256": "c6bce6a6c2ff72a2c41e01c4385430cea7bcdfa779e9b01f5de5caae80d57604",
+      "size": 3832
+    }
+  ],
+  "first_manifest": {
+    "path": "manifest.json",
+    "sha256": "31617b9832e13f41184946f98fc0b621a697e872b24461fe4673cfcc49dc538c",
+    "size": 27088
+  },
+  "kind": "library-feature-reproduction",
+  "second_manifest": {
+    "path": "manifest.json",
+    "sha256": "0cbcb02fa85705145f38d085180fc0994fab088b1d1e7e7e8c5e556ec99b86b0",
+    "size": 27088
+  }
+}

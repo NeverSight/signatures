@@ -1,0 +1,384 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NeverD library feature pack version 1",
+  "description": "Shape contract; validate_library_features.py also verifies hashes, artifacts, graph typing, witnesses and profile consistency.",
+  "allOf": [
+    {
+      "$ref": "#/$defs/pack"
+    }
+  ],
+  "$defs": {
+    "file": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "node": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+        },
+        "op": {
+          "enum": [
+            "input",
+            "constant",
+            "load",
+            "zext",
+            "sext",
+            "select",
+            "add",
+            "sub",
+            "mul",
+            "udiv",
+            "and",
+            "or",
+            "xor",
+            "shl",
+            "lshr",
+            "ashr",
+            "eq",
+            "ne",
+            "ult",
+            "ule",
+            "slt"
+          ]
+        },
+        "bits": {
+          "enum": [
+            8,
+            16,
+            32,
+            64
+          ]
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+          },
+          "maxItems": 3
+        },
+        "role": {
+          "enum": [
+            "receiver",
+            "argument"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^0x[0-9a-f]+$"
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": -1048576,
+          "maximum": 1048576
+        }
+      },
+      "required": [
+        "id",
+        "op",
+        "bits"
+      ],
+      "additionalProperties": false
+    },
+    "witness": {
+      "type": "object",
+      "properties": {
+        "build": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expectation": {
+          "enum": [
+            "inline-expression",
+            "whole-function",
+            "unproven-receiver",
+            "configuration-mismatch",
+            "wrong-layout",
+            "wrong-stride",
+            "ordered-memory",
+            "extra-effects",
+            "inline-region",
+            "wrong-call-order",
+            "missing-null-guard",
+            "wrong-interface-slot"
+          ]
+        }
+      },
+      "required": [
+        "build",
+        "symbol",
+        "expectation"
+      ],
+      "additionalProperties": false
+    },
+    "rule": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "family": {
+          "enum": [
+            "stl",
+            "atl-mfc-string",
+            "atl-com",
+            "libc"
+          ]
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "receiver_type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "layout": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+        },
+        "identity_evidence": {
+          "enum": [
+            "authoritative-receiver",
+            "authenticated-call-relationship",
+            "byte-signature"
+          ]
+        },
+        "scope": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "whole-function",
+              "inline-expression",
+              "inline-region"
+            ]
+          }
+        },
+        "pattern": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/expression"
+            },
+            {
+              "$ref": "#/$defs/com-lifetime"
+            },
+            {
+              "$ref": "#/$defs/byte-pattern"
+            }
+          ]
+        },
+        "positive": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/witness"
+          }
+        },
+        "negative": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/witness"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "revision",
+        "family",
+        "operation",
+        "receiver_type",
+        "layout",
+        "identity_evidence",
+        "scope",
+        "pattern",
+        "positive",
+        "negative"
+      ],
+      "additionalProperties": false
+    },
+    "pack": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "type": "integer",
+          "const": 1
+        },
+        "kind": {
+          "const": "library-feature-pack"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+        },
+        "profile": {
+          "$ref": "#/$defs/file"
+        },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "#/$defs/rule"
+          }
+        },
+        "verification": {
+          "type": "object",
+          "properties": {
+            "data_verified": {
+              "const": true
+            },
+            "consumer_verified": {
+              "const": false
+            }
+          },
+          "required": [
+            "data_verified",
+            "consumer_verified"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "schema_version",
+        "kind",
+        "id",
+        "profile",
+        "rules",
+        "verification"
+      ],
+      "additionalProperties": false
+    },
+    "expression": {
+      "type": "object",
+      "properties": {
+        "nodes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "result": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_.-]{0,127}$"
+        }
+      },
+      "required": [
+        "nodes",
+        "result"
+      ],
+      "additionalProperties": false
+    },
+    "com-lifetime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "pointer_offset",
+        "interface_type",
+        "addref_slot",
+        "release_slot",
+        "policy",
+        "self_assignment"
+      ],
+      "properties": {
+        "kind": {
+          "const": "com-lifetime"
+        },
+        "pointer_offset": {
+          "const": 0
+        },
+        "interface_type": {
+          "const": "IUnknown"
+        },
+        "addref_slot": {
+          "const": 1
+        },
+        "release_slot": {
+          "const": 2
+        },
+        "policy": {
+          "enum": [
+            "zero-initialize",
+            "store-before-addref",
+            "addref-publish-release",
+            "clear-before-release",
+            "release-without-clear"
+          ]
+        },
+        "self_assignment": {
+          "enum": [
+            "skip-equal-pointer",
+            "not-applicable"
+          ]
+        }
+      }
+    },
+    "byte-pattern": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "file",
+        "symbol",
+        "generator",
+        "fixed_bytes_min"
+      ],
+      "properties": {
+        "kind": {
+          "const": "byte-pattern"
+        },
+        "file": {
+          "$ref": "#/$defs/file"
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "generator": {
+          "const": "neverd-sigmaker"
+        },
+        "fixed_bytes_min": {
+          "const": 16
+        }
+      }
+    }
+  }
+}

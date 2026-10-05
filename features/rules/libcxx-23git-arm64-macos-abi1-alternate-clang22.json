@@ -1,0 +1,1622 @@
+{
+  "id": "libcxx-23git-arm64-macos-abi1-alternate-clang22",
+  "kind": "library-feature-pack",
+  "profile": {
+    "path": "features/profiles/libcxx-23git-arm64-macos-abi1-alternate-clang22.json",
+    "sha256": "83bb51dc4d14a22bb1efe6b955ef58beec23b19874bb754fcb4ce4a104cfec6b",
+    "size": 145440
+  },
+  "rules": [
+    {
+      "family": "stl",
+      "id": "libcxx.string-char.size",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "string-char",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_size"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_string_char_size"
+        }
+      ],
+      "operation": "size",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 8,
+            "id": "tag",
+            "offset": 23,
+            "op": "load"
+          },
+          {
+            "bits": 8,
+            "id": "long-mask",
+            "op": "constant",
+            "value": "0x80"
+          },
+          {
+            "args": [
+              "tag",
+              "long-mask"
+            ],
+            "bits": 8,
+            "id": "flag",
+            "op": "and"
+          },
+          {
+            "bits": 8,
+            "id": "zero-tag",
+            "op": "constant",
+            "value": "0x0"
+          },
+          {
+            "args": [
+              "flag",
+              "zero-tag"
+            ],
+            "bits": 8,
+            "id": "is-long",
+            "op": "ne"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "long-size",
+            "offset": 8,
+            "op": "load"
+          },
+          {
+            "args": [
+              "tag"
+            ],
+            "bits": 64,
+            "id": "short-size",
+            "op": "zext"
+          },
+          {
+            "args": [
+              "is-long",
+              "long-size",
+              "short-size"
+            ],
+            "bits": 64,
+            "id": "value",
+            "op": "select"
+          }
+        ],
+        "result": "value"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4sizeB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_string_char_size_inline"
+        }
+      ],
+      "receiver_type": "std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.string-char.empty",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "string-char",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_empty"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_string_char_empty"
+        }
+      ],
+      "operation": "empty",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 8,
+            "id": "tag",
+            "offset": 23,
+            "op": "load"
+          },
+          {
+            "bits": 8,
+            "id": "long-mask",
+            "op": "constant",
+            "value": "0x80"
+          },
+          {
+            "args": [
+              "tag",
+              "long-mask"
+            ],
+            "bits": 8,
+            "id": "flag",
+            "op": "and"
+          },
+          {
+            "bits": 8,
+            "id": "zero-tag",
+            "op": "constant",
+            "value": "0x0"
+          },
+          {
+            "args": [
+              "flag",
+              "zero-tag"
+            ],
+            "bits": 8,
+            "id": "is-long",
+            "op": "ne"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "long-size",
+            "offset": 8,
+            "op": "load"
+          },
+          {
+            "args": [
+              "tag"
+            ],
+            "bits": 64,
+            "id": "short-size",
+            "op": "zext"
+          },
+          {
+            "args": [
+              "is-long",
+              "long-size",
+              "short-size"
+            ],
+            "bits": 64,
+            "id": "value",
+            "op": "select"
+          },
+          {
+            "bits": 64,
+            "id": "zero-size",
+            "op": "constant",
+            "value": "0x0"
+          },
+          {
+            "args": [
+              "value",
+              "zero-size"
+            ],
+            "bits": 8,
+            "id": "empty",
+            "op": "eq"
+          }
+        ],
+        "result": "empty"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE5emptyB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_string_char_empty_inline"
+        }
+      ],
+      "receiver_type": "std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.string-char.data",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "string-char",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_data"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_string_char_data"
+        }
+      ],
+      "operation": "data",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 8,
+            "id": "tag",
+            "offset": 23,
+            "op": "load"
+          },
+          {
+            "bits": 8,
+            "id": "long-mask",
+            "op": "constant",
+            "value": "0x80"
+          },
+          {
+            "args": [
+              "tag",
+              "long-mask"
+            ],
+            "bits": 8,
+            "id": "flag",
+            "op": "and"
+          },
+          {
+            "bits": 8,
+            "id": "zero-tag",
+            "op": "constant",
+            "value": "0x0"
+          },
+          {
+            "args": [
+              "flag",
+              "zero-tag"
+            ],
+            "bits": 8,
+            "id": "is-long",
+            "op": "ne"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "long-data",
+            "offset": 0,
+            "op": "load"
+          },
+          {
+            "args": [
+              "is-long",
+              "long-data",
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "value",
+            "op": "select"
+          }
+        ],
+        "result": "value"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE4dataB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_string_char_data_inline"
+        }
+      ],
+      "receiver_type": "std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.string-char.capacity",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "string-char",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_size"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_string_char_capacity"
+        }
+      ],
+      "operation": "capacity",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 8,
+            "id": "tag",
+            "offset": 23,
+            "op": "load"
+          },
+          {
+            "bits": 8,
+            "id": "long-mask",
+            "op": "constant",
+            "value": "0x80"
+          },
+          {
+            "args": [
+              "tag",
+              "long-mask"
+            ],
+            "bits": 8,
+            "id": "flag",
+            "op": "and"
+          },
+          {
+            "bits": 8,
+            "id": "zero-tag",
+            "op": "constant",
+            "value": "0x0"
+          },
+          {
+            "args": [
+              "flag",
+              "zero-tag"
+            ],
+            "bits": 8,
+            "id": "is-long",
+            "op": "ne"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "long-capacity",
+            "offset": 16,
+            "op": "load"
+          },
+          {
+            "bits": 64,
+            "id": "capacity-mask",
+            "op": "constant",
+            "value": "0x7fffffffffffffff"
+          },
+          {
+            "args": [
+              "long-capacity",
+              "capacity-mask"
+            ],
+            "bits": 64,
+            "id": "allocation",
+            "op": "and"
+          },
+          {
+            "bits": 64,
+            "id": "terminator",
+            "op": "constant",
+            "value": "0x1"
+          },
+          {
+            "args": [
+              "allocation",
+              "terminator"
+            ],
+            "bits": 64,
+            "id": "usable",
+            "op": "sub"
+          },
+          {
+            "bits": 64,
+            "id": "short-capacity",
+            "op": "constant",
+            "value": "0x16"
+          },
+          {
+            "args": [
+              "is-long",
+              "usable",
+              "short-capacity"
+            ],
+            "bits": 64,
+            "id": "value",
+            "op": "select"
+          }
+        ],
+        "result": "value"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE8capacityB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_string_char_capacity_inline"
+        }
+      ],
+      "receiver_type": "std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.string-wchar.size",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "string-wchar",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_size"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_string_wide_size"
+        }
+      ],
+      "operation": "size",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 8,
+            "id": "tag",
+            "offset": 23,
+            "op": "load"
+          },
+          {
+            "bits": 8,
+            "id": "long-mask",
+            "op": "constant",
+            "value": "0x80"
+          },
+          {
+            "args": [
+              "tag",
+              "long-mask"
+            ],
+            "bits": 8,
+            "id": "flag",
+            "op": "and"
+          },
+          {
+            "bits": 8,
+            "id": "zero-tag",
+            "op": "constant",
+            "value": "0x0"
+          },
+          {
+            "args": [
+              "flag",
+              "zero-tag"
+            ],
+            "bits": 8,
+            "id": "is-long",
+            "op": "ne"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "long-size",
+            "offset": 8,
+            "op": "load"
+          },
+          {
+            "args": [
+              "tag"
+            ],
+            "bits": 64,
+            "id": "short-size",
+            "op": "zext"
+          },
+          {
+            "args": [
+              "is-long",
+              "long-size",
+              "short-size"
+            ],
+            "bits": 64,
+            "id": "value",
+            "op": "select"
+          }
+        ],
+        "result": "value"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE4sizeB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_string_wide_size_inline"
+        }
+      ],
+      "receiver_type": "std::__1::basic_string<wchar_t, std::__1::char_traits<wchar_t>, std::__1::allocator<wchar_t>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.string-wchar.empty",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "string-wchar",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_empty"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_string_wide_empty"
+        }
+      ],
+      "operation": "empty",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 8,
+            "id": "tag",
+            "offset": 23,
+            "op": "load"
+          },
+          {
+            "bits": 8,
+            "id": "long-mask",
+            "op": "constant",
+            "value": "0x80"
+          },
+          {
+            "args": [
+              "tag",
+              "long-mask"
+            ],
+            "bits": 8,
+            "id": "flag",
+            "op": "and"
+          },
+          {
+            "bits": 8,
+            "id": "zero-tag",
+            "op": "constant",
+            "value": "0x0"
+          },
+          {
+            "args": [
+              "flag",
+              "zero-tag"
+            ],
+            "bits": 8,
+            "id": "is-long",
+            "op": "ne"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "long-size",
+            "offset": 8,
+            "op": "load"
+          },
+          {
+            "args": [
+              "tag"
+            ],
+            "bits": 64,
+            "id": "short-size",
+            "op": "zext"
+          },
+          {
+            "args": [
+              "is-long",
+              "long-size",
+              "short-size"
+            ],
+            "bits": 64,
+            "id": "value",
+            "op": "select"
+          },
+          {
+            "bits": 64,
+            "id": "zero-size",
+            "op": "constant",
+            "value": "0x0"
+          },
+          {
+            "args": [
+              "value",
+              "zero-size"
+            ],
+            "bits": 8,
+            "id": "empty",
+            "op": "eq"
+          }
+        ],
+        "result": "empty"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE5emptyB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_string_wide_empty_inline"
+        }
+      ],
+      "receiver_type": "std::__1::basic_string<wchar_t, std::__1::char_traits<wchar_t>, std::__1::allocator<wchar_t>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.string-wchar.data",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "string-wchar",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_data"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_string_wide_data"
+        }
+      ],
+      "operation": "data",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 8,
+            "id": "tag",
+            "offset": 23,
+            "op": "load"
+          },
+          {
+            "bits": 8,
+            "id": "long-mask",
+            "op": "constant",
+            "value": "0x80"
+          },
+          {
+            "args": [
+              "tag",
+              "long-mask"
+            ],
+            "bits": 8,
+            "id": "flag",
+            "op": "and"
+          },
+          {
+            "bits": 8,
+            "id": "zero-tag",
+            "op": "constant",
+            "value": "0x0"
+          },
+          {
+            "args": [
+              "flag",
+              "zero-tag"
+            ],
+            "bits": 8,
+            "id": "is-long",
+            "op": "ne"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "long-data",
+            "offset": 0,
+            "op": "load"
+          },
+          {
+            "args": [
+              "is-long",
+              "long-data",
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "value",
+            "op": "select"
+          }
+        ],
+        "result": "value"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE4dataB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_string_wide_data_inline"
+        }
+      ],
+      "receiver_type": "std::__1::basic_string<wchar_t, std::__1::char_traits<wchar_t>, std::__1::allocator<wchar_t>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.string-wchar.capacity",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "string-wchar",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_size"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_string_wide_capacity"
+        }
+      ],
+      "operation": "capacity",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 8,
+            "id": "tag",
+            "offset": 23,
+            "op": "load"
+          },
+          {
+            "bits": 8,
+            "id": "long-mask",
+            "op": "constant",
+            "value": "0x80"
+          },
+          {
+            "args": [
+              "tag",
+              "long-mask"
+            ],
+            "bits": 8,
+            "id": "flag",
+            "op": "and"
+          },
+          {
+            "bits": 8,
+            "id": "zero-tag",
+            "op": "constant",
+            "value": "0x0"
+          },
+          {
+            "args": [
+              "flag",
+              "zero-tag"
+            ],
+            "bits": 8,
+            "id": "is-long",
+            "op": "ne"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "long-capacity",
+            "offset": 16,
+            "op": "load"
+          },
+          {
+            "bits": 64,
+            "id": "capacity-mask",
+            "op": "constant",
+            "value": "0x7fffffffffffffff"
+          },
+          {
+            "args": [
+              "long-capacity",
+              "capacity-mask"
+            ],
+            "bits": 64,
+            "id": "allocation",
+            "op": "and"
+          },
+          {
+            "bits": 64,
+            "id": "terminator",
+            "op": "constant",
+            "value": "0x1"
+          },
+          {
+            "args": [
+              "allocation",
+              "terminator"
+            ],
+            "bits": 64,
+            "id": "usable",
+            "op": "sub"
+          },
+          {
+            "bits": 64,
+            "id": "short-capacity",
+            "op": "constant",
+            "value": "0x4"
+          },
+          {
+            "args": [
+              "is-long",
+              "usable",
+              "short-capacity"
+            ],
+            "bits": 64,
+            "id": "value",
+            "op": "select"
+          }
+        ],
+        "result": "value"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__112basic_stringIwNS_11char_traitsIwEENS_9allocatorIwEEE8capacityB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_string_wide_capacity_inline"
+        }
+      ],
+      "receiver_type": "std::__1::basic_string<wchar_t, std::__1::char_traits<wchar_t>, std::__1::allocator<wchar_t>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.vector-u32.size",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "vector-u32",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_size"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_vector_u32_size"
+        }
+      ],
+      "operation": "size",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "begin",
+            "offset": 0,
+            "op": "load"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "end",
+            "offset": 8,
+            "op": "load"
+          },
+          {
+            "args": [
+              "end",
+              "begin"
+            ],
+            "bits": 64,
+            "id": "distance",
+            "op": "sub"
+          },
+          {
+            "bits": 64,
+            "id": "scale",
+            "op": "constant",
+            "value": "0x2"
+          },
+          {
+            "args": [
+              "distance",
+              "scale"
+            ],
+            "bits": 64,
+            "id": "elements",
+            "op": "ashr"
+          }
+        ],
+        "result": "elements"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__16vectorIjNS_9allocatorIjEEE4sizeB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_vector_u32_size_inline"
+        }
+      ],
+      "receiver_type": "std::__1::vector<unsigned int, std::__1::allocator<unsigned int>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.vector-u32.empty",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "vector-u32",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_empty"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_vector_u32_empty"
+        }
+      ],
+      "operation": "empty",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "begin",
+            "offset": 0,
+            "op": "load"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "end",
+            "offset": 8,
+            "op": "load"
+          },
+          {
+            "args": [
+              "begin",
+              "end"
+            ],
+            "bits": 8,
+            "id": "empty",
+            "op": "eq"
+          }
+        ],
+        "result": "empty"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__16vectorIjNS_9allocatorIjEEE5emptyB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_vector_u32_empty_inline"
+        }
+      ],
+      "receiver_type": "std::__1::vector<unsigned int, std::__1::allocator<unsigned int>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.vector-u32.data",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "vector-u32",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_data"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_vector_u32_data"
+        }
+      ],
+      "operation": "data",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "begin",
+            "offset": 0,
+            "op": "load"
+          }
+        ],
+        "result": "begin"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__16vectorIjNS_9allocatorIjEEE4dataB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_vector_u32_data_inline"
+        }
+      ],
+      "receiver_type": "std::__1::vector<unsigned int, std::__1::allocator<unsigned int>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.vector-u32.capacity",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "vector-u32",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_size"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_vector_u32_capacity"
+        }
+      ],
+      "operation": "capacity",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "begin",
+            "offset": 0,
+            "op": "load"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "end",
+            "offset": 16,
+            "op": "load"
+          },
+          {
+            "args": [
+              "end",
+              "begin"
+            ],
+            "bits": 64,
+            "id": "distance",
+            "op": "sub"
+          },
+          {
+            "bits": 64,
+            "id": "scale",
+            "op": "constant",
+            "value": "0x2"
+          },
+          {
+            "args": [
+              "distance",
+              "scale"
+            ],
+            "bits": 64,
+            "id": "elements",
+            "op": "ashr"
+          }
+        ],
+        "result": "elements"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__16vectorIjNS_9allocatorIjEEE8capacityB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_vector_u32_capacity_inline"
+        }
+      ],
+      "receiver_type": "std::__1::vector<unsigned int, std::__1::allocator<unsigned int>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.vector-u64.size",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "vector-u64",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_size"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_vector_u64_size"
+        }
+      ],
+      "operation": "size",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "begin",
+            "offset": 0,
+            "op": "load"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "end",
+            "offset": 8,
+            "op": "load"
+          },
+          {
+            "args": [
+              "end",
+              "begin"
+            ],
+            "bits": 64,
+            "id": "distance",
+            "op": "sub"
+          },
+          {
+            "bits": 64,
+            "id": "scale",
+            "op": "constant",
+            "value": "0x3"
+          },
+          {
+            "args": [
+              "distance",
+              "scale"
+            ],
+            "bits": 64,
+            "id": "elements",
+            "op": "ashr"
+          }
+        ],
+        "result": "elements"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__16vectorIyNS_9allocatorIyEEE4sizeB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_vector_u64_size_inline"
+        }
+      ],
+      "receiver_type": "std::__1::vector<unsigned long long, std::__1::allocator<unsigned long long>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.vector-u64.empty",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "vector-u64",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_empty"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_vector_u64_empty"
+        }
+      ],
+      "operation": "empty",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "begin",
+            "offset": 0,
+            "op": "load"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "end",
+            "offset": 8,
+            "op": "load"
+          },
+          {
+            "args": [
+              "begin",
+              "end"
+            ],
+            "bits": 8,
+            "id": "empty",
+            "op": "eq"
+          }
+        ],
+        "result": "empty"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__16vectorIyNS_9allocatorIyEEE5emptyB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_vector_u64_empty_inline"
+        }
+      ],
+      "receiver_type": "std::__1::vector<unsigned long long, std::__1::allocator<unsigned long long>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.vector-u64.data",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "vector-u64",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_data"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_vector_u64_data"
+        }
+      ],
+      "operation": "data",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "begin",
+            "offset": 0,
+            "op": "load"
+          }
+        ],
+        "result": "begin"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__16vectorIyNS_9allocatorIyEEE4dataB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_vector_u64_data_inline"
+        }
+      ],
+      "receiver_type": "std::__1::vector<unsigned long long, std::__1::allocator<unsigned long long>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    },
+    {
+      "family": "stl",
+      "id": "libcxx.vector-u64.capacity",
+      "identity_evidence": "authoritative-receiver",
+      "layout": "vector-u64",
+      "negative": [
+        {
+          "build": "accessors-inline",
+          "expectation": "unproven-receiver",
+          "symbol": "_nd_user_range_size"
+        },
+        {
+          "build": "accessors-negative-configuration",
+          "expectation": "configuration-mismatch",
+          "symbol": "_nd_vector_u64_capacity"
+        }
+      ],
+      "operation": "capacity",
+      "pattern": {
+        "nodes": [
+          {
+            "bits": 64,
+            "id": "receiver",
+            "op": "input",
+            "role": "receiver"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "begin",
+            "offset": 0,
+            "op": "load"
+          },
+          {
+            "args": [
+              "receiver"
+            ],
+            "bits": 64,
+            "id": "end",
+            "offset": 16,
+            "op": "load"
+          },
+          {
+            "args": [
+              "end",
+              "begin"
+            ],
+            "bits": 64,
+            "id": "distance",
+            "op": "sub"
+          },
+          {
+            "bits": 64,
+            "id": "scale",
+            "op": "constant",
+            "value": "0x3"
+          },
+          {
+            "args": [
+              "distance",
+              "scale"
+            ],
+            "bits": 64,
+            "id": "elements",
+            "op": "ashr"
+          }
+        ],
+        "result": "elements"
+      },
+      "positive": [
+        {
+          "build": "accessors-inline",
+          "expectation": "whole-function",
+          "symbol": "__ZNKSt3__16vectorIyNS_9allocatorIyEEE8capacityB9nqe230000Ev"
+        },
+        {
+          "build": "accessors-inline",
+          "expectation": "inline-expression",
+          "symbol": "_nd_vector_u64_capacity_inline"
+        }
+      ],
+      "receiver_type": "std::__1::vector<unsigned long long, std::__1::allocator<unsigned long long>>",
+      "revision": 1,
+      "scope": [
+        "whole-function",
+        "inline-expression"
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "verification": {
+    "consumer_verified": false,
+    "data_verified": true
+  }
+}
