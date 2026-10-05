@@ -21,6 +21,11 @@ keeps out-of-line callees; O2 exercises operations inside callers. Whether
 each operation actually inlined is established from the retained output,
 not from the optimization flag alone.
 
+Address-taken member pointers also retain genuine, optimized library methods
+in the O2 object. This gives an optimized standalone body and an inline caller
+under the same supported profile. O0 remains separate evidence; it is not
+automatically claimed by a pack derived from O2.
+
 The evidence manifest reports `recognition_verified: false`: producing the
 data does not establish NeverD matcher accuracy. Rule packs and their
 consumer tests must separately prove accepted regions, rejected lookalikes,

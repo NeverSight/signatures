@@ -178,7 +178,9 @@ def produce(args: argparse.Namespace) -> dict:
                       "sdk": sdk, "compiler-resource": Path(resource)})
         origin = {"implementation": "libc++", "kind": "git",
                   "origin": args.source_origin, "revision": revision,
-                  "license": "Apache-2.0 WITH LLVM-exception"}
+                  "license": "Apache-2.0 WITH LLVM-exception",
+                  "sdk": {"settings": describe(sdk / "SDKSettings.json"),
+                          "version": json.loads((sdk / "SDKSettings.json").read_text())["Version"]}}
         version = command([str(compiler), "--no-default-config", "--version"], output, "compiler")
         target = "aarch64-macho"
         base = [str(compiler), "--no-default-config", "--target=arm64-apple-macos14.0",

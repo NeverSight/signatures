@@ -8,8 +8,10 @@
 
 #if defined(_MSC_VER)
 #define ND_EXPORT extern "C" __declspec(dllexport) __declspec(noinline)
+#define ND_KEEP __declspec(dllexport)
 #else
 #define ND_EXPORT extern "C" __attribute__((visibility("default"), noinline))
+#define ND_KEEP __attribute__((used, visibility("default")))
 #endif
 
 #define ND_ACCESSORS(Prefix, Type)                                            \
@@ -33,7 +35,13 @@
                                                std::size_t n) {              \
     return p->capacity() + n;                                                \
   }                                                                         \
-  ND_EXPORT std::size_t Prefix##_object_size() { return sizeof(Type); }
+  ND_EXPORT std::size_t Prefix##_object_size() { return sizeof(Type); }        \
+  ND_KEEP auto Prefix##_keep_size = &Type::size;                              \
+  ND_KEEP auto Prefix##_keep_empty = &Type::empty;                            \
+  ND_KEEP auto Prefix##_keep_capacity = &Type::capacity;                      \
+  ND_KEEP auto Prefix##_keep_data =                                         \
+      static_cast<const Type::value_type *(Type::*)() const noexcept>(       \
+          &Type::data);
 
 using StringChar = std::basic_string<char>;
 using StringWide = std::basic_string<wchar_t>;

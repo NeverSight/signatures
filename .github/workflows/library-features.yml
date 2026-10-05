@@ -9,6 +9,10 @@ on:
       - scripts/build_library_feature_probes.py
       - scripts/Build-LibraryFeatureProbes.ps1
       - scripts/tests/test_library_feature_probes.py
+      - scripts/build_libcxx_features.py
+      - scripts/validate_library_features.py
+      - scripts/tests/test_library_features.py
+      - features/**
       - validation/library-features/**
   pull_request:
     paths:
@@ -35,6 +39,8 @@ jobs:
             .github
             features
       - run: python3 -m unittest discover -s scripts/tests -v
+      - name: Validate feature contracts and compiler evidence
+        run: python3 scripts/validate_library_features.py
 
   windows:
     runs-on: windows-2022
