@@ -2,6 +2,11 @@
 
 FLIRT-style signature libraries for [NeverD](https://github.com/NeverSight/NeverD).
 
+Selected missing records from the local IDA 9.5 library are documented in
+[the import audit](reports/ida95-import.md). They supplement the rebuilt
+libraries under `ida95-*.pat`, with per-file source identities and strict
+exclusions for unsupported constraints.
+
 ## Layout
 
 ```

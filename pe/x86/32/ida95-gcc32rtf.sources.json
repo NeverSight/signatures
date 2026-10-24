@@ -1,0 +1,25 @@
+{
+  "origin": "Local IDA 9.5 BETA1 FLIRT signature; converted with its own dumpsig -F",
+  "source": "pc/gcc32rtf.sig",
+  "sha256": "8300968ba1bde27a4fe4210f616369c2b4ceea67dd0cb49ba9b2e0a4592dea41",
+  "dumper_sha256": "44da9bdc2cf6655227000b9c51af20a0e72329de1711419d20ed877e5a723270",
+  "header": {
+    "Signature": "GCC (mingw/cygwin) v3.4 runtime, 1200 modules",
+    "Version": "7",
+    "Features": "compressed(zlib) 32-bytes patterns",
+    "Processor id": "0 Intel 80x86",
+    "OS types": "0002 WIN",
+    "App types": "017F CONSOLE GRAPHICS EXE DLL DRV SINGLE-THREADED MULTI-THREADED 32BIT",
+    "File types": "00000800 PE",
+    "Flags": "0010"
+  },
+  "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
+  "generator": "scripts/import_ida_signatures.py",
+  "file": "pe/x86/32/ida95-gcc32rtf.pat",
+  "lines": 565,
+  "parts": 1,
+  "validation": {
+    "counterexample_policy_sha256": "016e7be3bf848cee0ce6e98b3ca5ddbe5cfdcf1f6fe577b9c72263e36625d758",
+    "rejected_records": 0
+  }
+}

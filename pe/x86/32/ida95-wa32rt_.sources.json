@@ -1,0 +1,25 @@
+{
+  "origin": "Local IDA 9.5 BETA1 FLIRT signature; converted with its own dumpsig -F",
+  "source": "pc/wa32rt_.sig",
+  "sha256": "2c52979b32a08c4194e5bcb21489bb24f3c2650d85baaea0fac2914bec26d442",
+  "dumper_sha256": "44da9bdc2cf6655227000b9c51af20a0e72329de1711419d20ed877e5a723270",
+  "header": {
+    "Signature": "Watcom v9-*1.5  32bit common runtime, 8144 modules",
+    "Version": "7",
+    "Features": "compressed(zlib) 32-bytes patterns",
+    "Processor id": "0 Intel 80x86",
+    "OS types": "000F MSDOS WIN OS/2 NETWARE",
+    "App types": "016F CONSOLE GRAPHICS EXE DLL SINGLE-THREADED MULTI-THREADED 32BIT",
+    "File types": "00000B90 NE LX LE NLM PE",
+    "Flags": "0010"
+  },
+  "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
+  "generator": "scripts/import_ida_signatures.py",
+  "file": "pe/x86/32/ida95-wa32rt_.pat",
+  "lines": 4065,
+  "parts": 1,
+  "validation": {
+    "counterexample_policy_sha256": "016e7be3bf848cee0ce6e98b3ca5ddbe5cfdcf1f6fe577b9c72263e36625d758",
+    "rejected_records": 0
+  }
+}

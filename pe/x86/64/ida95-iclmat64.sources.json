@@ -1,0 +1,25 @@
+{
+  "origin": "Local IDA 9.5 BETA1 FLIRT signature; converted with its own dumpsig -F",
+  "source": "pc/iclmat64.sig",
+  "sha256": "3ccf43dc06aa281dbe962a09c55040abcce59b30cdb217a97fd0396cd31a4657",
+  "dumper_sha256": "44da9bdc2cf6655227000b9c51af20a0e72329de1711419d20ed877e5a723270",
+  "header": {
+    "Signature": "Intel C 64bit specific libraries, 44280 modules",
+    "Version": "10",
+    "Features": "compressed(zlib) 32-bytes patterns",
+    "Processor id": "0 Intel 80x86",
+    "OS types": "0002 WIN",
+    "App types": "026F CONSOLE GRAPHICS EXE DLL SINGLE-THREADED MULTI-THREADED 64BIT",
+    "File types": "00000800 PE",
+    "Flags": "0010"
+  },
+  "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
+  "generator": "scripts/import_ida_signatures.py",
+  "file": "pe/x86/64/ida95-iclmat64.pat",
+  "lines": 72737,
+  "parts": 1,
+  "validation": {
+    "counterexample_policy_sha256": "016e7be3bf848cee0ce6e98b3ca5ddbe5cfdcf1f6fe577b9c72263e36625d758",
+    "rejected_records": 0
+  }
+}

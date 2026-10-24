@@ -1,0 +1,25 @@
+{
+  "origin": "Local IDA 9.5 BETA1 FLIRT signature; converted with its own dumpsig -F",
+  "source": "arm/mfc.sig",
+  "sha256": "e0b66ca056be2b8086c49314399d6a4be480e9a9cca96d6ab579ce96ec51baab",
+  "dumper_sha256": "44da9bdc2cf6655227000b9c51af20a0e72329de1711419d20ed877e5a723270",
+  "header": {
+    "Signature": "Windows CE runtime & MFC for ARM, 8702 modules",
+    "Version": "7",
+    "Features": "compressed(zlib) 32-bytes patterns",
+    "Processor id": "13 Advanced RISC Machines",
+    "OS types": "0002 WIN",
+    "App types": "017F CONSOLE GRAPHICS EXE DLL DRV SINGLE-THREADED MULTI-THREADED 32BIT",
+    "File types": "00000800 PE",
+    "Flags": "0010"
+  },
+  "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
+  "generator": "scripts/import_ida_signatures.py",
+  "file": "pe/arm/32/ida95-mfc.pat",
+  "lines": 2490,
+  "parts": 1,
+  "validation": {
+    "counterexample_policy_sha256": "016e7be3bf848cee0ce6e98b3ca5ddbe5cfdcf1f6fe577b9c72263e36625d758",
+    "rejected_records": 0
+  }
+}
