@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "file": "pe/x86/64/supplemental-iclmat64.pat",
+  "library_family": "Intel C 64bit specific libraries",
+  "source_kind": "converted_binary_library_signatures",
+  "generator": "scripts/import_binary_signatures.py",
+  "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
+  "lines": 72737,
+  "parts": 1,
+  "artifacts": [
+    {
+      "file": "pe/x86/64/supplemental-iclmat64.pat",
+      "sha256": "9a116b70a91cdcfc077e68661d9cf9ac420afa6087d846f28584e94a1cea5e47"
+    }
+  ],
+  "validation": {
+    "counterexample_policy_sha256": "016e7be3bf848cee0ce6e98b3ca5ddbe5cfdcf1f6fe577b9c72263e36625d758",
+    "rejected_records": 0
+  }
+}

@@ -2,6 +2,11 @@
 
 FLIRT-style signature libraries for [NeverD](https://github.com/NeverSight/NeverD).
 
+Supplemental legacy PE coverage is documented in
+[the coverage report](reports/legacy-library-coverage.md). The
+`supplemental-*.pat` packs add missing symbols with duplicate, collision
+and native-probe validation.
+
 ## Layout
 
 ```

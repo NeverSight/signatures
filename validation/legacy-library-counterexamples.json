@@ -1,0 +1,1189 @@
+{
+  "schema": 1,
+  "claims": [
+    {
+      "target": "pe/x86/32",
+      "sha256": "01310637bc217ee05a103c57069d6b1bb6258d76c74c17e1286afc190b77f481",
+      "byte_claim": "558BEC51894DFC8B45FC8B80940000008BE55DC3 00 0000 0014",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x45B450",
+        "proposed": "?IsHourPM@CGXBDateTimeCtrl@@QAEHXZ",
+        "expected": [
+          "?ContextStackSize@SchedulerProxy@details@Concurrency@@QBEHXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "03030794c2406ee8033eb69b7f661fc86f5d6cf5847e920d884a7cf739aca3e6",
+      "byte_claim": "558BEC51894DFC8B45FC8B80CC0000008BE55DC3 00 0000 0014",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x4520F0",
+        "proposed": "?AreSysColorsTracked@SECListBaseC@@UAEHXZ",
+        "expected": [
+          "?GetDebugBits@InternalContextBase@details@Concurrency@@QBEKXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "03aa29ecfed2870c70ac8db257df5ec634d7b8dca85156c342b1d16a036b49ef",
+      "byte_claim": "558BEC6A00FF7510FF750CFF7508E8........5DC20C00 00 0000 0017",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mfc-mt-o2.exe",
+        "probe_sha256": "0b56262ade386e975bee9f5e82504f5c9714980ecc84049c4b11ef6a815fa692",
+        "truth_sha256": "8f5254a456322c664e140db41aa890224d1040bafc9582edb76ca6f2e36b2862",
+        "addr": "0x404964",
+        "proposed": "@AfxOleRegisterPropertyPageClass$qqsp11HINSTANCE__rx5_GUIDui",
+        "expected": [
+          "?AfxA2WHelper@@YGPA_WPA_WPBDH@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "0dc7cda518a3e7571df27e55f10e3f74957375446f8ce017ba75e09abb5d9859",
+      "byte_claim": "558BEC51894DFC8B45FC83C0588BE55DC3 00 0000 0011",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x424BD0",
+        "proposed": "?GetFontUnselectedTab@SECTabControl@@QAEPAVCFont@@XZ",
+        "expected": [
+          "?_Null@?$match_results@V?$_String_const_iterator@V?$_String_val@U?$_Simple_types@D@std@@@std@@@std@@V?$allocator@V?$sub_match@V?$_String_const_iterator@V?$_String_val@U?$_Simple_types@D@std@@@std@@@std@@@std@@@2@@std@@QAEAAV?$sub_match@V?$_String_const_iterator@V?$_String_val@U?$_Simple_types@D@std@@@std@@@std@@@2@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "0df25e2a1aec2256befb385ac566e394a8c4eb34de7cf3dfa3e34fba1a098e6b",
+      "byte_claim": "558BEC51894DFC8B4DFCE8........8B45FCC700........8B4DFC8B55088951 0A 4BC9 002A",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x43E540",
+        "proposed": "??0?$CCIterPos_T@PAVSECLayoutNode@@@@QAE@PAVSECLayoutNode@@@Z",
+        "expected": [
+          "??0TopologyObject@GlobalCore@details@Concurrency@@QAE@PAU123@@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "233562c9413668f260e3325fe41c5880d404dd9806e13ad3abc50390800619d2",
+      "byte_claim": "8BFF558BECFF7514FF7510FF750CFF7508E8........83C4105DC3 00 0000 001B",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mfc-mt-o2.exe",
+        "probe_sha256": "0b56262ade386e975bee9f5e82504f5c9714980ecc84049c4b11ef6a815fa692",
+        "truth_sha256": "8f5254a456322c664e140db41aa890224d1040bafc9582edb76ca6f2e36b2862",
+        "addr": "0x54C5EE",
+        "proposed": "??$copy_s@U?$char_traits@D@std@@@_Traits_helper@std@@YAPADPADIPBDIU_Secure_char_traits_tag@1@@Z",
+        "expected": [
+          "__lseeki64_nolock"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "23703dfe5da30b98006f76c38392da399788746d3fcf07b8974521946ba1d10b",
+      "byte_claim": "558BEC51894DFC8B4DFC83C108E8........8BE55DC3 00 0000 0016",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x413D00",
+        "proposed": "?GetHeadChildPos@?$SECComposite_T@PAVSECLayoutNode@@@@UBEPAU__POSITION@@XZ",
+        "expected": [
+          "??1?$_Regex_traits@D@std@@QAE@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "29652862edf1fe6e4a04332c8f99bccf4e64f20cd55a24c616036c13fc3fe030",
+      "byte_claim": "558BEC51894DFC8B45FC83C0208BE55DC3 00 0000 0011",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x4251B0",
+        "proposed": "?GetWindowPlacement@SECAContainerProps@@QAEABUtagWINDOWPLACEMENT@@XZ",
+        "expected": [
+          "?_Pfx@?$match_results@V?$_String_const_iterator@V?$_String_val@U?$_Simple_types@D@std@@@std@@@std@@V?$allocator@V?$sub_match@V?$_String_const_iterator@V?$_String_val@U?$_Simple_types@D@std@@@std@@@std@@@std@@@2@@std@@QAEAAV?$sub_match@V?$_String_const_iterator@V?$_String_val@U?$_Simple_types@D@std@@@std@@@std@@@2@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "2f9c63d29d8110feb901e2bfbac1bcbe7ae354e80504a8650b911eb82c7afb10",
+      "byte_claim": "558BEC51894DFC8B45FC8B40208BE55DC3 00 0000 0011",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x45C010",
+        "proposed": "?getCallBack@VDosToWinPipe@@QAEKXZ",
+        "expected": [
+          "?GetNumBorrowedCores@SchedulerNode@details@Concurrency@@QAEIXZ",
+          "?GetVirtualProcessorRoot@UMSThreadProxy@details@Concurrency@@QAEPAVUMSFreeVirtualProcessorRoot@23@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "32d93bde9c96375a4f30f1341eb4fd828bcbd1159b3298742a01990d2ae83e8e",
+      "byte_claim": "558BEC51894DFC8B45FC8B809C0000008BE55DC3 00 0000 0014",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x460090",
+        "proposed": "?GetDisplay3dButtons@CGXProperties@@QBEHXZ",
+        "expected": [
+          "?GetProxy@InternalContextBase@details@Concurrency@@UAEPAUIThreadProxy@3@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "39b13f8f7058ae7695bfc02529917a26d6fe24e5bf94f7ef75a00ff5f506d93e",
+      "byte_claim": "558BEC51894DFC8B45FC8B808C0000008BE55DC3 00 0000 0014",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x4650F0",
+        "proposed": "?GetDockFrameClass@SECMultiDocTemplate@@QAEPAUCRuntimeClass@@XZ",
+        "expected": [
+          "?GetExecutionResourceId@VirtualProcessor@details@Concurrency@@QBEIXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "3d4e57d27ae25569ee8a15558d54165cbe1f41b5b851e0abc033b4e72a314250",
+      "byte_claim": "558BEC51894DFC8B45FC8B4D088948048B45FC8BE55DC20400 00 0000 0019",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x43AB70",
+        "proposed": "??4?$CCIterPos_T@PAVSECLayoutNode@@@@QAEAAV0@PAVSECLayoutNode@@@Z",
+        "expected": [
+          "??0ContextNode@SchedulerBase@details@Concurrency@@QAE@PAVInternalContextBase@23@@Z",
+          "??0EventWaitNode@details@Concurrency@@QAE@PAVWaitBlock@12@@Z",
+          "??0locale@std@@AAE@PAV_Locimp@01@@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "4cabb660a455bdc2900e89c5709bf4f5d287af18884aaf2d5c64f270e1390957",
+      "byte_claim": "558BEC51894DFC8B45FC83C0048BE55DC3 00 0000 0011",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x434820",
+        "proposed": "?data@CPlex@@QAEPAXXZ",
+        "expected": [
+          "?_Getpnext@_Iterator_base12@std@@QAEPAPAU12@XZ",
+          "?_get_cs@_Mtx_internal_imp_t@@QAEPAVstl_critical_section_interface@details@Concurrency@@XZ",
+          "?native_handle@stl_critical_section_concrt@details@Concurrency@@QAEAAVcritical_section@3@XZ",
+          "?native_handle@stl_critical_section_vista@details@Concurrency@@QAEPAU_RTL_CRITICAL_SECTION@@XZ",
+          "?native_handle@stl_critical_section_win7@details@Concurrency@@QAEPAU_RTL_SRWLOCK@@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "4cf27f1a2b4c62474dbb11f4021a0ba48e518526ef9e3ab2d6bc271468dae816",
+      "byte_claim": "558BEC51894DFC8B45FC8B4D0889088B55FCC74204000000008B45FC8BE55DC2 02 2768 0022",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x4556C0",
+        "proposed": "??0_RichEditCookie@@QAE@AAVCArchive@@@Z",
+        "expected": [
+          "??0SweeperContext@details@Concurrency@@QAE@PAV_TaskCollection@12@@Z",
+          "??0_Node@TokenRegistrationContainer@_CancellationTokenState@details@Concurrency@@QAE@PAV_CancellationTokenRegistration@34@@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "5399da43d0e24bc6422c3c5daa0ec212922b507dcc27c8eea4bf8f3428d50600",
+      "byte_claim": "558BEC51894DFC8B45FC8B4D0889088B55FC8B450C8942048B45FC8BE55DC208 01 78F0 0021",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x4133B0",
+        "proposed": "??0GXNDX@@QAE@KK@Z",
+        "expected": [
+          "??0Slot@?$Mailbox@V_UnrealizedChore@details@Concurrency@@@details@Concurrency@@AAE@PAUSegment@123@I@Z",
+          "??0_Fac_node@std@@QAE@PAU01@PAV_Facet_base@1@@Z",
+          "??0error_code@std@@QAE@HABVerror_category@1@@Z",
+          "??0error_condition@std@@QAE@HABVerror_category@1@@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "5e88ed2661cd6bcd0eaa3d2958f885326d8afb654511b0c1eb0121443240f8f4",
+      "byte_claim": "8BFF558BEC6A00FF7510FF750CFF7508E8........83C4105DC3 00 0000 001A",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mfc-mt-o2.exe",
+        "probe_sha256": "0b56262ade386e975bee9f5e82504f5c9714980ecc84049c4b11ef6a815fa692",
+        "truth_sha256": "8f5254a456322c664e140db41aa890224d1040bafc9582edb76ca6f2e36b2862",
+        "addr": "0x547E32",
+        "proposed": "?_Stod@@YANPBDPAPADJ@Z",
+        "expected": [
+          "_mbtowc"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "60acd7c212b3fc69522a1436df4f6f70d289c24c57e1d1c9c76500d5b0fca1b4",
+      "byte_claim": "558BEC51894DFC8B45FC8B4D0889088B45FC8BE55DC20400 00 0000 0018",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x40FBA0",
+        "proposed": "??0?$SECIteratorPtr@PAVSECBar@@@@QAE@PAV?$SECIterator@PAVSECBar@@@@@Z",
+        "expected": [
+          "??0?$_Cmp_collate@V?$regex_traits@D@std@@@std@@QAE@ABV?$regex_traits@D@1@@Z",
+          "??0?$_Cmp_icase@V?$_Regex_traits@D@std@@@std@@QAE@ABV?$_Regex_traits@D@1@@Z",
+          "??0?$_Cmp_icase@V?$regex_traits@D@std@@@std@@QAE@ABV?$regex_traits@D@1@@Z",
+          "??0?$__crt_scoped_stack_ptr@_W@@QAE@U?$__crt_scoped_stack_ptr_tag@_W@@@Z",
+          "??0?$__crt_scoped_stack_ptr_tag@_W@@QAE@QA_W@Z",
+          "??0?$__crt_unique_heap_ptr@DU__crt_internal_free_policy@@@@QAE@QAD@Z",
+          "??0?$__crt_unique_heap_ptr@DU__crt_public_free_policy@@@@QAE@QAD@Z",
+          "??0?$__crt_unique_heap_ptr@U__vcrt_ptd@@U__crt_internal_free_policy@@@@QAE@QAU__vcrt_ptd@@@Z",
+          "??0?$atomic@J@std@@QAE@J@Z",
+          "??0id@locale@std@@QAE@I@Z",
+          "??0id@thread@std@@AAE@I@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "79d8835a36854e82cd9f91fae3725bf1c8025556fa2d1401aa28660f0151b17b",
+      "byte_claim": "558BEC51894DFC8B45FC8B4D088B1189108B45FC8B4D088B51048950048B45FC 06 6154 0026",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x4528E0",
+        "proposed": "??0tagSelData@SECCurrencyEdit@@QAE@ABU01@@Z",
+        "expected": [
+          "??0Slot@?$Mailbox@V_UnrealizedChore@details@Concurrency@@@details@Concurrency@@QAE@ABV0123@@Z",
+          "??4Slot@?$Mailbox@VInternalContextBase@details@Concurrency@@@details@Concurrency@@QAEAAV0123@ABV0123@@Z",
+          "??4Slot@?$Mailbox@V_UnrealizedChore@details@Concurrency@@@details@Concurrency@@QAEAAV0123@ABV0123@@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "7fb65fc5d606ab39ebf4479a3248996a349cd5c79df614b2406e14c52ad6966e",
+      "byte_claim": "558BEC51894DFC8B45FC8B80000100008BE55DC3 00 0000 0014",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x453E90",
+        "proposed": "?GetPrintHorzLines@CGXProperties@@QAEHXZ",
+        "expected": [
+          "?GetGroup@ScheduleGroupSegmentBase@details@Concurrency@@QBEPAVScheduleGroupBase@23@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "8668ff0c6b5b88189824ad63226d9f23a81858202018214b214f9a41d3fafea3",
+      "byte_claim": "558BEC6A018D451050FF750CFF7508E8........5DC20C00 00 0000 0018",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mfc-mt-o2.exe",
+        "probe_sha256": "0b56262ade386e975bee9f5e82504f5c9714980ecc84049c4b11ef6a815fa692",
+        "truth_sha256": "8f5254a456322c664e140db41aa890224d1040bafc9582edb76ca6f2e36b2862",
+        "addr": "0x4082E2",
+        "proposed": "@AfxFormatString1$qqsr7CStringuipxc",
+        "expected": [
+          "?AfxFormatString1@@YGXAAV?$CStringT@_WV?$StrTraitMFC@_WV?$ChTraitsCRT@_W@ATL@@@@@ATL@@IPB_W@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "8fd87a0846f25ef8f53ee01db8121bab8988a246322134edabf066c7bd921137",
+      "byte_claim": "558BEC51894DFC8B45FC8B80A00000008BE55DC3 00 0000 0014",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x443C20",
+        "proposed": "?IsTabStop@SECACtrlItem@@QBEHXZ",
+        "expected": [
+          "?GetNumAllocatedCores@SchedulerProxy@details@Concurrency@@QBEIXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "9e79f601fcb339d645880326f8de42550cea2749fd19e35d309e0b8b0e2972c3",
+      "byte_claim": "558BEC51894DFC8B45FCC700........8B4DFCC74104000000008B55FCC74208 0B F44B 002B",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x40FA70",
+        "proposed": "??0exception@@QAE@XZ",
+        "expected": [
+          "??0?$_Buf@D@std@@QAE@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "a020f69e7f57b274021bb613b669ba45886ddcdede94a634dab15718f3e83ff8",
+      "byte_claim": "558BEC6A006A008B450850E8........83C40C5DC3 00 0000 0015",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x470450",
+        "proposed": "_exit",
+        "expected": [
+          "??$__crt_interlocked_read_pointer@$$A6AXXZ@@YAP6AXXZPDS6AXXZ@Z",
+          "??$__crt_interlocked_read_pointer@UHINSTANCE__@@@@YAPAUHINSTANCE__@@PDSAU0@@Z",
+          "??$__crt_interlocked_read_pointer@X@@YAPAXPDSAX@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "ace196998901174658c87d712a1086dbcef52b28f249d90816f362f75c30b17f",
+      "byte_claim": "558BEC51894DFC8B45FC8BE55DC20400 00 0000 0010",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x411410",
+        "proposed": "??4type_info@@AAEAAV0@ABV0@@Z",
+        "expected": [
+          "??$?0D@?$allocator@U_Container_proxy@std@@@std@@QAE@ABV?$allocator@D@1@@Z",
+          "??$?0H@?$_StaticAllocator@V?$_Ref_count_obj_alloc@V__ExceptionPtr@@U?$_StaticAllocator@H@@@std@@@@QAE@ABU?$_StaticAllocator@H@@@Z",
+          "??$?0H@?$allocator@U_Container_proxy@std@@@std@@QAE@ABV?$allocator@H@1@@Z",
+          "??$?0H@?$allocator@V?$_Func_impl@V<lambda_10acadd772698193f5f92bf5668b9137>@@V?$allocator@H@std@@I$$V@std@@@std@@QAE@ABV?$allocator@H@1@@Z",
+          "??$?0I@?$allocator@U_Container_proxy@std@@@std@@QAE@ABV?$allocator@I@1@@Z",
+          "??$?0U?$_List_node@U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@PAX@std@@@?$allocator@U_Container_proxy@std@@@std@@QAE@ABV?$allocator@U?$_List_node@U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@PAX@std@@@1@@Z",
+          "??$?0U?$_Tree_node@NPAX@std@@@?$allocator@U_Container_proxy@std@@@std@@QAE@ABV?$allocator@U?$_Tree_node@NPAX@std@@@1@@Z",
+          "??$?0U?$_Tree_node@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@std@@PAX@std@@@?$allocator@U_Container_proxy@std@@@std@@QAE@ABV?$allocator@U?$_Tree_node@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@std@@PAX@std@@@1@@Z",
+          "??$?0U?$integral_constant@_N$00@std@@@_Any_tag@std@@QAE@$$QAU?$integral_constant@_N$00@1@@Z",
+          "??$?0U?$integral_constant@_N$0A@@std@@@_Any_tag@std@@QAE@$$QAU?$integral_constant@_N$0A@@1@@Z",
+          "??$?0U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@@?$allocator@U?$_List_node@U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@PAX@std@@@std@@QAE@ABV?$allocator@U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@@1@@Z",
+          "??$?0U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@@?$allocator@V?$_List_unchecked_iterator@V?$_List_val@U?$_List_simple_types@U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@@std@@@std@@@std@@@std@@QAE@ABV?$allocator@U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@@1@@Z",
+          "??$?0U_Exact_args_t@std@@$0A@@?$tuple@$$V@std@@QAE@U_Exact_args_t@1@@Z",
+          "??$?0U_Grp_t@?$_Tgt_state_t@V?$_String_const_iterator@V?$_String_val@U?$_Simple_types@D@std@@@std@@@std@@@std@@@?$allocator@U_Container_proxy@std@@@std@@QAE@ABV?$allocator@U_Grp_t@?$_Tgt_state_t@V?$_String_const_iterator@V?$_String_val@U?$_Simple_types@D@std@@@std@@@std@@@std@@@1@@Z",
+          "??$?0U_Loop_vals_t@std@@@?$allocator@U_Container_proxy@std@@@std@@QAE@ABV?$allocator@U_Loop_vals_t@std@@@1@@Z",
+          "??$?0V?$_List_unchecked_iterator@V?$_List_val@U?$_List_simple_types@U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@@std@@@std@@@std@@@?$allocator@U_Container_proxy@std@@@std@@QAE@ABV?$allocator@V?$_List_unchecked_iterator@V?$_List_val@U?$_List_simple_types@U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@@std@@@std@@@std@@@1@@Z",
+          "??$?0V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@?$allocator@U_Container_proxy@std@@@std@@QAE@ABV?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@1@@Z",
+          "??$?0V?$sub_match@V?$_String_const_iterator@V?$_String_val@U?$_Simple_types@D@std@@@std@@@std@@@std@@@?$allocator@U_Container_proxy@std@@@std@@QAE@ABV?$allocator@V?$sub_match@V?$_String_const_iterator@V?$_String_val@U?$_Simple_types@D@std@@@std@@@std@@@std@@@1@@Z",
+          "??$?0Vthread@std@@@?$allocator@U_Container_proxy@std@@@std@@QAE@ABV?$allocator@Vthread@std@@@1@@Z",
+          "??$?0_N@?$allocator@I@std@@QAE@ABV?$allocator@_N@1@@Z",
+          "??$?0_W@?$allocator@U_Container_proxy@std@@@std@@QAE@ABV?$allocator@_W@1@@Z",
+          "??0?$allocator@D@std@@QAE@ABV01@@Z",
+          "??0?$allocator@H@std@@QAE@ABV01@@Z",
+          "??0?$allocator@I@std@@QAE@ABV01@@Z",
+          "??0?$allocator@U_Grp_t@?$_Tgt_state_t@V?$_String_const_iterator@V?$_String_val@U?$_Simple_types@D@std@@@std@@@std@@@std@@@std@@QAE@ABV01@@Z",
+          "??0?$allocator@V?$_List_unchecked_iterator@V?$_List_val@U?$_List_simple_types@U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@@std@@@std@@@std@@@std@@QAE@ABV01@@Z",
+          "??0?$allocator@_W@std@@QAE@ABV01@@Z",
+          "??0?$tuple@$$V@std@@QAE@ABV01@@Z",
+          "??0locale@std@@QAE@W4_Uninitialized@1@@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "af60f11371677ad52b1762c140b350340e4ad05e123b6970e9f9d53fc3a2c3b7",
+      "byte_claim": "558BEC51894DFC8B45FC8B40288BE55DC3 00 0000 0011",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x459020",
+        "proposed": "?GetDecimalSeparatorLineColor@Format@SECCurrencyEdit@@QBEKXZ",
+        "expected": [
+          "?GetCoreIndex@ExecutionResource@details@Concurrency@@QAEIXZ",
+          "?GetId@ThreadProxy@details@Concurrency@@UBEIXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "b2c6ecd6431f233b9c45ef3e15c0aa3f71299188c358851518a18f9ed2f63d07",
+      "byte_claim": "8BFF558BEC6A00FF750CFF7508E8........83C40C5DC3 00 0000 0017",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mfc-mt-o2.exe",
+        "probe_sha256": "0b56262ade386e975bee9f5e82504f5c9714980ecc84049c4b11ef6a815fa692",
+        "truth_sha256": "8f5254a456322c664e140db41aa890224d1040bafc9582edb76ca6f2e36b2862",
+        "addr": "0x539EB5",
+        "proposed": "__atodbl",
+        "expected": [
+          "__wcsupr_s"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "b43ab42db709961c09647d3c90a05dcb2dca584a3e029acf6081b43e883029cd",
+      "byte_claim": "558BEC51894DFC8B45FC8B80900000008BE55DC3 00 0000 0014",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x460070",
+        "proposed": "?GetDockFrameClass@SECMultiDocTemplate@@QAEPAUCRuntimeClass@@XZ",
+        "expected": [
+          "?GetMaskId@VirtualProcessor@details@Concurrency@@QBEIXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "b84811fe93e1021f61cbb201e4ad28e02a5da6d2cfd4d860c50aded5ecca2105",
+      "byte_claim": "558BEC51894DFC8B45FC8A40048BE55DC3 00 0000 0011",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x4171D0",
+        "proposed": "?IsSimple@CType@@QAE_NXZ",
+        "expected": [
+          "??Bsentry@?$basic_istream@DU?$char_traits@D@std@@@std@@QBE_NXZ",
+          "??Bsentry@?$basic_ostream@DU?$char_traits@D@std@@@std@@QBE_NXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "c5c6844b7c101934a0e6fc12fe199f3720fa604bcedc9c02172765e9179777bb",
+      "byte_claim": "558BEC83EC08894DF8C745FC000000008B450C508B4D08518B4DF8E8........ 12 E1BF 0032",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x40F3E0",
+        "proposed": "??A?$CArray@USECA_EnumType@@AAU1@@@QBE?AUSECA_EnumType@@H@Z",
+        "expected": [
+          "??$try_emplace@$$V@?$map@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HU?$less@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@V?$allocator@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@std@@@2@@std@@QAE?AU?$pair@V?$_Tree_iterator@V?$_Tree_val@U?$_Tree_simple_types@U?$pair@$$CBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@std@@@std@@@std@@@std@@_N@1@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@1@@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "c840ab173f038ac68342f654eb68a1147d32a19580d24fc1ddd9a642b1eaafe5",
+      "byte_claim": "558BEC51894DFC8B4DFCE8........8B4DFC83C108E8........8B45FC8BE55D 01 EF04 0021",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x4665B0",
+        "proposed": "??0Extents@MvcLogicalPart@@QAE@XZ",
+        "expected": [
+          "??0?$SafeSQueue@VInternalContextBase@details@Concurrency@@V_HyperNonReentrantLock@23@@details@Concurrency@@QAE@XZ",
+          "??0?$SafeSQueue@VRealizedChore@details@Concurrency@@V_HyperNonReentrantLock@23@@details@Concurrency@@QAE@XZ",
+          "??0?$SafeSQueue@VSafePointInvocation@details@Concurrency@@V_HyperNonReentrantLock@23@@details@Concurrency@@QAE@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "d024cb6914c7f986ad2c000b5403f7b5ca0888cd2de106b2d5b686ff4f57d714",
+      "byte_claim": "558BEC51894DFC8B45FCC700000000008BE55DC3 00 0000 0014",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x41D040",
+        "proposed": "?FirstImp@IArrayInterface@SECArrayIteratorTypes@@IAEXXZ",
+        "expected": [
+          "?Reset@SafePointMarker@details@Concurrency@@QAEXXZ",
+          "?_Clrcont@_Iterator_base12@std@@QAEXXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "d887780e720cf2b31f8f74a28f2d1b7557ed6c74887ef408fe2412ce966ea3d5",
+      "byte_claim": "558BEC51894DFC8B45FC8B403C8BE55DC3 00 0000 0011",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x431810",
+        "proposed": "?GetLargeWidth@SECBmpMgr@@QBEHXZ",
+        "expected": [
+          "?tie@?$basic_ios@DU?$char_traits@D@std@@@std@@QBEPAV?$basic_ostream@DU?$char_traits@D@std@@@2@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "e0e14c88c6e8bce14fb100a117e94631e21e22d51df995042fb24ecd8a23e888",
+      "byte_claim": "558BEC51894DFC8B45FC8B0851E8........83C4048BE55DC3 00 0000 0019",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x417320",
+        "proposed": "??1VMutex@@QAE@XZ",
+        "expected": [
+          "??D?$_List_unchecked_const_iterator@V?$_List_val@U?$_List_simple_types@U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@@std@@@std@@U_Iterator_base0@2@@std@@QBEABU?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@1@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "e52e85fbbc5eddb011e676736545b8fd6674b2408629bca6d689d6af15dbcd1a",
+      "byte_claim": "558BEC51894DFC8B45FC8B4D088948048BE55DC20400 00 0000 0016",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x450A00",
+        "proposed": "?SetThisNode@SECDefDockNodeInitiatorBase@@QAEXPAVSECLayoutNode@@@Z",
+        "expected": [
+          "?SetOwningNode@SchedulingRing@details@Concurrency@@AAEXPAVSchedulingNode@23@@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "e6ad1f7780c75333e0fb15ffcc79ed55f8b41edc4e62cb287fa6a8d4d7db412f",
+      "byte_claim": "558BEC51894DFC8B45FC8B40408BE55DC3 00 0000 0011",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x86-mtd-od.exe",
+        "probe_sha256": "0da5103f3f51835364bac46f88ea840939c069ac4b2930df46b34767c3f67739",
+        "truth_sha256": "361a993547d7da5febd9bae0ee58e72e01221d036a17d46e0b042a7794a7b0c8",
+        "addr": "0x46CB60",
+        "proposed": "?GetLargeHeight@SECBmpMgr@@QBEHXZ",
+        "expected": [
+          "?GetExecutionContext@FreeThreadProxy@details@Concurrency@@QAEPAUIExecutionContext@3@XZ",
+          "?Id@WorkQueue@details@Concurrency@@QBEIXZ",
+          "?MaxIndex@?$ListArray@U?$ListArrayInlineLink@VWorkQueue@details@Concurrency@@@details@Concurrency@@@details@Concurrency@@QAEHXZ",
+          "?MaxIndex@?$ListArray@VExternalStatistics@details@Concurrency@@@details@Concurrency@@QAEHXZ",
+          "?MaxIndex@?$ListArray@VScheduleGroupSegmentBase@details@Concurrency@@@details@Concurrency@@QAEHXZ",
+          "?MaxIndex@?$ListArray@VVirtualProcessor@details@Concurrency@@@details@Concurrency@@QAEHXZ",
+          "?MaxIndex@?$ListArray@VWorkQueue@details@Concurrency@@@details@Concurrency@@QAEHXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/32",
+      "sha256": "ee27bf633b4dc94c27b69192350bbe33ffe3ee27fd8f235ac2637224c016d4f9",
+      "byte_claim": "558BEC51894DFC8B4508508B4DFCE8........8B45088BE55DC20400 00 0000 001C",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2017-x86-mtd-od.exe",
+        "probe_sha256": "970beab659cc087eea40c318dd777d593b29be5943a66f3f02f3afb794736e67",
+        "truth_sha256": "71accdf5c0a1ebcab0040cc551a860ae4e7b1a59d43d4915b5d5a6226883b361",
+        "addr": "0x425110",
+        "proposed": "??4VRegistryKey@@QAEPADPAD@Z",
+        "expected": [
+          "?cbegin@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QBE?AV?$_String_const_iterator@V?$_String_val@U?$_Simple_types@D@std@@@std@@@2@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "0e91ce99ddec0a0897b320808099988b7fed9a36a5e4ad4629ab5b212920e981",
+      "byte_claim": "4C894C24204C89442418488954241048894C2408488B442428488B4C24184889 07 ED58 0027",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2019-x64-mtd-od.exe",
+        "probe_sha256": "50aa1456694cbb6f242ef45896a320cf3017c0a1d4beb26645e619a68766371d",
+        "truth_sha256": "1ab889057c9e4ee0b2c146430abcf0e7e157df5e7873c7bd37e8eaa52d6ecbd0",
+        "addr": "0x14002A8E0",
+        "proposed": "?do_unshift@?$codecvt@DDU__mbstate_t@@@std@@MEBAHAEAU__mbstate_t@@PEAD1AEAPEAD@Z",
+        "expected": [
+          "?do_unshift@?$codecvt@DDU_Mbstatet@@@std@@MEBAHAEAU_Mbstatet@@PEAD1AEAPEAD@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "0f30b6159ea353e80fb8d128174321b2d1645e07a29ac1b617a0353a6f97fbdd",
+      "byte_claim": "488954241048894C24084883EC38C744242000000000488B442440488B00488B 20 D9D5 0040",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x140038640",
+        "proposed": "?negative_sign@?$_Mpunct@D@std@@QEBA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@XZ",
+        "expected": [
+          "?falsename@?$numpunct@D@std@@QEBA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "0f7cad4a4a2fca4d1e648b58c0a81fa59b7e04f029035b77015b5ef8022ddaed",
+      "byte_claim": "4489442418488954241048894C2408488B442408488B4C2410488908488B4424 0E 4D4C 002E",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x140086150",
+        "proposed": "??0?$_Smanip@H@std@@QEAA@P6AXAEAVios_base@1@H@ZH@Z",
+        "expected": [
+          "??0Slot@?$Mailbox@V_UnrealizedChore@details@Concurrency@@@details@Concurrency@@AEAA@PEAUSegment@123@I@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "15e3b57c34da00e529fe0375fa68cba42287ffd8c9f4e4ac3f26c1c96c96ab07",
+      "byte_claim": "48894C2408488B442408488B00488B4C240848034108C3 00 0000 0017",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x14001C1B0",
+        "proposed": "??B?$fpos@U__mbstate_t@@@std@@QEBA_JXZ",
+        "expected": [
+          "??B?$fpos@U_Mbstatet@@@std@@QEBA_JXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "1758dadf807d9943ec1b0a5c8066822ff81e43a6d3968037d6189954683eedb6",
+      "byte_claim": "4883EC38488364242000E8........4883C438C3 00 0000 0014",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mfc-mt-o2.exe",
+        "probe_sha256": "d10f1eb8523cebf769e0634acb445b63f43691c17aa8c380c2d7ed5a634d6e0f",
+        "truth_sha256": "1bc468a7b37ced4829732187252823ac0b4ed301ad04afcc922b31f080a93514",
+        "addr": "0x140021528",
+        "proposed": "KerbSetPasswordUser",
+        "expected": [
+          "?CreateIndirect@CDialog@@UEAAHPEBUDLGTEMPLATE@@PEAVCWnd@@PEAX@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "1ae57e50e6b58cd460e695f69810d98a4d7e1bedf6510e56da1eb5a7d0a09d12",
+      "byte_claim": "48894C2408488B442408488B4020488B00C3 00 0000 0012",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x14003ADE0",
+        "proposed": "?eback@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IEBAPEAGXZ",
+        "expected": [
+          "?pbase@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEBAPEADXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "317af5af80d8e6cf6f6c25f900598dc50277aeeb9244ae0f9fde109087f0babf",
+      "byte_claim": "488954241048894C24084883EC18488B442420488B405048890424488B442420 12 A3E6 0032",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x140043850",
+        "proposed": "?tie@?$basic_ios@GU?$char_traits@G@std@@@std@@QEAAPEAV?$basic_ostream@GU?$char_traits@G@std@@@2@PEAV32@@Z",
+        "expected": [
+          "?tie@?$basic_ios@DU?$char_traits@D@std@@@std@@QEAAPEAV?$basic_ostream@DU?$char_traits@D@std@@@2@PEAV32@@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "3e5c875f86c84f661895c2ec36dfbca583bdd3c0e58af7ea4050b71752e9a262",
+      "byte_claim": "48894C24084883EC28488B4C2430FF15........4883C428C3 00 0000 0019",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x140043940",
+        "proposed": "??3ULI@@SAXPEAX@Z",
+        "expected": [
+          "_Mtxdst"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "4d2bbeeb5296cb01596cdaa0d32a84212652cfa5c06486e32979b3ed52f12378",
+      "byte_claim": "4883EC48488BD1488D4C2420E8........488D15........488D4C2420E8.... 00 0000 0023",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mt-o2.exe",
+        "probe_sha256": "eec5b440397d58b93cde761e67823d066b2629c3e052d3767216edc58f431b33",
+        "truth_sha256": "37bdaa3cfe733b2a904051ed26a6bb44e1ab2142c5cdea29f25138fa05027bc4",
+        "addr": "0x140017A68",
+        "proposed": "?_Doraise@bad_alloc@std@@MEBAXXZ",
+        "expected": [
+          "?_Xlength_error@std@@YAXPEBD@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "500254050cc56d5163e0a1c86305cf10251e080739a69d5a21d7a20c93ba0c19",
+      "byte_claim": "48895424104C894424184C894C24204883EC284C8D442440E8........4883C4 02 2316 0022",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mfc-mt-o2.exe",
+        "probe_sha256": "d10f1eb8523cebf769e0634acb445b63f43691c17aa8c380c2d7ed5a634d6e0f",
+        "truth_sha256": "1bc468a7b37ced4829732187252823ac0b4ed301ad04afcc922b31f080a93514",
+        "addr": "0x140002600",
+        "proposed": "__fprintf",
+        "expected": [
+          "?AppendFormat@?$CStringT@_WV?$StrTraitMFC@_WV?$ChTraitsCRT@_W@ATL@@@@@ATL@@QEAAXPEB_WZZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "52b2bc54540b24642e80a7857d8267d146da4f2db8e4532d369b85fbf7441dec",
+      "byte_claim": "48894C24084883EC18488B442420488B4040488338007410488B442420488B40 18 A0AB 0038",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x14002E390",
+        "proposed": "?_Gnavail@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEBA_JXZ",
+        "expected": [
+          "?_Pnavail@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEBA_JXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "563e7919b0249799865a2bb5b317f5a699b394ea10967bb235d68d653d14d8d1",
+      "byte_claim": "48894C2408488B442408488B80B8000000C3 00 0000 0012",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x14006A300",
+        "proposed": "?GetEvent@CAMSchedule@@QEBAPEAXXZ",
+        "expected": [
+          "?GetExecutingContext@VirtualProcessor@details@Concurrency@@QEAAPEAUIExecutionContext@3@XZ",
+          "?_GetToken@_CancellationTokenRegistration@details@Concurrency@@QEBAPEAV_CancellationTokenState@23@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "58d8b892f71978a0b728fd39f1401ef1ccdb52c91884328577d861a7a5a8c763",
+      "byte_claim": "48894C2408488B442408488B4040488B00C3 00 0000 0012",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x14003AE70",
+        "proposed": "?gptr@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEBAPEADXZ",
+        "expected": [
+          "?pptr@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEBAPEADXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "609d2a9acccc1bac3933d0b867b85f4bb9c93a66ec819083060c150cbc66f9a9",
+      "byte_claim": "664489442418488954241048894C24084883EC284C8B4424380FB7542440488B 04 E3C0 002D",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x1400330F0",
+        "proposed": "?assign@?$char_traits@G@std@@SAPEAGPEAG_KG@Z",
+        "expected": [
+          "?assign@?$char_traits@_W@std@@SAPEA_WPEA_W_K_W@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "63f5215f6a24c9afcbe85b675fbeb538af171d836b1b7d21164ed4a807b4a692",
+      "byte_claim": "488954241048894C24084883EC28488B4C2430E8........4883C428C3 00 0000 001D",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x140045D00",
+        "proposed": "??3@YAXPEAXAEBUnothrow_t@std@@@Z",
+        "expected": [
+          "??3@YAXPEAX_K@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "69cf5cd10f5aa75fc6e7abd5acbf8b4891b089c048022dc392f0a32ae0ed2733",
+      "byte_claim": "40534883EC20488BD9E8........488BCB4883C4205BE9........ 00 0000 001B",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mfc-mt-o2.exe",
+        "probe_sha256": "d10f1eb8523cebf769e0634acb445b63f43691c17aa8c380c2d7ed5a634d6e0f",
+        "truth_sha256": "1bc468a7b37ced4829732187252823ac0b4ed301ad04afcc922b31f080a93514",
+        "addr": "0x140030E84",
+        "proposed": "NtProcessStartup",
+        "expected": [
+          "?OnDestroy@CMFCFontComboBox@@IEAAXXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "83064dac67b7134774485b42c28feb6d466e62d431e619ec643aa91cf14f7ae2",
+      "byte_claim": "488D05........48890133C04889410848894110894118488BC1C3 00 0000 001B",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mfc-mt-o2.exe",
+        "probe_sha256": "d10f1eb8523cebf769e0634acb445b63f43691c17aa8c380c2d7ed5a634d6e0f",
+        "truth_sha256": "1bc468a7b37ced4829732187252823ac0b4ed301ad04afcc922b31f080a93514",
+        "addr": "0x14000E184",
+        "proposed": "??0CAudioMediaType@@IEAA@XZ",
+        "expected": [
+          "??0CDC@@QEAA@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "8cfec6aff916025d84151201e431e76ef65815fecc82c985ecfd65c669da8c63",
+      "byte_claim": "48894C24084883EC28488B4C2430E8........4883C428C3 00 0000 0018",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x1400019F0",
+        "proposed": "??$imag@M@std@@YAMAEBV?$complex@M@0@@Z",
+        "expected": [
+          "time"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "9276412c2b1819a29dd7c2c831b38fc1a8139c7edd0b3f110a3995794d46d643",
+      "byte_claim": "44894C24204C89442418488954241048894C24084883EC58488B4C2470E8.... 00 0000 0216 ..........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................C3",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x14003D700",
+        "proposed": "?seekpos@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MEAA?AV?$fpos@U__mbstate_t@@@2@V32@H@Z",
+        "expected": [
+          "?seekpos@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MEAA?AV?$fpos@U_Mbstatet@@@2@V32@H@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "976c556650cd9a268fdc18d3d9c4ac0bcc4c7f28dd01697ee9123cc3c91dd008",
+      "byte_claim": "8BC1448BC29941F7F8894424188954241C488B442418C3 00 0000 0017",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mfc-mt-o2.exe",
+        "probe_sha256": "d10f1eb8523cebf769e0634acb445b63f43691c17aa8c380c2d7ed5a634d6e0f",
+        "truth_sha256": "1bc468a7b37ced4829732187252823ac0b4ed301ad04afcc922b31f080a93514",
+        "addr": "0x1401A5A0C",
+        "proposed": "div",
+        "expected": [
+          "ldiv"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "99f833fb6d7c82dca260211d60b8c6d56ee89ec5b6ee374f328a3fc1852b26ac",
+      "byte_claim": "48894C2408488B44240848C70000000000488B442408C3 00 0000 0017",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x1400CA300",
+        "proposed": "??0_Iterator_base@std@@QEAA@XZ",
+        "expected": [
+          "??0?$List@UBoostedObject@details@Concurrency@@VNoCount@CollectionTypes@23@@details@Concurrency@@QEAA@XZ",
+          "??0?$List@UListEntry@details@Concurrency@@VNoCount@CollectionTypes@23@@details@Concurrency@@QEAA@XZ",
+          "??0?$List@VWaitNode@SchedulerBase@details@Concurrency@@VNoCount@CollectionTypes@34@@details@Concurrency@@QEAA@XZ",
+          "??0?$LockFreePushStack@VContextNode@SchedulerBase@details@Concurrency@@@details@Concurrency@@QEAA@XZ",
+          "??0?$_List_unchecked_const_iterator@V?$_List_val@U?$_List_simple_types@U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@@std@@@std@@U_Iterator_base0@2@@std@@QEAA@XZ",
+          "??0StructuredEvent@details@Concurrency@@QEAA@XZ",
+          "??0_Container_base12@std@@QEAA@XZ",
+          "??0__crt_deferred_errno_cache@@QEAA@XZ",
+          "??0__crt_stdio_stream@@QEAA@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "a4df1ba478749f05e10d65d361f7220d6655cdadd33a53a557e1d23f034254db",
+      "byte_claim": "48894C24084883EC48488B4C2450E8........4885C0750FE8........E91401 0D 3DCC 013B",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x14003ED20",
+        "proposed": "?underflow@?$basic_stringbuf@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@MEAAGXZ",
+        "expected": [
+          "?underflow@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MEAAHXZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "bdfd066aae5aed631fd8baf3880623cbc10a37d3492de2317e35659d1223e17d",
+      "byte_claim": "4C894C24204C89442418488954241048894C24084883EC18488B442430488B4C 36 E0E5 0056",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x140034970",
+        "proposed": "?do_length@?$codecvt@DDU__mbstate_t@@@std@@MEBAHAEBU__mbstate_t@@PEBD1_K@Z",
+        "expected": [
+          "?do_length@?$codecvt@DDU_Mbstatet@@@std@@MEBAHAEAU_Mbstatet@@PEBD1_K@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "c063561149734857b4a99731d3931390e5bda546909e7cd145dbaa1c1c41e58a",
+      "byte_claim": "48894C24084883EC28488B442430488B08E8........4883C428C3 00 0000 001B",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x140011F60",
+        "proposed": "??1_Timevec@std@@QEAA@XZ",
+        "expected": [
+          "??$get@$0A@$$QEAH@std@@YA$$QEAH$$QEAV?$tuple@$$QEAH@0@@Z",
+          "??$get@$0A@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@std@@YAAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@$$QEAV?$tuple@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@0@@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "ccd22cf24618771f01e10dc383453ef810d782fdc50a24feabc77917df5f8bd7",
+      "byte_claim": "488954241048894C24084883EC28488B542430488B4C2438E8........4883C4 02 2316 0022",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2019-x64-mtd-od.exe",
+        "probe_sha256": "50aa1456694cbb6f242ef45896a320cf3017c0a1d4beb26645e619a68766371d",
+        "truth_sha256": "1ab889057c9e4ee0b2c146430abcf0e7e157df5e7873c7bd37e8eaa52d6ecbd0",
+        "addr": "0x140008460",
+        "proposed": "??$?ODU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z",
+        "expected": [
+          "??$_Idl_distance@V?$_Vb_iterator@U?$_Wrap_alloc@V?$allocator@I@std@@@std@@@std@@V12@@std@@YA?A_PAEBV?$_Vb_iterator@U?$_Wrap_alloc@V?$allocator@I@std@@@std@@@0@0@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "e038258e218c2043f8f09819ecb50f42af5c745c2c937e2697bb0d824c14fd24",
+      "byte_claim": "4883EC28488B094885C97406FF15........4883C428C3 00 0000 0017",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mfc-mt-o2.exe",
+        "probe_sha256": "d10f1eb8523cebf769e0634acb445b63f43691c17aa8c380c2d7ed5a634d6e0f",
+        "truth_sha256": "1bc468a7b37ced4829732187252823ac0b4ed301ad04afcc922b31f080a93514",
+        "addr": "0x140028CD0",
+        "proposed": "??1CAMEvent@@QEAA@XZ",
+        "expected": [
+          "??1CDialogTemplate@@QEAA@XZ"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "e5481b28f46a28beb78611823b81a0a2910a3a912788e77938c198b99e709cc0",
+      "byte_claim": "4C89442418488954241048894C2408488B442408488B4C2410488908488B4424 10 FFEC 0030",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x1400C5230",
+        "proposed": "??0_Fac_node@std@@QEAA@PEAU01@PEAVfacet@locale@1@@Z",
+        "expected": [
+          "??0<lambda_3b83eb014488ad801d84acef5aaf14d3>@@QEAA@AEBQEAU_onexit_table_t@@AEBQ6AHXZ@Z",
+          "??0<lambda_87849dbe581bdf47b379eb01181f234f>@@QEAA@AEAHAEAPEBD@Z",
+          "??0<lambda_92619d2358a28f41a33ba319515a20b9>@@QEAA@AEBQEAU__acrt_ptd@@AEBQEAPEAU__crt_locale_data@@@Z",
+          "??0<lambda_bd5a608237428601b7e45fbdc72b1ae8>@@QEAA@AEBQEAU__acrt_ptd@@AEBQEAPEAU__crt_multibyte_data@@@Z",
+          "??0?$_Smanip@_J@std@@QEAA@P6AXAEAVios_base@1@_J@Z1@Z",
+          "??0_Fac_node@std@@QEAA@PEAU01@PEAV_Facet_base@1@@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "f20199bdea6bb93baf593b9d86d7bac6b4003d6076b04d8fd35dc2431fb84fdc",
+      "byte_claim": "488954241048894C2408488B442408488B4C24100FB709668908C3 00 0000 001B",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x140033120",
+        "proposed": "?assign@?$char_traits@G@std@@SAXAEAGAEBG@Z",
+        "expected": [
+          "?assign@?$char_traits@_W@std@@SAXAEA_WAEB_W@Z"
+        ],
+        "confirmed": false
+      }
+    },
+    {
+      "target": "pe/x86/64",
+      "sha256": "f776bb25d1444d1c6ac41f877ec1c8884e8717cfb496185ce2575276ca9a9c27",
+      "byte_claim": "488954241048894C24084883EC2833D2488B4C2438E8........4883C428C3 00 0000 001F",
+      "reason": "native_proposal_contradicts_linker_truth",
+      "example": {
+        "probe": "vs2015-x64-mtd-od.exe",
+        "probe_sha256": "6b3f8daa3e93ba9494b69608a94f008b6879a248308d4920ce82bcb12056e56b",
+        "truth_sha256": "5bb19a92ae82e99187f9f00d0b7bce32504142190f5d73ae7db49276292b7a53",
+        "addr": "0x140011190",
+        "proposed": "?allocate@?$allocator@G@std@@QEAAPEAG_K@Z",
+        "expected": [
+          "??$destroy@U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@@?$allocator@U?$_List_node@U?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@std@@PEAX@std@@@std@@QEAAXPEAU?$pair@$$CBHV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@@1@@Z"
+        ],
+        "confirmed": false
+      }
+    }
+  ]
+}

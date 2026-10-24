@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "file": "pe/x86/64/supplemental-msddk64.pat",
+  "library_family": "DDK Windows 64bit",
+  "source_kind": "converted_binary_library_signatures",
+  "generator": "scripts/import_binary_signatures.py",
+  "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
+  "lines": 341,
+  "parts": 1,
+  "artifacts": [
+    {
+      "file": "pe/x86/64/supplemental-msddk64.pat",
+      "sha256": "f502825a5e17f5b8503105e13edf85fa7658b9b287462175c38b24109c5016af"
+    }
+  ],
+  "validation": {
+    "counterexample_policy_sha256": "016e7be3bf848cee0ce6e98b3ca5ddbe5cfdcf1f6fe577b9c72263e36625d758",
+    "rejected_records": 0
+  }
+}
