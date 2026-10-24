@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "file": "pe/x86/32/supplemental-dm_d2_win.pat",
+  "library_family": "Digital Mars D v2 win32 runtime",
+  "source_kind": "converted_binary_library_signatures",
+  "generator": "scripts/import_binary_signatures.py",
+  "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
+  "lines": 11236,
+  "parts": 1,
+  "artifacts": [
+    {
+      "file": "pe/x86/32/supplemental-dm_d2_win.pat",
+      "sha256": "968aa1480ff8bce3f321d6fd262c882ab20f03d5006b2471c57ee0943ae1cab5"
+    }
+  ],
+  "validation": {
+    "counterexample_policy_sha256": "016e7be3bf848cee0ce6e98b3ca5ddbe5cfdcf1f6fe577b9c72263e36625d758",
+    "rejected_records": 0
+  }
+}

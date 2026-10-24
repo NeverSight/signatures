@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "file": "pe/x86/32/supplemental-bds.pat",
+  "library_family": "BDS 2005-2007 and Delphi6-7 Visual Component Library",
+  "source_kind": "converted_binary_library_signatures",
+  "generator": "scripts/import_binary_signatures.py",
+  "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
+  "lines": 31348,
+  "parts": 1,
+  "artifacts": [
+    {
+      "file": "pe/x86/32/supplemental-bds.pat",
+      "sha256": "eef09f6120fe137393b2567514aeb97f7a39a8e872bdcd687a4f086dd106e04c"
+    }
+  ],
+  "validation": {
+    "counterexample_policy_sha256": "016e7be3bf848cee0ce6e98b3ca5ddbe5cfdcf1f6fe577b9c72263e36625d758",
+    "rejected_records": 0
+  }
+}

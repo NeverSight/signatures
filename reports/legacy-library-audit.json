@@ -1,0 +1,3297 @@
+{
+  "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
+  "neverd_leading_bytes": 32,
+  "neverd_minimum_stated_bytes": 16,
+  "imported_records": 490677,
+  "counterexample_policy_sha256": "016e7be3bf848cee0ce6e98b3ca5ddbe5cfdcf1f6fe577b9c72263e36625d758",
+  "publication_schema": 1,
+  "files": [
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 92
+      },
+      "symbols": 11,
+      "profile": 1,
+      "library_family": "MetaWare ARC millicode"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 5296
+      },
+      "symbols": 691,
+      "profile": 2,
+      "library_family": "Android NDK ARM"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 8
+      },
+      "symbols": 7,
+      "profile": 3,
+      "library_family": "Startups of ELF files"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 11296
+      },
+      "symbols": 2258,
+      "profile": 4,
+      "library_family": "glibc 2.19-2.41 (Debian static, multi-release) arm64"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 29734
+      },
+      "symbols": 2590,
+      "profile": 5,
+      "library_family": "glibc 2.11-2.41 (Debian static, multi-release) armhf/armel"
+    },
+    {
+      "target": "pe/arm/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 4775,
+        "local_or_collision_flags": 282,
+        "multi_function_or_negative_offset": 67,
+        "non_direct_or_unproved_reference": 998,
+        "records": 8702,
+        "too_few_stated_bytes": 17,
+        "unnamed_or_non_ascii": 72
+      },
+      "symbols": 2731,
+      "missing_symbols": 1351,
+      "missing_examples": [
+        "??0?$SVSTHeap@_J@@QAA@XZ",
+        "??0AFX_CLASSINIT_COMPAT@@QAA@PAUCRuntimeClass@@@Z",
+        "??0CArchiveException@@QAA@HPBG@Z",
+        "??0CByteArray@@QAA@XZ",
+        "??0CCeCommandBar@@QAA@XZ",
+        "??0CCeDBDatabase@@QAA@XZ",
+        "??0CCeDBEnum@@QAA@K@Z",
+        "??0CCeDBProp@@AAA@U_CEPROPVAL@@W4enCopyMode@0@@Z",
+        "??0CCeDBProp@@QAA@AAV0@@Z",
+        "??0CCeDBProp@@QAA@FG@Z",
+        "??0CCeDBProp@@QAA@GG@Z",
+        "??0CCeDBProp@@QAA@HG@Z"
+      ],
+      "output": "pe/arm/32/supplemental-mfc.pat",
+      "expressible_records": 2491,
+      "after_folding": 2491,
+      "imported_records": 2490,
+      "imported_symbols": 970,
+      "dropped_conflicts_or_covered": 1,
+      "duplicate_records_across_sources": 0,
+      "profile": 6,
+      "library_family": "Windows CE runtime & MFC for ARM"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 26
+      },
+      "symbols": 0,
+      "profile": 7,
+      "library_family": "Startups of PE files"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 48
+      },
+      "symbols": 22,
+      "profile": 8,
+      "library_family": "Startups of PE files"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 78
+      },
+      "symbols": 46,
+      "profile": 9,
+      "library_family": "Startups of PE+ files"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 49837
+      },
+      "symbols": 0,
+      "profile": 10,
+      "library_family": "Microsoft VisualC v14/net runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 77963
+      },
+      "symbols": 0,
+      "profile": 11,
+      "library_family": "MFC v14"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 20531
+      },
+      "symbols": 0,
+      "profile": 12,
+      "library_family": "Microsoft VisualC universal runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 86065
+      },
+      "symbols": 9193,
+      "profile": 13,
+      "library_family": "Microsoft VisualC v14 64bit runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 258
+      },
+      "symbols": 41,
+      "profile": 14,
+      "library_family": "VC14 ATL 64bit support library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 1421
+      },
+      "symbols": 252,
+      "profile": 15,
+      "library_family": "VC14 Extra (technology) 64bit library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 290588
+      },
+      "symbols": 20767,
+      "profile": 16,
+      "library_family": "MFC v14 64bit"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 229
+      },
+      "symbols": 25,
+      "profile": 17,
+      "library_family": "SEH for vc64 v14"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 49788
+      },
+      "symbols": 3953,
+      "profile": 18,
+      "library_family": "Microsoft VisualC 64bit universal runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 288
+      },
+      "symbols": 0,
+      "profile": 19,
+      "library_family": "VC14 ATL support library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 637
+      },
+      "symbols": 350,
+      "profile": 20,
+      "library_family": "VC11 ATL support library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 64
+      },
+      "symbols": 32,
+      "profile": 21,
+      "library_family": "VC11 Extra (techology) library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 13032
+      },
+      "symbols": 6033,
+      "profile": 22,
+      "library_family": "Microsoft VisualC 11 runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 657
+      },
+      "symbols": 0,
+      "profile": 23,
+      "library_family": "VC14 Extra (technology) library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 123
+      },
+      "symbols": 0,
+      "profile": 24,
+      "library_family": "SEH for vc v14"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 759
+      },
+      "symbols": 173,
+      "profile": 25,
+      "library_family": "Keil C runtime"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 2
+      },
+      "symbols": 2,
+      "profile": 26,
+      "library_family": "Startups of PE files for EBC"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 2
+      },
+      "symbols": 2,
+      "profile": 27,
+      "library_family": "Startups of COFF files"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 1392
+      },
+      "symbols": 318,
+      "profile": 28,
+      "library_family": "GNU C runtime for H8"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 1533
+      },
+      "symbols": 255,
+      "profile": 29,
+      "library_family": "C runtime for Intel 960"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 918
+      },
+      "symbols": 376,
+      "profile": 30,
+      "library_family": "CodeWarrior PalmOS Runtime"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 8121
+      },
+      "symbols": 2449,
+      "profile": 31,
+      "library_family": "glibc 2.24-2.36 (Debian static, multi-release) mips64el"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 2778
+      },
+      "symbols": 2404,
+      "profile": 32,
+      "library_family": "Windows CE runtime & MFC for MIPS"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 2
+      },
+      "symbols": 2,
+      "profile": 33,
+      "library_family": "Startups of PE  files"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 2
+      },
+      "symbols": 2,
+      "profile": 34,
+      "library_family": "Startups of PSX files"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 1818
+      },
+      "symbols": 1740,
+      "profile": 35,
+      "library_family": "Sony Playstation C runtime (psyq)"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 531
+      },
+      "symbols": 146,
+      "profile": 36,
+      "library_family": "Aztec v3.20d"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 1,
+        "local_or_collision_flags": 10860,
+        "multi_function_or_negative_offset": 279,
+        "non_direct_or_unproved_reference": 8177,
+        "records": 164121,
+        "rule_byte_outside_extent": 5,
+        "too_few_stated_bytes": 7690,
+        "unnamed_or_non_ascii": 16639
+      },
+      "symbols": 63219,
+      "missing_symbols": 63218,
+      "missing_examples": [
+        "@$beql$qrx5_GUIDt1",
+        "@$bneq$qrx5_GUIDt1",
+        "@$xp$10Bde@CBType",
+        "@$xp$10Bde@DRVCat",
+        "@$xp$10Bde@OPType",
+        "@$xp$10_TDataMode",
+        "@$xp$10_TFileAttr",
+        "@$xp$10_TTextCase",
+        "@$xp$10_TTypeKind",
+        "@$xp$11Bde@CBRType",
+        "@$xp$11Bde@CFGMode",
+        "@$xp$11Bde@FLDVchk"
+      ],
+      "output": "pe/x86/32/supplemental-b32vcl.pat",
+      "expressible_records": 120470,
+      "after_folding": 120088,
+      "imported_records": 85030,
+      "imported_symbols": 47466,
+      "dropped_conflicts_or_covered": 35058,
+      "duplicate_records_across_sources": 0,
+      "profile": 37,
+      "library_family": "Borland Visual Component Library & Packages"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "local_or_collision_flags": 522,
+        "multi_function_or_negative_offset": 249,
+        "non_direct_or_unproved_reference": 201,
+        "records": 16866,
+        "too_few_stated_bytes": 278,
+        "unnamed_or_non_ascii": 121
+      },
+      "symbols": 7413,
+      "missing_symbols": 7413,
+      "missing_examples": [
+        "@$badd$qqscrx7CString",
+        "@$badd$qqspxcrx7CString",
+        "@$badd$qqsrx7CStringc",
+        "@$badd$qqsrx7CStringpxc",
+        "@$badd$qqsrx7CStringt1",
+        "@$bdele$qpv",
+        "@$beql$qqspxcrx7CString",
+        "@$beql$qqsrx7CStringpxc",
+        "@$beql$qqsrx7CStringt1",
+        "@$bgeq$qqspxcrx7CString",
+        "@$bgeq$qqsrx7CStringpxc",
+        "@$bgeq$qqsrx7CStringt1"
+      ],
+      "output": "pe/x86/32/supplemental-b5132mfc.pat",
+      "expressible_records": 15495,
+      "after_folding": 15474,
+      "imported_records": 15324,
+      "imported_symbols": 7028,
+      "dropped_conflicts_or_covered": 145,
+      "duplicate_records_across_sources": 3,
+      "rejected_by_probe_counterexamples": 2,
+      "profile": 38,
+      "library_family": "Borland 5.0x MFC adaptation"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 350
+      },
+      "symbols": 350,
+      "profile": 39,
+      "library_family": "BCC v4.5/v5.x CodeGuard 16 bit"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 137,
+        "multi_function_or_negative_offset": 3,
+        "non_direct_or_unproved_reference": 198,
+        "records": 340,
+        "too_few_stated_bytes": 1
+      },
+      "symbols": 337,
+      "missing_symbols": 200,
+      "missing_examples": [
+        "@$bdele$qpv",
+        "@$bdla$qpv",
+        "@$bnew$qui",
+        "@$bnew$quirx13std@nothrow_t",
+        "@$bnwa$qui",
+        "@$bnwa$quirx13std@nothrow_t",
+        "@__GetPolymorphicDTC$qnvui",
+        "_CG_GD_EG",
+        "___org__errno_help",
+        "__atold",
+        "__cg_hndl_setup",
+        "__cg_memory_exit"
+      ],
+      "output": "pe/x86/32/supplemental-b532cgw.pat",
+      "expressible_records": 1,
+      "after_folding": 1,
+      "imported_records": 1,
+      "imported_symbols": 1,
+      "dropped_conflicts_or_covered": 0,
+      "duplicate_records_across_sources": 0,
+      "profile": 40,
+      "library_family": "BCC v4.5/v8.x CodeGuard 32 bit"
+    },
+    {
+      "target": null,
+      "decision": "binary_format_or_16bit_unsupported",
+      "counts": {
+        "records": 255
+      },
+      "symbols": 199,
+      "profile": 41,
+      "library_family": "BCC++ for OS/2 classlib"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 1445
+      },
+      "symbols": 713,
+      "profile": 42,
+      "library_family": "BCC++ for OS/2 runtime"
+    },
+    {
+      "target": null,
+      "decision": "binary_format_or_16bit_unsupported",
+      "counts": {
+        "records": 712
+      },
+      "symbols": 665,
+      "profile": 43,
+      "library_family": "BCC++ for OS/2 OWL"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 202
+      },
+      "symbols": 113,
+      "profile": 44,
+      "library_family": "TCC++/BCC++ classlib"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 338
+      },
+      "symbols": 174,
+      "profile": 45,
+      "library_family": "BCC++ v3.1 OWL"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 6186
+      },
+      "symbols": 822,
+      "profile": 46,
+      "library_family": "TCC/TCC++/BCC++ 16 bit DOS"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 1990
+      },
+      "symbols": 556,
+      "profile": 47,
+      "library_family": "BCC++ v3.1 windows runtime"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 337
+      },
+      "symbols": 165,
+      "profile": 48,
+      "library_family": "TCC++/BCC++ TVision"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 35568
+      },
+      "symbols": 18982,
+      "profile": 49,
+      "library_family": "CBuilder 5 runtime"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 1,
+        "local_or_collision_flags": 8294,
+        "multi_function_or_negative_offset": 142,
+        "non_direct_or_unproved_reference": 1217,
+        "records": 95447,
+        "rule_byte_outside_extent": 3,
+        "too_few_stated_bytes": 5536,
+        "unnamed_or_non_ascii": 15645
+      },
+      "symbols": 43834,
+      "missing_symbols": 43833,
+      "missing_examples": [
+        "@$beql$qrx5_GUIDt1",
+        "@$bneq$qrx5_GUIDt1",
+        "@$xt$10DB2Command",
+        "@$xt$10DS_Factory",
+        "@$xt$10FLDCRepeat",
+        "@$xt$10FLDUniCode",
+        "@$xt$10FLDUnicode",
+        "@$xt$10IBMetadata",
+        "@$xt$10ORACommand",
+        "@$xt$10SQLCommand",
+        "@$xt$10tagVARIANT",
+        "@$xt$11DB2Metadata"
+      ],
+      "output": "pe/x86/32/supplemental-bds.pat",
+      "expressible_records": 64609,
+      "after_folding": 64477,
+      "imported_records": 31348,
+      "imported_symbols": 22514,
+      "dropped_conflicts_or_covered": 25521,
+      "duplicate_records_across_sources": 7608,
+      "profile": 50,
+      "library_family": "BDS 2005-2007 and Delphi6-7 Visual Component Library"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "local_or_collision_flags": 2220,
+        "multi_function_or_negative_offset": 10,
+        "non_direct_or_unproved_reference": 500,
+        "records": 43186,
+        "rule_byte_outside_extent": 3,
+        "too_few_stated_bytes": 3371,
+        "unnamed_or_non_ascii": 9580
+      },
+      "symbols": 29547,
+      "missing_symbols": 29547,
+      "missing_examples": [
+        "@@AStrCmp",
+        "@@AbstractError",
+        "@@AddRefArray",
+        "@@AfterConstruction",
+        "@@Append",
+        "@@AsClass",
+        "@@Assert",
+        "@@Assign",
+        "@@BeforeDestruction",
+        "@@BlockRead",
+        "@@BlockWrite",
+        "@@CallDynaClass"
+      ],
+      "output": "pe/x86/32/supplemental-bds2006.pat",
+      "expressible_records": 27502,
+      "after_folding": 27484,
+      "imported_records": 553,
+      "imported_symbols": 516,
+      "dropped_conflicts_or_covered": 25556,
+      "duplicate_records_across_sources": 1375,
+      "profile": 51,
+      "library_family": "Delphi2006/BDS2006 Visual Component Library"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 1,
+        "local_or_collision_flags": 2727,
+        "multi_function_or_negative_offset": 17,
+        "non_direct_or_unproved_reference": 721,
+        "records": 57975,
+        "too_few_stated_bytes": 4319,
+        "unnamed_or_non_ascii": 11062
+      },
+      "symbols": 38860,
+      "missing_symbols": 38859,
+      "missing_examples": [
+        "@$beql$qrx5_GUIDt1",
+        "@$bneq$qrx5_GUIDt1",
+        "@$xt$10DB2Command",
+        "@$xt$10DS_Factory",
+        "@$xt$10FLDCRepeat",
+        "@$xt$10FLDUniCode",
+        "@$xt$10FLDUnicode",
+        "@$xt$10IBMetadata",
+        "@$xt$10ORACommand",
+        "@$xt$10SQLCommand",
+        "@$xt$10tagVARIANT",
+        "@$xt$11DB2Metadata"
+      ],
+      "output": "pe/x86/32/supplemental-bds2007.pat",
+      "expressible_records": 39128,
+      "after_folding": 39060,
+      "imported_records": 655,
+      "imported_symbols": 588,
+      "dropped_conflicts_or_covered": 26502,
+      "duplicate_records_across_sources": 11903,
+      "profile": 52,
+      "library_family": "Codegear Rad Studio 2007 Visual Component Library"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 55089
+      },
+      "symbols": 39515,
+      "profile": 53,
+      "library_family": "BDS 4.0 RTL and VCL"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 139,
+        "multi_function_or_negative_offset": 3,
+        "non_direct_or_unproved_reference": 196,
+        "records": 340,
+        "too_few_stated_bytes": 1
+      },
+      "symbols": 339,
+      "missing_symbols": 200,
+      "missing_examples": [
+        "@$bdele$qpv",
+        "@$bdla$qpv",
+        "@$bnew$qui",
+        "@$bnew$quirx13std@nothrow_t",
+        "@$bnwa$qui",
+        "@$bnwa$quirx13std@nothrow_t",
+        "@__GetPolymorphicDTC$qnvui",
+        "_CG_GD_EG",
+        "___org__errno_help",
+        "__atold",
+        "__cg_hndl_setup",
+        "__cg_memory_exit"
+      ],
+      "output": "pe/x86/32/supplemental-bds8cg32.pat",
+      "expressible_records": 1,
+      "after_folding": 1,
+      "imported_records": 0,
+      "imported_symbols": 0,
+      "dropped_conflicts_or_covered": 0,
+      "duplicate_records_across_sources": 1,
+      "profile": 54,
+      "library_family": "BDS2008-RADxe10 CodeGuard library"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "local_or_collision_flags": 258,
+        "multi_function_or_negative_offset": 291,
+        "non_direct_or_unproved_reference": 34,
+        "records": 2776,
+        "too_few_stated_bytes": 77,
+        "unnamed_or_non_ascii": 2
+      },
+      "symbols": 990,
+      "missing_symbols": 990,
+      "missing_examples": [
+        "@$beql$qrx5_GUIDt1",
+        "@$bneq$qrx5_GUIDt1",
+        "@$xt$104ATL@%CComEnumImpl$12IEnumUnknownpx5_GUID$e&@IID_IEnumUnknown$p8IUnknown30ATL@%_CopyInterface$8IUnknown%%",
+        "@$xt$10IOleWindow",
+        "@$xt$10TBltBitmap",
+        "@$xt$10TCCalendar",
+        "@$xt$10TCTrayIcon",
+        "@$xt$10_com_error",
+        "@$xt$10tagVARIANT",
+        "@$xt$11ATL@CWindow",
+        "@$xt$11IAdviseSink",
+        "@$xt$126ATL@%CComEnum$12IEnumUnknownpx5_GUID$e&@IID_IEnumUnknown$p8IUnknown30ATL@%_CopyInterface$8IUnknown%24ATL@CComMultiThreadModel%"
+      ],
+      "output": "pe/x86/32/supplemental-bds8ext.pat",
+      "expressible_records": 2114,
+      "after_folding": 2114,
+      "imported_records": 1915,
+      "imported_symbols": 829,
+      "dropped_conflicts_or_covered": 141,
+      "duplicate_records_across_sources": 58,
+      "profile": 55,
+      "library_family": "BDS2008-RADxe10 Extra (atl/ie) library"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 10836
+      },
+      "symbols": 2699,
+      "profile": 56,
+      "library_family": "BDS2008-RADxe10 win32 runtime"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 3,
+        "local_or_collision_flags": 31344,
+        "multi_function_or_negative_offset": 93428,
+        "non_direct_or_unproved_reference": 9698,
+        "records": 302981,
+        "too_few_stated_bytes": 10374,
+        "unnamed_or_non_ascii": 14
+      },
+      "symbols": 93717,
+      "missing_symbols": 93715,
+      "missing_examples": [
+        "@$bneq$qrx5_GUIDt1",
+        "@$xt$107%TComInterface$41Word_xp@HangulHanjaConversionDictionariespx5_GUID$gIID_HangulHanjaConversionDictionaries$%",
+        "@$xt$10DS_Factory",
+        "@$xt$10FLDCRepeat",
+        "@$xt$10FLDCSingle",
+        "@$xt$10FLDUniCode",
+        "@$xt$10FLDUnicode",
+        "@$xt$10QPatternMB",
+        "@$xt$10TBltBitmap",
+        "@$xt$10TCCalendar",
+        "@$xt$10TCTrayIcon",
+        "@$xt$10TPieEditor"
+      ],
+      "output": "pe/x86/32/supplemental-bds8vcl.pat",
+      "expressible_records": 158120,
+      "after_folding": 157999,
+      "imported_records": 144949,
+      "imported_symbols": 70800,
+      "dropped_conflicts_or_covered": 10024,
+      "duplicate_records_across_sources": 3026,
+      "profile": 57,
+      "library_family": "BDS2008-RADxe10 Component Library & Packages"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 4,
+        "local_or_collision_flags": 2792,
+        "non_direct_or_unproved_reference": 63,
+        "records": 10819,
+        "too_few_stated_bytes": 172,
+        "unnamed_or_non_ascii": 102
+      },
+      "symbols": 4749,
+      "missing_symbols": 4748,
+      "missing_examples": [
+        "@$bnew$quipv",
+        "@$vc1$B0$1$0$",
+        "@$xt$100boost@archive@%basic_binary_iprimitive$36boost@archive@naked_binary_wiarchiveb19std@%char_traits$b%%",
+        "@$xt$100std@%_Tree_nod$76std@%_Tmap_traits$buc12std@%less$b%33std@%allocator$15std@%pair$xbuc%%o$i0$%%@_Node",
+        "@$xt$101boost@re_detail@%perl_matcher$pxb39std@%allocator$21boost@%sub_match$pxb%%24boost@%c_regex_traits$b%%",
+        "@$xt$101boost@re_detail@%perl_matcher$pxc39std@%allocator$21boost@%sub_match$pxc%%24boost@%c_regex_traits$c%%",
+        "@$xt$102boost@%shared_ptr$81boost@%regex_traits_wrapper$50boost@%regex_traits$b26boost@%w32_regex_traits$b%%%%",
+        "@$xt$102boost@%shared_ptr$81boost@%regex_traits_wrapper$50boost@%regex_traits$c26boost@%w32_regex_traits$c%%%%",
+        "@$xt$103boost@spirit@%safe_bool$22boost@spirit@%match$b%52boost@spirit@impl@%no_base$22boost@spirit@%match$b%%%",
+        "@$xt$103boost@spirit@%safe_bool$22boost@spirit@%match$c%52boost@spirit@impl@%no_base$22boost@spirit@%match$c%%%",
+        "@$xt$103boost@spirit@%safe_bool$22boost@spirit@%match$i%52boost@spirit@impl@%no_base$22boost@spirit@%match$i%%%",
+        "@$xt$104std@%_List_nod$33boost@signals@detail@bound_object51std@%allocator$33boost@signals@detail@bound_object%%"
+      ],
+      "output": "pe/x86/32/supplemental-bdsboost.pat",
+      "expressible_records": 7686,
+      "after_folding": 7662,
+      "imported_records": 7609,
+      "imported_symbols": 4541,
+      "dropped_conflicts_or_covered": 51,
+      "duplicate_records_across_sources": 2,
+      "profile": 58,
+      "library_family": "BDS2008 Boost Library"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "local_or_collision_flags": 294,
+        "non_direct_or_unproved_reference": 78,
+        "records": 3570,
+        "too_few_stated_bytes": 9,
+        "unnamed_or_non_ascii": 113
+      },
+      "symbols": 3161,
+      "missing_symbols": 3161,
+      "missing_examples": [
+        "@$xt$104ATL@%CComEnumImpl$12IEnumUnknownpx5_GUID$e&@IID_IEnumUnknown$p8IUnknown30ATL@%_CopyInterface$8IUnknown%%",
+        "@$xt$107%TComInterface$41Word_2k@HangulHanjaConversionDictionariespx5_GUID$gIID_HangulHanjaConversionDictionaries$%",
+        "@$xt$107%TComInterface$41Word_xp@HangulHanjaConversionDictionariespx5_GUID$gIID_HangulHanjaConversionDictionaries$%",
+        "@$xt$10IOleWindow",
+        "@$xt$10_com_error",
+        "@$xt$10tagVARIANT",
+        "@$xt$11ATL@CWindow",
+        "@$xt$11IAdviseSink",
+        "@$xt$126ATL@%CComEnum$12IEnumUnknownpx5_GUID$e&@IID_IEnumUnknown$p8IUnknown30ATL@%_CopyInterface$8IUnknown%24ATL@CComMultiThreadModel%",
+        "@$xt$12ATL@CComBSTR",
+        "@$xt$12IEnumUnknown",
+        "@$xt$136ATL@%IDispatchImpl$21IAxWinAmbientDispatchpx5_GUID$e&@IID_IAxWinAmbientDispatch$t2$e&@LIBID_ATLLib$us$i1$us$i0$22ATL@CComTypeInfoHolder%"
+      ],
+      "output": "pe/x86/32/supplemental-bdsext.pat",
+      "expressible_records": 3076,
+      "after_folding": 2820,
+      "imported_records": 2488,
+      "imported_symbols": 2488,
+      "dropped_conflicts_or_covered": 57,
+      "duplicate_records_across_sources": 275,
+      "profile": 59,
+      "library_family": "BDS v8 Extra (techology) library"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 1853
+      },
+      "symbols": 405,
+      "profile": 60,
+      "library_family": "BCC v4.x/5.x class library 16 bit"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 6035
+      },
+      "symbols": 4766,
+      "profile": 61,
+      "library_family": "Borland DBE 16 bit"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 3
+      },
+      "symbols": 1,
+      "profile": 62,
+      "library_family": "BCC v4.x/5.x BGI graphics"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 1017
+      },
+      "symbols": 365,
+      "profile": 63,
+      "library_family": "Borland OCF 16 bit"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 6065
+      },
+      "symbols": 1983,
+      "profile": 64,
+      "library_family": "Borland OWL (2/2.5) 16 bit"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 4750
+      },
+      "symbols": 961,
+      "profile": 65,
+      "library_family": "BCC v4.x/5.x DOS runtime"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 3488
+      },
+      "symbols": 739,
+      "profile": 66,
+      "library_family": "BCC v4.x/5.x windows runtime"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "local_or_collision_flags": 207,
+        "multi_function_or_negative_offset": 136,
+        "non_direct_or_unproved_reference": 16,
+        "records": 1737,
+        "too_few_stated_bytes": 24,
+        "unnamed_or_non_ascii": 21
+      },
+      "symbols": 816,
+      "missing_symbols": 816,
+      "missing_examples": [
+        "@$blsh$qr42std@%basic_ostream$c19std@%char_traits$c%%rx20ClassLib@TFileStatus",
+        "@$blsh$qr46std@%basic_ostream$tc$t20std@%char_traits$tc%%rx20ClassLib@TFileStatus",
+        "@$blsh$qr7ostreamrx5TRect",
+        "@$bnew$quipv",
+        "@$brsh$qr8ipstreamr5TRect",
+        "@$brsh$qr8ipstreamr6TResId",
+        "@$xt$107ClassLib@%TMListBlockInitializer$tp38ClassLib@TBinarySearchTreeBase@BinNode$t27ClassLib@TStandardAllocator%",
+        "@$xt$10TMsgThread",
+        "@$xt$10TReference",
+        "@$xt$10TResString",
+        "@$xt$10TStringRef",
+        "@$xt$10TXRegistry"
+      ],
+      "output": "pe/x86/32/supplemental-bh32cls.pat",
+      "expressible_records": 1333,
+      "after_folding": 1331,
+      "imported_records": 1211,
+      "imported_symbols": 698,
+      "dropped_conflicts_or_covered": 117,
+      "duplicate_records_across_sources": 3,
+      "profile": 67,
+      "library_family": "BCC v4.x/5.x class library 32 bit"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "local_or_collision_flags": 468,
+        "multi_function_or_negative_offset": 154,
+        "non_direct_or_unproved_reference": 481,
+        "records": 3554,
+        "too_few_stated_bytes": 17
+      },
+      "symbols": 2663,
+      "missing_symbols": 2663,
+      "missing_examples": [
+        "@$xt$10TBDTObject",
+        "@$xt$10TBatchMove",
+        "@$xt$10TBlobField",
+        "@$xt$10TDBControl",
+        "@$xt$10TDBDataSet",
+        "@$xt$10TDBListBox",
+        "@$xt$10TDateField",
+        "@$xt$10TFieldDefs",
+        "@$xt$10TIndexDefs",
+        "@$xt$10TMemoField",
+        "@$xt$10TTimeField",
+        "@$xt$10TWordField"
+      ],
+      "output": "pe/x86/32/supplemental-bh32dbe.pat",
+      "expressible_records": 2434,
+      "after_folding": 2344,
+      "imported_records": 2319,
+      "imported_symbols": 2236,
+      "dropped_conflicts_or_covered": 22,
+      "duplicate_records_across_sources": 3,
+      "profile": 68,
+      "library_family": "Borland DBE 32 bit"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "local_or_collision_flags": 445,
+        "multi_function_or_negative_offset": 211,
+        "non_direct_or_unproved_reference": 44,
+        "records": 2394,
+        "too_few_stated_bytes": 24,
+        "unnamed_or_non_ascii": 14
+      },
+      "symbols": 1157,
+      "missing_symbols": 1157,
+      "missing_examples": [
+        "@$xt$0@OcRegisterClass$qr8TRegListp11HINSTANCE__r7ostreamuspcp8TRegItemt6@_buf@",
+        "@$xt$10OCF@IBPart",
+        "@$xt$10OCF@IBSite",
+        "@$xt$10OCF@TOcApp",
+        "@$xt$10OCF@TXAuto",
+        "@$xt$10TAutoClass",
+        "@$xt$10TAutoStack",
+        "@$xt$10TCtrlEvent",
+        "@$xt$10TOcControl",
+        "@$xt$10TOcRemView",
+        "@$xt$10TOcStorage",
+        "@$xt$10TServedCOM"
+      ],
+      "output": "pe/x86/32/supplemental-bh32ocf.pat",
+      "expressible_records": 1656,
+      "after_folding": 1656,
+      "imported_records": 1503,
+      "imported_symbols": 987,
+      "dropped_conflicts_or_covered": 92,
+      "duplicate_records_across_sources": 61,
+      "profile": 69,
+      "library_family": "Borland OCF 32 bit"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "local_or_collision_flags": 1395,
+        "multi_function_or_negative_offset": 1715,
+        "non_direct_or_unproved_reference": 430,
+        "records": 11656,
+        "too_few_stated_bytes": 191,
+        "unnamed_or_non_ascii": 78
+      },
+      "symbols": 5427,
+      "missing_symbols": 5427,
+      "missing_examples": [
+        "@$band$qrx11OWL@TBitSett1",
+        "@$beql$qrx18OWL@TSocketAddresst1",
+        "@$blsh$qr7ostreamrx5TRect",
+        "@$blsh$qr7ostreamrx7TModule",
+        "@$bnew$quipv",
+        "@$bor$qrx11OWL@TBitSett1",
+        "@$brsh$qr8ipstreamr10TMenuDescr",
+        "@$brsh$qr8ipstreamr5TRect",
+        "@$vc1$B0$25$0$",
+        "@$vc1$B0$29$0$",
+        "@$vc1$B0$2D$0$",
+        "@$vc1$B0$31$0$"
+      ],
+      "output": "pe/x86/32/supplemental-bh32owl.pat",
+      "expressible_records": 7847,
+      "after_folding": 7841,
+      "imported_records": 7353,
+      "imported_symbols": 4554,
+      "dropped_conflicts_or_covered": 214,
+      "duplicate_records_across_sources": 274,
+      "profile": 70,
+      "library_family": "Borland OWL (2/2.5) 32 bit"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 11017
+      },
+      "symbols": 5702,
+      "profile": 71,
+      "library_family": "BCC v4.x/5.x & BCB v1.0/v7.0 BDS2006 win32 runtime"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 232
+      },
+      "symbols": 201,
+      "profile": 72,
+      "library_family": "BSDI386 3.1 kernel"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "local_or_collision_flags": 554,
+        "multi_function_or_negative_offset": 46,
+        "non_direct_or_unproved_reference": 119,
+        "records": 13335,
+        "too_few_stated_bytes": 1301,
+        "unnamed_or_non_ascii": 2035
+      },
+      "symbols": 10701,
+      "missing_symbols": 10701,
+      "missing_examples": [
+        "@$xt$10tagVARIANT",
+        "@$xt$13TAutoArgsBase",
+        "@$xt$14System@AutoCmd",
+        "@$xt$14System@TObject",
+        "@$xt$14System@Variant",
+        "@$xt$15System@TVarData",
+        "@$xt$17%TAutoArgs$i$i0$%",
+        "@$xt$17System@AnsiString",
+        "@$xt$17System@WideString",
+        "@$xt$18Sysutils@EExternal",
+        "@$xt$18Sysutils@EIntError",
+        "@$xt$18Sysutils@Exception"
+      ],
+      "output": "pe/x86/32/supplemental-c4vcl.pat",
+      "expressible_records": 9280,
+      "after_folding": 9264,
+      "imported_records": 233,
+      "imported_symbols": 233,
+      "dropped_conflicts_or_covered": 8193,
+      "duplicate_records_across_sources": 838,
+      "profile": 73,
+      "library_family": "CBuilder 4 and Delphi 4 VCL"
+    },
+    {
+      "target": null,
+      "decision": "binary_format_or_16bit_unsupported",
+      "counts": {
+        "records": 847
+      },
+      "symbols": 352,
+      "profile": 74,
+      "library_family": "IBM C Set v2.x/3.x class library"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 2160
+      },
+      "symbols": 708,
+      "profile": 75,
+      "library_family": "IBM C Set v2.x/3.x"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 72
+      },
+      "symbols": 35,
+      "profile": 76,
+      "library_family": "CTask library"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 3,
+        "local_or_collision_flags": 384,
+        "multi_function_or_negative_offset": 102,
+        "non_direct_or_unproved_reference": 85,
+        "records": 10633,
+        "too_few_stated_bytes": 1132,
+        "unnamed_or_non_ascii": 1649
+      },
+      "symbols": 8465,
+      "missing_symbols": 8465,
+      "missing_examples": [
+        "@@AStrCmp",
+        "@@AbstractError",
+        "@@AddRefArray",
+        "@@AsClass",
+        "@@Assert",
+        "@@BlockRead",
+        "@@BlockWrite",
+        "@@COS",
+        "@@CallDynaClass",
+        "@@CallDynaInst",
+        "@@ChDir",
+        "@@CheckAutoResult"
+      ],
+      "output": "pe/x86/32/supplemental-d3vcl.pat",
+      "expressible_records": 7278,
+      "after_folding": 7274,
+      "imported_records": 1360,
+      "imported_symbols": 1352,
+      "dropped_conflicts_or_covered": 5205,
+      "duplicate_records_across_sources": 709,
+      "profile": 77,
+      "library_family": "Delphi 3 Visual Component Library"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 3,
+        "local_or_collision_flags": 527,
+        "multi_function_or_negative_offset": 115,
+        "non_direct_or_unproved_reference": 185,
+        "records": 14231,
+        "too_few_stated_bytes": 1422,
+        "unnamed_or_non_ascii": 2268
+      },
+      "symbols": 11252,
+      "missing_symbols": 11252,
+      "missing_examples": [
+        "@@AStrCmp",
+        "@@AbstractError",
+        "@@AddRefArray",
+        "@@AddRefRecord",
+        "@@AfterConstruction",
+        "@@AsClass",
+        "@@Assert",
+        "@@BeforeDestruction",
+        "@@BlockRead",
+        "@@BlockWrite",
+        "@@COS",
+        "@@CallDynaClass"
+      ],
+      "output": "pe/x86/32/supplemental-d4vcl.pat",
+      "expressible_records": 9711,
+      "after_folding": 9699,
+      "imported_records": 137,
+      "imported_symbols": 135,
+      "dropped_conflicts_or_covered": 8613,
+      "duplicate_records_across_sources": 949,
+      "profile": 78,
+      "library_family": "Delphi 4 Visual Component Library"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 3,
+        "local_or_collision_flags": 742,
+        "multi_function_or_negative_offset": 137,
+        "non_direct_or_unproved_reference": 223,
+        "records": 20064,
+        "too_few_stated_bytes": 1856,
+        "unnamed_or_non_ascii": 4052
+      },
+      "symbols": 14992,
+      "missing_symbols": 14992,
+      "missing_examples": [
+        "@@AStrCmp",
+        "@@AbstractError",
+        "@@AddRefArray",
+        "@@AfterConstruction",
+        "@@AsClass",
+        "@@Assert",
+        "@@BeforeDestruction",
+        "@@BlockRead",
+        "@@BlockWrite",
+        "@@COS",
+        "@@CallDynaClass",
+        "@@CallDynaInst"
+      ],
+      "output": "pe/x86/32/supplemental-d5vcl.pat",
+      "expressible_records": 13051,
+      "after_folding": 13037,
+      "imported_records": 1715,
+      "imported_symbols": 1701,
+      "dropped_conflicts_or_covered": 10256,
+      "duplicate_records_across_sources": 1066,
+      "profile": 79,
+      "library_family": "Delphi 5 Visual Component Library"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 6616
+      },
+      "symbols": 3807,
+      "profile": 80,
+      "library_family": "Delphi V1.0"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 3428
+      },
+      "symbols": 1701,
+      "profile": 81,
+      "library_family": "Digital Mars C v8.4 DOS run-time"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 6493
+      },
+      "symbols": 3091,
+      "profile": 82,
+      "library_family": "Digital Mars v8.4/8.5 win32 runtime"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 28,
+        "local_or_collision_flags": 1956,
+        "multi_function_or_negative_offset": 6,
+        "non_direct_or_unproved_reference": 2219,
+        "records": 22278,
+        "too_few_stated_bytes": 2249,
+        "unnamed_or_non_ascii": 22,
+        "unsupported_non_ascii_names": 2292,
+        "unsupported_non_ascii_names_non_ascii_reference": 1319,
+        "unsupported_non_ascii_reference": 805
+      },
+      "symbols": 11220,
+      "missing_symbols": 11205,
+      "missing_examples": [
+        "_CreateWindowA@44",
+        "_CreateWindowW@44",
+        "_D2gc11gcinterface15__unittest_failFiZv",
+        "_D2gc11gcinterface5Range11__xopEqualsFKxS2gc11gcinterface5RangeKxS2gc11gcinterface5RangeZb",
+        "_D2gc11gcinterface7__arrayZ",
+        "_D2gc11gcinterface8__assertFiZv",
+        "_D2gc2gc11gc_clrProxyUZv16__foreachbody227MFKS2gc3gcx5RangeZi",
+        "_D2gc2gc11gc_clrProxyUZv16__foreachbody228MFKPvZi",
+        "_D2gc2gc11gc_clrProxyUZv16__foreachbody301MFKS2gc3gcx5RangeZi",
+        "_D2gc2gc11gc_clrProxyUZv16__foreachbody302MFKPvZi",
+        "_D2gc2gc11gc_setProxyUPS2gc2gc5ProxyZv16__foreachbody225MFKPvZi",
+        "_D2gc2gc11gc_setProxyUPS2gc2gc5ProxyZv16__foreachbody226MFKS2gc3gcx5RangeZi"
+      ],
+      "output": "pe/x86/32/supplemental-dm_d2_win.pat",
+      "expressible_records": 11382,
+      "after_folding": 11372,
+      "imported_records": 11236,
+      "imported_symbols": 7088,
+      "dropped_conflicts_or_covered": 136,
+      "duplicate_records_across_sources": 0,
+      "profile": 83,
+      "library_family": "Digital Mars D v2 win32 runtime"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 3
+      },
+      "symbols": 2,
+      "profile": 84,
+      "library_family": "Startups of ELF files"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 7
+      },
+      "symbols": 5,
+      "profile": 85,
+      "library_family": "Startups of ELF64 files"
+    },
+    {
+      "target": null,
+      "decision": "binary_format_or_16bit_unsupported",
+      "counts": {
+        "records": 342
+      },
+      "symbols": 282,
+      "profile": 86,
+      "library_family": "EMX additional libraries"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 853
+      },
+      "symbols": 501,
+      "profile": 87,
+      "library_family": "EMX runtime"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 106
+      },
+      "symbols": 82,
+      "profile": 88,
+      "library_family": "Startups of EXE/COM files"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 235,
+        "local_or_collision_flags": 176,
+        "multi_function_or_negative_offset": 63,
+        "non_direct_or_unproved_reference": 108,
+        "records": 1200,
+        "too_few_stated_bytes": 34
+      },
+      "symbols": 1030,
+      "missing_symbols": 810,
+      "missing_examples": [
+        "_C_alloca",
+        "__Exit",
+        "__ZN10__cxxabiv111__terminateEPFvvE",
+        "__ZN10__cxxabiv174_GLOBAL__N_.._.._.._.._gcc_libstdc___v3_libsupc___vec.cc_DFF67DD7_30D0C30B17uncatch_exceptionC2Ev",
+        "__ZN11__gnu_debug19_Safe_iterator_base9_M_detachEv",
+        "__ZN14__gnu_internal19_GLIBCXX_mutex_initEv",
+        "__ZN9__gnu_cxx10__mt_allocIcE10deallocateEPcj",
+        "__ZN9__gnu_cxx10__mt_allocIcE13_S_initializeEv",
+        "__ZN9__gnu_cxx10__mt_allocIcE14_S_get_optionsEv",
+        "__ZN9__gnu_cxx10__mt_allocIcE14_S_set_optionsENS1_5_TuneE",
+        "__ZN9__gnu_cxx10__mt_allocIcE16_S_get_thread_idEv",
+        "__ZN9__gnu_cxx10__mt_allocIcE21_S_destroy_thread_keyEPv"
+      ],
+      "output": "pe/x86/32/supplemental-gcc32rtf.pat",
+      "expressible_records": 584,
+      "after_folding": 584,
+      "imported_records": 565,
+      "imported_symbols": 565,
+      "dropped_conflicts_or_covered": 19,
+      "duplicate_records_across_sources": 0,
+      "profile": 89,
+      "library_family": "GCC (mingw/cygwin) v3.4 runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 47400
+      },
+      "symbols": 2643,
+      "profile": 90,
+      "library_family": "glibc 2.5-2.43 (Arch+Debian+EL+Fedora static, multi-release) amd64/x86_64"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 42653
+      },
+      "symbols": 2495,
+      "profile": 91,
+      "library_family": "glibc 2.11-2.43 (Arch+Debian+EL+Fedora static, multi-release) i386/i686"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 482805
+      },
+      "symbols": 24959,
+      "profile": 92,
+      "library_family": "go standard library (ABI0)"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 424416
+      },
+      "symbols": 22106,
+      "profile": 93,
+      "library_family": "go standard library (ABI0)"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 98937
+      },
+      "symbols": 17793,
+      "profile": 94,
+      "library_family": "go standard library (ABIInternal)"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 64535
+      },
+      "symbols": 15512,
+      "profile": 95,
+      "library_family": "go standard library (ABIInternal)"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 848
+      },
+      "symbols": 571,
+      "profile": 96,
+      "library_family": "Metaware High C for OS/2"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "records": 8
+      },
+      "symbols": 1,
+      "missing_symbols": 1,
+      "missing_examples": [
+        "___intel_new_proc_init"
+      ],
+      "output": "pe/x86/32/supplemental-iclapp.pat",
+      "expressible_records": 8,
+      "after_folding": 8,
+      "imported_records": 3,
+      "imported_symbols": 1,
+      "dropped_conflicts_or_covered": 5,
+      "duplicate_records_across_sources": 0,
+      "profile": 97,
+      "library_family": "Intel C detector"
+    },
+    {
+      "target": "pe/x86/64",
+      "decision": "candidate",
+      "counts": {
+        "records": 5
+      },
+      "symbols": 1,
+      "missing_symbols": 1,
+      "missing_examples": [
+        "__intel_new_proc_init"
+      ],
+      "output": "pe/x86/64/supplemental-iclapp64.pat",
+      "expressible_records": 5,
+      "after_folding": 5,
+      "imported_records": 1,
+      "imported_symbols": 1,
+      "dropped_conflicts_or_covered": 4,
+      "duplicate_records_across_sources": 0,
+      "profile": 98,
+      "library_family": "Intel C 64bit detector"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 2649,
+        "local_or_collision_flags": 10447,
+        "multi_function_or_negative_offset": 1429,
+        "non_direct_or_unproved_reference": 51293,
+        "records": 123919,
+        "too_few_stated_bytes": 1480,
+        "unnamed_or_non_ascii": 84
+      },
+      "symbols": 38464,
+      "missing_symbols": 38205,
+      "missing_examples": [
+        "??0?$AvComQIPtr@UIAvImageSave@@$1?IID_IAvImageSave@@3U_GUID@@B@@QAE@PAUIUnknown@@@Z",
+        "??0?$AvComQIPtr@UISupportErrorInfo@@$1?IID_ISupportErrorInfo@@3U_GUID@@B@@QAE@PAUIUnknown@@@Z",
+        "??0AvBSTR@@QAE@PAG@Z",
+        "??0AvBSTR@@QAE@PBD@Z",
+        "??0CDataset@@QAE@XZ",
+        "??0CRootObj@@QAE@XZ",
+        "??0CType@@QAE@XZ",
+        "??0CViewer@@QAE@XZ",
+        "??1?$AvComQIPtr@UIAvImageSave@@$1?IID_IAvImageSave@@3U_GUID@@B@@QAE@XZ",
+        "??1?$AvComQIPtr@UISupportErrorInfo@@$1?IID_ISupportErrorInfo@@3U_GUID@@B@@QAE@XZ",
+        "??1?$CAvList@VCDataset@@@@QAE@XZ",
+        "??1?$CAvList@VCType@@@@QAE@XZ"
+      ],
+      "output": "pe/x86/32/supplemental-iclmat.pat",
+      "expressible_records": 56537,
+      "after_folding": 56534,
+      "imported_records": 56165,
+      "imported_symbols": 18805,
+      "dropped_conflicts_or_covered": 368,
+      "duplicate_records_across_sources": 0,
+      "rejected_by_probe_counterexamples": 1,
+      "profile": 99,
+      "library_family": "Intel C specific libraries"
+    },
+    {
+      "target": "pe/x86/64",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 2156,
+        "local_or_collision_flags": 11493,
+        "multi_function_or_negative_offset": 26,
+        "non_direct_or_unproved_reference": 61286,
+        "records": 149585,
+        "too_few_stated_bytes": 1402,
+        "unnamed_or_non_ascii": 63
+      },
+      "symbols": 44754,
+      "missing_symbols": 44534,
+      "missing_examples": [
+        "?__kmp_alloc_argv_entries@@YAXHPEATkmp_team@@H@Z",
+        "?__kmp_asat_env_initialize@@YAXPEBD@Z",
+        "?__kmp_change_library@@YAHH@Z",
+        "?__kmp_convert_to_milliseconds@@YAHPEBD@Z",
+        "?__kmp_default_tp_capacity@@YAHHHH@Z",
+        "?__kmp_env_initialize@@YAXPEBD@Z",
+        "?__kmp_env_print@@YAXXZ",
+        "?__kmp_fork_barrier@@YAXHH@Z",
+        "?__kmp_get_logical_id@@YAHHH@Z",
+        "?__kmp_get_physical_id@@YAHHH@Z",
+        "?__kmp_gvs_add_nest_structure@@YAXPEAUkmp_gvs_team@@H@Z",
+        "?__kmp_gvs_expand_tracefile_arrays@@YAXPEAUkmp_gvs_file@@@Z"
+      ],
+      "output": "pe/x86/64/supplemental-iclmat64.pat",
+      "expressible_records": 73159,
+      "after_folding": 73156,
+      "imported_records": 72737,
+      "imported_symbols": 19350,
+      "dropped_conflicts_or_covered": 419,
+      "duplicate_records_across_sources": 0,
+      "profile": 100,
+      "library_family": "Intel C 64bit specific libraries"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 1817
+      },
+      "symbols": 562,
+      "profile": 101,
+      "library_family": "Lattice C v3.30"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 15
+      },
+      "symbols": 9,
+      "profile": 102,
+      "library_family": "Startups of LE files"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 563
+      },
+      "symbols": 530,
+      "profile": 103,
+      "library_family": "Linux libc5.3.12"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 27
+      },
+      "symbols": 17,
+      "profile": 104,
+      "library_family": "Startups of LX files"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 7
+      },
+      "symbols": 5,
+      "profile": 105,
+      "library_family": "Startups of MACHO64 files"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 2550,
+        "local_or_collision_flags": 184,
+        "multi_function_or_negative_offset": 4,
+        "non_direct_or_unproved_reference": 79,
+        "records": 3470,
+        "too_few_stated_bytes": 91,
+        "unnamed_or_non_ascii": 20
+      },
+      "symbols": 1199,
+      "missing_symbols": 306,
+      "missing_examples": [
+        "??0Block@HeapManager@@QAE@XZ",
+        "??0DName@@QAE@K@Z",
+        "??0DNameNode@@IAE@XZ",
+        "??0__non_rtti_object@@QAE@ABV0@@Z",
+        "??0__non_rtti_object@@QAE@PBD@Z",
+        "??0bad_cast@@QAE@ABQBD@Z",
+        "??0bad_typeid@@QAE@ABV0@@Z",
+        "??0bad_typeid@@QAE@PBD@Z",
+        "??0exception@@QAE@XZ",
+        "??0type_info@@AAE@ABV0@@Z",
+        "??1__non_rtti_object@@UAE@XZ",
+        "??2@YAPAXIAAVHeapManager@@H@Z"
+      ],
+      "output": "pe/x86/32/supplemental-mccor.pat",
+      "expressible_records": 542,
+      "after_folding": 542,
+      "imported_records": 505,
+      "imported_symbols": 187,
+      "dropped_conflicts_or_covered": 34,
+      "duplicate_records_across_sources": 0,
+      "rejected_by_probe_counterexamples": 3,
+      "profile": 106,
+      "library_family": "Microsoft Visual Studio.Net COM+ Runtime"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 1419
+      },
+      "symbols": 406,
+      "profile": 107,
+      "library_family": "MS Quick C v1.0/v2.01 & MSC v5.1 DOS run-time & graphic"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 1931
+      },
+      "symbols": 728,
+      "profile": 108,
+      "library_family": "MSC v6.x OS/2 v2.xx  runtime"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 12970,
+        "local_or_collision_flags": 2051,
+        "multi_function_or_negative_offset": 16,
+        "non_direct_or_unproved_reference": 2772,
+        "records": 27298,
+        "too_few_stated_bytes": 724,
+        "unnamed_or_non_ascii": 62
+      },
+      "symbols": 13816,
+      "missing_symbols": 9303,
+      "missing_examples": [
+        "??$AddToDynamicArray@G@@YAHPAPAGABGPAI2@Z",
+        "??$AddToDynamicArray@USLoadVertex@@@@YAHPAPAUSLoadVertex@@ABU0@PAK2@Z",
+        "??$BContains@G@@YAHPAGGG@Z",
+        "??$BContains@I@@YAHPAIII@Z",
+        "??$BInArray@G@@YA_NQAGIG@Z",
+        "??$BInArray@I@@YA_NQAIII@Z",
+        "??$CalcSplitMeshSizes@G$00$0PPPP@@@YAJPAGKKKPAK111G@Z",
+        "??$CalcSplitMeshSizes@I$0A@$0PPPPPPPP@@@YAJPAIKKKPAK111I@Z",
+        "??$CopyPortionOfMesh@G$00$0PPPP@@@YAJPAUID3DXMesh@@PAGKPAEKPAKKKK3K3@Z",
+        "??$CopyPortionOfMesh@I$0A@$0PPPPPPPP@@@YAJPAUID3DXMesh@@PAIKPAEKPAKKKK3K3@Z",
+        "??$D3DXConvertMeshToStripEx@G@@YGJPAUID3DXBaseMesh@@KHKPAPAUIDirect3DIndexBuffer8@@PAKPAPAUID3DXBuffer@@2G@Z",
+        "??$D3DXConvertMeshToStripEx@I@@YGJPAUID3DXBaseMesh@@KHKPAPAUIDirect3DIndexBuffer8@@PAKPAPAUID3DXBuffer@@2I@Z"
+      ],
+      "output": "pe/x86/32/supplemental-ms32wdk.pat",
+      "expressible_records": 8703,
+      "after_folding": 8703,
+      "imported_records": 8410,
+      "imported_symbols": 5943,
+      "dropped_conflicts_or_covered": 239,
+      "duplicate_records_across_sources": 39,
+      "rejected_by_probe_counterexamples": 15,
+      "profile": 109,
+      "library_family": "Windows Driver Kit 7/10 32bit"
+    },
+    {
+      "target": "pe/x86/64",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 14466,
+        "local_or_collision_flags": 1865,
+        "multi_function_or_negative_offset": 2,
+        "non_direct_or_unproved_reference": 1496,
+        "records": 22287,
+        "too_few_stated_bytes": 677,
+        "unnamed_or_non_ascii": 134
+      },
+      "symbols": 7345,
+      "missing_symbols": 2970,
+      "missing_examples": [
+        "??$?8DU?$char_traits@D@std@@@std@@YA_NAEBV?$istreambuf_iterator@DU?$char_traits@D@std@@@0@0@Z",
+        "??$?8_WU?$char_traits@_W@std@@@std@@YA_NAEBV?$istreambuf_iterator@_WU?$char_traits@_W@std@@@0@0@Z",
+        "??$_Allocate@_W@std@@YAPEA_W_KPEA_W@Z",
+        "??$_Fgetc@_W@std@@YA_NAEA_WPEAU_iobuf@@@Z",
+        "??$_Fputc@_W@std@@YA_N_WPEAU_iobuf@@@Z",
+        "??$_LStrcoll@D@std@@YAHPEBD000PEBU_Collvec@@@Z",
+        "??$_LStrxfrm@D@std@@YA_KPEAD0PEBD1PEBU_Collvec@@@Z",
+        "??$_Maklocbyte@_W@std@@YAD_WAEBU_Cvtvec@@@Z",
+        "??$_Maklocchr@_W@std@@YA_WDPEA_WAEBU_Cvtvec@@@Z",
+        "??$_Ungetc@_W@std@@YA_NAEB_WPEAU_iobuf@@@Z",
+        "??$arg@M@std@@YAMAEBV?$complex@M@0@@Z",
+        "??$polar@M@std@@YA?AV?$complex@M@0@AEBM@Z"
+      ],
+      "output": "pe/x86/64/supplemental-ms64wdk.pat",
+      "expressible_records": 3647,
+      "after_folding": 3647,
+      "imported_records": 3511,
+      "imported_symbols": 1637,
+      "dropped_conflicts_or_covered": 127,
+      "duplicate_records_across_sources": 0,
+      "rejected_by_probe_counterexamples": 9,
+      "profile": 110,
+      "library_family": "Windows Driver Kit 7/10 64bit"
+    },
+    {
+      "target": null,
+      "decision": "contradictory_bitness_metadata",
+      "counts": {
+        "records": 12186
+      },
+      "symbols": 4900,
+      "profile": 111,
+      "library_family": "DDK Windows 32bit"
+    },
+    {
+      "target": "pe/x86/64",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 3658,
+        "local_or_collision_flags": 521,
+        "multi_function_or_negative_offset": 2,
+        "non_direct_or_unproved_reference": 582,
+        "records": 6308,
+        "too_few_stated_bytes": 367,
+        "unnamed_or_non_ascii": 8
+      },
+      "symbols": 4859,
+      "missing_symbols": 2166,
+      "missing_examples": [
+        "??0?$CComObject@V?$CSafeComEnum@UIEnumPluggableSuperclassInfo@@$1?IID_IEnumPluggableSuperclassInfo@@3U_GUID@@BPEAUITPluggableTerminalSuperclassInfo@@V?$_CopyInterface@UITPluggableTerminalSuperclassInfo@@@ATL@@VCComMultiThreadModel@6@@@@ATL@@QEAA@PEAX@Z",
+        "??0?$CComObject@V?$CSafeComEnum@UIEnumPluggableTerminalClassInfo@@$1?IID_IEnumPluggableTerminalClassInfo@@3U_GUID@@BPEAUITPluggableTerminalClassInfo@@V?$_CopyInterface@UITPluggableTerminalClassInfo@@@ATL@@VCComMultiThreadModel@6@@@@ATL@@QEAA@PEAX@Z",
+        "??0?$CComObject@V?$CSafeComEnum@UIEnumStream@@$1?IID_IEnumStream@@3U_GUID@@BPEAUITStream@@V?$_CopyInterface@UITStream@@@ATL@@VCComMultiThreadModel@6@@@@ATL@@QEAA@PEAX@Z",
+        "??0?$CComObject@V?$CSafeComEnum@UIEnumTerminal@@$1?IID_IEnumTerminal@@3U_GUID@@BPEAUITTerminal@@V?$_CopyInterface@UITTerminal@@@ATL@@VCComMultiThreadModel@6@@@@ATL@@QEAA@PEAX@Z",
+        "??0?$CComObject@V?$CSafeComEnum@UIEnumTerminalClass@@$1?IID_IEnumTerminalClass@@3U_GUID@@BU3@V?$_Copy@U_GUID@@@ATL@@VCComMultiThreadModel@5@@@@ATL@@QEAA@PEAX@Z",
+        "??0?$CComObject@V?$CSafeComEnum@UIEnumVARIANT@@$1?IID_IEnumVARIANT@@3U_GUID@@BUtagVARIANT@@V?$_Copy@UtagVARIANT@@@ATL@@VCComMultiThreadModel@6@@@@ATL@@QEAA@PEAX@Z",
+        "??0?$CComObject@V?$CTapiIfCollection@PEAUITPluggableTerminalClassInfo@@@@@ATL@@QEAA@PEAX@Z",
+        "??0?$CComObject@V?$CTapiIfCollection@PEAUITPluggableTerminalSuperclassInfo@@@@@ATL@@QEAA@PEAX@Z",
+        "??0?$CComObject@V?$CTapiIfCollection@PEAUITStream@@@@@ATL@@QEAA@PEAX@Z",
+        "??0?$CComObject@V?$CTapiIfCollection@PEAUITTerminal@@@@@ATL@@QEAA@PEAX@Z",
+        "??0?$CGenericList@UIMediaSample@@@@QEAA@PEAGHHH@Z",
+        "??0?$CTapiIfCollection@PEAUITPluggableTerminalClassInfo@@@@QEAA@XZ"
+      ],
+      "output": "pe/x86/64/supplemental-msddk64.pat",
+      "expressible_records": 1170,
+      "after_folding": 1170,
+      "imported_records": 341,
+      "imported_symbols": 341,
+      "dropped_conflicts_or_covered": 73,
+      "duplicate_records_across_sources": 756,
+      "profile": 112,
+      "library_family": "DDK Windows 64bit"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 1713,
+        "local_or_collision_flags": 97,
+        "multi_function_or_negative_offset": 190,
+        "non_direct_or_unproved_reference": 3074,
+        "records": 10517,
+        "too_few_stated_bytes": 176,
+        "unnamed_or_non_ascii": 17
+      },
+      "symbols": 8660,
+      "missing_symbols": 7733,
+      "missing_examples": [
+        "??0DName@@QAE@K@Z",
+        "??0DNameNode@@IAE@XZ",
+        "??0Iostream_init@@QAE@AAVios@@H@Z",
+        "??0Iostream_init@@QAE@XZ",
+        "??0__non_rtti_object@@QAE@ABV0@@Z",
+        "??0__non_rtti_object@@QAE@PBD@Z",
+        "??0bad_cast@@QAE@ABQBD@Z",
+        "??0bad_cast@@QAE@ABV0@@Z",
+        "??0bad_typeid@@QAE@ABV0@@Z",
+        "??0bad_typeid@@QAE@PBD@Z",
+        "??0exception@@QAE@XZ",
+        "??0filebuf@@QAE@ABV0@@Z"
+      ],
+      "output": "pe/x86/32/supplemental-msfps40.pat",
+      "expressible_records": 5250,
+      "after_folding": 5250,
+      "imported_records": 5241,
+      "imported_symbols": 5019,
+      "dropped_conflicts_or_covered": 9,
+      "duplicate_records_across_sources": 0,
+      "profile": 113,
+      "library_family": "MS Fortran PowerStation 4.0"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 17
+      },
+      "symbols": 1,
+      "profile": 114,
+      "library_family": "MFC32 WinMain detector"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 32
+      },
+      "symbols": 1,
+      "profile": 115,
+      "library_family": "MFC32 DllMain detector"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 17
+      },
+      "symbols": 1,
+      "profile": 116,
+      "library_family": "MFC32 wWinMain detector"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 5
+      },
+      "symbols": 1,
+      "profile": 117,
+      "library_family": "MFC64 WinMain detector"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 18
+      },
+      "symbols": 1,
+      "profile": 118,
+      "library_family": "MFC64 DllMain detector"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 5
+      },
+      "symbols": 1,
+      "profile": 119,
+      "library_family": "MFC64 wWinMain detector"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 525
+      },
+      "symbols": 447,
+      "profile": 120,
+      "library_family": "SDK Windows 32bit"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 522
+      },
+      "symbols": 442,
+      "profile": 121,
+      "library_family": "SDK Windows 64bit"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 161
+      },
+      "symbols": 74,
+      "profile": 122,
+      "library_family": "MSC v6.0/v7.0 & MSVC v1.0/v1.5 graphic library"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 44188
+      },
+      "symbols": 15895,
+      "profile": 123,
+      "library_family": "MFC 2.0/2.5 16bit"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 2929
+      },
+      "symbols": 1137,
+      "profile": 124,
+      "library_family": "MSC v6.0/v7.0 & MSVC v1.0/v1.5 DOS runtime"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 2710
+      },
+      "symbols": 881,
+      "profile": 125,
+      "library_family": "MSC v6.0/v7.0 & MSVC v1.0/v1.5 windows runtime"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 601
+      },
+      "symbols": 487,
+      "profile": 126,
+      "library_family": "NDP C++ v4.2"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 117
+      },
+      "symbols": 88,
+      "profile": 127,
+      "library_family": "Startups of NE files"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 11
+      },
+      "symbols": 9,
+      "profile": 128,
+      "library_family": "Startups of NLM files"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 57,
+        "local_or_collision_flags": 1089,
+        "multi_function_or_negative_offset": 425,
+        "non_direct_or_unproved_reference": 1222,
+        "records": 11424,
+        "too_few_stated_bytes": 663,
+        "unnamed_or_non_ascii": 809
+      },
+      "symbols": 6202,
+      "missing_symbols": 6161,
+      "missing_examples": [
+        "??0?$CArray@PAVCGXTabCreateInfo@@PAV1@@@QAE@XZ",
+        "??0?$CGXCaptiveManager@VCOleVariant@@@@QAE@XZ",
+        "??0?$CGXCreator@VCGXTabWndAdapter@@@@QAE@XZ",
+        "??0?$CGXHandleManager@PAX@@QAE@XZ",
+        "??0?$CGXInterfaceManager@UIUnknown@@@@QAE@XZ",
+        "??0?$CGXNodeManager@VCGXCellTipWnd@@@@QAE@PAUCRuntimeClass@@@Z",
+        "??0?$CGXNodeManager@VCGXOleViewer@@@@QAE@PAUCRuntimeClass@@@Z",
+        "??0?$CGXNodeManager@VCGXTabWndMgr@@@@QAE@PAUCRuntimeClass@@@Z",
+        "??0?$CGXNodeManagerNor@VCGXTabWndAdapter@@@@QAE@PAU?$CGXCreator@VCGXTabWndAdapter@@@@P8CGXTabWndAdapter@@AEXXZ@Z",
+        "??0?$CGXProcessLocal@UGX_ENGINE_MEMOBJ_STATE@@@@QAE@XZ",
+        "??0?$CGXProcessLocal@UGX_INTELLI_STATE@@@@QAE@XZ",
+        "??0?$CGXProcessLocal@UGX_SCROLLTIP_STATE@@@@QAE@XZ"
+      ],
+      "output": "pe/x86/32/supplemental-og70.pat",
+      "expressible_records": 7159,
+      "after_folding": 7159,
+      "imported_records": 5942,
+      "imported_symbols": 3971,
+      "dropped_conflicts_or_covered": 1213,
+      "duplicate_records_across_sources": 0,
+      "rejected_by_probe_counterexamples": 4,
+      "profile": 129,
+      "library_family": "Objective Grid Library v7.0"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 11,
+        "local_or_collision_flags": 3,
+        "multi_function_or_negative_offset": 10,
+        "non_direct_or_unproved_reference": 93,
+        "records": 452,
+        "too_few_stated_bytes": 37,
+        "unnamed_or_non_ascii": 20
+      },
+      "symbols": 296,
+      "missing_symbols": 287,
+      "missing_examples": [
+        "??0?$CArray@PAVIMvcObserver@@PAV1@@@QAE@XZ",
+        "??0?$CArray@PAVMvcCommand@@PAV1@@@QAE@XZ",
+        "??0?$CArray@PAVMvcVisualComponent@@PAV1@@@QAE@XZ",
+        "??0?$CCArray_T@PAVIMvcObserver@@PAV1@@@QAE@XZ",
+        "??0?$CCArray_T@PAVMvcVisualComponent@@PAV1@@@QAE@XZ",
+        "??0?$CCIterPos_T@H@@QAE@XZ",
+        "??0?$CCStack_T@PAVMvcCommand@@PAV1@@@QAE@XZ",
+        "??0?$ICollection_T@PAVIMvcObserver@@@@QAE@XZ",
+        "??0?$ICollection_T@PAVMvcVisualComponent@@@@QAE@XZ",
+        "??0?$IStack_T@PAVMvcCommand@@@@QAE@XZ",
+        "??0?$Iterator_T@PAVIMvcObserver@@@@QAE@PAV?$ICollection_T@PAVIMvcObserver@@@@@Z",
+        "??0?$Iterator_T@PAVMvcVisualComponent@@@@QAE@PAV?$ICollection_T@PAVMvcVisualComponent@@@@@Z"
+      ],
+      "output": "pe/x86/32/supplemental-omvc60.pat",
+      "expressible_records": 278,
+      "after_folding": 278,
+      "imported_records": 187,
+      "imported_symbols": 154,
+      "dropped_conflicts_or_covered": 90,
+      "duplicate_records_across_sources": 0,
+      "rejected_by_probe_counterexamples": 1,
+      "profile": 130,
+      "library_family": "Objective MVC Library v6.0"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 17907
+      },
+      "symbols": 10730,
+      "profile": 131,
+      "library_family": "Optima v1.0 runtime"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 18,
+        "local_or_collision_flags": 22,
+        "multi_function_or_negative_offset": 56,
+        "non_direct_or_unproved_reference": 59,
+        "records": 934,
+        "too_few_stated_bytes": 67,
+        "unnamed_or_non_ascii": 48
+      },
+      "symbols": 628,
+      "missing_symbols": 614,
+      "missing_examples": [
+        "??0?$CTypedPtrList@VCPtrList@@PAVSECWndListener@@@@QAE@H@Z",
+        "??0?$CTypedPtrMap@VCMapPtrToPtr@@PAUHWND__@@PAUSECWndListener_MsgProcInfo_tag@@@@QAE@H@Z",
+        "??0?$_CTypedPtrList@VCPtrList@@PAVSECWndListener@@@@QAE@H@Z",
+        "??0CGdiObject@@QAE@XZ",
+        "??0SECBitmapButton@@QAE@XZ",
+        "??0SECColorWell@@QAE@XZ",
+        "??0SECDib@@QAE@XZ",
+        "??0SECImage@@QAE@XZ",
+        "??0SECJpeg@@QAE@XZ",
+        "??0SECMemDC@@QAE@AAVCDC@@VCRect@@@Z",
+        "??0SECMenuButton@@QAE@XZ",
+        "??0SECOtherButton@@QAE@XZ"
+      ],
+      "output": "pe/x86/32/supplemental-osc60.pat",
+      "expressible_records": 664,
+      "after_folding": 664,
+      "imported_records": 610,
+      "imported_symbols": 484,
+      "dropped_conflicts_or_covered": 52,
+      "duplicate_records_across_sources": 2,
+      "profile": 132,
+      "library_family": "Objective Common Library v6.0"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 136,
+        "local_or_collision_flags": 386,
+        "multi_function_or_negative_offset": 469,
+        "non_direct_or_unproved_reference": 1598,
+        "records": 14961,
+        "too_few_stated_bytes": 1157,
+        "unnamed_or_non_ascii": 958
+      },
+      "symbols": 8126,
+      "missing_symbols": 8042,
+      "missing_examples": [
+        "??0?$CArray@HH@@QAE@XZ",
+        "??0?$CArray@II@@QAE@XZ",
+        "??0?$CArray@MM@@QAE@XZ",
+        "??0?$CArray@PAUDescriptor@SECMsgFilter@@PAU12@@@QAE@XZ",
+        "??0?$CArray@PAUHMENU__@@PAU1@@@QAE@XZ",
+        "??0?$CArray@PAVSECACtrlItem@@PAV1@@@QAE@XZ",
+        "??0?$CArray@PAVSECBar@@PAV1@@@QAE@XZ",
+        "??0?$CArray@PAVSECBmpMenuItemInfo@@PAV1@@@QAE@XZ",
+        "??0?$CArray@PAVSECMsgFilter@@PAV1@@@QAE@XZ",
+        "??0?$CArray@UListData@SECAPropList@@AAU12@@@QAE@XZ",
+        "??0?$CArray@USECA_EnumType@@AAU1@@@QAE@XZ",
+        "??0?$CArray@USECA_EventParam@@AAU1@@@QAE@XZ"
+      ],
+      "output": "pe/x86/32/supplemental-otp60.pat",
+      "expressible_records": 10257,
+      "after_folding": 10247,
+      "imported_records": 8598,
+      "imported_symbols": 5165,
+      "dropped_conflicts_or_covered": 1609,
+      "duplicate_records_across_sources": 15,
+      "rejected_by_probe_counterexamples": 25,
+      "profile": 133,
+      "library_family": "Objective Toolkit Pro Library v6.0"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 533
+      },
+      "symbols": 400,
+      "profile": 134,
+      "library_family": "Startups of PE files"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 306
+      },
+      "symbols": 193,
+      "profile": 135,
+      "library_family": "Startups of PE+ files"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 5841
+      },
+      "symbols": 1997,
+      "profile": 136,
+      "library_family": "Symantec v6.x/7.2 DOS runtime"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 5741
+      },
+      "symbols": 2092,
+      "profile": 137,
+      "library_family": "Symantec v6.x/7.2 windows runtime"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 160
+      },
+      "symbols": 118,
+      "profile": 138,
+      "library_family": "Symantec v6.x/7.2 stream classes 16bit"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 1407
+      },
+      "symbols": 1162,
+      "profile": 139,
+      "library_family": "Symantec v7.2 win32 runtime"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 348
+      },
+      "symbols": 192,
+      "profile": 140,
+      "library_family": "Turbo Pascal V5.0/5.5/6.0/7.0"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 191
+      },
+      "symbols": 136,
+      "profile": 141,
+      "library_family": "Turbo Pascal V7.0"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 877
+      },
+      "symbols": 750,
+      "profile": 142,
+      "library_family": "OWL for TPW V6.0/V7.0"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 3
+      },
+      "symbols": 2,
+      "profile": 143,
+      "library_family": "Turbo Pascal Startup"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 9
+      },
+      "symbols": 6,
+      "profile": 144,
+      "library_family": "Turbo Pascal NE Startup"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 1523
+      },
+      "symbols": 1091,
+      "profile": 145,
+      "library_family": "Turbo Vision for TP 6.0/7.0"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 984
+      },
+      "symbols": 682,
+      "profile": 146,
+      "library_family": "Turbo Vision for TP V7.0"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 241
+      },
+      "symbols": 148,
+      "profile": 147,
+      "library_family": "Turbo Pascal for Windows V6.0/V7.0"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 5,
+        "multi_function_or_negative_offset": 8,
+        "non_direct_or_unproved_reference": 2,
+        "records": 41,
+        "unnamed_or_non_ascii": 8
+      },
+      "symbols": 11,
+      "missing_symbols": 10,
+      "missing_examples": [
+        "FindResourceA",
+        "FindResourceW",
+        "LoadStringA",
+        "LoadStringW",
+        "_GetExeString",
+        "__FUnloadDelayLoadedDLL2",
+        "___delayAccess",
+        "___delayLoadHelper",
+        "__delayLoadHelperStub",
+        "_dpmiNlsInit"
+      ],
+      "output": "pe/x86/32/supplemental-ulink.pat",
+      "expressible_records": 18,
+      "after_folding": 18,
+      "imported_records": 18,
+      "imported_symbols": 7,
+      "dropped_conflicts_or_covered": 0,
+      "duplicate_records_across_sources": 0,
+      "profile": 148,
+      "library_family": "UniLink Features"
+    },
+    {
+      "target": "pe/x86/64",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 9,
+        "local_or_collision_flags": 9,
+        "multi_function_or_negative_offset": 5,
+        "non_direct_or_unproved_reference": 2,
+        "records": 48,
+        "too_few_stated_bytes": 1,
+        "unnamed_or_non_ascii": 5
+      },
+      "symbols": 15,
+      "missing_symbols": 12,
+      "missing_examples": [
+        "FindResourceA",
+        "FindResourceW",
+        "GetExeString",
+        "LoadStringA",
+        "LoadStringW",
+        "_GetExeString",
+        "___HrLoadAllImportsForDll@4",
+        "___delayAccess",
+        "___delayLoadHelper2",
+        "__delayLoadHelperStub",
+        "_dpmiNlsInit",
+        "dpmiNlsInit"
+      ],
+      "output": "pe/x86/64/supplemental-ulink64.pat",
+      "expressible_records": 17,
+      "after_folding": 17,
+      "imported_records": 17,
+      "imported_symbols": 10,
+      "dropped_conflicts_or_covered": 0,
+      "duplicate_records_across_sources": 0,
+      "profile": 149,
+      "library_family": "UniLink Features (64bit)"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 1,
+        "local_or_collision_flags": 13,
+        "multi_function_or_negative_offset": 378,
+        "non_direct_or_unproved_reference": 40,
+        "records": 1316,
+        "too_few_stated_bytes": 94,
+        "unnamed_or_non_ascii": 5
+      },
+      "symbols": 665,
+      "missing_symbols": 664,
+      "missing_examples": [
+        "?StripSOMPrefix__FPc",
+        "?_AllocSpace",
+        "?_CRT_term",
+        "?_CheckIfMem",
+        "?_CloseStream",
+        "?_CrtGetLocalData",
+        "?_Flush",
+        "?_FreeFCB",
+        "?_GetBytePos",
+        "?_GetErrMsg",
+        "?_GetTMPPath",
+        "?_InitBuf"
+      ],
+      "output": "pe/x86/32/supplemental-vac35wc.pat",
+      "expressible_records": 785,
+      "after_folding": 785,
+      "imported_records": 785,
+      "imported_symbols": 446,
+      "dropped_conflicts_or_covered": 0,
+      "duplicate_records_across_sources": 0,
+      "profile": 150,
+      "library_family": "IBM Visual Age v3.0 for Windows"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 64365
+      },
+      "symbols": 16466,
+      "profile": 151,
+      "library_family": "Microsoft VisualC 14/net runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 25173
+      },
+      "symbols": 6953,
+      "profile": 152,
+      "library_family": "Microsoft VisualC 14/net runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 2186
+      },
+      "symbols": 1137,
+      "profile": 153,
+      "library_family": "Microsoft VisualC 14/net runtime (dynamic CRT)"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 215227
+      },
+      "symbols": 21827,
+      "profile": 154,
+      "library_family": "MFC 3.1-14 32bit"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 220544
+      },
+      "symbols": 23560,
+      "profile": 155,
+      "library_family": "MFC 3.1-14.0 32bit"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 1612,
+        "local_or_collision_flags": 87,
+        "multi_function_or_negative_offset": 18,
+        "non_direct_or_unproved_reference": 276,
+        "records": 2745,
+        "too_few_stated_bytes": 99,
+        "unnamed_or_non_ascii": 21
+      },
+      "symbols": 2336,
+      "missing_symbols": 969,
+      "missing_examples": [
+        "??0AFX_CLASSINIT_COMPAT@@QAE@PAUCRuntimeClass@@@Z",
+        "??0CByteArray@@QAE@XZ",
+        "??0CCeCommandBar@@QAE@XZ",
+        "??0CCeDBDatabase@@QAE@XZ",
+        "??0CCeDBEnum@@QAE@K@Z",
+        "??0CCeDBProp@@AAE@U_CEPROPVAL@@W4enCopyMode@0@@Z",
+        "??0CCeDBProp@@QAE@AAV0@@Z",
+        "??0CCeDBProp@@QAE@FG@Z",
+        "??0CCeDBProp@@QAE@GG@Z",
+        "??0CCeDBProp@@QAE@JG@Z",
+        "??0CCeDBProp@@QAE@KG@Z",
+        "??0CCeDBProp@@QAE@PAGGW4enCopyMode@0@@Z"
+      ],
+      "output": "pe/x86/32/supplemental-vc32mfce.pat",
+      "expressible_records": 632,
+      "after_folding": 632,
+      "imported_records": 578,
+      "imported_symbols": 572,
+      "dropped_conflicts_or_covered": 51,
+      "duplicate_records_across_sources": 3,
+      "profile": 156,
+      "library_family": "Windows CE runtime & MFC for X86EM"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 60195
+      },
+      "symbols": 11482,
+      "profile": 157,
+      "library_family": "Microsoft VisualC 2-14/net runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 22486
+      },
+      "symbols": 3850,
+      "profile": 158,
+      "library_family": "Microsoft VisualC universal runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 18287
+      },
+      "symbols": 3588,
+      "profile": 159,
+      "library_family": "Microsoft VisualC universal runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 276
+      },
+      "symbols": 192,
+      "profile": 160,
+      "library_family": "SDK CAB-library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 374
+      },
+      "symbols": 161,
+      "profile": 161,
+      "library_family": "VC4.x/5.0 OpenGL"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 428
+      },
+      "symbols": 373,
+      "profile": 162,
+      "library_family": "VC4.2/5.0 commuticate library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 67524
+      },
+      "symbols": 17593,
+      "profile": 163,
+      "library_family": "Microsoft VisualC v14 64bit runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 26254
+      },
+      "symbols": 7034,
+      "profile": 164,
+      "library_family": "Microsoft VisualC v14 64bit runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 539
+      },
+      "symbols": 185,
+      "profile": 165,
+      "library_family": "VC14 ATL 64bit support library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 1689
+      },
+      "symbols": 469,
+      "profile": 166,
+      "library_family": "VC7/14 ATL 64bit support library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 868
+      },
+      "symbols": 329,
+      "profile": 167,
+      "library_family": "VC7/14 Extra (technology) 64bit library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 1650
+      },
+      "symbols": 1020,
+      "profile": 168,
+      "library_family": "Microsoft VisualC v14 64bit runtime (dynamic CRT)"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 243109
+      },
+      "symbols": 21465,
+      "profile": 169,
+      "library_family": "MFC 7-14 64bit"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 231190
+      },
+      "symbols": 23006,
+      "profile": 170,
+      "library_family": "MFC 7-14 64bit"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 41767
+      },
+      "symbols": 8944,
+      "profile": 171,
+      "library_family": "Microsoft VisualC v7/14 64bit runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 210
+      },
+      "symbols": 30,
+      "profile": 172,
+      "library_family": "SEH for vc64 v7-v14"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 204
+      },
+      "symbols": 32,
+      "profile": 173,
+      "library_family": "SEH for vc64 7-14"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 24877
+      },
+      "symbols": 3990,
+      "profile": 174,
+      "library_family": "Microsoft VisualC 64bit universal runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 19045
+      },
+      "symbols": 3613,
+      "profile": 175,
+      "library_family": "Microsoft VisualC 64bit universal runtime"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 1366
+      },
+      "symbols": 1224,
+      "profile": 176,
+      "library_family": "VC7 ATL support library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 1642
+      },
+      "symbols": 1211,
+      "profile": 177,
+      "library_family": "VC8/14 ATL support library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 2908
+      },
+      "symbols": 1487,
+      "profile": 178,
+      "library_family": "VC8/14 ATL support library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 726
+      },
+      "symbols": 263,
+      "profile": 179,
+      "library_family": "VC6/14 Extra (technology) library"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 395
+      },
+      "symbols": 71,
+      "profile": 180,
+      "library_family": "SEH for vc v7-v14"
+    },
+    {
+      "target": null,
+      "decision": "rebuilt_family_preserved",
+      "counts": {
+        "records": 120
+      },
+      "symbols": 35,
+      "profile": 181,
+      "library_family": "SEH for vc7-14"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "checksum_outside_extent": 6,
+        "local_or_collision_flags": 84,
+        "multi_function_or_negative_offset": 51,
+        "non_direct_or_unproved_reference": 88,
+        "pattern_checks_beyond_extent": 21,
+        "records": 2478,
+        "too_few_stated_bytes": 687,
+        "unnamed_or_non_ascii": 63
+      },
+      "symbols": 1735,
+      "missing_symbols": 1735,
+      "missing_examples": [
+        "@$vc1$B0$21$0$",
+        "@$vc1$B0$25$0$",
+        "@$vc1$B0$29$0$",
+        "@$vc1$B0$2D$0$",
+        "@$vc1$B0$31$0$",
+        "@$vc1$B0$35$0$",
+        "@$vc1$B0$39$0$",
+        "@$vc1$B0$3D$0$",
+        "@$vc1$B0$41$0$",
+        "@$vc1$B0$45$0$",
+        "@$vc1$B0$49$0$",
+        "@$vc1$B0$4D$0$"
+      ],
+      "output": "pe/x86/32/supplemental-vireobc.pat",
+      "expressible_records": 1478,
+      "after_folding": 1478,
+      "imported_records": 1135,
+      "imported_symbols": 660,
+      "dropped_conflicts_or_covered": 343,
+      "duplicate_records_across_sources": 0,
+      "profile": 182,
+      "library_family": "VIREO libraries (Borland)"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 15,
+        "local_or_collision_flags": 107,
+        "multi_function_or_negative_offset": 52,
+        "non_direct_or_unproved_reference": 152,
+        "records": 2641,
+        "too_few_stated_bytes": 698,
+        "unnamed_or_non_ascii": 2
+      },
+      "symbols": 1868,
+      "missing_symbols": 1856,
+      "missing_examples": [
+        "??0?$KList@U__resource@@@@QAE@XZ",
+        "??0?$KList@VKDPC@@@@QAE@XZ",
+        "??0?$KList@VKResourceRequest@@@@QAE@XZ",
+        "??0CSharedFifo@@QAE@XZ",
+        "??0D2WPipeEvent@@QAE@PAVVDosToWinPipe@@HPAX@Z",
+        "??0KDispatcherObject@@IAE@PAXK@Z",
+        "??0KEvent@@QAE@PAXK@Z",
+        "??0KKernelSharedFifo@@QAE@KKPAD@Z",
+        "??0KKernelSharedFifo@@QAE@XZ",
+        "??0KMemory@@QAE@PAXKPAU_MDL@@@Z",
+        "??0KMemoryRange@@QAE@XZ",
+        "??0KMemoryRange@@QAE@_KKD@Z"
+      ],
+      "output": "pe/x86/32/supplemental-vireoms.pat",
+      "expressible_records": 1615,
+      "after_folding": 1613,
+      "imported_records": 1192,
+      "imported_symbols": 736,
+      "dropped_conflicts_or_covered": 380,
+      "duplicate_records_across_sources": 34,
+      "rejected_by_probe_counterexamples": 7,
+      "profile": 183,
+      "library_family": "VIREO libraries (Microsoft)"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 3449
+      },
+      "symbols": 846,
+      "profile": 184,
+      "library_family": "Watcom 10.6 16 bit QNX runtime"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 8126
+      },
+      "symbols": 1787,
+      "profile": 185,
+      "library_family": "Watcom 9.x-11.x 16bit common runtime"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 8333
+      },
+      "symbols": 1860,
+      "profile": 186,
+      "library_family": "Watcom 9.x-11.x 16bit DOS runtime"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 9067
+      },
+      "symbols": 1655,
+      "profile": 187,
+      "library_family": "Watcom 9.x-11.x 16bit OS/2 runtime"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 19225
+      },
+      "symbols": 6221,
+      "profile": 188,
+      "library_family": "Watcom 9.x-11.x 16bit WIN runtime"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 36
+      },
+      "symbols": 29,
+      "profile": 189,
+      "library_family": "Secondary startup for Watcom 16bit OS/2 and DOS"
+    },
+    {
+      "target": null,
+      "decision": "binary_format_or_16bit_unsupported",
+      "counts": {
+        "records": 2269
+      },
+      "symbols": 1894,
+      "profile": 190,
+      "library_family": "Watcom 10.6 32 bit QNX runtime"
+    },
+    {
+      "target": "pe/x86/32",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 5,
+        "local_or_collision_flags": 944,
+        "multi_function_or_negative_offset": 707,
+        "non_direct_or_unproved_reference": 356,
+        "records": 8144,
+        "rule_byte_outside_extent": 1,
+        "too_few_stated_bytes": 263,
+        "unnamed_or_non_ascii": 1765
+      },
+      "symbols": 1110,
+      "missing_symbols": 1108,
+      "missing_examples": [
+        "C16Div",
+        "C16Div_",
+        "C16Mul",
+        "C16Mul_",
+        "C16Pow",
+        "C16Pow_",
+        "CDABS",
+        "CDABS_",
+        "CDCOS",
+        "CDCOS_",
+        "CDEXP",
+        "CDEXP_"
+      ],
+      "output": "pe/x86/32/supplemental-wa32rt_.pat",
+      "expressible_records": 4103,
+      "after_folding": 4103,
+      "imported_records": 4065,
+      "imported_symbols": 770,
+      "dropped_conflicts_or_covered": 38,
+      "duplicate_records_across_sources": 0,
+      "profile": 191,
+      "library_family": "Watcom v9-*1.5  32bit common runtime"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 7109
+      },
+      "symbols": 2489,
+      "profile": 192,
+      "library_family": "Watcom v9-*1.5  32bit DOS runtime"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 27232
+      },
+      "symbols": 13879,
+      "profile": 193,
+      "library_family": "Watcom v9-*1.5  32bit NT runtime"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 10243
+      },
+      "symbols": 2685,
+      "profile": 194,
+      "library_family": "Watcom v9-*1.5  32bit OS/2 runtime"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 1348
+      },
+      "symbols": 619,
+      "profile": 195,
+      "library_family": "Watcom v9-*1.5  32bit Netware runtime"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 11355
+      },
+      "symbols": 3769,
+      "profile": 196,
+      "library_family": "Watcom v9-*1.5  32bit Windows runtime"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 38
+      },
+      "symbols": 34,
+      "profile": 197,
+      "library_family": "Secondary signature for Watcom NT"
+    },
+    {
+      "target": null,
+      "decision": "startup_rules_unsupported",
+      "counts": {
+        "records": 25
+      },
+      "symbols": 24,
+      "profile": 198,
+      "library_family": "Secondary signature for Watcom NT"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 7264
+      },
+      "symbols": 4490,
+      "profile": 199,
+      "library_family": "Microsoft Unix for Windows"
+    },
+    {
+      "target": "pe/x86/64",
+      "decision": "candidate",
+      "counts": {
+        "already_named": 825,
+        "local_or_collision_flags": 399,
+        "multi_function_or_negative_offset": 2,
+        "non_direct_or_unproved_reference": 130,
+        "records": 2159,
+        "too_few_stated_bytes": 63,
+        "unnamed_or_non_ascii": 1
+      },
+      "symbols": 1801,
+      "missing_symbols": 1024,
+      "missing_examples": [
+        "??$?5GU?$char_traits@G@std@@V?$allocator@G@1@@std@@YAAEAV?$basic_istream@GU?$char_traits@G@std@@@0@AEAV10@AEAV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@@Z",
+        "??$?5NDU?$char_traits@D@std@@@std@@YAAEAV?$basic_istream@DU?$char_traits@D@std@@@0@AEAV10@AEAV?$complex@N@0@@Z",
+        "??$?5NGU?$char_traits@G@std@@@std@@YAAEAV?$basic_istream@GU?$char_traits@G@std@@@0@AEAV10@AEAV?$complex@N@0@@Z",
+        "??$?5ODU?$char_traits@D@std@@@std@@YAAEAV?$basic_istream@DU?$char_traits@D@std@@@0@AEAV10@AEAV?$complex@O@0@@Z",
+        "??$?5OGU?$char_traits@G@std@@@std@@YAAEAV?$basic_istream@GU?$char_traits@G@std@@@0@AEAV10@AEAV?$complex@O@0@@Z",
+        "??$?6DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@0@AEAV10@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z",
+        "??$?6GU?$char_traits@G@std@@V?$allocator@G@1@@std@@YAAEAV?$basic_ostream@GU?$char_traits@G@std@@@0@AEAV10@AEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@@Z",
+        "??$?6U?$char_traits@D@std@@@std@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@0@AEAV10@C@Z",
+        "??$?8DU?$char_traits@D@std@@@std@@YA_NAEBV?$istreambuf_iterator@DU?$char_traits@D@std@@@0@0@Z",
+        "??$?8DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z",
+        "??$?8DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEBD@Z",
+        "??$?8DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NPEBDAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z"
+      ],
+      "output": "pe/x86/64/supplemental-win64unx.pat",
+      "expressible_records": 739,
+      "after_folding": 739,
+      "imported_records": 642,
+      "imported_symbols": 640,
+      "dropped_conflicts_or_covered": 57,
+      "duplicate_records_across_sources": 0,
+      "rejected_by_probe_counterexamples": 40,
+      "profile": 200,
+      "library_family": "Microsoft Unix for Windows 64bit"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 760
+      },
+      "symbols": 174,
+      "profile": 201,
+      "library_family": "Zortech C v1.0 DOS run-time"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 95
+      },
+      "symbols": 47,
+      "profile": 202,
+      "library_family": "Zortech v3.1 graphic library"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 592
+      },
+      "symbols": 575,
+      "profile": 203,
+      "library_family": "Zortech v3.1 DOS mathlib"
+    },
+    {
+      "target": null,
+      "decision": "missing_or_mixed_target_metadata",
+      "counts": {
+        "records": 592
+      },
+      "symbols": 575,
+      "profile": 204,
+      "library_family": "Zortech v3.1 windows mathlib"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 1635
+      },
+      "symbols": 630,
+      "profile": 205,
+      "library_family": "Zortech v3.1 DOS run-time"
+    },
+    {
+      "target": null,
+      "decision": "ctype_constraints_unsupported",
+      "counts": {
+        "records": 1299
+      },
+      "symbols": 593,
+      "profile": 206,
+      "library_family": "Zortech v3.1 windows run-time"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 1982
+      },
+      "symbols": 1540,
+      "profile": 207,
+      "library_family": "glibc 2.41 (Arch+Debian static, multi-release) riscv64"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 10545
+      },
+      "symbols": 2054,
+      "profile": 208,
+      "library_family": "glibc 2.19-2.41 (Debian static, multi-release) s390x"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 3669
+      },
+      "symbols": 2401,
+      "profile": 209,
+      "library_family": "Windows CE runtime & MFC for SH3 & SH4"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 3
+      },
+      "symbols": 3,
+      "profile": 210,
+      "library_family": "Startups of PE files"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 2
+      },
+      "symbols": 1,
+      "profile": 211,
+      "library_family": "Startups of COFF files"
+    },
+    {
+      "target": null,
+      "decision": "signature_tree_architecture_unsupported",
+      "counts": {
+        "records": 278
+      },
+      "symbols": 138,
+      "profile": 212,
+      "library_family": "TMS320C6 C runtime"
+    }
+  ]
+}

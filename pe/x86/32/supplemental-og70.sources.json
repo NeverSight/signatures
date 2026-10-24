@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "file": "pe/x86/32/supplemental-og70.pat",
+  "library_family": "Objective Grid Library v7.0",
+  "source_kind": "converted_binary_library_signatures",
+  "generator": "scripts/import_binary_signatures.py",
+  "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
+  "lines": 5942,
+  "parts": 1,
+  "artifacts": [
+    {
+      "file": "pe/x86/32/supplemental-og70.pat",
+      "sha256": "3b844939a4144312f7c96a78d3b3166ba0ed87f55f50186fa87cca60abe4d50f"
+    }
+  ],
+  "validation": {
+    "counterexample_policy_sha256": "016e7be3bf848cee0ce6e98b3ca5ddbe5cfdcf1f6fe577b9c72263e36625d758",
+    "rejected_records": 4
+  }
+}

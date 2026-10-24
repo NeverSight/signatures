@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "file": "pe/x86/32/supplemental-c4vcl.pat",
+  "library_family": "CBuilder 4 and Delphi 4 VCL",
+  "source_kind": "converted_binary_library_signatures",
+  "generator": "scripts/import_binary_signatures.py",
+  "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
+  "lines": 233,
+  "parts": 1,
+  "artifacts": [
+    {
+      "file": "pe/x86/32/supplemental-c4vcl.pat",
+      "sha256": "cbc300c142cb9949e56f354574b007d480b30c50220b592032c5f856bd2abc12"
+    }
+  ],
+  "validation": {
+    "counterexample_policy_sha256": "016e7be3bf848cee0ce6e98b3ca5ddbe5cfdcf1f6fe577b9c72263e36625d758",
+    "rejected_records": 0
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "file": "pe/arm/32/supplemental-mfc.pat",
+  "library_family": "Windows CE runtime & MFC for ARM",
+  "source_kind": "converted_binary_library_signatures",
+  "generator": "scripts/import_binary_signatures.py",
+  "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
+  "lines": 2490,
+  "parts": 1,
+  "artifacts": [
+    {
+      "file": "pe/arm/32/supplemental-mfc.pat",
+      "sha256": "870aa887b95fd806b100b855da7a6ce94ba7f7a4ba2c33b3bd250113040b161b"
+    }
+  ],
+  "validation": {
+    "counterexample_policy_sha256": "016e7be3bf848cee0ce6e98b3ca5ddbe5cfdcf1f6fe577b9c72263e36625d758",
+    "rejected_records": 0
+  }
+}
