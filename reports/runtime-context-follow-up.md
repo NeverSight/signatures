@@ -16,8 +16,8 @@ raw claim; alternatives at one site are inseparable.
 
 The stripped-input evaluation uses linker-map truth for 23 executable probes,
 including optimized/debug x64, x86, ARM32 and ARM64 controls. The original
-161-entry investigation now has 139 settled candidates, up from 134 before
-this engine/data follow-up. Twenty-two entries remain unresolved.
+161-entry investigation reached 139 settled candidates, up from 134 before
+this engine/data follow-up. Twenty-two entries remained unresolved then.
 
 Against the original `fe9a373c020fd48f68802353497bf8e315f7e178` data/engine
 baseline, the complete accumulated changes recover 1,382 correct addresses
@@ -64,3 +64,34 @@ Matching increases in this run while discovery stays close to baseline.
 Full held-out platform coverage and reliable cross-tool speed comparisons
 remain outside this report. Byte-identical functions with unresolved context
 remain candidates or unknowns; they do not acquire an invented identity.
+
+## Self-reference audit follow-up
+
+Producer `c275e77111dc2182cfb40e9e322a09cce97f6653` preserves self-address
+and self-branch references, including aliases, in raw collision evidence for
+COFF, ELF and Mach-O. Omitting those fields hid a useful constraint in rival
+initializer bodies. Ordinary and caller patterns still omit self references.
+Eight full-library caller/context outputs remain byte-identical to their
+previous outputs (libcmt, libcpmt, libvcruntime and libucrt).
+
+All 18 x64 evidence collections were regenerated and audited. Only one useful
+new initializer record is retained; both of its independent references are
+required. The exact final tree reaches **140/161**, leaving **21** unresolved.
+All 23 stripped probes retain zero new wrong names, zero lost correct addresses
+and zero automatic signature-only identities. The increment over the preceding
+update is one correct address; the other proposed records added no recognition
+and were not published.
+
+The selected profile now contains 161,340 modules. The same alternating
+one-worker, 51-repetition local matching check gives these process-CPU medians:
+
+| Probe | Before / after (ms) |
+| --- | --- |
+| vs2022-x64-mt-o2 | 7.558 / 7.426 |
+| vs2022-x64-mfc-mt-o2 | 49.043 / 48.793 |
+| vs2022-x64-mtd-od | 17.327 / 17.443 |
+
+These small changes vary in both directions on the shared host; they do not
+establish a reliable speedup. All 225 native signature tests pass, including
+new self-reference and alias cases for the three formats. The raw evidence
+marker remains rejected by the runtime parser.
