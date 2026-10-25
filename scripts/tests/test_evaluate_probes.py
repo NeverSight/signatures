@@ -45,6 +45,16 @@ class SettledNameTests(unittest.TestCase):
             with self.subTest(bad=bad), self.assertRaises(ValueError):
                 evaluate_probes.settled_names([admitted, bad])
 
+    def test_incoming_support_selects_only_requested_aliases(self) -> None:
+        rows = [match(0x10, "unrelated", True),
+                {**match(0x10, "__internal"), "caller_confirmed": True},
+                {**match(0x10, "public"), "caller_confirmed": True},
+                match(0x20, "a"), match(0x20, "b")]
+        for row in rows:
+            row.update(auto_name="", name_evidence="none")
+        self.assertEqual(evaluate_probes.candidate_names(rows), ({0x10: "public"}, {0x20}))
+        self.assertEqual(evaluate_probes.settled_names(rows), ({}, set()))
+
     def test_one_name_settles_and_two_dispute(self) -> None:
         names, disputed = evaluate_probes.settled_names(
             [match(0x10, "a"), match(0x10, "a"), match(0x20, "b"), match(0x20, "c")]
