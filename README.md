@@ -58,6 +58,11 @@ record the gains and remaining ambiguity. Conditional references use the
 canonical COFF x86/x64 `0F 80..8F` rel32 field, a zero relocation addend and
 an explicitly typed source function symbol.
 
+`vs2022.part7.npat` adds one complete initializer clause after the raw audit
+was extended to retain self-address constraints. Its source and output hashes
+are in `runtime-self-context.sources.json`. This changes offline evidence;
+runtime patterns still cannot confirm themselves.
+
 ## What a line says
 
 ```
