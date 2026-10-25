@@ -23,6 +23,28 @@ def match(address: int, name: str, confirmed: bool | None = None) -> dict:
 
 
 class SettledNameTests(unittest.TestCase):
+    def test_strict_candidates_are_not_promoted_by_reference_confirmation(self) -> None:
+        rows = [{**match(0x10, "guess", True), "auto_name": "", "name_evidence": "none"}]
+        self.assertEqual(evaluate_probes.settled_names(rows), ({}, set()))
+        self.assertEqual(evaluate_probes.candidate_names(rows), ({0x10: "guess"}, set()))
+
+    def test_only_the_exact_admitted_alias_is_used(self) -> None:
+        rows = [{**match(0x10, "short"), "aliases": ["long_real_name"],
+                 "auto_name": "long_real_name", "name_evidence": "image_symbol"},
+                {**match(0x10, "unrelated"), "auto_name": "long_real_name",
+                 "name_evidence": "image_symbol"}]
+        self.assertEqual(evaluate_probes.settled_names(rows), ({0x10: "long_real_name"}, set()))
+
+    def test_mixed_or_inconsistent_strict_results_fail(self) -> None:
+        admitted = {**match(0x10, "guess"), "auto_name": "real", "name_evidence": "image_symbol"}
+        for bad in [match(0x20, "legacy"),
+                    {**admitted, "auto_name": "other"},
+                    {**admitted, "auto_name": None},
+                    {**admitted, "name_evidence": "references"},
+                    {**admitted, "auto_name": ""}]:
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                evaluate_probes.settled_names([admitted, bad])
+
     def test_one_name_settles_and_two_dispute(self) -> None:
         names, disputed = evaluate_probes.settled_names(
             [match(0x10, "a"), match(0x10, "a"), match(0x20, "b"), match(0x20, "c")]
@@ -56,6 +78,28 @@ class SettledNameTests(unittest.TestCase):
 
 
 class FailureTests(unittest.TestCase):
+    def test_report_keeps_correct_and_wrong_candidates_visible(self) -> None:
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            neverd = root / "neverd"
+            rows = [{**match(0x10, "real"), "auto_name": "", "name_evidence": "none"},
+                    {**match(0x20, "wrong"), "auto_name": "", "name_evidence": "none"}]
+            neverd.write_text("#!/bin/sh\ncat <<'RESULT'\n" + json.dumps(rows) + "\nRESULT\n")
+            neverd.chmod(0o755)
+            probe = root / "elf-test-x64-o2.elf"
+            probe.write_bytes(b"\x7fELF")
+            probe.with_suffix(".truth.json").write_text(json.dumps(
+                [{"address": "0x10", "names": ["real"], "from_library": True},
+                 {"address": "0x20", "names": ["different"], "from_library": True}]))
+            result = evaluate_probes.evaluate(neverd, f"--sig-dir={root}", probe)
+        self.assertIsNone(result.failure)
+        self.assertEqual(result.naming_policy, "independent_identity")
+        self.assertEqual(result.correct, 0)
+        self.assertEqual(result.wrong, [])
+        self.assertEqual(result.candidate_correct, 1)
+        self.assertEqual(result.candidate_wrong, [("0x20", "wrong", ["different"])])
+        self.assertEqual(result.candidate_only, 2)
+
     def test_a_program_neverd_cannot_read_is_reported_not_raised(self) -> None:
         with tempfile.TemporaryDirectory() as scratch:
             root = Path(scratch)

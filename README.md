@@ -309,10 +309,22 @@ every name NeverD would apply with the linker map of the same image:
 - **wrong**: addresses NeverD would give a name the map does not give them.
   This includes the program's own functions: STL templates the program
   instantiates compile to the same bytes as library code.
-- **disputed**: addresses where the loaded lines disagree and no branch
-  reference settles which is right, so NeverD names nothing. An address
-  where exactly one of the names comes from a match whose references NeverD
-  confirmed gets that name, and counts as named or wrong like any other.
+- **candidate_correct**, **candidate_wrong**, **candidate_disputed**: preferred
+  byte/reference suggestions measured separately, including suggestions the
+  engine declines to apply. These retain the historical alias and reference
+  settlement rules; they do not measure independent identity.
+- **candidate_only**: addresses with candidates but no admitted automatic name.
+
+Current engines report `auto_name` and `name_evidence`; the evaluator uses the
+core's exact decision rather than promoting `name`, `aliases` or `confirmed`.
+Their report says `naming_policy=independent_identity`. Older engines omit these
+fields and retain their historical settlement, labeled `legacy`; `disputed`
+then counts unresolved competing names. Mixed or inconsistent responses fail
+evaluation. A strict policy may defer correct suggestions as well as wrong
+ones, so always report candidate coverage alongside automatic naming.
+
+The following measurements predate independent-identity admission and describe
+the historical engine explicitly identified below.
 
 `validation/` holds three programs, each linked statically with a map: an
 MFC program and a CRT program built with `/O2 /MT`, and the CRT program built
