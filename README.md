@@ -591,3 +591,14 @@ no asset collects, and rizin's reading of routines the libraries state
 themselves. None of them is in any file: every file is built from its
 libraries alone. [`reports/`](reports) lists, per file the import held,
 every line removed, not reproduced or unresolved.
+
+
+## External scheduled collection
+
+For bounded collection by an external scheduler, use
+[`scripts/collect_signature_updates.py`](scripts/collect_signature_updates.py).
+See [the collection and validation contract](docs/external-signature-collection.md)
+for supported targets, private artifact handling, resumable receipts, and
+candidate-generation gates. It does not publish or dispatch GitHub Actions.
+The existing Actions entry points remain available until replacement coverage
+has been verified.
