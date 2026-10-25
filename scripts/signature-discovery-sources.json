@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "msvc-stable",
+      "adapter": "visual-studio",
+      "url": "https://aka.ms/vs/stable/channel",
+      "profile": {
+        "platform": "windows",
+        "domain": "userspace",
+        "architecture": "reported VC CRT package targets, not assumed coverage",
+        "format": "PE/COFF",
+        "build_config": "must be pinned before signature generation"
+      },
+      "notes": "Discover actual VC package versions; catalog SHA-256 must match the channel payload. No installer execution.",
+      "channel": "stable"
+    },
+    {
+      "id": "msvc-insiders",
+      "adapter": "visual-studio",
+      "url": "https://aka.ms/vs/insiders/channel",
+      "profile": {
+        "platform": "windows",
+        "domain": "userspace",
+        "architecture": "reported VC CRT package targets, not assumed coverage",
+        "format": "PE/COFF",
+        "build_config": "must be pinned before signature generation"
+      },
+      "notes": "Discover actual VC package versions; catalog SHA-256 must match the channel payload. No installer execution.",
+      "channel": "insiders"
+    },
+    {
+      "id": "msvc-2022-release",
+      "adapter": "visual-studio",
+      "url": "https://aka.ms/vs/17/release/channel",
+      "profile": {
+        "platform": "windows",
+        "domain": "userspace",
+        "architecture": "reported VC CRT package targets, not assumed coverage",
+        "format": "PE/COFF",
+        "build_config": "must be pinned before signature generation"
+      },
+      "notes": "Discover actual VC package versions; catalog SHA-256 must match the channel payload. No installer execution.",
+      "channel": "stable"
+    },
+    {
+      "id": "msvc-2022-preview",
+      "adapter": "visual-studio",
+      "url": "https://aka.ms/vs/17/pre/channel",
+      "profile": {
+        "platform": "windows",
+        "domain": "userspace",
+        "architecture": "reported VC CRT package targets, not assumed coverage",
+        "format": "PE/COFF",
+        "build_config": "must be pinned before signature generation"
+      },
+      "notes": "Discover actual VC package versions; catalog SHA-256 must match the channel payload. No installer execution.",
+      "channel": "preview"
+    },
+    {
+      "id": "windows-sdk",
+      "adapter": "nuget",
+      "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windows.sdk.cpp/index.json",
+      "profile": {
+        "platform": "windows",
+        "domain": "userspace",
+        "architecture": "package metadata, target libraries require inspection",
+        "format": "PE/COFF",
+        "build_config": "must be pinned before signature generation"
+      },
+      "notes": "Stable NuGet package versions and catalog SHA-512. NuGet version is not assumed equal to installed SDK folder version; no package download or installation.",
+      "package": "Microsoft.Windows.SDK.CPP"
+    },
+    {
+      "id": "windows-wdk-x64",
+      "adapter": "nuget",
+      "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windows.wdk.x64/index.json",
+      "profile": {
+        "platform": "windows",
+        "domain": "kernel",
+        "architecture": "x64 package host; target architectures require inspection",
+        "format": "PE/COFF",
+        "build_config": "must be pinned before signature generation"
+      },
+      "notes": "Stable NuGet package versions and catalog SHA-512. NuGet version is not assumed equal to installed SDK folder version; no package download or installation.",
+      "package": "Microsoft.Windows.WDK.x64"
+    },
+    {
+      "id": "windows-wdk-arm64",
+      "adapter": "nuget",
+      "url": "https://api.nuget.org/v3-flatcontainer/microsoft.windows.wdk.arm64/index.json",
+      "profile": {
+        "platform": "windows",
+        "domain": "kernel",
+        "architecture": "ARM64 package host; target architectures require inspection",
+        "format": "PE/COFF",
+        "build_config": "must be pinned before signature generation"
+      },
+      "notes": "Stable NuGet package versions and catalog SHA-512. NuGet version is not assumed equal to installed SDK folder version; no package download or installation.",
+      "package": "Microsoft.Windows.WDK.ARM64"
+    },
+    {
+      "id": "homebrew-zlib",
+      "adapter": "homebrew",
+      "url": "https://formulae.brew.sh/api/formula/zlib.json",
+      "profile": {
+        "platform": "macos",
+        "domain": "userspace",
+        "architecture": "macOS bottle tags; ARM64 and x64 only when present",
+        "format": "Mach-O",
+        "build_config": "must be pinned before signature generation"
+      },
+      "notes": "Linux bottle tags are excluded from the Mach-O row. New version uses a distinct library identity, preserving historical pins.",
+      "formula": "zlib",
+      "archives": [
+        "lib/libz.a"
+      ]
+    },
+    {
+      "id": "homebrew-xz",
+      "adapter": "homebrew",
+      "url": "https://formulae.brew.sh/api/formula/xz.json",
+      "profile": {
+        "platform": "macos",
+        "domain": "userspace",
+        "architecture": "macOS bottle tags; ARM64 and x64 only when present",
+        "format": "Mach-O",
+        "build_config": "must be pinned before signature generation"
+      },
+      "notes": "Linux bottle tags are excluded from the Mach-O row. New version uses a distinct library identity, preserving historical pins.",
+      "formula": "xz",
+      "archives": [
+        "lib/liblzma.a"
+      ]
+    },
+    {
+      "id": "homebrew-pcre2",
+      "adapter": "homebrew",
+      "url": "https://formulae.brew.sh/api/formula/pcre2.json",
+      "profile": {
+        "platform": "macos",
+        "domain": "userspace",
+        "architecture": "macOS bottle tags; ARM64 and x64 only when present",
+        "format": "Mach-O",
+        "build_config": "must be pinned before signature generation"
+      },
+      "notes": "Linux bottle tags are excluded from the Mach-O row. New version uses a distinct library identity, preserving historical pins.",
+      "formula": "pcre2",
+      "archives": [
+        "lib/libpcre2-8.a",
+        "lib/libpcre2-16.a",
+        "lib/libpcre2-32.a",
+        "lib/libpcre2-posix.a"
+      ]
+    }
+  ]
+}
