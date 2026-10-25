@@ -170,7 +170,7 @@
     },
     {
       "file": "vs2022.part3.npat",
-      "sha256": "c3ed13460423a69b1458a8107c517d691a3818db365e8c4b7ced91615c4dc8c7"
+      "sha256": "fb0c882b125180fad24fd314a2b88eaa6f4658c6850fc2683098bc5d823e99f0"
     },
     {
       "file": "vs2022.pat",
@@ -190,7 +190,7 @@
     },
     {
       "file": "winsdk.part3.npat",
-      "sha256": "39801c7f087e9f9c8340e44d9970e4bc38521cedef860a02f14ced52fc9de307"
+      "sha256": "fc09a6bcac280a2a99fc5a4c8e4212f913e085ba268f5764d8dacbcf1c30d98a"
     },
     {
       "file": "winsdk.pat",
@@ -200,13 +200,13 @@
   "output": [
     {
       "file": "vs2022.part4.npat",
-      "patterns": 5492,
-      "sha256": "0f4c6c7158d099e30d3ff104369968aa696dcdff19b7471f90f58772f6f69b60"
+      "patterns": 5429,
+      "sha256": "98d89498bdf8c798e282f9c2dfc9183fb2c54072f3dbe020ad4dac89b8b3caac"
     },
     {
       "file": "winsdk.part4.npat",
-      "patterns": 4157,
-      "sha256": "27c98b32b3c87035be5285698259b9bddcff886c0dc95bc8142056501d2faa7c"
+      "patterns": 4078,
+      "sha256": "ddcf776190e652c5cdaee9b1462dc107377925449d6e452c9a50da19b1a658e8"
     }
   ],
   "generator": {
@@ -227,7 +227,8 @@
       "--collision-evidence"
     ],
     "filter": "scripts/signatures/supplement_patterns.py",
-    "existing_revision": "fe9a373c020fd48f68802353497bf8e315f7e178"
+    "existing_revision": "fe9a373c020fd48f68802353497bf8e315f7e178",
+    "filter_ref": "198bcbc0008f43343a950062e74e36c6826ac08e"
   },
   "candidate_sources": [
     {

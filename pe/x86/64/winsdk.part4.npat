@@ -656,45 +656,9 @@
 448D41FF41BA1F85EB5181C12B010000418BC2F7E9418BC2448BCA41F7E841C1 2B CA14 004B !caller :0000 ??$__crt_time_elapsed_leap_years@J@@YAJJ@Z
 4533C0418D5002E9........ 00 0000 000C !caller :0000 _Exit ^0008 ?common_exit@@YAXHW4_crt_exit_cleanup_mode@@W4_crt_exit_return_mode@@@Z
 4533C0418D5002E9........ 00 0000 000C !caller :0000 _exit ^0008 ?common_exit@@YAXHW4_crt_exit_cleanup_mode@@W4_crt_exit_return_mode@@@Z
-4533C0E9........ 00 0000 0008 !caller :0000 _atodbl ^0004 ??$common_atodbl_l@ND@@YAHQEANQEBDQEAU__crt_locale_pointers@@@Z ^0004 _atodbl_l
-4533C0E9........ 00 0000 0008 !caller :0000 _atoflt ^0004 ??$common_atodbl_l@MD@@YAHQEAMQEBDQEAU__crt_locale_pointers@@@Z ^0004 _atoflt_l
-4533C0E9........ 00 0000 0008 !caller :0000 _atoldbl ^0004 _atoldbl_l
-4533C0E9........ 00 0000 0008 !caller :0000 _getws_s ^0004 ??$common_gets@_W@@YAPEA_WQEA_W_K_N@Z ^0004 _getws_helper
-4533C0E9........ 00 0000 0008 !caller :0000 _ismbslead ^0004 _ismbslead_l
-4533C0E9........ 00 0000 0008 !caller :0000 _ismbstrail ^0004 _ismbstrail_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbbtype ^0004 _mbbtype_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbsbtype ^0004 _mbsbtype_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbschr ^0004 _mbschr_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbscmp ^0004 _mbscmp_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbscoll ^0004 _mbscoll_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbscspn ^0004 _mbscspn_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbsdec ^0004 _mbsdec_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbsicmp ^0004 _mbsicmp_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbsicoll ^0004 _mbsicoll_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbslwr_s ^0004 _mbslwr_s_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbsnbcnt ^0004 _mbsnbcnt_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbsnccnt ^0004 _mbsnccnt_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbsnlen ^0004 _mbsnlen_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbspbrk ^0004 _mbspbrk_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbsrchr ^0004 _mbsrchr_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbsset ^0004 _mbsset_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbsspn ^0004 _mbsspn_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbsspnp ^0004 _mbsspnp_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbsstr ^0004 _mbsstr_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbstok ^0004 _mbstok_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbstrnlen ^0004 _mbstrnlen_l
-4533C0E9........ 00 0000 0008 !caller :0000 _mbsupr_s ^0004 _mbsupr_s_l
-4533C0E9........ 00 0000 0008 !caller :0000 _strlwr_s ^0004 _strlwr_s_l
-4533C0E9........ 00 0000 0008 !caller :0000 _strupr_s ^0004 _strupr_s_l
-4533C0E9........ 00 0000 0008 !caller :0000 _wcslwr_s ^0004 _wcslwr_s_l
-4533C0E9........ 00 0000 0008 !caller :0000 _wcsupr_s ^0004 _wcsupr_s_l
-4533C0E9........ 00 0000 0008 !caller :0000 gets_s ^0004 ??$common_gets@D@@YAPEADQEAD_K_N@Z ^0004 _gets_helper
-4533C0E9........ 00 0000 0008 !caller :0000 remainderl ^0004 remquol
 4533C0E9........ 00 0000 0008 !caller :0000 strtod ^0004 ??$common_strtod_l@ND@@YANQEBDQEAPEADQEAU__crt_locale_pointers@@@Z ^0004 _strtod_l
-4533C0E9........ 00 0000 0008 !caller :0000 strtof ^0004 ??$common_strtod_l@MD@@YAMQEBDQEAPEADQEAU__crt_locale_pointers@@@Z
 4533C0E9........ 00 0000 0008 !caller :0000 strtold ^0004 ??$common_strtod_l@ND@@YANQEBDQEAPEADQEAU__crt_locale_pointers@@@Z
 4533C0E9........ 00 0000 0008 !caller :0000 wcstod ^0004 ??$common_strtod_l@N_W@@YANQEB_WQEAPEA_WQEAU__crt_locale_pointers@@@Z ^0004 _wcstod_l
-4533C0E9........ 00 0000 0008 !caller :0000 wcstof ^0004 ??$common_strtod_l@M_W@@YAMQEB_WQEAPEA_WQEAU__crt_locale_pointers@@@Z ^0004 _wcstof_l
 4533C0E9........ 00 0000 0008 !caller :0000 wcstold ^0004 ??$common_strtod_l@N_W@@YANQEB_WQEAPEA_WQEAU__crt_locale_pointers@@@Z
 4585C00F8499000000488BC44889580848896810488970184889782041564883 3E 1371 00A3 !caller :0000 ?write_string@?$string_output_adapter@D@__crt_stdio_output@@QEBAXQEBDHQEAHAEAV__crt_cached_ptd_host@@@Z ^005E memcpy ........498B06480130498B0648017010498B06807818007404013BEB0C483BF77405830BFFEB020133488B5C2430488B6C2438488B742440488B7C24484883C420415EC3
 4585C00F849B00000048895C240848896C2410488974241857415641574883EC 41 A13C 00A5 !caller :0000 ?write_string@?$string_output_adapter@_W@__crt_stdio_output@@QEBAXQEB_WHQEAHAEAV__crt_cached_ptd_host@@@Z ^0061 memcpy ........498B07480118498B074C017010498B078078180074040137EB0D4C3BF67405830FFFEB03440137488B5C2440488B6C2448488B7424504883C420415F415E5FC3
@@ -702,8 +666,6 @@
 458B00488B0948FF25........ 00 0000 000D !caller :0000 ??$get_module_file_name@AEAPEAUHINSTANCE__@@AEAY0BAF@_WK@?$__crt_char_traits@_W@@SAKAEAPEAUHINSTANCE__@@AEAY0BAF@_W$$QEAK@Z ^0009 __imp_GetModuleFileNameW
 458B00488B09E9........ 00 0000 000B !caller :0000 ??$get_module_file_name@$$TAEAY0BAF@DH@?$__crt_char_traits@D@@SAK$$QEA$$TAEAY0BAF@D$$QEAH@Z ^0007 __acrt_GetModuleFileNameA
 458B00488B09E9........ 00 0000 000B !caller :0000 ??$get_module_file_name@AEAPEAUHINSTANCE__@@AEAY0BAF@DK@?$__crt_char_traits@D@@SAKAEAPEAUHINSTANCE__@@AEAY0BAF@D$$QEAK@Z ^0007 __acrt_GetModuleFileNameA
-458B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tcserror_s@PEAD_KAEBH@?$__crt_char_traits@D@@SAH$$QEAPEAD$$QEA_KAEBH@Z ^000A strerror_s
-458B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tcserror_s@PEA_W_KAEBH@?$__crt_char_traits@_W@@SAH$$QEAPEA_W$$QEA_KAEBH@Z ^000A _wcserror_s
 458B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tcstoull@AEBQEAD$$TH@?$__crt_char_traits@D@@SA_KAEBQEAD$$QEA$$T$$QEAH@Z ^000A strtoull
 458B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tcstoull@AEBQEA_W$$TH@?$__crt_char_traits@_W@@SA_KAEBQEA_W$$QEA$$T$$QEAH@Z ^000A wcstoull
 458B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tcstoull@PEBDPEAPEADH@?$__crt_char_traits@D@@SA_K$$QEAPEBD$$QEAPEAPEAD$$QEAH@Z ^000A strtoull
@@ -714,8 +676,6 @@
 458B094D8B00488B12488B09E9........ 00 0000 0011 !caller :0000 ??$message_box@$$TAEBQEB_WAEBQEB_WK@?$__crt_char_traits@_W@@SAH$$QEA$$TAEBQEB_W1$$QEAK@Z ^000D __acrt_MessageBoxW
 458B094D8B00488B12488B09E9........ 00 0000 0011 !caller :0000 ??$message_box@PEAUHWND__@@AEBQEBDAEBQEBDAEBI@?$__crt_char_traits@D@@SAH$$QEAPEAUHWND__@@AEBQEBD1AEBI@Z ^000D __acrt_MessageBoxA
 458B094D8B00488B12488B09E9........ 00 0000 0011 !caller :0000 ??$message_box@PEAUHWND__@@AEBQEB_WAEBQEB_WAEBI@?$__crt_char_traits@_W@@SAH$$QEAPEAUHWND__@@AEBQEB_W1AEBI@Z ^000D __acrt_MessageBoxW
-458B094D8B00488B12488B09E9........ 00 0000 0011 !caller :0000 ??$ulltot_s@AEB_KAEBQEADAEB_KH@?$__crt_char_traits@D@@SAHAEB_KAEBQEAD0$$QEAH@Z ^000D _ui64toa_s
-458B094D8B00488B12488B09E9........ 00 0000 0011 !caller :0000 ??$ulltot_s@AEB_KAEBQEA_WAEB_KH@?$__crt_char_traits@_W@@SAHAEB_KAEBQEA_W0$$QEAH@Z ^000D _ui64tow_s
 480FC9488BC1C3 00 0000 0007 !caller :0000 _byteswap_uint64
 483B5110740A488B4118C6000032C0C3B001C3 00 0000 0013 !caller :0000 ?restore_state@?$input_adapter_character_source@V?$console_input_adapter@D@__crt_stdio_input@@@__crt_strtox@@QEAA_N_K@Z
 483B5110740A488B4118C6000032C0C3B001C3 00 0000 0013 !caller :0000 ?restore_state@?$input_adapter_character_source@V?$console_input_adapter@_W@__crt_stdio_input@@@__crt_strtox@@QEAA_N_K@Z
@@ -731,8 +691,6 @@
 486312488B09E9........ 00 0000 000B !caller :0000 ??$tcscat_s@AEAPEA_WHAEAY01$$CB_W@?$__crt_char_traits@_W@@SAHAEAPEA_W$$QEAHAEAY01$$CB_W@Z ^0007 wcscat_s
 486312488B09E9........ 00 0000 000B !caller :0000 ??$tcscat_s@PEADHAEAY01$$CBD@?$__crt_char_traits@D@@SAH$$QEAPEAD$$QEAHAEAY01$$CBD@Z ^0007 strcat_s
 486312488B09E9........ 00 0000 000B !caller :0000 ??$tcscat_s@PEA_WHAEAY01$$CB_W@?$__crt_char_traits@_W@@SAH$$QEAPEA_W$$QEAHAEAY01$$CB_W@Z ^0007 wcscat_s
-486312488B09E9........ 00 0000 000B !caller :0000 ??$tcscpy_s@AEAPEADHAEAY04$$CBD@?$__crt_char_traits@D@@SAHAEAPEAD$$QEAHAEAY04$$CBD@Z ^0007 strcpy_s
-486312488B09E9........ 00 0000 000B !caller :0000 ??$tcscpy_s@AEAPEA_WHAEAY04$$CB_W@?$__crt_char_traits@_W@@SAHAEAPEA_W$$QEAHAEAY04$$CB_W@Z ^0007 wcscpy_s
 486312488B09E9........ 00 0000 000B !caller :0000 ??$tcsnlen@AEBQEBDH@?$__crt_char_traits@D@@SA_KAEBQEBD$$QEAH@Z ^0007 strnlen
 486312488B09E9........ 00 0000 000B !caller :0000 ??$tcsnlen@AEBQEB_WH@?$__crt_char_traits@_W@@SA_KAEBQEB_W$$QEAH@Z ^0007 wcsnlen
 486312488B09E9........ 00 0000 000B !caller :0000 ??$tcsnlen@PEBDH@?$__crt_char_traits@D@@SA_K$$QEAPEBD$$QEAH@Z ^0007 strnlen
@@ -905,7 +863,6 @@
 4883EC28488B0D........4883F9FD7706FF15........4883C428C3 00 0000 001C !caller :0000 __dcrt_terminate_console_output ^0013 __imp_CloseHandle
 4883EC28488B41104885C07514E8........C70016000000E8........32C0EB 0E DBFF 002E !caller :0000 ?validate@?$string_input_adapter@D@__crt_stdio_input@@QEAA_NXZ ^000E _errno ^0019 _invalid_parameter_noinfo
 4883EC28488B41104885C07514E8........C70016000000E8........32C0EB 0E DBFF 002E !caller :0000 ?validate@?$string_input_adapter@_W@__crt_stdio_input@@QEAA_NXZ ^000E _errno ^0019 _invalid_parameter_noinfo
-4883EC28488BC248894C2430488BC8488D542430E8........4883C428C3 00 0000 001E !caller :0000 ??$__acrt_get_full_path_name_wide@U__crt_win32_buffer_internal_dynamic_resizing@@@@YAHQEB_WAEAV?$__crt_win32_buffer@_WU__crt_win32_buffer_internal_dynamic_resizing@@@@@Z ^0015 ??$call_win32_function@V<lambda_70821863356a07dc63cd205fc1ee57ea>@@@?$__crt_win32_buffer@_WU__crt_win32_buffer_internal_dynamic_resizing@@@@QEAAHAEBV<lambda_70821863356a07dc63cd205fc1ee57ea>@@@Z
 4883EC28488BC248894C2430488BC8488D542430E8........4883C428C3 00 0000 001E !caller :0000 ??$__acrt_get_full_path_name_wide@U__crt_win32_buffer_no_resizing@@@@YAHQEB_WAEAV?$__crt_win32_buffer@_WU__crt_win32_buffer_no_resizing@@@@@Z ^0015 ??$call_win32_function@V<lambda_17b8e77e04f0039ff1429d79b8271fa1>@@@?$__crt_win32_buffer@_WU__crt_win32_buffer_no_resizing@@@@QEAAHAEBV<lambda_17b8e77e04f0039ff1429d79b8271fa1>@@@Z
 4883EC28488BC248894C2430488BC8488D542430E8........4883C428C3 00 0000 001E !caller :0000 ??$__acrt_get_full_path_name_wide@U__crt_win32_buffer_public_dynamic_resizing@@@@YAHQEB_WAEAV?$__crt_win32_buffer@_WU__crt_win32_buffer_public_dynamic_resizing@@@@@Z ^0015 ??$call_win32_function@V<lambda_1a60cddbd8640ed4c95e91b82cd9827b>@@@?$__crt_win32_buffer@_WU__crt_win32_buffer_public_dynamic_resizing@@@@QEAAHAEBV<lambda_1a60cddbd8640ed4c95e91b82cd9827b>@@@Z
 4883EC28488BC248894C2430488BC8488D542430E8........4883C428C3 00 0000 001E !caller :0000 ??$get_full_path_name@AEAY03_WAEAV?$__crt_win32_buffer@_WU__crt_win32_buffer_no_resizing@@@@@?$__crt_char_traits@_W@@SAHAEAY03_WAEAV?$__crt_win32_buffer@_WU__crt_win32_buffer_no_resizing@@@@@Z ^0015 ??$call_win32_function@V<lambda_17b8e77e04f0039ff1429d79b8271fa1>@@@?$__crt_win32_buffer@_WU__crt_win32_buffer_no_resizing@@@@QEAAHAEBV<lambda_17b8e77e04f0039ff1429d79b8271fa1>@@@Z
@@ -1615,7 +1572,6 @@
 48895C2408574883EC204C8B4910488BD9448B4108488B11488B0D........FF 01 54B7 0075 !caller :0000 ??$console_input_reopen_and_retry@V<lambda_560b05754d65e4eba1f4dc954e842d87>@@@@YAHAEBV<lambda_560b05754d65e4eba1f4dc954e842d87>@@@Z ^0021 __imp_PeekConsoleInputA ^002D __imp_GetLastError ^0045 __imp_CloseHandle ^004A ?__dcrt_lowio_initialize_console_input@@YAXXZ ^0062 __imp_PeekConsoleInputA ........8BF885C0753DFF15........83F8067532488B0D........4883F9FD7706FF15........E8........4C8B4B10448B4308488B13488B0D........FF15........8BF8488B5C24308BC74883C4205FC3
 48895C2408574883EC204C8B4910488BD9448B4108488B11488B0D........FF 01 54B7 0075 !caller :0000 ??$console_input_reopen_and_retry@V<lambda_bc4991f5022419389f2d00bcc230aada>@@@@YAHAEBV<lambda_bc4991f5022419389f2d00bcc230aada>@@@Z ^0021 __imp_ReadConsoleInputW ^002D __imp_GetLastError ^0045 __imp_CloseHandle ^004A ?__dcrt_lowio_initialize_console_input@@YAXXZ ^0062 __imp_ReadConsoleInputW ........8BF885C0753DFF15........83F8067532488B0D........4883F9FD7706FF15........E8........4C8B4B10448B4308488B13488B0D........FF15........8BF8488B5C24308BC74883C4205FC3
 48895C2408574883EC2080792800488BD9740D488B4910E8........C6432800 1A E70A 003A !caller :0000 ?set_to_nullptr@?$__crt_win32_buffer@DU__crt_win32_buffer_internal_dynamic_resizing@@@@QEAAXXZ ^0018 _free_base
-48895C2408574883EC2080792800488BD9740D488B4910E8........C6432800 1A E70A 003A !caller :0000 ?set_to_nullptr@?$__crt_win32_buffer@DU__crt_win32_buffer_public_dynamic_resizing@@@@QEAAXXZ ^0018 free
 48895C2408574883EC2080792800488BD9740D488B4910E8........C6432800 1A E70A 003A !caller :0000 ?set_to_nullptr@?$__crt_win32_buffer@_WU__crt_win32_buffer_internal_dynamic_resizing@@@@QEAAXXZ ^0018 _free_base
 48895C2408574883EC208B11488BF9488B0D........FF15........8BD885C0 04 EF95 0063 !caller :0000 ??$console_input_reopen_and_retry@V<lambda_48270ed9c4927d16e6b297c660a07e6e>@@@@YAHAEBV<lambda_48270ed9c4927d16e6b297c660a07e6e>@@@Z ^0018 __imp_SetConsoleMode ^0024 __imp_GetLastError ^003C __imp_CloseHandle ^0041 ?__dcrt_lowio_initialize_console_input@@YAXXZ ^0050 __imp_SetConsoleMode ........83F8067529488B0D........4883F9FD7706FF15........E8........8B17488B0D........FF15........8BD88BC3488B5C24304883C4205FC3
 48895C2408574883EC208BF98BD1488B0D........FF15........8BD885C075 03 EF9B 0062 !caller :0000 __dcrt_set_input_console_mode ^0017 __imp_SetConsoleMode ^0023 __imp_GetLastError ^003B __imp_CloseHandle ^0040 ?__dcrt_lowio_initialize_console_input@@YAXXZ ^004F __imp_SetConsoleMode ........83F8067529488B0D........4883F9FD7706FF15........E8........488B0D........8BD7FF15........8BD88BC3488B5C24304883C4205FC3
@@ -2193,18 +2149,6 @@
 488B09488B09E9........ 00 0000 000B !caller :0000 ??R<lambda_9a32fed5bf61b6b509b2d3f6003082a1>@@QEBA@XZ ^0007 _fflush_nolock
 488B09488BC148C1E83425FF0700003DFF070000751B48B8FFFFFFFFFFFF0F00 33 02A7 0053 !caller :0000 _dtest
 488B09488BC148C1E83425FF0700003DFF070000751B48B8FFFFFFFFFFFF0F00 33 02A7 0053 !caller :0000 _ldtest
-488B09E9........ 00 0000 0008 !caller :0000 ??$get_full_path_name@AEBQEBDAEAV?$__crt_win32_buffer@DU__crt_win32_buffer_no_resizing@@@@@?$__crt_char_traits@D@@SAHAEBQEBDAEAV?$__crt_win32_buffer@DU__crt_win32_buffer_no_resizing@@@@@Z ^0004 ??$__acrt_get_full_path_name_narrow_acp_or_utf8@U__crt_win32_buffer_no_resizing@@@@YAHQEBDAEAV?$__crt_win32_buffer@DU__crt_win32_buffer_no_resizing@@@@@Z
-488B09E9........ 00 0000 0008 !caller :0000 ??$get_full_path_name@AEBQEBDAEAV?$__crt_win32_buffer@DU__crt_win32_buffer_public_dynamic_resizing@@@@@?$__crt_char_traits@D@@SAHAEBQEBDAEAV?$__crt_win32_buffer@DU__crt_win32_buffer_public_dynamic_resizing@@@@@Z ^0004 ??$__acrt_get_full_path_name_narrow_acp_or_utf8@U__crt_win32_buffer_public_dynamic_resizing@@@@YAHQEBDAEAV?$__crt_win32_buffer@DU__crt_win32_buffer_public_dynamic_resizing@@@@@Z
-488B09E9........ 00 0000 0008 !caller :0000 ??$getc_nolock@PEAU_iobuf@@@?$__crt_char_traits@D@@SAH$$QEAPEAU_iobuf@@@Z ^0004 _getc_nolock
-488B09E9........ 00 0000 0008 !caller :0000 ??$getc_nolock@PEAU_iobuf@@@?$__crt_char_traits@_W@@SAG$$QEAPEAU_iobuf@@@Z ^0004 _getwc_nolock
-488B09E9........ 00 0000 0008 !caller :0000 ??$output_debug_string@AEBQEBD@?$__crt_char_traits@D@@SAXAEBQEBD@Z ^0004 __acrt_OutputDebugStringA
-488B09E9........ 00 0000 0008 !caller :0000 ??$set_current_directory@AEBQEBD@?$__crt_char_traits@D@@SAHAEBQEBD@Z ^0004 __acrt_SetCurrentDirectoryA
-488B09E9........ 00 0000 0008 !caller :0000 ??$tasctime@PEAUtm@@@?$__crt_char_traits@D@@SAPEAD$$QEAPEAUtm@@@Z ^0004 asctime
-488B09E9........ 00 0000 0008 !caller :0000 ??$tasctime@PEAUtm@@@?$__crt_char_traits@_W@@SAPEA_W$$QEAPEAUtm@@@Z ^0004 _wasctime
-488B09E9........ 00 0000 0008 !caller :0000 ??$tcspbrk@AEAPEADAEAY02$$CBD@?$__crt_char_traits@D@@SAPEADAEAPEADAEAY02$$CBD@Z ^0004 strpbrk
-488B09E9........ 00 0000 0008 !caller :0000 ??$tcspbrk@AEAPEA_WAEAY02$$CB_W@?$__crt_char_traits@_W@@SAPEA_WAEAPEA_WAEAY02$$CB_W@Z ^0004 wcspbrk
-488B09E9........ 00 0000 0008 !caller :0000 ??$time@PEAJ@?$__crt_integer_traits@J@@SAJ$$QEAPEAJ@Z ^0004 _time32
-488B09E9........ 00 0000 0008 !caller :0000 ??$time@PEA_J@?$__crt_integer_traits@_J@@SA_J$$QEAPEA_J@Z ^0004 _time64
 488B09E9........ 00 0000 0008 !caller :0000 ??R<lambda_082dd7c0feb7dbdaf245f261e54a6583>@@QEBA@XZ ^0004 _lock_file
 488B09E9........ 00 0000 0008 !caller :0000 ??R<lambda_13a597834fd3cef18bd4341e137232db>@@QEBA@XZ ^0004 _unlock_file
 488B09E9........ 00 0000 0008 !caller :0000 ??R<lambda_1c23a5dd5e46d7c5fbe45428cfdcd388>@@QEBA@XZ ^0004 _lock_file
@@ -2262,13 +2206,10 @@
 488B12488B09E9........ 00 0000 000B !caller :0000 ??$gmtime_s@AEBQEAUtm@@PEA_J@?$__crt_integer_traits@_J@@SAHAEBQEAUtm@@$$QEAPEA_J@Z ^0007 _gmtime64_s
 488B12488B09E9........ 00 0000 000B !caller :0000 ??$gmtime_s@PEAUtm@@PEAJ@?$__crt_integer_traits@J@@SAH$$QEAPEAUtm@@$$QEAPEAJ@Z ^0007 _gmtime32_s
 488B12488B09E9........ 00 0000 000B !caller :0000 ??$gmtime_s@PEAUtm@@PEA_J@?$__crt_integer_traits@_J@@SAH$$QEAPEAUtm@@$$QEAPEA_J@Z ^0007 _gmtime64_s
-488B12488B09E9........ 00 0000 000B !caller :0000 ??$localtime_s@AEBQEAUtm@@AEBQEBJ@?$__crt_integer_traits@J@@SAHAEBQEAUtm@@AEBQEBJ@Z ^0007 ??$common_localtime_s@J@@YAHQEAUtm@@QEBJ@Z
-488B12488B09E9........ 00 0000 000B !caller :0000 ??$localtime_s@AEBQEAUtm@@AEBQEB_J@?$__crt_integer_traits@_J@@SAHAEBQEAUtm@@AEBQEB_J@Z ^0007 ??$common_localtime_s@_J@@YAHQEAUtm@@QEB_J@Z
 488B12488B09E9........ 00 0000 000B !caller :0000 ??$localtime_s@PEAUtm@@AEBQEBJ@?$__crt_integer_traits@J@@SAH$$QEAPEAUtm@@AEBQEBJ@Z ^0007 _localtime32_s
 488B12488B09E9........ 00 0000 000B !caller :0000 ??$localtime_s@PEAUtm@@AEBQEB_J@?$__crt_integer_traits@_J@@SAH$$QEAPEAUtm@@AEBQEB_J@Z ^0007 _localtime64_s
 488B12488B09E9........ 00 0000 000B !caller :0000 ??$localtime_s@PEAUtm@@PEAJ@?$__crt_integer_traits@J@@SAH$$QEAPEAUtm@@$$QEAPEAJ@Z ^0007 _localtime32_s
 488B12488B09E9........ 00 0000 000B !caller :0000 ??$localtime_s@PEAUtm@@PEA_J@?$__crt_integer_traits@_J@@SAH$$QEAPEAUtm@@$$QEAPEA_J@Z ^0007 _localtime64_s
-488B12488B09E9........ 00 0000 000B !caller :0000 ??$set_environment_variable@AEBQEADQEAD@?$__crt_char_traits@D@@SAHAEBQEAD$$QEBQEAD@Z ^0007 __acrt_SetEnvironmentVariableA
 488B12488B09E9........ 00 0000 000B !caller :0000 ??$tcscat_s@AEAPEADAEB_KAEAY01$$CBD@?$__crt_char_traits@D@@SAHAEAPEADAEB_KAEAY01$$CBD@Z ^0007 strcat_s
 488B12488B09E9........ 00 0000 000B !caller :0000 ??$tcscat_s@AEAPEADAEB_KAEAY02$$CBD@?$__crt_char_traits@D@@SAHAEAPEADAEB_KAEAY02$$CBD@Z ^0007 strcat_s
 488B12488B09E9........ 00 0000 000B !caller :0000 ??$tcscat_s@AEAPEA_WAEB_KAEAY01$$CB_W@?$__crt_char_traits@_W@@SAHAEAPEA_WAEB_KAEAY01$$CB_W@Z ^0007 wcscat_s
@@ -3082,8 +3023,6 @@
 4D6300488B12488B09E9........ 00 0000 000E !caller :0000 ??$tgetpath@AEAPEA_WAEAPEA_WH@?$__crt_char_traits@_W@@SAPEA_WAEAPEA_W0$$QEAH@Z ^000A __acrt_wgetpath
 4D6300488B12488B09E9........ 00 0000 000E !caller :0000 ??$tgetpath@AEAPEBDPEADH@?$__crt_char_traits@D@@SAPEADAEAPEBD$$QEAPEAD$$QEAH@Z ^000A __acrt_getpath
 4D6300488B12488B09E9........ 00 0000 000E !caller :0000 ??$tgetpath@AEAPEB_WPEA_WH@?$__crt_char_traits@_W@@SAPEA_WAEAPEB_W$$QEAPEA_W$$QEAH@Z ^000A __acrt_wgetpath
-4D8B00488B09E9........ 00 0000 000B !caller :0000 ??$tcsncmp@AEAPEBDAEAY02$$CBD_K@?$__crt_char_traits@D@@SAHAEAPEBDAEAY02$$CBD$$QEA_K@Z ^0007 strncmp
-4D8B00488B09E9........ 00 0000 000B !caller :0000 ??$tcsncmp@AEAPEB_WAEAY02$$CB_W_K@?$__crt_char_traits@_W@@SAHAEAPEB_WAEAY02$$CB_W$$QEA_K@Z ^0007 wcsncmp
 4D8B00488B09E9........ 00 0000 000B !caller :0000 ??$tcsnicmp@AEAPEBDAEAY04$$CBD_K@?$__crt_char_traits@D@@SAHAEAPEBDAEAY04$$CBD$$QEA_K@Z ^0007 _strnicmp
 4D8B00488B09E9........ 00 0000 000B !caller :0000 ??$tcsnicmp@AEAPEBDAEAY06$$CBD_K@?$__crt_char_traits@D@@SAHAEAPEBDAEAY06$$CBD$$QEA_K@Z ^0007 _strnicmp
 4D8B00488B09E9........ 00 0000 000B !caller :0000 ??$tcsnicmp@AEAPEBDAEAY07$$CBD_K@?$__crt_char_traits@D@@SAHAEAPEBDAEAY07$$CBD$$QEA_K@Z ^0007 _strnicmp
@@ -3092,8 +3031,6 @@
 4D8B00488B09E9........ 00 0000 000B !caller :0000 ??$tcsnicmp@AEAPEB_WAEAY07$$CB_W_K@?$__crt_char_traits@_W@@SAHAEAPEB_WAEAY07$$CB_W$$QEA_K@Z ^0007 _wcsnicmp
 4D8B00488B09E9........ 00 0000 000B !caller :0000 ??$tcsnicmp@AEBQEBDAEAY0L@$$CBD_K@?$__crt_char_traits@D@@SAHAEBQEBDAEAY0L@$$CBD$$QEA_K@Z ^0007 _strnicmp
 4D8B00488B09E9........ 00 0000 000B !caller :0000 ??$tcsnicmp@AEBQEB_WAEAY0L@$$CB_W_K@?$__crt_char_traits@_W@@SAHAEBQEB_WAEAY0L@$$CB_W$$QEA_K@Z ^0007 _wcsnicmp
-4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tasctime_s@AEBQEADAEB_KPEAUtm@@@?$__crt_char_traits@D@@SAHAEBQEADAEB_K$$QEAPEAUtm@@@Z ^000A asctime_s
-4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tasctime_s@AEBQEA_WAEB_KPEAUtm@@@?$__crt_char_traits@_W@@SAHAEBQEA_WAEB_K$$QEAPEAUtm@@@Z ^000A _wasctime_s
 4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tcscat_s@AEAPEADAEB_KPEAD@?$__crt_char_traits@D@@SAHAEAPEADAEB_K$$QEAPEAD@Z ^000A strcat_s
 4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tcscat_s@AEAPEA_WAEB_KPEA_W@?$__crt_char_traits@_W@@SAHAEAPEA_WAEB_K$$QEAPEA_W@Z ^000A wcscat_s
 4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tcscat_s@AEBQEADAEB_KAEAPEAD@?$__crt_char_traits@D@@SAHAEBQEADAEB_KAEAPEAD@Z ^000A strcat_s
@@ -3134,16 +3071,10 @@
 4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tcsnicoll@AEAPEA_WAEBQEB_WAEB_K@?$__crt_char_traits@_W@@SAHAEAPEA_WAEBQEB_WAEB_K@Z ^000A _wcsnicoll
 4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tcsnicoll@AEBQEBDAEAPEADAEB_K@?$__crt_char_traits@D@@SAHAEBQEBDAEAPEADAEB_K@Z ^000A _strnicoll
 4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tcsnicoll@AEBQEB_WAEAPEA_WAEB_K@?$__crt_char_traits@_W@@SAHAEBQEB_WAEAPEA_WAEB_K@Z ^000A _wcsnicoll
-4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tdupenv_s_crt@PEAPEAD$$TAEBQEBD@?$__crt_char_traits@D@@SAH$$QEAPEAPEAD$$QEA$$TAEBQEBD@Z ^000A _dupenv_s
-4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tdupenv_s_crt@PEAPEA_W$$TAEBQEB_W@?$__crt_char_traits@_W@@SAH$$QEAPEAPEA_W$$QEA$$TAEBQEB_W@Z ^000A _wdupenv_s
-4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tfullpath@AEBQEADAEBQEBDAEB_K@?$__crt_char_traits@D@@SAPEADAEBQEADAEBQEBDAEB_K@Z ^000A _fullpath
-4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tfullpath@AEBQEA_WAEBQEB_WAEB_K@?$__crt_char_traits@_W@@SAPEA_WAEBQEA_WAEBQEB_WAEB_K@Z ^000A _wfullpath
 4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tgetpath@AEAPEADAEAPEAD_K@?$__crt_char_traits@D@@SAPEADAEAPEAD0$$QEA_K@Z ^000A __acrt_getpath
 4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tgetpath@AEAPEA_WAEAPEA_W_K@?$__crt_char_traits@_W@@SAPEA_WAEAPEA_W0$$QEA_K@Z ^000A __acrt_wgetpath
 4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tgetpath@AEBQEADAEAPEAD_K@?$__crt_char_traits@D@@SAPEADAEBQEADAEAPEAD$$QEA_K@Z ^000A __acrt_getpath
 4D8B00488B12488B09E9........ 00 0000 000E !caller :0000 ??$tgetpath@AEBQEA_WAEAPEA_W_K@?$__crt_char_traits@_W@@SAPEA_WAEBQEA_WAEAPEA_W$$QEA_K@Z ^000A __acrt_wgetpath
-4D8B094D8B00488B12488B09E9........ 00 0000 0011 !caller :0000 ??$pack_command_line_and_environment@AEBQEBQEBDAEBQEBQEBDPEAPEADPEAPEAD@?$__crt_char_traits@D@@SAHAEBQEBQEBD0$$QEAPEAPEAD1@Z ^000D __acrt_pack_narrow_command_line_and_environment
-4D8B094D8B00488B12488B09E9........ 00 0000 0011 !caller :0000 ??$pack_command_line_and_environment@AEBQEBQEB_WAEBQEBQEB_WPEAPEA_WPEAPEA_W@?$__crt_char_traits@_W@@SAHAEBQEBQEB_W0$$QEAPEAPEA_W1@Z ^000D __acrt_pack_wide_command_line_and_environment
 4D8B094D8B00488B12488B09E9........ 00 0000 0011 !caller :0000 ??$tcsncat_s@AEAPEADAEB_KAEBQEBD_K@?$__crt_char_traits@D@@SAHAEAPEADAEB_KAEBQEBD$$QEA_K@Z ^000D strncat_s
 4D8B094D8B00488B12488B09E9........ 00 0000 0011 !caller :0000 ??$tcsncat_s@AEAPEA_WAEB_KAEBQEB_W_K@?$__crt_char_traits@_W@@SAHAEAPEA_WAEB_KAEBQEB_W$$QEA_K@Z ^000D wcsncat_s
 4D8B094D8B00488B12488B09E9........ 00 0000 0011 !caller :0000 ??$tcsncat_s@AEBQEADAEB_KAEAPEBD_K@?$__crt_char_traits@D@@SAHAEBQEADAEB_KAEAPEBD$$QEA_K@Z ^000D strncat_s
@@ -3166,8 +3097,6 @@
 4D8B094D8B00488B128B09E9........ 00 0000 0010 !caller :0000 ??$tspawnve@AEBHAEBQEBDAEBQEBQEBDAEBQEBQEBD@?$__crt_char_traits@D@@SA_JAEBHAEBQEBDAEBQEBQEBD2@Z ^000C _spawnve
 4D8B094D8B00488B128B09E9........ 00 0000 0010 !caller :0000 ??$tspawnve@AEBHAEBQEB_WAEBQEAPEA_WAEBQEBQEB_W@?$__crt_char_traits@_W@@SA_JAEBHAEBQEB_WAEBQEAPEA_WAEBQEBQEB_W@Z ^000C _wspawnve
 4D8B094D8B00488B128B09E9........ 00 0000 0010 !caller :0000 ??$tspawnve@AEBHAEBQEB_WAEBQEBQEB_WAEBQEBQEB_W@?$__crt_char_traits@_W@@SA_JAEBHAEBQEB_WAEBQEBQEB_W2@Z ^000C _wspawnve
-4D8B094D8B00488B128B09E9........ 00 0000 0010 !caller :0000 ??$tspawnvpe@AEBHAEBQEBDAEBQEAPEADAEBQEBQEBD@?$__crt_char_traits@D@@SA_JAEBHAEBQEBDAEBQEAPEADAEBQEBQEBD@Z ^000C _spawnvpe
-4D8B094D8B00488B128B09E9........ 00 0000 0010 !caller :0000 ??$tspawnvpe@AEBHAEBQEB_WAEBQEAPEA_WAEBQEBQEB_W@?$__crt_char_traits@_W@@SA_JAEBHAEBQEB_WAEBQEAPEA_WAEBQEBQEB_W@Z ^000C _wspawnvpe
 4D8B11498B10488B4424304C8B18488B4424284889410833C089412088412448 33 E334 0053 !caller :0000 ??$?0AEBV?$console_output_adapter@D@__crt_stdio_output@@AEB_KAEBQEBDAEAV__crt_cached_ptd_host@@AEBQEAD@?$format_validation_base@DV?$console_output_adapter@D@__crt_stdio_output@@@__crt_stdio_output@@IEAA@AEBV?$console_output_adapter@D@1@AEB_KAEBQEBDAEAV__crt_cached_ptd_host@@AEBQEAD@Z
 4D8B11498B10488B4424304C8B18488B4424284889410833C089412088412448 33 E334 0053 !caller :0000 ??$?0AEBV?$console_output_adapter@D@__crt_stdio_output@@AEB_KAEBQEBDAEAV__crt_cached_ptd_host@@AEBQEAD@?$standard_base@DV?$console_output_adapter@D@__crt_stdio_output@@@__crt_stdio_output@@IEAA@AEBV?$console_output_adapter@D@1@AEB_KAEBQEBDAEAV__crt_cached_ptd_host@@AEBQEAD@Z
 4D8B11498B10488B4424304C8B18488B4424284889410833C089412088412448 36 98A1 0056 !caller :0000 ??$?0AEBV?$console_output_adapter@_W@__crt_stdio_output@@AEB_KAEBQEB_WAEAV__crt_cached_ptd_host@@AEBQEAD@?$format_validation_base@_WV?$console_output_adapter@_W@__crt_stdio_output@@@__crt_stdio_output@@IEAA@AEBV?$console_output_adapter@_W@1@AEB_KAEBQEB_WAEAV__crt_cached_ptd_host@@AEBQEAD@Z
@@ -3482,7 +3411,6 @@
 8B05........C3 00 0000 0007 !caller :0000 ??R<lambda_310477c8b9c73405e9396a64630870ce>@@QEBA@XZ
 8B05........C3 00 0000 0007 !caller :0000 _query_app_type
 8B0948FF25........ 00 0000 0009 !caller :0000 ??1__crt_scoped_get_last_error_reset@@QEAA@XZ ^0005 __imp_SetLastError
-8B09E9........ 00 0000 0007 !caller :0000 ??$ungettch_nolock@AEBH@?$__crt_char_traits@D@@SAHAEBH@Z ^0003 _ungetch_nolock
 8B09E9........ 00 0000 0007 !caller :0000 ??R<lambda_01a7098693036236037e7cdb9bca3d73>@@QEBA@XZ ^0003 __acrt_unlock
 8B09E9........ 00 0000 0007 !caller :0000 ??R<lambda_0384895ae1aa6ccbfe369a30d6ca2ef7>@@QEBA@XZ ^0003 __acrt_lock
 8B09E9........ 00 0000 0007 !caller :0000 ??R<lambda_0a2f2c9f9a56eb2b08bfa6ff61d331c5>@@QEBA@XZ ^0003 __acrt_unlock
@@ -3547,8 +3475,6 @@
 8B11488B0D........48FF25........ 00 0000 0010 !caller :0000 ??R<lambda_48270ed9c4927d16e6b297c660a07e6e>@@QEBA@XZ ^000C __imp_SetConsoleMode
 8B118BC2448B4104C1E0048901418BC0C1E004C1EA1C0BC241C1E81C8941048B 0C C99E 002C !caller :0000 ??$multiply_ld12_by@$0BA@@@YAXQEAU_LDBL12@@@Z
 8B118BC2448B4104C1E0048901418BC0C1E004C1EA1C0BC241C1E81C8941048B 0C C99E 002C !caller :0000 ??$shl_ld12@$03@@YAXQEAU_LDBL12@@@Z
-8B12488B09E9........ 00 0000 000A !caller :0000 ??$set_variable_in_environment_nolock@PEADH@?$__crt_char_traits@D@@SAH$$QEAPEAD$$QEAH@Z ^0006 __dcrt_set_variable_in_narrow_environment_nolock
-8B12488B09E9........ 00 0000 000A !caller :0000 ??$set_variable_in_environment_nolock@PEA_WH@?$__crt_char_traits@_W@@SAH$$QEAPEA_W$$QEAH@Z ^0006 __dcrt_set_variable_in_wide_environment_nolock
 8B12488B09E9........ 00 0000 000A !caller :0000 ??$taccess_s@AEAPEADH@?$__crt_char_traits@D@@SAHAEAPEAD$$QEAH@Z ^0006 _access_s
 8B12488B09E9........ 00 0000 000A !caller :0000 ??$taccess_s@AEAPEA_WH@?$__crt_char_traits@_W@@SAHAEAPEA_W$$QEAH@Z ^0006 _waccess_s
 8B12488B09E9........ 00 0000 000A !caller :0000 ??$taccess_s@AEAPEBDH@?$__crt_char_traits@D@@SAHAEAPEBD$$QEAH@Z ^0006 _access_s
@@ -3561,10 +3487,6 @@
 8B12488B09E9........ 00 0000 000A !caller :0000 ??$taccess_s@PEA_WH@?$__crt_char_traits@_W@@SAH$$QEAPEA_W$$QEAH@Z ^0006 _waccess_s
 8B12488B09E9........ 00 0000 000A !caller :0000 ??$taccess_s@PEBDH@?$__crt_char_traits@D@@SAH$$QEAPEBD$$QEAH@Z ^0006 _access_s
 8B12488B09E9........ 00 0000 000A !caller :0000 ??$taccess_s@PEB_WH@?$__crt_char_traits@_W@@SAH$$QEAPEB_W$$QEAH@Z ^0006 _waccess_s
-8B12488B09E9........ 00 0000 000A !caller :0000 ??$tcscat_s@PEADAEBIAEAY01$$CBD@?$__crt_char_traits@D@@SAH$$QEAPEADAEBIAEAY01$$CBD@Z ^0006 strcat_s
-8B12488B09E9........ 00 0000 000A !caller :0000 ??$tcscat_s@PEA_WAEBIAEAY01$$CB_W@?$__crt_char_traits@_W@@SAH$$QEAPEA_WAEBIAEAY01$$CB_W@Z ^0006 wcscat_s
-8B12488B09E9........ 00 0000 000A !caller :0000 ??$tgetcwd@AEBQEADH@?$__crt_char_traits@D@@SAPEADAEBQEAD$$QEAH@Z ^0006 _getcwd
-8B12488B09E9........ 00 0000 000A !caller :0000 ??$tgetcwd@AEBQEA_WH@?$__crt_char_traits@_W@@SAPEA_WAEBQEA_W$$QEAH@Z ^0006 _wgetcwd
 8B124D8B00488B09E9........ 00 0000 000D !caller :0000 ??$tcscat_s@PEADAEBIAEAPEBD@?$__crt_char_traits@D@@SAH$$QEAPEADAEBIAEAPEBD@Z ^0009 strcat_s
 8B124D8B00488B09E9........ 00 0000 000D !caller :0000 ??$tcscat_s@PEADAEBIAEBQEBD@?$__crt_char_traits@D@@SAH$$QEAPEADAEBIAEBQEBD@Z ^0009 strcat_s
 8B124D8B00488B09E9........ 00 0000 000D !caller :0000 ??$tcscat_s@PEA_WAEBIAEAPEB_W@?$__crt_char_traits@_W@@SAH$$QEAPEA_WAEBIAEAPEB_W@Z ^0009 wcscat_s
@@ -3825,7 +3747,6 @@ BA0C000000E9........ 00 0000 000A !caller :0000 ??$free_crt_array@D$0M@@@YAXAEAY
 BA0C000000E9........ 00 0000 000A !caller :0000 ??$free_crt_array@_W$0M@@@YAXAEAY0M@PEA_W@Z ^0006 ?free_crt_array_internal@@YAXQEAPEBX_K@Z
 BA10000000E9........ 00 0000 000A !caller :0000 _iswpunct_l ^0006 iswctype
 BA10000000E9........ 00 0000 000A !caller :0000 iswpunct ^0006 iswctype
-BA10000000E9........ 00 0000 000A !caller :0000 tmpfile_s ^0006 ?common_tmpfile@@YAHQEAPEAU_iobuf@@H@Z ^0006 _tmpfile_helper
 BA17010000E9........ 00 0000 000A !caller :0000 _iswgraph_l ^0006 iswctype
 BA17010000E9........ 00 0000 000A !caller :0000 iswgraph ^0006 iswctype
 BA20000000E9........ 00 0000 000A !caller :0000 _iswcntrl_l ^0006 iswctype

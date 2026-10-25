@@ -192,13 +192,13 @@
   "output": [
     {
       "file": "vs2022.part3.npat",
-      "patterns": 692,
-      "sha256": "c3ed13460423a69b1458a8107c517d691a3818db365e8c4b7ced91615c4dc8c7"
+      "patterns": 755,
+      "sha256": "fb0c882b125180fad24fd314a2b88eaa6f4658c6850fc2683098bc5d823e99f0"
     },
     {
       "file": "winsdk.part3.npat",
-      "patterns": 358,
-      "sha256": "39801c7f087e9f9c8340e44d9970e4bc38521cedef860a02f14ced52fc9de307"
+      "patterns": 437,
+      "sha256": "fc09a6bcac280a2a99fc5a4c8e4212f913e085ba268f5764d8dacbcf1c30d98a"
     }
   ],
   "generator": {
@@ -219,7 +219,8 @@
       "--collision-evidence"
     ],
     "filter": "scripts/signatures/supplement_patterns.py",
-    "existing_revision": "fe9a373c020fd48f68802353497bf8e315f7e178"
+    "existing_revision": "fe9a373c020fd48f68802353497bf8e315f7e178",
+    "filter_ref": "198bcbc0008f43343a950062e74e36c6826ac08e"
   },
   "candidate_sources": [
     {
