@@ -44,10 +44,11 @@ PR, artifact store, or release.
 
 ## External scheduler contract
 
-A scheduler should first record the signatures checkout commit, inspect the
-selected official source metadata, and compare versions/content hashes with the
-reviewed matrix pins. A new upstream version is a **matrix-pin review candidate**,
-not authority to rewrite pins or run upstream build/install scripts. No change
+A scheduler should first record the signatures checkout commit and run
+`discover_signature_sources.py` against the selected official feeds (see below).
+It compares persistent semantic source records, not just commit timestamps.
+New versions produce immutable versioned candidates rather than overwriting
+historical matrix rows or running upstream build/install scripts. No change
 to pinned inputs means a successfully collected download row can be reused;
 its cached manifests and archives are rehashed before reuse. Installed MSVC
 inputs are always recollected because installed servicing versions can change
@@ -138,3 +139,76 @@ python3 -m py_compile scripts/collect_signature_updates.py
 These fixtures exercise orchestration/manifest/archive guards only. They do not
 download packages, run collectors, build SDKs, run sigmaker, or validate NeverD
 recognition accuracy.
+
+## Discover new versions, then collect their inputs
+
+The update path starts with `scripts/discover_signature_sources.py`, not with a
+weekly rebuild of old pins. It fetches official HTTPS metadata, checks redirects
+against a narrow host allowlist, bounds response sizes, and preserves the last
+successful source baseline if a request fails. Each candidate records platform,
+domain, architecture knowledge, format, build-configuration requirements,
+version/channel and provenance. Unknown architecture/configuration stays unknown.
+
+```sh
+python3 scripts/discover_signature_sources.py --state /private/source-discovery \
+  --source msvc-stable --source windows-sdk --source windows-wdk-x64 \
+  --source windows-wdk-arm64 --source homebrew-zlib
+```
+
+Select at most five sources per invocation and rotate groups. The registered
+source IDs and actual coverage are:
+
+| Sources | Metadata discovery | Acquisition / signature status |
+| --- | --- | --- |
+| `msvc-stable`, `msvc-2022-release` | Actual VC CRT package versions from hash-checked official VS catalogs | Matching installed toolset collector exists; installation is not automated |
+| `msvc-insiders`, `msvc-2022-preview` | Explicit preview channels, separate from stable | Opt-in only; never mixed into a stable profile |
+| `windows-sdk`, `windows-wdk-x64`, `windows-wdk-arm64` | NuGet stable version inventory, registration/catalog package SHA-512 | New NuGet package acquisition/extraction profiles still need an adapter; package host architecture is not assumed to be every target ABI |
+| `homebrew-zlib`, `homebrew-xz`, `homebrew-pcre2` | Stable formula/revision and macOS bottle SHA-256 pins | Executable candidate handoff to the existing bottle collector; Linux bottles excluded |
+| `linux-kernel` | Upstream stable/mainline/longterm/RC releases | Exact kernel configuration, compiler, architecture and acquisition/build adapter required |
+| `gnu-glibc`, `musl-libc` | Official source-release filenames | Source archive digest, ABI, compiler/distro patches and build adapter required |
+| `android-common-gki` | Android common/GKI source tags and peeled commit IDs | Not OEM device kernels or vendor modules; exact configuration/toolchain adapter required |
+| `android-bionic` | Android bionic source tags and commits | Not glibc; exact Android ABI/build profile required |
+| `android-ndk` | Official stable/preview package inventory and advertised checksum algorithm | New archive adapter/license review and target-triple inspection required; host OS is not target ABI |
+| `apple-xnu` | Apple's XNU source tags | Not shipping iOS/macOS kernelcache; source tag is insufficient to claim firmware coverage |
+| `apple-libc`, `apple-libsystem` | Apple source tags | Not an extracted shipping dyld cache or every iOS/macOS libSystem ABI |
+| `llvm-runtimes` | LLVM release source tags | compiler-rt/libc++/libunwind exact target/build profiles required |
+
+Listing a source here means its metadata parser exists, not that its binaries
+were collected or that NeverD recognition was verified. There is no universal
+"all architectures" success flag. Current GitHub tag feeds explicitly report
+bounded first-page coverage; source histories outside that window remain
+uncovered. Gitiles and release-listing responses are bounded and fail if too
+large. Kernel/NDK entries retain preview labels; an external scheduler should
+select stable entries by default. Preview VS sources require explicit selection.
+
+The first successful fetch is `initial_observation`, not a claim that every old
+version was just released. Subsequent entries distinguish `new_version`,
+`changed_source_metadata_or_pins`, classification changes and repaired candidate
+files. Metadata-only differences do not claim binary bytes changed. NuGet keeps
+all advertised stable versions in its inventory, resolving at most two missing
+catalog pins per source/run, with the rest explicitly `pending_catalog_hash`;
+subsequent runs resume this backlog rather than dropping intermediate versions.
+The discovery command does not download SDKs, package archives or installers.
+
+For a genuinely changed eligible Homebrew input, the immutable candidate carries
+a new library identity containing version plus bottle-content fingerprint. It
+can be passed directly to the collection CLI after source/license review:
+
+```sh
+python3 scripts/collect_signature_updates.py --state /private/signature-state \
+  --timeout 900 --max-gib 8 collect \
+  --candidate /private/source-discovery/homebrew-zlib/<hash>.candidate.json --execute
+```
+
+The handoff accepts only registered formula/archive profiles, known macOS tag
+shapes and SHA-256 pins. It creates a private temporary matrix and invokes the
+existing collector, rather than editing old rows. Candidates matching existing
+pins are rejected as redundant. New versions and same-version rebuilt bottles
+have distinct identities, preserving earlier coverage. Other newly discovered
+families currently remain metadata candidates with their precise adapter or
+environment requirements; do not report them as collected.
+
+Generation still needs the complete historical same-directory asset baseline,
+trusted sigmaker, two identical passes and the consumer/preservation gates above.
+Discovery, collection, generation and recognition validation are separate states.
+No legacy Actions capability is retired merely because a metadata feed works.

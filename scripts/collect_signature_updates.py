@@ -83,11 +83,13 @@ def capabilities(family):
     return missing
 
 
-def commands(root, family, row, work, assets):
+def commands(root, family, row, work, assets, matrix=None):
     script = str(root / "scripts" / FAMILIES[family])
     if family != "msvc":
         argv = [sys.executable, script, "--name", row["name"], "--work", str(work),
                 "--output", str(assets), "--zstd-level", "3"]
+        if matrix is not None:
+            argv += ["--matrix", str(matrix)]
         if family == "elf":
             argv += ["--jobs", "1"]
         return [argv]
@@ -255,8 +257,37 @@ def run_bounded(argv, work, log, seconds, max_bytes):
                 proc.wait()
 
 
-def collect(root, state, selected, execute, seconds, max_bytes):
+def candidate_target(root, path):
+    candidate = json.loads(path.read_text(encoding="utf-8"))
+    if candidate.get("already_pinned"):
+        raise ValueError("candidate matches existing pins; no new input to collect")
+    row = candidate["candidate_matrix_row"]
+    sources = json.loads((root / "scripts/signature-discovery-sources.json").read_text())["sources"]
+    source = next((s for s in sources if s["id"] == candidate["source"] and s["adapter"] == "homebrew"), None)
+    if source is None or row["formula"] != source["formula"] or row["archives"] != source["archives"]:
+        raise ValueError("candidate is not an approved Homebrew source/archive profile")
+    version = row["version"]
+    if not re.fullmatch(r"[0-9][A-Za-z0-9._-]*", version):
+        raise ValueError("invalid candidate version")
+    bottle_id = hashlib.sha256(json.dumps(row["bottles"], sort_keys=True).encode()).hexdigest()[:12]
+    expected = f"homebrew-{row['formula']}-{version}-{bottle_id}"
+    if row["name"] != expected or row["library"] != expected:
+        raise ValueError("candidate must have a new versioned library identity")
+    if not row["bottles"] or len(row["bottles"]) > 32:
+        raise ValueError("invalid bottle count")
+    for bottle in row["bottles"]:
+        if not re.fullmatch(r"(?:arm64_)?(?:high_sierra|mojave|catalina|big_sur|monterey|ventura|sonoma|sequoia|tahoe|golden_gate)", bottle["tag"]) or "linux" in bottle["tag"] or not HEX.fullmatch(bottle["sha256"]):
+            raise ValueError("invalid macOS bottle pin")
+    return "homebrew:" + expected, row
+
+
+def collect(root, state, selected, execute, seconds, max_bytes, candidate=None):
     all_targets = targets(root)
+    candidate_key = None
+    if candidate is not None:
+        candidate_key, row = candidate_target(root, candidate)
+        all_targets[candidate_key] = ("homebrew", row)
+        selected = [candidate_key]
     if not selected or len(selected) > 3 or len(set(selected)) != len(selected):
         raise ValueError("select one to three distinct targets; no implicit all-target run")
     scripts = {p.name: digest(p) for p in sorted((root / "scripts").glob("*.py"))}
@@ -297,7 +328,11 @@ def collect(root, state, selected, execute, seconds, max_bytes):
         result.update(run=run.name, assets=str(assets))
         try:
             started = time.monotonic()
-            for argv in commands(root, family, row, run / "work", assets):
+            matrix = None
+            if key == candidate_key:
+                matrix = run / "candidate-matrix.json"
+                write_json(matrix, [row])
+            for argv in commands(root, family, row, run / "work", assets, matrix):
                 remaining = seconds - (time.monotonic() - started)
                 if remaining <= 0:
                     raise RuntimeError("target time budget exhausted")
@@ -382,7 +417,9 @@ def main(argv=None):
     parser.add_argument("--max-gib", type=int, default=8)
     sub = parser.add_subparsers(dest="command", required=True)
     c = sub.add_parser("collect")
-    c.add_argument("--target", action="append", required=True, help="family:matrix-row, at most three")
+    selection = c.add_mutually_exclusive_group(required=True)
+    selection.add_argument("--target", action="append", help="family:matrix-row, at most three")
+    selection.add_argument("--candidate", type=Path, help="discovered versioned Homebrew candidate JSON")
     c.add_argument("--execute", action="store_true", help="otherwise only report plan/capabilities")
     check = sub.add_parser("check-archives", help="validate every tar member without extracting")
     check.add_argument("--assets", type=Path, required=True)
@@ -406,7 +443,7 @@ def main(argv=None):
         parser.error("another run or stale lock exists; inspect before removing .collection-lock")
     try:
         if args.command == "collect":
-            result = collect(ROOT, state, args.target, args.execute, args.timeout, args.max_gib << 30)
+            result = collect(ROOT, state, args.target, args.execute, args.timeout, args.max_gib << 30, args.candidate)
             failed = any(r["status"] in ("failed", "unavailable") for r in result)
         elif args.command == "check-archives":
             check_archives(args.assets.resolve(), args.max_gib << 30, args.timeout)

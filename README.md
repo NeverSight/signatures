@@ -595,8 +595,11 @@ every line removed, not reproduced or unresolved.
 
 ## External scheduled collection
 
-For bounded collection by an external scheduler, use
-[`scripts/collect_signature_updates.py`](scripts/collect_signature_updates.py).
+For new upstream version discovery by an external scheduler, start with
+[`scripts/discover_signature_sources.py`](scripts/discover_signature_sources.py),
+then use [`scripts/collect_signature_updates.py`](scripts/collect_signature_updates.py)
+for eligible bounded collection. Official Windows, Linux/Android and Apple source
+feeds are tracked separately; discovery is not a claim of binary/ABI coverage.
 See [the collection and validation contract](docs/external-signature-collection.md)
 for supported targets, private artifact handling, resumable receipts, and
 candidate-generation gates. It does not publish or dispatch GitHub Actions.
