@@ -99,8 +99,8 @@ def alias_order(name: str) -> tuple:
     return (len(name) - len(name.lstrip("_")), len(name), name)
 
 
-def settled_names(matches: list[dict]) -> tuple[dict[int, str], set[int]]:
-    """The name NeverD renames each address to, as SignatureDB::buildNameMap does.
+def candidate_names(matches: list[dict]) -> tuple[dict[int, str], set[int]]:
+    """Preferred suggestions, as SignatureDB::buildCandidateNameMap does.
 
     Each match gives its address a set of names: its name and its `aliases`,
     the other symbols its library gives the same routine. Matches agree when
@@ -134,6 +134,32 @@ def settled_names(matches: list[dict]) -> tuple[dict[int, str], set[int]]:
     return names, disputed
 
 
+def settled_names(matches: list[dict]) -> tuple[dict[int, str], set[int]]:
+    """Use the core's admitted names without promoting candidate aliases.
+
+    Historical engines omitted auto_name; retain their old settlement for
+    before/after comparison, explicitly labeled as legacy in the report.
+    A mixed or inconsistent response is an error, not a permission to guess.
+    """
+    if not any("auto_name" in match for match in matches):
+        return candidate_names(matches)
+    decisions: dict[int, str] = {}
+    for match in matches:
+        name = match.get("auto_name")
+        if not isinstance(name, str):
+            raise ValueError("missing or invalid auto_name in strict results")
+        evidence = match.get("name_evidence")
+        if name and evidence not in {"image_symbol", "exception_personality"}:
+            raise ValueError("automatic name lacks recognized identity evidence")
+        if not name and evidence != "none":
+            raise ValueError("candidate has inconsistent identity evidence")
+        address = int(match["addr"], 16)
+        if address in decisions and decisions[address] != name:
+            raise ValueError("inconsistent automatic names at one address")
+        decisions[address] = name
+    return {address: name for address, name in decisions.items() if name}, set()
+
+
 @dataclass
 class Result:
     probe: str
@@ -142,6 +168,11 @@ class Result:
     wrong: list[tuple[str, str, list[str]]] = field(default_factory=list)
     disputed: int = 0
     unmapped: int = 0
+    naming_policy: str = "legacy"
+    candidate_correct: int = 0
+    candidate_wrong: list[tuple[str, str, list[str]]] = field(default_factory=list)
+    candidate_disputed: int = 0
+    candidate_only: int = 0
     # Why NeverD could not read the program, when it could not.
     failure: str | None = None
 
@@ -163,9 +194,25 @@ def evaluate(neverd: Path, source: str, probe: Path) -> Result:
         lines = [line.strip() for line in completed.stderr.splitlines() if line.strip()]
         result.failure = lines[-1] if lines else f"exit status {completed.returncode}"
         return result
-    matches = json.loads(completed.stdout or "[]")
-    names, disputed = settled_names(matches)
+    try:
+        matches = json.loads(completed.stdout or "[]")
+        names, disputed = settled_names(matches)
+        suggestions, candidate_disputed = candidate_names(matches)
+    except (ValueError, KeyError, TypeError, AttributeError) as error:
+        result.failure = f"invalid signature results: {error}"
+        return result
+    if any("auto_name" in match for match in matches):
+        result.naming_policy = "independent_identity"
     result.disputed = len(disputed)
+    result.candidate_disputed = len(candidate_disputed)
+    result.candidate_only = len({int(match["addr"], 16) for match in matches} - names.keys())
+    for address, name in sorted(suggestions.items()):
+        expected = functions.get(address)
+        if expected is not None and name in expected.names:
+            result.candidate_correct += bool(expected.from_library)
+        else:
+            result.candidate_wrong.append(
+                (hex(address), name, sorted(expected.names) if expected else []))
     for address, name in sorted(names.items()):
         expected = functions.get(address)
         if expected is None:
@@ -216,8 +263,11 @@ def main(argv: list[str] | None = None) -> int:
         print(
             f"{probe.name}: {result.correct}/{result.library_functions} library functions "
             f"named ({result.coverage:.0%}), {len(result.wrong)} wrong, "
-            f"{result.disputed} disputed"
+            f"{result.disputed} disputed; policy={result.naming_policy}"
         )
+        print(f"  Candidate suggestions: {result.candidate_correct} correct, "
+              f"{len(result.candidate_wrong)} wrong, {result.candidate_disputed} disputed; "
+              f"{result.candidate_only} addresses lack an admitted name")
         for address, name, expected in result.wrong[:10]:
             print(f"  WRONG {address}: {name} (map: {', '.join(expected) or 'no function'})")
     if args.report:
