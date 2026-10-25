@@ -31,6 +31,25 @@ A file larger than 50 MB, GitHub's recommended limit, is written in parts of
 even size: `<name>.pat`, `<name>.part2.pat` and so on. NeverD reads the parts
 as one library, and the Rich header chooses a release's parts together.
 
+Current NeverD also reads `.npat` parts with native context requirements.
+Older directory readers ignore these files and retain ordinary `.pat`
+coverage. Selection still uses the same architecture, platform and toolset
+profile. `!refs` records require complete body coverage and confirmation of
+every reference before becoming candidates. `!caller` records are excluded
+from global byte scanning and queried only by names requested by validated
+incoming context. Existing ordinary byte claims do not become incoming
+evidence merely because they are loaded. Neither form independently proves
+the original source identity or authorizes an automatic name.
+
+The x64 runtime additions retain their source, collision and output hashes in
+`runtime-context.sources.json`, `runtime-callers.sources.json` and
+`runtime-metadata.sources.json`. The metadata refinements preserve all bytes
+and names while adding missing immutable import or primary-vftable constraints.
+Raw collision evidence includes short and discarded source functions across
+toolsets; absence from a selected pack is never proof of uniqueness. See
+[NeverD's quality policy](https://github.com/NeverSight/NeverD/blob/dev/docs/signature-quality.md)
+for the identity boundary and required accuracy/performance checks.
+
 ## What a line says
 
 ```

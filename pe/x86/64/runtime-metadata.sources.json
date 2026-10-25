@@ -1,0 +1,543 @@
+{
+  "existing": [
+    {
+      "file": "vs2015.pat",
+      "sha256": "1983c44b692a1f4de5fb3ffe2986d44a30f4d594a550592cae74a57e49684514"
+    },
+    {
+      "file": "vs2017.pat",
+      "sha256": "a2f03a8b47e8fdfd293d1c3d1780c8eccc19d2dfc3fa82055184ee5f770cf274"
+    },
+    {
+      "file": "vs2019.pat",
+      "sha256": "3771c91d3eb3133a9f58b4ad8234556391b68807afc33a2006f37285175b5f04"
+    },
+    {
+      "file": "vs2022.part2.pat",
+      "sha256": "47e1b44118b60512be571cf00f0da3ce032eac9ee5d78dbecded9d5e525daeef"
+    },
+    {
+      "file": "vs2022.pat",
+      "sha256": "1022a2be92f63b859440850ccb864679e515171c5f340b1c2515c79f8ba9c525"
+    },
+    {
+      "file": "vs2026.part2.pat",
+      "sha256": "239e62b20a36b688c9188234bb6280f52c92f8f5347824e0684189010e331027"
+    },
+    {
+      "file": "vs2026.pat",
+      "sha256": "fcad3eeffc1e61e4ad66b0263824f7370a312aebc6b7857d2696f65b4bcd627f"
+    },
+    {
+      "file": "winsdk.part2.pat",
+      "sha256": "f065bb31989baf1e068b9dbacf15891f901e792a625e6ecff911e9e75d9a8940"
+    },
+    {
+      "file": "winsdk.pat",
+      "sha256": "dbc74dddc5ad2501c6e8dbdacc7d56aca2b2c2dab5845f35886f794fc4d8db51"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "vs2005-8.0.50727.42-x64.pat",
+      "sha256": "8a74e4621c2093e537381c4929e66e28a30f0784d87a905b6b6d0577f711b91b"
+    },
+    {
+      "file": "vs2008-9.0.21022-x64.pat",
+      "sha256": "aabd99457a335e6c37afcc6ea6e3f7ca96f9a3ff8eb770bd40f533ef7743ad5f"
+    },
+    {
+      "file": "vs2010-10.0.30319-x64.pat",
+      "sha256": "de364b438930b2d15777d72d20c6234d52204a2f97632a40b7b2093289c10d7d"
+    },
+    {
+      "file": "vs2012-11.0.50727-x64.pat",
+      "sha256": "e00e0edc6b9ace74d8722a6588bfd09cb4e85043aac5f49f330494692c10bac2"
+    },
+    {
+      "file": "vs2013-12.0.21005-x64.pat",
+      "sha256": "8b8754258765ebc2363c61f3033c00c3c489e778c2483644f6085dd83ed88e1c"
+    },
+    {
+      "file": "vs2015-14.0-x64.pat",
+      "sha256": "c251aa28c741a6d741d4f6d306c1559e7a6d90cf99ded6572ce3add28fb78a76"
+    },
+    {
+      "file": "vs2017-14.16.27023-x64.pat",
+      "sha256": "a0c3c0066bcb1857539eb1eb5cd1d1d714f819658e2b64074a1c3b806e3d1d32"
+    },
+    {
+      "file": "vs2019-14.29.30133-x64.pat",
+      "sha256": "f764e0db6dfd26182550a534dbf25139dd8a06e53140bfcbf63ce29e739061d8"
+    },
+    {
+      "file": "vs2022-14.44.35207-x64.pat",
+      "sha256": "34fd07a36426fd3b992730acdda071b32a8e5eda8412ff9b603bbe24b4c7c885"
+    },
+    {
+      "file": "vs2026-14.50.35717-x64.pat",
+      "sha256": "223c7c6a3e19951b51a5d7a42cb7a806ade000f37be400ad1ad0c3d39b2cfc6f"
+    },
+    {
+      "file": "vs2026-14.51.36231-x64.pat",
+      "sha256": "661b23988820eda9b1f32bda34f95a4ce38378c211f55fc75ad0622116068e91"
+    },
+    {
+      "file": "winsdk-10.0.17763.0-x64.pat",
+      "sha256": "c0fc86d9196ca4e7e1c590aba341ca1b7daa0df15f25a531a5b1f7a6b12e7d37"
+    },
+    {
+      "file": "winsdk-10.0.18362.0-x64.pat",
+      "sha256": "ee4ac8e520ec2d00bbc219b3de6de9a1ae92394d333f2ce5601a39f49d50cdd6"
+    },
+    {
+      "file": "winsdk-10.0.19041.0-x64.pat",
+      "sha256": "fdc927d1e3c33c1ae9a5d3547ac9897e45a23afbc9270f711ba58e21206d0835"
+    },
+    {
+      "file": "winsdk-10.0.20348.0-x64.pat",
+      "sha256": "7e89a07bf7be39dd9fc30d1c7a9a99ed733ba9fcf434f783880cb11669c4c9dc"
+    },
+    {
+      "file": "winsdk-10.0.22000.0-x64.pat",
+      "sha256": "8d4dce619a54d00555b826982414c8461f072eb9b2d3f120046a0626b8f42d55"
+    },
+    {
+      "file": "winsdk-10.0.22621.0-x64.pat",
+      "sha256": "f3ce9344cf623ab49a7e72acb428041a3eb1d6779158ad03a24bb5715cd830ea"
+    },
+    {
+      "file": "winsdk-10.0.26100.0-x64.pat",
+      "sha256": "bb61afd820636cd0cee34ec3aaeffee2315773424d173f0fa2d041e74498fbea"
+    }
+  ],
+  "names": [
+    "?<lambda_invoker_cdecl>@<lambda_a1ce4c8ae42411fd470c77163914f50e>@@CAHPEBX0@Z",
+    "?<lambda_invoker_cdecl>@<lambda_dab45adc24e199bf12521bdae1bd6b3b>@@CA@PEA_W@Z",
+    "??$?0ABQAX$$Z$$V@?$pair@QAXU_Mutex_count_pair@?A0xd1a5d2f8@@@std@@QAE@Upiecewise_construct_t@1@V?$tuple@ABQAX@1@V?$tuple@$$V@1@@Z",
+    "??$?0ABQAX$0A@@?$tuple@ABQAX@std@@QAE@ABQAX@Z",
+    "??$?0ABQAX@?$_Tuple_val@ABQAX@std@@QAE@ABQAX@Z",
+    "??$?0AEBQEAX$$Z$$V@?$pair@QEAXU_Mutex_count_pair@?A0x5c44013d@@@std@@QEAA@Upiecewise_construct_t@1@V?$tuple@AEBQEAX@1@V?$tuple@$$V@1@@Z",
+    "??$?0AEBQEAX$$Z$$V@?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@QEAA@Upiecewise_construct_t@1@V?$tuple@AEBQEAX@1@V?$tuple@$$V@1@@Z",
+    "??$?0AEBQEAX$0A@@?$tuple@AEBQEAX@std@@QEAA@AEBQEAX@Z",
+    "??$?0AEBQEAX@?$_Tuple_val@AEBQEAX@std@@QEAA@AEBQEAX@Z",
+    "??$?0U_UCalendar_deleter@?A0xd43320ef@@PAPAX@?$_Compressed_pair@U_UCalendar_deleter@?A0xd43320ef@@PAPAX$00@std@@QAE@U_One_then_variadic_args_t@1@$$QAU_UCalendar_deleter@?A0xd43320ef@@$$QAPAPAX@Z",
+    "??$?0U_UCalendar_deleter@?A0xd524ec53@@PEAPEAX@?$_Compressed_pair@U_UCalendar_deleter@?A0xd524ec53@@PEAPEAX$00@std@@QEAA@U_One_then_variadic_args_t@1@$$QEAU_UCalendar_deleter@?A0xd524ec53@@$$QEAPEAPEAX@Z",
+    "??$_CallSETranslator@V__FrameHandler3@@@@YAHPEAUEHExceptionRecord@@PEA_KPEAU_CONTEXT@@PEAU_xDISPATCHER_CONTEXT@@PEBU_s_FuncInfo@@K1H@Z",
+    "??$_CallSETranslator@V__FrameHandler4@@@@YAHPEAUEHExceptionRecord@@PEA_KPEAU_CONTEXT@@PEAU_xDISPATCHER_CONTEXT@@PEAUFuncInfo4@FH4@@K1H@Z",
+    "??$_Copy_construct_from@$$CBU_EXCEPTION_RECORD@@@?$_Ptr_base@$$CBU_EXCEPTION_RECORD@@@std@@IAEXABV?$shared_ptr@$$CBU_EXCEPTION_RECORD@@@1@@Z",
+    "??$_Copy_construct_from@$$CBU_EXCEPTION_RECORD@@@?$_Ptr_base@$$CBU_EXCEPTION_RECORD@@@std@@IEAAXAEBV?$shared_ptr@$$CBU_EXCEPTION_RECORD@@@1@@Z",
+    "??$_Debug_lt_pred@ABU?$less@PAX@std@@ABQAXABQAX$0A@@std@@YA_NABU?$less@PAX@0@ABQAX1@Z",
+    "??$_Debug_lt_pred@AEBU?$less@PEAX@std@@AEBQEAXAEBQEAX$0A@@std@@YA_NAEBU?$less@PEAX@0@AEBQEAX1@Z",
+    "??$_Debug_lt_pred@AEBU?$less@PEAX@std@@AEBQEAXAEBQEAX@std@@YA_NAEBU?$less@PEAX@0@AEBQEAX1@Z",
+    "??$_Enable_shared_from_this@V__ExceptionPtr@@V1@@std@@YAXAEBV?$shared_ptr@V__ExceptionPtr@@@0@PEAV__ExceptionPtr@@@Z",
+    "??$_Erase_head@V?$_Crt_allocator@U?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0x5c44013d@@@std@@PEAX@std@@@std@@@?$_Tree_val@U?$_Tree_simple_types@U?$pair@QEAXU_Mutex_count_pair@?A0x5c44013d@@@std@@@std@@@std@@QEAAXAEAV?$_Crt_allocator@U?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0x5c44013d@@@std@@PEAX@std@@@1@@Z",
+    "??$_Erase_head@V?$_Crt_allocator@U?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@PEAX@std@@@std@@@?$_Tree_val@U?$_Tree_simple_types@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@@std@@@std@@QEAAXAEAV?$_Crt_allocator@U?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@PEAX@std@@@1@@Z",
+    "??$_Erase_tree@V?$_Crt_allocator@U?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0x5c44013d@@@std@@PEAX@std@@@std@@@?$_Tree_val@U?$_Tree_simple_types@U?$pair@QEAXU_Mutex_count_pair@?A0x5c44013d@@@std@@@std@@@std@@QEAAXAEAV?$_Crt_allocator@U?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0x5c44013d@@@std@@PEAX@std@@@1@PEAU?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0x5c44013d@@@std@@PEAX@1@@Z",
+    "??$_Erase_tree@V?$_Crt_allocator@U?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@PEAX@std@@@std@@@?$_Tree_val@U?$_Tree_simple_types@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@@std@@@std@@QEAAXAEAV?$_Crt_allocator@U?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@PEAX@std@@@1@PEAU?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@PEAX@1@@Z",
+    "??$_Find_unchecked1@PEBDD@std@@YAPEBDPEBDQEBDAEBDU?$integral_constant@_N$00@0@@Z",
+    "??$_Find_unchecked@PEBDD@std@@YAPEBDQEBD0AEBD@Z",
+    "??$_Idl_distance@PEADPEAD@std@@YA?A_PAEBQEAD0@Z",
+    "??$_Move_construct_from@$$CBU_EXCEPTION_RECORD@@@?$_Ptr_base@$$CBU_EXCEPTION_RECORD@@@std@@IEAAX$$QEAV01@@Z",
+    "??$_Traits_equal@U?$char_traits@_S@std@@@std@@YA_NQB_SI0I@Z",
+    "??$_Traits_equal@U?$char_traits@_S@std@@@std@@YA_NQEB_S_K01@Z",
+    "??$__crt_time_is_leap_year@H@@YA_NH@Z",
+    "??$construct@V?$_Ref_count_obj_alloc@V__ExceptionPtr@@U?$_StaticAllocator@H@@@std@@AEBU?$_StaticAllocator@H@@AEAPEAUEHExceptionRecord@@_N@?$_Wrap_alloc@U?$_StaticAllocator@V?$_Ref_count_obj_alloc@V__ExceptionPtr@@U?$_StaticAllocator@H@@@std@@@@@std@@QEAAXPEAV?$_Ref_count_obj_alloc@V__ExceptionPtr@@U?$_StaticAllocator@H@@@1@AEBU?$_StaticAllocator@H@@AEAPEAUEHExceptionRecord@@$$QEA_N@Z",
+    "??$forward_as_tuple@ABQAX@std@@YA?AV?$tuple@ABQAX@0@ABQAX@Z",
+    "??$free_environment@D@@YAXQEAPEAD@Z",
+    "??$type_case_integer@$07@?$output_processor@DV?$string_output_adapter@D@__crt_stdio_output@@V?$format_validation_base@DV?$string_output_adapter@D@__crt_stdio_output@@@2@@__crt_stdio_output@@AEAA_N_N@Z",
+    "??$type_case_integer@$09@?$output_processor@DV?$string_output_adapter@D@__crt_stdio_output@@V?$format_validation_base@DV?$string_output_adapter@D@__crt_stdio_output@@@2@@__crt_stdio_output@@AEAA_N_N@Z",
+    "??$type_case_integer@$0BA@@?$output_processor@DV?$string_output_adapter@D@__crt_stdio_output@@V?$format_validation_base@DV?$string_output_adapter@D@__crt_stdio_output@@@2@@__crt_stdio_output@@AEAA_N_N@Z",
+    "??$uninitialize_environment_internal@D@@YAXAEAPEAPEAD@Z",
+    "??$uninitialize_environment_internal@_W@@YAXAEAPEAPEA_W@Z",
+    "??0?$IDispatchImpl@V?$ITTerminalVtblBase@VCBaseTerminal@@@@$1?IID_ITTerminal@@3U_GUID@@B$1?LIBID_TAPI3Lib@@3U3@B$00$0A@VCComTypeInfoHolder@ATL@@@ATL@@QEAA@XZ",
+    "??0?$_Tree_temp_node_alloc@V?$_Crt_allocator@U?$_Tree_node@U?$pair@QAXU_Mutex_count_pair@?A0xd1a5d2f8@@@std@@PAX@std@@@std@@@std@@QAE@AAV?$_Crt_allocator@U?$_Tree_node@U?$pair@QAXU_Mutex_count_pair@?A0xd1a5d2f8@@@std@@PAX@std@@@1@@Z",
+    "??0?$map@PEAXU_Mutex_count_pair@?A0xc73d6b27@@U?$less@PEAX@std@@V?$_Crt_allocator@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@@4@@std@@QEAA@XZ",
+    "??0?$scanset_storage@$00@__crt_stdio_input@@QEAA@XZ",
+    "??0?$shared_ptr@$$CBU_EXCEPTION_RECORD@@@std@@QAE@$$QAV01@@Z",
+    "??0?$shared_ptr@$$CBU_EXCEPTION_RECORD@@@std@@QEAA@$$QEAV01@@Z",
+    "??0?$shared_ptr@$$CBU_EXCEPTION_RECORD@@@std@@QEAA@AEBV01@@Z",
+    "??0?$shared_ptr@V__ExceptionPtr@@@std@@QEAA@$$QEAV01@@Z",
+    "??0?$tuple@ABQAX@std@@QAE@$$QAV01@@Z",
+    "??0?$tuple@AEBQEAX@std@@QEAA@$$QEAV01@@Z",
+    "??0bad_alloc@std@@QEAA@XZ",
+    "??0bad_exception@std@@QEAA@XZ",
+    "??0exception_ptr@std@@QEAA@XZ",
+    "??0length_error@std@@QEAA@PEBD@Z",
+    "??0out_of_range@std@@QEAA@PEBD@Z",
+    "??0regex_error@std@@QEAA@AEBV01@@Z",
+    "??1?$_Tree@V?$_Tmap_traits@PEAXU_Mutex_count_pair@?A0x5c44013d@@U?$less@PEAX@std@@V?$_Crt_allocator@U?$pair@QEAXU_Mutex_count_pair@?A0x5c44013d@@@std@@@4@$0A@@std@@@std@@QEAA@XZ",
+    "??1?$_Tree@V?$_Tmap_traits@PEAXU_Mutex_count_pair@?A0xc73d6b27@@U?$less@PEAX@std@@V?$_Crt_allocator@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@@4@$0A@@std@@@std@@QEAA@XZ",
+    "??8?$_Tree_const_iterator@V?$_Tree_val@U?$_Tree_simple_types@U?$pair@QAXU_Mutex_count_pair@?A0xd1a5d2f8@@@std@@@std@@@std@@@std@@QBE_NABV01@@Z",
+    "??9__crt_strtox@@YA_NAEBUbig_integer@0@0@Z",
+    "??R<lambda_1>@?1???$_Append@D@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAAAEAV12@QEBD_K@Z@SA@QEAD0101@Z",
+    "??R<lambda_1>@?1???$_Assign@D@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAAAEAV12@QEBD_K@Z@SA@QEAD10@Z",
+    "??R<lambda_1>@?1??append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV23@QEBD_K@Z@QEBA@QEAD0101@Z",
+    "??R<lambda_1>@?1??append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV23@_KD@Z@QEBA@QEADQEBD00D@Z",
+    "??R<lambda_1>@?1??append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV23@_KD@Z@SA@QEADQEBD00D@Z",
+    "??R<lambda_1>@?1??assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV23@QEBD_K@Z@QEBA@QEAD10@Z",
+    "??R<lambda_1>@?1??insert@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV23@_K0D@Z@QEBA@QEADQEBD000D@Z",
+    "??R<lambda_1>@?1??insert@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV23@_K0D@Z@SA@QEADQEBD000D@Z",
+    "??R<lambda_1>@?1??push_back@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAXD@Z@QEBA@QEADQEBD_KD@Z",
+    "??R<lambda_1>@?1??push_back@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAXD@Z@SA@QEADQEBD_KD@Z",
+    "??_D?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QAEXXZ",
+    "??_G?$basic_stringstream@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@UAEPAXI@Z",
+    "??_GRealizedChore@details@Concurrency@@UEAAPEAXI@Z",
+    "??_GUMSSchedulingContext@details@Concurrency@@QEAAPEAXI@Z",
+    "??_G_Iostream_error_category2@std@@UEAAPEAXI@Z",
+    "??_Gregex_error@std@@UEAAPEAXI@Z",
+    "??__Eclassic_locale@std@@YAXXZ",
+    "??__Ecout@std@@YAXXZ",
+    "??__Einit_cout@std@@YAXXZ",
+    "??__Fcout@std@@YAXXZ",
+    "??__Ffout@std@@YAXXZ",
+    "?ExecutionInCatch@__FrameHandler4@@SA_NPEAU_xDISPATCHER_CONTEXT@@PEAUFuncInfo4@FH4@@@Z",
+    "?GetCurrentState@__FrameHandler3@@SAHPEA_KPEAU_xDISPATCHER_CONTEXT@@PEBU_s_FuncInfo@@@Z",
+    "?GetId@ContextBase@details@Concurrency@@UEBAIXZ",
+    "?GetUnwindTryBlock@__FrameHandler3@@SAHPEA_KPEAU_xDISPATCHER_CONTEXT@@PEBU_s_FuncInfo@@@Z",
+    "?SetOversubscribedVProc@InternalContextBase@details@Concurrency@@QEAAXPEAVVirtualProcessor@23@@Z",
+    "?SetState@__FrameHandler3@@SAXPEA_KPEBU_s_FuncInfo@@H@Z",
+    "?SetUnwindTryBlock@__FrameHandler3@@SAXPEA_KPEAU_xDISPATCHER_CONTEXT@@PEBU_s_FuncInfo@@H@Z",
+    "?StateFromControlPc@__FrameHandler3@@SAHPEBU_s_FuncInfo@@PEAU_xDISPATCHER_CONTEXT@@@Z",
+    "?StateFromControlPc@__FrameHandler4@@SAHPEAUFuncInfo4@FH4@@PEAU_xDISPATCHER_CONTEXT@@@Z",
+    "?_Alloc_sentinel_and_proxy@?$_Tree@V?$_Tmap_traits@PAXU_Mutex_count_pair@?A0xd1a5d2f8@@U?$less@PAX@std@@V?$_Crt_allocator@U?$pair@QAXU_Mutex_count_pair@?A0xd1a5d2f8@@@std@@@4@$0A@@std@@@std@@IAEXXZ",
+    "?_Alloc_sentinel_and_proxy@?$_Tree@V?$_Tmap_traits@PEAXU_Mutex_count_pair@?A0x5c44013d@@U?$less@PEAX@std@@V?$_Crt_allocator@U?$pair@QEAXU_Mutex_count_pair@?A0x5c44013d@@@std@@@4@$0A@@std@@@std@@IEAAXXZ",
+    "?_Alloc_sentinel_and_proxy@?$_Tree@V?$_Tmap_traits@PEAXU_Mutex_count_pair@?A0xc73d6b27@@U?$less@PEAX@std@@V?$_Crt_allocator@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@@4@$0A@@std@@@std@@IEAAXXZ",
+    "?_CallMemberFunction0@@YAXQEAX0@Z",
+    "?_CallMemberFunction1@@YAXQEAX00@Z",
+    "?_CallMemberFunction2@@YAXQEAX00H@Z",
+    "?_Check_grow_by_1@?$_Tree@V?$_Tmap_traits@PAXU_Mutex_count_pair@?A0xd1a5d2f8@@U?$less@PAX@std@@V?$_Crt_allocator@U?$pair@QAXU_Mutex_count_pair@?A0xd1a5d2f8@@@std@@@4@$0A@@std@@@std@@IAEXXZ",
+    "?_Check_grow_by_1@?$_Tree@V?$_Tmap_traits@PEAXU_Mutex_count_pair@?A0x5c44013d@@U?$less@PEAX@std@@V?$_Crt_allocator@U?$pair@QEAXU_Mutex_count_pair@?A0x5c44013d@@@std@@@4@$0A@@std@@@std@@IEAAXXZ",
+    "?_Check_grow_by_1@?$_Tree@V?$_Tmap_traits@PEAXU_Mutex_count_pair@?A0xc73d6b27@@U?$less@PEAX@std@@V?$_Crt_allocator@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@@4@$0A@@std@@@std@@IEAAXXZ",
+    "?_Getgloballocale@locale@std@@CAPEAV_Locimp@12@XZ",
+    "?_Insert_node@?$_Tree_val@U?$_Tree_simple_types@U?$pair@QAXU_Mutex_count_pair@?A0xd1a5d2f8@@@std@@@std@@@std@@QAEPAU?$_Tree_node@U?$pair@QAXU_Mutex_count_pair@?A0xd1a5d2f8@@@std@@PAX@2@U?$_Tree_id@PAU?$_Tree_node@U?$pair@QAXU_Mutex_count_pair@?A0xd1a5d2f8@@@std@@PAX@std@@@2@QAU32@@Z",
+    "?_Insert_node@?$_Tree_val@U?$_Tree_simple_types@U?$pair@QEAXU_Mutex_count_pair@?A0x5c44013d@@@std@@@std@@@std@@QEAAPEAU?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0x5c44013d@@@std@@PEAX@2@U?$_Tree_id@PEAU?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0x5c44013d@@@std@@PEAX@std@@@2@QEAU32@@Z",
+    "?_Insert_node@?$_Tree_val@U?$_Tree_simple_types@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@@std@@@std@@QEAAPEAU?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@PEAX@2@U?$_Tree_id@PEAU?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@PEAX@std@@@2@QEAU32@@Z",
+    "?_Lrotate@?$_Tree_val@U?$_Tree_simple_types@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@@std@@@std@@QEAAXPEAU?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@PEAX@2@@Z",
+    "?_Rrotate@?$_Tree_val@U?$_Tree_simple_types@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@@std@@@std@@QEAAXPEAU?$_Tree_node@U?$pair@QEAXU_Mutex_count_pair@?A0xc73d6b27@@@std@@PEAX@2@@Z",
+    "?_Xbad_alloc@std@@YAXXZ",
+    "?_Xlength_error@std@@YAXPEBD@Z",
+    "?_Xout_of_range@std@@YAXPEBD@Z",
+    "?_Xruntime_error@std@@YAXPEBD@Z",
+    "?__scrt_initialize_type_info@@YAXXZ",
+    "?__scrt_throw_std_bad_array_new_length@@YAXXZ",
+    "?_set_new_handler@@YAP6AH_K@ZH@Z",
+    "?_wcsicmp_validate_param@@YAHQEB_W0@Z",
+    "?atomic_load_explicit@std@@YAJPEBU_Atomic_long@1@W4memory_order@1@@Z",
+    "?deallocate@?$allocator@U_Container_proxy@std@@@std@@QAEXQAU_Container_proxy@2@I@Z",
+    "?deallocate@?$allocator@U_Container_proxy@std@@@std@@QEAAXQEAU_Container_proxy@2@_K@Z",
+    "?destroy_fls@@YAXPEAX@Z",
+    "?dtor$0@?0???0ThreadProxyFactoryManager@details@Concurrency@@QEAA@XZ@4HA",
+    "?dtor$0@?0??try_lock_for@critical_section@Concurrency@@QEAA_NI@Z@4HA",
+    "?dtor$1@?0???0ScheduleGroupBase@details@Concurrency@@QEAA@PEAVSchedulerBase@12@PEAVlocation@2@@Z@4HA",
+    "?dtor$1@?0??CreateDlgControl@COccManager@@IEAAHPEAVCWnd@@PEAUHWND__@@HPEAUDLGITEMTEMPLATE@@GPEAEKPEAPEAU3@@Z@4HA",
+    "?dtor$2@?0??CaptureProcessAffinity@ResourceManager@details@Concurrency@@CAXXZ@4HA",
+    "?dtor$3@?0??_Makeloc@_Locimp@locale@std@@CAPEAV123@AEBV_Locinfo@3@HPEAV123@PEBV23@@Z@4HA",
+    "?dtor$8@?0??Read@XElementButtonGallery@CMFCRibbonInfo@@UEAAHAEAVXRibbonInfoParser@2@@Z@4HA",
+    "?end@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA?AV?$_String_iterator@V?$_String_val@U?$_Simple_types@D@std@@@std@@@2@XZ",
+    "?eof@__crt_stdio_stream@@QEBA_NXZ",
+    "?front@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEADXZ",
+    "?generic_category@std@@YAAEBVerror_category@1@XZ",
+    "?get_raw_ptd@__crt_cached_ptd_host@@QEAAPEAU__acrt_ptd@@XZ",
+    "?load@?$_Atomic_storage@J$03@std@@QEBAJXZ",
+    "?notify_all@condition_variable@std@@QEAAXXZ",
+    "?parse_int_from_format_string@?$output_processor@DV?$string_output_adapter@D@__crt_stdio_output@@V?$format_validation_base@DV?$string_output_adapter@D@__crt_stdio_output@@@2@@__crt_stdio_output@@AEAA_NQEAH@Z",
+    "?post_pgo_initialization@@YAHXZ",
+    "?pre_cpp_initialization@@YAXXZ",
+    "?release@?$unique_ptr@V_Facet_base@std@@U?$default_delete@V_Facet_base@std@@@2@@std@@QEAAPEAV_Facet_base@2@XZ",
+    "?reset_and_return@__crt_mbstring@@YA_K_KPEAU_Mbstatet@@@Z",
+    "?rethrow_exception@std@@YAXVexception_ptr@1@@Z",
+    "?setprecision@std@@YA?AU?$_Smanip@_J@1@_J@Z",
+    "?spfun@std@@YAXAEAVios_base@1@_J@Z",
+    "?state_case_size@?$output_processor@DV?$string_output_adapter@D@__crt_stdio_output@@V?$format_validation_base@DV?$string_output_adapter@D@__crt_stdio_output@@@2@@__crt_stdio_output@@AEAA_NXZ",
+    "?state_case_type@?$output_processor@DV?$string_output_adapter@D@__crt_stdio_output@@V?$format_validation_base@DV?$string_output_adapter@D@__crt_stdio_output@@@2@@__crt_stdio_output@@AEAA_NXZ",
+    "?str@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEGBA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@XZ",
+    "?str@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QGBE?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@XZ",
+    "?type_case_Z@?$output_processor@DV?$string_output_adapter@D@__crt_stdio_output@@V?$format_validation_base@DV?$string_output_adapter@D@__crt_stdio_output@@@2@@__crt_stdio_output@@AEAA_NXZ",
+    "?type_case_a@?$output_processor@DV?$string_output_adapter@D@__crt_stdio_output@@V?$format_validation_base@DV?$string_output_adapter@D@__crt_stdio_output@@@2@@__crt_stdio_output@@AEAA_NXZ",
+    "?type_case_c_tchar@?$output_processor@DV?$string_output_adapter@D@__crt_stdio_output@@V?$format_validation_base@DV?$string_output_adapter@D@__crt_stdio_output@@@2@@__crt_stdio_output@@AEAA_ND@Z",
+    "?type_case_n@?$output_processor@DV?$string_output_adapter@D@__crt_stdio_output@@V?$format_validation_base@DV?$string_output_adapter@D@__crt_stdio_output@@@2@@__crt_stdio_output@@AEAA_NXZ",
+    "?type_case_s@?$output_processor@DV?$string_output_adapter@D@__crt_stdio_output@@V?$format_validation_base@DV?$string_output_adapter@D@__crt_stdio_output@@@2@@__crt_stdio_output@@AEAA_NXZ",
+    "?write_string@?$string_output_adapter@D@__crt_stdio_output@@QEBAXQEBDHQEAHAEAV__crt_cached_ptd_host@@@Z",
+    "_Cnd_broadcast",
+    "_GetImageBase",
+    "_GetThrowImageBase",
+    "_Mtx_lock",
+    "_Mtxinit",
+    "_Query_perf_counter",
+    "_RTC_Initialize",
+    "_RTC_Terminate",
+    "_Timespec64_get_sys",
+    "__C_ExecuteExceptionFilter",
+    "__NLG_Return2",
+    "___acrt_initialize_new_handler",
+    "__acrt_FlsGetValue2",
+    "__acrt_fenv_get_common_round_control",
+    "__acrt_getheap",
+    "__acrt_getptd",
+    "__acrt_initialize",
+    "__acrt_initialize_fmode",
+    "__acrt_initialize_invalid_parameter_handler",
+    "__acrt_initialize_new_handler",
+    "__acrt_initialize_signal_handlers",
+    "__acrt_initialize_thread_local_exit_callback",
+    "__acrt_initialize_user_matherr",
+    "__acrt_iob_func",
+    "__acrt_locale_free_monetary",
+    "__acrt_locale_free_numeric",
+    "__acrt_lowio_lock_fh",
+    "__acrt_lowio_unlock_fh",
+    "__acrt_set_locale_changed",
+    "__acrt_stdio_flush_and_write_narrow_nolock",
+    "__acrt_uninitialize_locks",
+    "__acrt_uninitialize_ptd",
+    "__aligned_free",
+    "__aligned_msize",
+    "__crtGetSystemTimePreciseAsFileTime",
+    "__crt_debugger_hook",
+    "__current_exception",
+    "__current_exception_context",
+    "__daylight",
+    "__dcrt_terminate_console_output",
+    "__dstbias",
+    "__ehhandler$?CreateField@CDaoTableDef@@QAEXAAUCDaoFieldInfo@@@Z",
+    "__local_stdio_scanf_options",
+    "__p___argc",
+    "__p___argv",
+    "__p__commode",
+    "__scrt_get_dyn_tls_dtor_callback",
+    "__scrt_get_dyn_tls_init_callback",
+    "__scrt_initialize_winrt",
+    "__scrt_is_ucrt_dll_in_use",
+    "__scrt_is_user_matherr_present",
+    "__scrt_set_unhandled_exception_filter",
+    "__std_terminate",
+    "__timezone",
+    "__tzname",
+    "__unwindfunclet$??0CD2DBrush@@IAE@PAVCRenderTarget@@PAVCD2DBrushProperties@@H@Z$1",
+    "__unwindfunclet$?GetAdapter@CDocument@@UAEPAUIDocument@ATL@@XZ$2",
+    "__unwindfunclet$?register_filter@?$propagator_block@V?$single_link_registry@V?$ITarget@I@Concurrency@@@Concurrency@@V?$multi_link_registry@V?$ISource@W4agent_status@Concurrency@@@Concurrency@@@2@V?$ordered_message_processor@I@2@@Concurrency@@IAEXABV?$function@$$A6A_NABW4agent_status@Concurrency@@@Z@std@@@Z$0",
+    "__vcrt_getptd",
+    "__vcrt_initialize",
+    "__vcrt_uninitialize_locks",
+    "__wide_tzname",
+    "_c_exit",
+    "_cexit",
+    "_crt_atexit",
+    "_endthreadex",
+    "_exit",
+    "_flushall",
+    "_fputc_nolock_internal",
+    "_get_daylight",
+    "_get_dstbias",
+    "_get_heap_handle",
+    "_get_initial_narrow_environment",
+    "_get_purecall_handler",
+    "_get_startup_file_mode",
+    "_get_timezone",
+    "_guard_check_icall_nop",
+    "_guard_dispatch_icall_nop",
+    "_guard_xfg_dispatch_icall_nop",
+    "_ismbblead",
+    "_itow_s",
+    "_lock_file",
+    "_lock_locales",
+    "_mbsdec",
+    "_purecall",
+    "_query_app_type",
+    "_query_new_mode",
+    "_set_app_type",
+    "_should_initialize_environment",
+    "_sin_special",
+    "_time64",
+    "_unlock_file",
+    "_wremove",
+    "_wtol",
+    "ceil",
+    "ceilf",
+    "exit",
+    "fegetround",
+    "initialize_global_variables",
+    "memcmp",
+    "memcpy",
+    "memcpy_repmovs",
+    "remove",
+    "strcpy_s",
+    "strftime",
+    "strnlen",
+    "uninitialize_environment",
+    "wcscat_s",
+    "wcscpy_s",
+    "wcsnlen"
+  ],
+  "output": [
+    {
+      "file": "vs2015.pat",
+      "sha256": "8a17de5e6628305f050f987c0bf79c1ba72a15cca9594c38d2c8a8f76b72b939"
+    },
+    {
+      "file": "vs2017.pat",
+      "sha256": "ecd9ce3699b07da4d061ebbb4942c9ea0c1495c2b7ec87795e1805b7c7667458"
+    },
+    {
+      "file": "vs2019.pat",
+      "sha256": "d339a1130a174adad8942f519bcf5607aa26d5853e30d85b8bb65581405ef277"
+    },
+    {
+      "file": "vs2022.pat",
+      "sha256": "fb5ca8e5529b26f3ada5bbb4788fdb5568cfe00970a9bfd1c6f82674444b5aef"
+    },
+    {
+      "file": "vs2026.part2.pat",
+      "sha256": "0601843a32272a0dfde6f82359ddcd8d8705876c6f73241f86025f1681d78f82"
+    },
+    {
+      "file": "vs2026.pat",
+      "sha256": "3e3e52bcb8d0c9e33a03879661a7535ea64f54a6846ae006d01278475a87ddb0"
+    },
+    {
+      "file": "winsdk.pat",
+      "sha256": "b67d878373165c5cdde42c9e6021e33e87c32b4de96cbc33de8d410830016b61"
+    }
+  ],
+  "generator": {
+    "neverd_ref": "12f4a9382cdee65d6c8283ad5cd28a3a527b90e5",
+    "tool": "scripts/signatures/refine_pattern_metadata.py",
+    "existing_revision": "fe9a373c020fd48f68802353497bf8e315f7e178"
+  },
+  "collision_sources": [
+    {
+      "asset": "vs2005-8.0.50727.42-x64",
+      "archive_sha256": "866327646f9ec2adc6f38582afdd5b75e1c5b2f5bd2eb323f0398ef71cf2edf7",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "8.0.50727.42"
+    },
+    {
+      "asset": "vs2008-9.0.21022-x64",
+      "archive_sha256": "7096b8bdeddc652ca76cd9197e463007b11014e16a14188b9dd392bd4cb65607",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "9.0.21022"
+    },
+    {
+      "asset": "vs2010-10.0.30319-x64",
+      "archive_sha256": "79279514eec08011691d5f1be62899ab136760b912db85bf9df6fb7b035631b9",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "10.0.30319"
+    },
+    {
+      "asset": "vs2012-11.0.50727-x64",
+      "archive_sha256": "ac4640857e41ddbe6c87d735695ceca35f14836ecd3b9123db1bcba87a1bac49",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "11.0.50727"
+    },
+    {
+      "asset": "vs2013-12.0.21005-x64",
+      "archive_sha256": "e0a46893fd349bfa8238da33f5bb1fbf8fc8348c89be8922652ade2010be7699",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "12.0.21005"
+    },
+    {
+      "asset": "vs2015-14.0-x64",
+      "archive_sha256": "0a6c3c7ff08897e57ee2c28b23bdb449165af576dfbf2d9cc1642a8da49527b2",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.0",
+      "compiler_version": "19.00.24247.2 built by: VCTOOLSD14ULDR"
+    },
+    {
+      "asset": "vs2017-14.16.27023-x64",
+      "archive_sha256": "bbaf0d191dd830bce88627f91fbdd614d7cc848dd24e138e6487721b20262e20",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.16.27023",
+      "compiler_version": "19.16.27054.0 built by: cloudtest"
+    },
+    {
+      "asset": "vs2019-14.29.30133-x64",
+      "archive_sha256": "b16da73503fb5483aa128acb21a318e7501f917ced68a802056f075a71bacab0",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.29.30133",
+      "compiler_version": "19.29.30159.0 built by: cloudtest"
+    },
+    {
+      "asset": "vs2022-14.44.35207-x64",
+      "archive_sha256": "77f0ac320c8eb354134ed09530c6e503f2bee3a52de8c260f19b0ad7d35649ec",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.44.35207",
+      "compiler_version": "19.44.35229.0"
+    },
+    {
+      "asset": "vs2026-14.50.35717-x64",
+      "archive_sha256": "318885cc187463697c9eadd5efccb0e3932ca01a253796b2ff328f2eb7f1a939",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.50.35717",
+      "compiler_version": "19.50.35738.0"
+    },
+    {
+      "asset": "vs2026-14.51.36231-x64",
+      "archive_sha256": "b7db3724cc249540969a683ab8f71c0490e724bb5eb9f72321b8b406e1efb1df",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.51.36231",
+      "compiler_version": "19.51.36257.0"
+    },
+    {
+      "asset": "winsdk-10.0.17763.0-x64",
+      "archive_sha256": "54a38eee47cb502f60edb9b2b40cf0cfd32ae52b0a51875498fc87c61e423fff",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.17763.0"
+    },
+    {
+      "asset": "winsdk-10.0.18362.0-x64",
+      "archive_sha256": "ef65df57068df919848d0aa5fe38b284ed99a171c9e5cf85b984069b2868b977",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.18362.0"
+    },
+    {
+      "asset": "winsdk-10.0.19041.0-x64",
+      "archive_sha256": "57a42ca6e00415b06e110241f8f3a327f1210ec018ade97f82ce54b30ce7ee59",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.19041.0"
+    },
+    {
+      "asset": "winsdk-10.0.20348.0-x64",
+      "archive_sha256": "779a6f7400fd4b67c95d411ec9342c30041836a0da025a0274a2889f7767a44e",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.20348.0"
+    },
+    {
+      "asset": "winsdk-10.0.22000.0-x64",
+      "archive_sha256": "8b6aea198651449ba1f0a7de1247665ad983d0395148ea0fd86844297d4167d1",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.22000.0"
+    },
+    {
+      "asset": "winsdk-10.0.22621.0-x64",
+      "archive_sha256": "c0b87aa69bbadd7192eb80b4892c6ad9daee2ce0776467f6c1564fb212f73e83",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.22621.0"
+    },
+    {
+      "asset": "winsdk-10.0.26100.0-x64",
+      "archive_sha256": "dcfd27ae46e3cc28562df12441238b5300fefcf04f67243d4a889b41535ec817",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.26100.0"
+    }
+  ],
+  "scope": "Missing immutable import/vftable constraints in a reviewed name subset. Every byte, existing name and prior reference is preserved; all overlapping raw source versions participate."
+}

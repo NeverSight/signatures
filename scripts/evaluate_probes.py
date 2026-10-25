@@ -105,16 +105,22 @@ def candidate_names(matches: list[dict]) -> tuple[dict[int, str], set[int]]:
     Each match gives its address a set of names: its name and its `aliases`,
     the other symbols its library gives the same routine. Matches agree when
     a name is in every one of those sets, and the address takes the preferred
-    such name. Otherwise it is disputed, unless the matches whose branch
+    such name. Incoming rows (`caller_confirmed`) instead state the exact
+    names frozen callers requested at this target: they are candidate aliases
+    and take precedence over unresolved byte alternatives. Otherwise the
+    address is disputed, unless the matches whose branch
     references the image confirmed (`confirmed`, which NeverD before those
     references omits) agree on one in the same way.
     """
 
     proposed: dict[int, list[tuple[frozenset[str], bool]]] = {}
+    incoming: dict[int, set[str]] = {}
     for match in matches:
         names = frozenset([match["name"], *match.get("aliases", [])])
-        proposed.setdefault(int(match["addr"], 16), []).append(
-            (names, bool(match.get("confirmed", False))))
+        address = int(match["addr"], 16)
+        proposed.setdefault(address, []).append((names, bool(match.get("confirmed", False))))
+        if match.get("caller_confirmed", False):
+            incoming.setdefault(address, set()).update(names)
 
     def agree(name_sets: list[frozenset[str]]) -> str | None:
         if not name_sets:
@@ -125,7 +131,8 @@ def candidate_names(matches: list[dict]) -> tuple[dict[int, str], set[int]]:
     names: dict[int, str] = {}
     disputed: set[int] = set()
     for address, proposals in proposed.items():
-        name = (agree([names_ for names_, _ in proposals])
+        name = (min(incoming[address], key=alias_order) if address in incoming
+                else agree([names_ for names_, _ in proposals])
                 or agree([names_ for names_, confirmed in proposals if confirmed]))
         if name is None:
             disputed.add(address)
