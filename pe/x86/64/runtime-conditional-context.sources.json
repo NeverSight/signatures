@@ -1,0 +1,401 @@
+{
+  "candidates": [
+    {
+      "library": "vs2022",
+      "file": "vs2022.caller.pat",
+      "sha256": "738f1d4d9baee3a63d081055f1dc98476c5c8e7b7a1419942b09de6b4c53008e"
+    }
+  ],
+  "evidence": [
+    {
+      "library": "vs2005",
+      "file": "vs2005-8.0.50727.42-x64.pat",
+      "sha256": "8a74e4621c2093e537381c4929e66e28a30f0784d87a905b6b6d0577f711b91b"
+    },
+    {
+      "library": "vs2008",
+      "file": "vs2008-9.0.21022-x64.pat",
+      "sha256": "aabd99457a335e6c37afcc6ea6e3f7ca96f9a3ff8eb770bd40f533ef7743ad5f"
+    },
+    {
+      "library": "vs2010",
+      "file": "vs2010-10.0.30319-x64.pat",
+      "sha256": "de364b438930b2d15777d72d20c6234d52204a2f97632a40b7b2093289c10d7d"
+    },
+    {
+      "library": "vs2012",
+      "file": "vs2012-11.0.50727-x64.pat",
+      "sha256": "c85fc0b3f1e9bf522b55b9ac58c19762ac94a2bc0d179d6370bc74d50cb3c8fb"
+    },
+    {
+      "library": "vs2013",
+      "file": "vs2013-12.0.21005-x64.pat",
+      "sha256": "f2a6564dad38f1c4c20697a01c125e04b8949a1b4699f7599ba5294967b4a031"
+    },
+    {
+      "library": "vs2015",
+      "file": "vs2015-14.0-x64.pat",
+      "sha256": "b0ca56741db25eba6c054cc8c3824c24136b8a42aa30efdc6a86b72bc2e1fe71"
+    },
+    {
+      "library": "vs2017",
+      "file": "vs2017-14.16.27023-x64.pat",
+      "sha256": "3f43479b1d47b6b60a03c05d85b6a2e1d4e8678f72fbd2e82d4a5a1c5c4a138f"
+    },
+    {
+      "library": "vs2019",
+      "file": "vs2019-14.29.30133-x64.pat",
+      "sha256": "72a432a3a336651013a480bc9488e23db0407391f1a8592698b07ffd0b073e38"
+    },
+    {
+      "library": "vs2022",
+      "file": "vs2022-14.44.35207-x64.pat",
+      "sha256": "7367166ad2f547e97ba3a92409508381c2923d7200055382fc8a5705fecf4f46"
+    },
+    {
+      "library": "vs2026",
+      "file": "vs2026-14.50.35717-x64.pat",
+      "sha256": "65b16ba1fa37e78db2cb4468f2633f40a8834702f2a1c7daea4df34d04404792"
+    },
+    {
+      "library": "vs2026",
+      "file": "vs2026-14.51.36231-x64.pat",
+      "sha256": "f40410fab40de31f309667a5b4083d4b05f9386ce3f4851ab1d2c4c8e295a2ce"
+    },
+    {
+      "library": "winsdk",
+      "file": "winsdk-10.0.17763.0-x64.pat",
+      "sha256": "2fe6ec13fcb777e904aba66aeca6290a82f9cd5aa86ef4e3d6b7bcf8693da9f2"
+    },
+    {
+      "library": "winsdk",
+      "file": "winsdk-10.0.18362.0-x64.pat",
+      "sha256": "47f9d1d118f30617d04ee98d03d4b397d697659d906c0ce4234a913ab902a454"
+    },
+    {
+      "library": "winsdk",
+      "file": "winsdk-10.0.19041.0-x64.pat",
+      "sha256": "cb09f077c892b80da3bda8c54bcd1ab8e345f2687df096978461e002bb942f5a"
+    },
+    {
+      "library": "winsdk",
+      "file": "winsdk-10.0.20348.0-x64.pat",
+      "sha256": "c051fe0f79622661f772503ba9c21dd6c5f9dd34fb394efd2d25b397ce1984ce"
+    },
+    {
+      "library": "winsdk",
+      "file": "winsdk-10.0.22000.0-x64.pat",
+      "sha256": "c8f4e808831b555f7e25683f9b836acb9849e2fcedba821bad72dfe0d99d0e07"
+    },
+    {
+      "library": "winsdk",
+      "file": "winsdk-10.0.22621.0-x64.pat",
+      "sha256": "14dfd7a746793ef09208000456439354429a45c0f5fed6044648326b9ebd69d0"
+    },
+    {
+      "library": "winsdk",
+      "file": "winsdk-10.0.26100.0-x64.pat",
+      "sha256": "ca9edfa3e9d5c845ab33bd693618373a0aa70935a853a12b8f430c9512c6681d"
+    }
+  ],
+  "existing": [
+    {
+      "file": "mingw32-zlib.pat",
+      "sha256": "341029ef81d6d8ac27999fc1e5a4d4babb2e84691cfb4998b7c4f600e45c3e15"
+    },
+    {
+      "file": "supplemental-iclapp64.pat",
+      "sha256": "47004f2271f8f6dcf3860ba7a2239c472442e22a6f15ece774f54d5f230f9dc6"
+    },
+    {
+      "file": "supplemental-iclmat64.pat",
+      "sha256": "9a116b70a91cdcfc077e68661d9cf9ac420afa6087d846f28584e94a1cea5e47"
+    },
+    {
+      "file": "supplemental-ms64wdk.pat",
+      "sha256": "a3df8c0858956472175a063030ba648934d419cc243a4e20ff0d147965d3fc05"
+    },
+    {
+      "file": "supplemental-msddk64.pat",
+      "sha256": "f502825a5e17f5b8503105e13edf85fa7658b9b287462175c38b24109c5016af"
+    },
+    {
+      "file": "supplemental-ulink64.pat",
+      "sha256": "66262d94a6400d6d954dc8ba48b34ed289f918c4775494875dbd379060ebe0b2"
+    },
+    {
+      "file": "supplemental-win64unx.pat",
+      "sha256": "734a9405439583ef0bb1ebb287c457fae32bdfe7153d03976d52d9954c10623c"
+    },
+    {
+      "file": "vs2005.pat",
+      "sha256": "4dc71ddc6933a8db4447070bc5072d66eab98f76eda5356697649eb482ad6de0"
+    },
+    {
+      "file": "vs2008.pat",
+      "sha256": "3902bbf4709f7c3dbfd2e2233c04cc3703022ef56f60a4ad5dffd7c5a5f506b5"
+    },
+    {
+      "file": "vs2010.pat",
+      "sha256": "43aadd4d8dfda9f1d69cde01e53f724d5c9426ce0ef731d3667b14d2d3b52a54"
+    },
+    {
+      "file": "vs2012.pat",
+      "sha256": "6b3d752c88ce681f3bd107aad616679340415ac3feb3763c7bd2706b092f39f6"
+    },
+    {
+      "file": "vs2013.pat",
+      "sha256": "6617d9429c60353a1818f7be2ec8a45d0350d03f0f481b5fdb83580de93cc1bd"
+    },
+    {
+      "file": "vs2015.pat",
+      "sha256": "8a17de5e6628305f050f987c0bf79c1ba72a15cca9594c38d2c8a8f76b72b939"
+    },
+    {
+      "file": "vs2017.pat",
+      "sha256": "ecd9ce3699b07da4d061ebbb4942c9ea0c1495c2b7ec87795e1805b7c7667458"
+    },
+    {
+      "file": "vs2019.pat",
+      "sha256": "d339a1130a174adad8942f519bcf5607aa26d5853e30d85b8bb65581405ef277"
+    },
+    {
+      "file": "vs2022.part2.pat",
+      "sha256": "47e1b44118b60512be571cf00f0da3ce032eac9ee5d78dbecded9d5e525daeef"
+    },
+    {
+      "file": "vs2022.part3.npat",
+      "sha256": "fb0c882b125180fad24fd314a2b88eaa6f4658c6850fc2683098bc5d823e99f0"
+    },
+    {
+      "file": "vs2022.part4.npat",
+      "sha256": "98d89498bdf8c798e282f9c2dfc9183fb2c54072f3dbe020ad4dac89b8b3caac"
+    },
+    {
+      "file": "vs2022.part5.npat",
+      "sha256": "1b348dc9d717aa10ed0174244fc0af7f4159a0861b2c7d5f1eec1e9a8e473f33"
+    },
+    {
+      "file": "vs2022.pat",
+      "sha256": "fb5ca8e5529b26f3ada5bbb4788fdb5568cfe00970a9bfd1c6f82674444b5aef"
+    },
+    {
+      "file": "vs2026.part2.pat",
+      "sha256": "0601843a32272a0dfde6f82359ddcd8d8705876c6f73241f86025f1681d78f82"
+    },
+    {
+      "file": "vs2026.pat",
+      "sha256": "3e3e52bcb8d0c9e33a03879661a7535ea64f54a6846ae006d01278475a87ddb0"
+    },
+    {
+      "file": "winsdk.part2.pat",
+      "sha256": "f065bb31989baf1e068b9dbacf15891f901e792a625e6ecff911e9e75d9a8940"
+    },
+    {
+      "file": "winsdk.part3.npat",
+      "sha256": "fc09a6bcac280a2a99fc5a4c8e4212f913e085ba268f5764d8dacbcf1c30d98a"
+    },
+    {
+      "file": "winsdk.part4.npat",
+      "sha256": "ddcf776190e652c5cdaee9b1462dc107377925449d6e452c9a50da19b1a658e8"
+    },
+    {
+      "file": "winsdk.pat",
+      "sha256": "b67d878373165c5cdde42c9e6021e33e87c32b4de96cbc33de8d410830016b61"
+    }
+  ],
+  "output": [
+    {
+      "file": "vs2022.part6.npat",
+      "patterns": 1,
+      "sha256": "738f1d4d9baee3a63d081055f1dc98476c5c8e7b7a1419942b09de6b4c53008e"
+    }
+  ],
+  "generator": {
+    "neverd_ref": "d0df4ce1b1b6e6500437e36da92728c560fc4789",
+    "tool": "neverd-sigmaker",
+    "arguments": [
+      "--machine",
+      "x64",
+      "--tail",
+      "65535",
+      "--min-size",
+      "1",
+      "--caller-context"
+    ],
+    "evidence_arguments": [
+      "--machine",
+      "x64",
+      "--collision-evidence"
+    ],
+    "filter": "scripts/signatures/supplement_patterns.py",
+    "filter_ref": "d0df4ce1b1b6e6500437e36da92728c560fc4789",
+    "existing_revision": "39c99bbade0bf21c00cc0d70df7c577d98e34a7c",
+    "preceding_supplement": "runtime-single-context.sources.json"
+  },
+  "selected_names": [
+    "memcpy"
+  ],
+  "scope": "Complete caller record containing canonical conditional rel32 references to explicit function symbols. Queried by name only; never globally scanned or used to authorize automatic names.",
+  "candidate_sources": [
+    {
+      "source": "vs2022-14.44.35207-x64",
+      "archive": {
+        "name": "vs2022-14.44.35207-x64.tar.zst",
+        "sha256": "77f0ac320c8eb354134ed09530c6e503f2bee3a52de8c260f19b0ad7d35649ec",
+        "size": 145456540
+      },
+      "files": [
+        {
+          "path": "vc/lib/x64/libcmt.lib",
+          "sha256": "8fe40dd342b90b35d62b8f5d55b4e92df7785c122976618365cfe3b014cc857a",
+          "size": 6534094
+        },
+        {
+          "path": "vc/lib/x64/libcpmt.lib",
+          "sha256": "da86944db1497552c378e6252a7177fbefbdaeba4e69a6457de4db7fb2d235de",
+          "size": 21684758
+        },
+        {
+          "path": "vc/lib/x64/libvcruntime.lib",
+          "sha256": "e4f8daf356d63592ff6d6f7ad90c8c9da4c1230273ad113a9a2b56afd6bfcb04",
+          "size": 2087406
+        }
+      ]
+    }
+  ],
+  "collision_sources": [
+    {
+      "asset": "vs2005-8.0.50727.42-x64",
+      "archive_sha256": "866327646f9ec2adc6f38582afdd5b75e1c5b2f5bd2eb323f0398ef71cf2edf7",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "8.0.50727.42"
+    },
+    {
+      "asset": "vs2008-9.0.21022-x64",
+      "archive_sha256": "7096b8bdeddc652ca76cd9197e463007b11014e16a14188b9dd392bd4cb65607",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "9.0.21022"
+    },
+    {
+      "asset": "vs2010-10.0.30319-x64",
+      "archive_sha256": "79279514eec08011691d5f1be62899ab136760b912db85bf9df6fb7b035631b9",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "10.0.30319"
+    },
+    {
+      "asset": "vs2012-11.0.50727-x64",
+      "archive_sha256": "ac4640857e41ddbe6c87d735695ceca35f14836ecd3b9123db1bcba87a1bac49",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "11.0.50727"
+    },
+    {
+      "asset": "vs2013-12.0.21005-x64",
+      "archive_sha256": "e0a46893fd349bfa8238da33f5bb1fbf8fc8348c89be8922652ade2010be7699",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "12.0.21005"
+    },
+    {
+      "asset": "vs2015-14.0-x64",
+      "archive_sha256": "0a6c3c7ff08897e57ee2c28b23bdb449165af576dfbf2d9cc1642a8da49527b2",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.0",
+      "compiler_version": "19.00.24247.2 built by: VCTOOLSD14ULDR"
+    },
+    {
+      "asset": "vs2017-14.16.27023-x64",
+      "archive_sha256": "bbaf0d191dd830bce88627f91fbdd614d7cc848dd24e138e6487721b20262e20",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.16.27023",
+      "compiler_version": "19.16.27054.0 built by: cloudtest"
+    },
+    {
+      "asset": "vs2019-14.29.30133-x64",
+      "archive_sha256": "b16da73503fb5483aa128acb21a318e7501f917ced68a802056f075a71bacab0",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.29.30133",
+      "compiler_version": "19.29.30159.0 built by: cloudtest"
+    },
+    {
+      "asset": "vs2022-14.44.35207-x64",
+      "archive_sha256": "77f0ac320c8eb354134ed09530c6e503f2bee3a52de8c260f19b0ad7d35649ec",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.44.35207",
+      "compiler_version": "19.44.35229.0"
+    },
+    {
+      "asset": "vs2026-14.50.35717-x64",
+      "archive_sha256": "318885cc187463697c9eadd5efccb0e3932ca01a253796b2ff328f2eb7f1a939",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.50.35717",
+      "compiler_version": "19.50.35738.0"
+    },
+    {
+      "asset": "vs2026-14.51.36231-x64",
+      "archive_sha256": "b7db3724cc249540969a683ab8f71c0490e724bb5eb9f72321b8b406e1efb1df",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.51.36231",
+      "compiler_version": "19.51.36257.0"
+    },
+    {
+      "asset": "winsdk-10.0.17763.0-x64",
+      "archive_sha256": "54a38eee47cb502f60edb9b2b40cf0cfd32ae52b0a51875498fc87c61e423fff",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.17763.0"
+    },
+    {
+      "asset": "winsdk-10.0.18362.0-x64",
+      "archive_sha256": "ef65df57068df919848d0aa5fe38b284ed99a171c9e5cf85b984069b2868b977",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.18362.0"
+    },
+    {
+      "asset": "winsdk-10.0.19041.0-x64",
+      "archive_sha256": "57a42ca6e00415b06e110241f8f3a327f1210ec018ade97f82ce54b30ce7ee59",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.19041.0"
+    },
+    {
+      "asset": "winsdk-10.0.20348.0-x64",
+      "archive_sha256": "779a6f7400fd4b67c95d411ec9342c30041836a0da025a0274a2889f7767a44e",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.20348.0"
+    },
+    {
+      "asset": "winsdk-10.0.22000.0-x64",
+      "archive_sha256": "8b6aea198651449ba1f0a7de1247665ad983d0395148ea0fd86844297d4167d1",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.22000.0"
+    },
+    {
+      "asset": "winsdk-10.0.22621.0-x64",
+      "archive_sha256": "c0b87aa69bbadd7192eb80b4892c6ad9daee2ce0776467f6c1564fb212f73e83",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.22621.0"
+    },
+    {
+      "asset": "winsdk-10.0.26100.0-x64",
+      "archive_sha256": "dcfd27ae46e3cc28562df12441238b5300fefcf04f67243d4a889b41535ec817",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.26100.0"
+    }
+  ]
+}

@@ -50,6 +50,14 @@ toolsets; absence from a selected pack is never proof of uniqueness. See
 [NeverD's quality policy](https://github.com/NeverSight/NeverD/blob/dev/docs/signature-quality.md)
 for the identity boundary and required accuracy/performance checks.
 
+The follow-up `vs2022.part5.npat` and `vs2022.part6.npat` add five audited
+single-site context clauses and one complete conditional-branch caller.
+Their provenance is in `runtime-single-context.sources.json` and
+`runtime-conditional-context.sources.json`; [validation results](reports/runtime-context-follow-up.md)
+record the gains and remaining ambiguity. Conditional references use the
+canonical COFF x86/x64 `0F 80..8F` rel32 field, a zero relocation addend and
+an explicitly typed source function symbol.
+
 ## What a line says
 
 ```
