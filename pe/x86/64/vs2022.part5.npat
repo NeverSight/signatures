@@ -1,0 +1,6 @@
+4883EC28E8........4885C07406FF15........E8........CC 00 0000 001A !refs :0000 _purecall ^0005 _get_purecall_handler
+4883EC28E8........4885C07406FF15........E8........CC 00 0000 001A !refs :0000 _purecall ^0015 abort
+4883EC28E8........E8........8BC84883C428E9........ 00 0000 0019 !refs :0000 ?pre_cpp_initialization@@YAXXZ ^0005 __scrt_set_unhandled_exception_filter
+4883EC28E8........E8........8BC84883C428E9........ 00 0000 0019 !refs :0000 ?pre_cpp_initialization@@YAXXZ ^000A _get_startup_new_mode
+4883EC28E8........E8........8BC84883C428E9........ 00 0000 0019 !refs :0000 ?pre_cpp_initialization@@YAXXZ ^0015 _set_new_mode
+---
