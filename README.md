@@ -92,6 +92,12 @@ alternatives. It requires consumer `174c8015902ce9ad6e14e497008499a12aaf711e`
 (cache format 8). See `runtime-data-layout-context.sources.json` and the
 [validation report](reports/runtime-context-follow-up.md).
 
+`vs2022.part12.npat` adds one complete caller-source refinement, **377 bytes**,
+for a stream initializer already confirmed by frozen data evidence. It queries
+an existing destructor body through the name index and adds no byte-index
+entry. It requires consumer `1b2bbf2bc8393694035c68b725843c0c35bcf378`;
+see `runtime-data-caller-context.sources.json` and the validation report above.
+
 ## What a line says
 
 ```

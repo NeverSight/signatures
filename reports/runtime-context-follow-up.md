@@ -440,3 +440,58 @@ round-trip skipped). Changed current-tree translation units and the parser/cache
 owners compile; clang-format 22.1.2 passes. Runtime qualification uses the
 isolated Release fixture, not a full unrelated current-mainline rebuild.
 Sanitizer coverage does not include every dependency and disables leak detection.
+
+
+## Caller queries from confirmed data consumers
+
+Consumer and selector `1b2bbf2bc8393694035c68b725843c0c35bcf378` allow complete,
+strong, independently data-confirmed parents to request existing caller bodies.
+Every generation reads the same frozen post-data candidates and exact data
+bindings; no descendant can create another binding or alter an ancestor's proof.
+The continuation reuses the existing name index and round budget. A preliminary
+query gate skips irrelevant data consumers. When useful, only visited addresses
+are settled from a sorted index of all frozen claims, preserving ambiguity.
+
+`vs2022.part12.npat` adds one **377-byte** complete source refinement. Existing
+records are unchanged; the selected profile has 161,358 records, with **zero**
+new byte-index entries and one new name-query body. The selected clause uses
+previously qualified raw output from producer `174c8015902ce9ad6e14e497008499a12aaf711e`;
+the provenance sidecar records all 18 evidence-file hashes. No producer change
+or weakening of cross-kind/missing-source counterclaims is involved. In
+particular, the destructor's rejected direct data-layout proof stays rejected;
+its registration by an independently confirmed initializer supplies the new
+incoming evidence.
+
+All 23 stripped probes reproduce their old-pack control JSON byte-for-byte.
+The increment adds one correct candidate, loses none, adds no wrong candidates,
+and advances the original gap set to **150/161**, leaving **11** unresolved.
+The 222 pre-existing wrong candidates remain; automatic signature-only names
+remain zero. Identical nominal bodies and insufficient roots remain unknown.
+
+Thirty paired Release runs use 51 measured calls per variant after warmup,
+one/four workers and separate old-pack controls. The previous implementation's
+private caller symbols are isolated, and its name digests match the immutable
+previous binary on all three probes. Final measurements (milliseconds):
+
+| Workers | Probe | Previous CPU median | Current CPU median | Paired CPU delta | Control paired delta |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 1 | vs2022-x64-mt-o2 | 4.740 | 4.824 | +0.036 | +0.016 |
+| 1 | vs2022-x64-mfc-mt-o2 | 35.451 | 34.800 | -0.207 | +0.130 |
+| 1 | vs2022-x64-mtd-od | 13.761 | 13.891 | -0.176 | -0.101 |
+| 4 | vs2022-x64-mt-o2 | 4.794 | 4.778 | +0.056 | -0.014 |
+| 4 | vs2022-x64-mfc-mt-o2 | 34.506 | 34.627 | -0.207 | +0.055 |
+| 4 | vs2022-x64-mtd-od | 15.225 | 15.165 | -0.150 | +0.021 |
+
+An initial eager-settlement implementation cost about 0.127 ms per target-probe
+call; the qualified implementation settles only visited addresses. Shared-host
+variation remains visible in controls and increments. These samples do not
+establish zero overhead or a universal speedup.
+
+Verification passes 291 native signature tests, 117 core Python tests, 183
+focused ASan/UBSan tests and 241 repository tests (one optional vendor
+round-trip skipped). New cases cover frozen competing target claims, rooted
+chains with back edges, missing source/root evidence and refusal to establish
+new data bindings. Runtime checks use the isolated Release fixture; current-tree
+changed translation units compile separately. Dependencies are not all
+instrumented and leak detection is disabled. No full unrelated mainline rebuild
+or cross-product performance ranking is claimed.

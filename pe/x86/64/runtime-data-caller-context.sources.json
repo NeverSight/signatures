@@ -1,0 +1,221 @@
+{
+  "schema": 1,
+  "purpose": "Complete source refinement for a caller established by frozen data context",
+  "producer_commit": "174c8015902ce9ad6e14e497008499a12aaf711e",
+  "consumer_commit": "1b2bbf2bc8393694035c68b725843c0c35bcf378",
+  "selector_commit": "1b2bbf2bc8393694035c68b725843c0c35bcf378",
+  "cache_version": 8,
+  "source_evidence_manifest": "runtime-data-layout-context.sources.json",
+  "source_evidence_manifest_sha256": "7f13b2113baf7a17d0b102fbf19536dbebd39501262a8f682629aceedb57376a",
+  "source_records": 4180555,
+  "source_evidence": [
+    {
+      "asset": "vs2005-8.0.50727.42-x64",
+      "evidence_file": "vs2005-8.0.50727.42-x64.pat",
+      "sha256": "839ab18908d257c6c028651f15b731130d758c12b03f6e0c498d64e7ff8f862c",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "vs2008-9.0.21022-x64",
+      "evidence_file": "vs2008-9.0.21022-x64.pat",
+      "sha256": "acc9263fa4a1049ef7792a8446d27003278e6905b8f23dbccd2403034a629b9f",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "vs2010-10.0.30319-x64",
+      "evidence_file": "vs2010-10.0.30319-x64.pat",
+      "sha256": "72bb7fa90cf2668d69e082e59ee55f4919219f43320cdd2dba60383cef5625b0",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "vs2012-11.0.50727-x64",
+      "evidence_file": "vs2012-11.0.50727-x64.pat",
+      "sha256": "62248814d75b7927b02eceea06c81b764daca7467bd61484992ccd98b21fe315",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "vs2013-12.0.21005-x64",
+      "evidence_file": "vs2013-12.0.21005-x64.pat",
+      "sha256": "d3b5f823632080e474eccdd1e2c898d9824ffb40bc481b28f4655d83eaecd2f5",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "vs2015-14.0-x64",
+      "evidence_file": "vs2015-14.0-x64.pat",
+      "sha256": "b2b2384d7faac8172a4f79f783a741c998dae3f1acf2e7ddf74f6ed46ee587c6",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "vs2017-14.16.27023-x64",
+      "evidence_file": "vs2017-14.16.27023-x64.pat",
+      "sha256": "2732ebef24ae49c64ad14962974476354ab59c1d89de058b4e3aa449cc593857",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "vs2019-14.29.30133-x64",
+      "evidence_file": "vs2019-14.29.30133-x64.pat",
+      "sha256": "d6bf9508aaa47c3eb6b792b0a3382af6b8013470aacadaf012f56dbad4bfd0b0",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "vs2022-14.44.35207-x64",
+      "evidence_file": "vs2022-14.44.35207-x64.pat",
+      "sha256": "d81086b875fc7c0c8e9bdcae4937fe8c79d7df159d15ca950b8ef805ad049d4d",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "vs2026-14.50.35717-x64",
+      "evidence_file": "vs2026-14.50.35717-x64.pat",
+      "sha256": "bf13290c6661c72725b317e129ec24f154622fb8799b45149482f2ad94a2f3de",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "vs2026-14.51.36231-x64",
+      "evidence_file": "vs2026-14.51.36231-x64.pat",
+      "sha256": "ccd88f4f950f694fb2f8baaa3ef62978d6fc34710d5d0f38b2e12f7db13ca361",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "winsdk-10.0.17763.0-x64",
+      "evidence_file": "winsdk-10.0.17763.0-x64.pat",
+      "sha256": "7ca525776b10aa941bb1a83644420943ad7e68563c2696566b90687c3839f5d3",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "winsdk-10.0.18362.0-x64",
+      "evidence_file": "winsdk-10.0.18362.0-x64.pat",
+      "sha256": "d0f2c50f77dbf5707ab43eb72afaaf5aae0ae8660420dc13b2b83656523e2a66",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "winsdk-10.0.19041.0-x64",
+      "evidence_file": "winsdk-10.0.19041.0-x64.pat",
+      "sha256": "8b4a2321a05569d5b9b23498180e0b563ca2bd5419b3c0e18b7cdc7db56c87c1",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "winsdk-10.0.20348.0-x64",
+      "evidence_file": "winsdk-10.0.20348.0-x64.pat",
+      "sha256": "640b53a8a9f3e85bd3fa31b6871835a77e526c2b8464b71bee98dd5353e5f93b",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "winsdk-10.0.22000.0-x64",
+      "evidence_file": "winsdk-10.0.22000.0-x64.pat",
+      "sha256": "63117094c7b78a7157934b392946e10635408e8187d5e18f24a8a2c6fa2a9f26",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "winsdk-10.0.22621.0-x64",
+      "evidence_file": "winsdk-10.0.22621.0-x64.pat",
+      "sha256": "834ef9eca5c346e1184c963e0f5c67ba0f7e60d6dde70117f0d063df6be05cc6",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    },
+    {
+      "asset": "winsdk-10.0.26100.0-x64",
+      "evidence_file": "winsdk-10.0.26100.0-x64.pat",
+      "sha256": "652e2665ec364a91beb41441b2b8c9eb06aea5e5e6278b136f58b0dcc98d00c0",
+      "producer_sha256": "b40c002dfa20fbdca8ed42bdb0b808cb721ca05677622c88412a25238eae24aa"
+    }
+  ],
+  "generation_options": [
+    "--collision-evidence",
+    "--data-references",
+    "--local-data-layout",
+    "--local-data-anchor (exact names listed per asset)"
+  ],
+  "selected_records": 1,
+  "selected_bytes": 377,
+  "refined_existing_bodies": 0,
+  "new_byte_index_entries": 0,
+  "new_name_query_bodies": 1,
+  "output": [
+    {
+      "file": "vs2022.part12.npat",
+      "sha256": "48a7a275c6ec6ea83c9568c01955d176a9525244a30baaf5e1b8feffa2bf7ff9",
+      "bytes": 377
+    }
+  ],
+  "qualification": {
+    "stripped_probes": 23,
+    "correct_candidates_added": 1,
+    "correct_candidates_lost": 0,
+    "new_wrong_candidates": 0,
+    "preexisting_wrong_candidates": 222,
+    "automatic_signature_only_names": 0,
+    "original_gaps_resolved": 150,
+    "original_gaps_total": 161,
+    "old_pack_exact_json_controls": 23,
+    "native_tests": 291,
+    "python_tests": 117,
+    "focused_asan_ubsan_tests": 183,
+    "paired_release_runs": 30,
+    "measured_calls_per_run_and_variant": 51,
+    "performance": [
+      {
+        "workers": 1,
+        "probe": "vs2022-x64-mt-o2",
+        "before_cpu": 4.74,
+        "after_cpu": 4.824,
+        "paired_cpu": 0.036000000000000476,
+        "paired_wall": 0.014581999999999873,
+        "control_paired_cpu": 0.016000000000000014
+      },
+      {
+        "workers": 1,
+        "probe": "vs2022-x64-mfc-mt-o2",
+        "before_cpu": 35.451,
+        "after_cpu": 34.8,
+        "paired_cpu": -0.20700000000000074,
+        "paired_wall": -0.20624199999999604,
+        "control_paired_cpu": 0.12950000000000017
+      },
+      {
+        "workers": 1,
+        "probe": "vs2022-x64-mtd-od",
+        "before_cpu": 13.761,
+        "after_cpu": 13.891,
+        "paired_cpu": -0.17599999999999838,
+        "paired_wall": -0.2499020000000005,
+        "control_paired_cpu": -0.10050000000000026
+      },
+      {
+        "workers": 4,
+        "probe": "vs2022-x64-mt-o2",
+        "before_cpu": 4.794,
+        "after_cpu": 4.778,
+        "paired_cpu": 0.05600000000000005,
+        "paired_wall": 0.04823099999999991,
+        "control_paired_cpu": -0.014499999999999957
+      },
+      {
+        "workers": 4,
+        "probe": "vs2022-x64-mfc-mt-o2",
+        "before_cpu": 34.506,
+        "after_cpu": 34.627,
+        "paired_cpu": -0.20700000000000074,
+        "paired_wall": -0.17566599999999966,
+        "control_paired_cpu": 0.054999999999999716
+      },
+      {
+        "workers": 4,
+        "probe": "vs2022-x64-mtd-od",
+        "before_cpu": 15.225,
+        "after_cpu": 15.165,
+        "paired_cpu": -0.14999999999999858,
+        "paired_wall": -0.174137,
+        "control_paired_cpu": 0.020500000000000185
+      }
+    ],
+    "repository_tests": 241,
+    "repository_skipped": 1
+  },
+  "limits": [
+    "No new producer behavior: the previous qualified raw evidence is reused.",
+    "All generations retain the frozen post-data candidate prefix and bindings; no inferred child creates another data binding.",
+    "Missing or contradictory raw claims remain unresolved; existing byte and identity floors are unchanged.",
+    "Release qualification uses an isolated fixture; changed current-tree translation units compile separately.",
+    "Scoped sanitizer coverage excludes some dependencies and leak detection.",
+    "Shared-host measurements do not prove zero overhead, universal speedup or superiority to other tools."
+  ]
+}
