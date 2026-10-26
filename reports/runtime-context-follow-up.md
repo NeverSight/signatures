@@ -144,3 +144,63 @@ linked dependencies are not all instrumented and leak detection is disabled.
 Changed current-tree translation units compile separately. Runtime checks use
 the frozen validation build, with the same current signature implementation;
 they do not claim a complete unrelated current-tree or native-platform rebuild.
+
+
+## Primary table context follow-up
+
+Producer `550bca08852a47c6d57b71aab16085621c498e3e` and consumer
+`7f90ff52d4f0f4a116d355fa9512fee7165c272e` add explicit primary-table metadata.
+The three records in `vs2022.part8.npat` reuse existing complete queried bodies;
+no ordinary signature or function body is replaced or copied. All 1,052
+relevant readable source declarations in 18 collected x64 inputs agree on
+slot names and layout. Raw evidence and archive/file hashes are retained in
+`runtime-table-context.sources.json`, including unreadable member counts.
+This does not claim coverage of unparsed compiler IR or every possible source.
+
+The exact selected tree reaches **144/161**, leaving **17** unresolved. Across
+23 stripped probes it adds two correct candidate addresses, loses no correct
+addresses and adds no wrong candidate names. Automatic signature-only source
+identities remain zero. The earlier exploratory cross-profile experiment is
+not this result: the published metadata is selected only with VS2022 packs.
+
+The selected profile grows from 161,345 to 161,348 records, with no new global
+byte-index entries. Runtime verification requires the strict primary RTTI
+reader, complete immutable table ownership, relocation-backed pointer slots
+and a complete strong existing body. Known contradictory siblings and multiple
+matching weak alternatives remain unresolved. A matching weak fallback is a
+candidate, not proof that no unknown override was linked. Table candidates do
+not restart incoming inference or establish data bindings, and their outgoing
+checks cannot bootstrap each other even with an empty original match set.
+
+The pass intersects the smaller loader-owned relocation index. On the local
+MFC probe this examines 2,521 data-pointer entries instead of 26,137 code-pointer
+entries; the other two probes retain their smaller code-pointer index. It
+never scans data sections for byte patterns.
+
+Verification passes 257 native signature tests, 100 core Python tests and
+241 signature-repository tests (one optional vendor round-trip test skipped).
+ASan/UBSan passes 149 focused tests with changed components instrumented;
+linked dependencies are not all instrumented and leak detection is disabled.
+Changed current-tree translation units compile separately. Runtime validation
+uses the frozen Release fixture with the current signature implementation;
+it is not a complete unrelated current-tree or native-platform rebuild.
+
+Alternating in-process Release measurements discard a warmup and retain 51
+repetitions at one and four workers. Separate runs compare old/new engines
+with unchanged packs and the three-record data increment. CPU medians and
+median paired differences (milliseconds) for the increment are:
+
+| Workers | Probe | Before / after (ms) | Paired delta (ms) |
+| --- | --- | --- | --- |
+| 1 | vs2022-x64-mt-o2 | 7.292 / 7.439 | +0.072 |
+| 1 | vs2022-x64-mfc-mt-o2 | 48.260 / 49.829 | +0.611 |
+| 1 | vs2022-x64-mtd-od | 16.993 / 17.218 | +0.190 |
+| 4 | vs2022-x64-mt-o2 | 6.747 / 6.772 | +0.062 |
+| 4 | vs2022-x64-mfc-mt-o2 | 47.331 / 48.504 | +0.760 |
+| 4 | vs2022-x64-mtd-od | 17.233 / 17.451 | +0.078 |
+
+The shared host remains busy and the timing variation is substantial. These
+results quantify additional validation cost; they do not establish zero cost,
+a stable speedup from the smaller-index change, an uncontended latency bound
+or a ranking against another tool. The reduced traversal count is independently
+observed and both index directions retain the same candidate results.
