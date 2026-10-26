@@ -1,0 +1,317 @@
+{
+  "candidate": [
+    {
+      "file": "vs2022-14.44.35207-x64.jsonl",
+      "sha256": "75af8cb0ccfd1bd9b0014e3098e1ccd5b6b0afd66ad56aa3562d66a0538c735c"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "vs2005-8.0.50727.42-x64.jsonl",
+      "sha256": "d363ae436c61dea8c60e315f0eb259f5d81ad895764e790971e0bed7ea232720"
+    },
+    {
+      "file": "vs2008-9.0.21022-x64.jsonl",
+      "sha256": "9d6aac632f155b7debff681335308ff2342ea2e2f26524cf150e146fd6d95e77"
+    },
+    {
+      "file": "vs2010-10.0.30319-x64.jsonl",
+      "sha256": "d3678644aacdb81d903493b69fd7dc8f4ca6a57fff245eedc237944afeec83b7"
+    },
+    {
+      "file": "vs2012-11.0.50727-x64.jsonl",
+      "sha256": "69cc7e8afe44f08ad344c549f52b64b315f1fbac556d8c40cf3ec3139d9ac8c9"
+    },
+    {
+      "file": "vs2013-12.0.21005-x64.jsonl",
+      "sha256": "37ae2a50b00ba41c643a896e7c0c4d1704eeac1e4fc3e3cd9aa06ff5e1b559ec"
+    },
+    {
+      "file": "vs2015-14.0-x64.jsonl",
+      "sha256": "67524072ffa547315c4cee0c673032ed2bfb9e052c41aafb8fd6270fe7bb46a3"
+    },
+    {
+      "file": "vs2017-14.16.27023-x64.jsonl",
+      "sha256": "36e3f1a3bf6bda515858c40ebe97d39a7de5840d22fabeb360397a5e37c45d2a"
+    },
+    {
+      "file": "vs2019-14.29.30133-x64.jsonl",
+      "sha256": "15a4534df3f23b0d1c57e88704f9e8f2a28ee39bd6c2ed1ab8387866947af753"
+    },
+    {
+      "file": "vs2022-14.44.35207-x64.jsonl",
+      "sha256": "75af8cb0ccfd1bd9b0014e3098e1ccd5b6b0afd66ad56aa3562d66a0538c735c"
+    },
+    {
+      "file": "vs2026-14.50.35717-x64.jsonl",
+      "sha256": "75af8cb0ccfd1bd9b0014e3098e1ccd5b6b0afd66ad56aa3562d66a0538c735c"
+    },
+    {
+      "file": "vs2026-14.51.36231-x64.jsonl",
+      "sha256": "4f1c75e7dd4917dcc9f9e7a40eb19576e1f45edd4984590cb1ae4aca45f768a0"
+    },
+    {
+      "file": "winsdk-10.0.17763.0-x64.jsonl",
+      "sha256": "b9b1a2b500df5d2cccfee2103e15cab9592650943a1e8cc07ab2a706cddd471b"
+    },
+    {
+      "file": "winsdk-10.0.18362.0-x64.jsonl",
+      "sha256": "518ca6e4f97080fc9fa572dc19404b5db1651ab959bc9c802b329bdeed4b05f0"
+    },
+    {
+      "file": "winsdk-10.0.19041.0-x64.jsonl",
+      "sha256": "a32f52b46881d0e0690bc4d479a67ce90bb3aa2a29b018684b3228b0c9d52eb8"
+    },
+    {
+      "file": "winsdk-10.0.20348.0-x64.jsonl",
+      "sha256": "d101d159b925d6a22ebba774f77bcabc73b94bd325733843859900e1b2b686e4"
+    },
+    {
+      "file": "winsdk-10.0.22000.0-x64.jsonl",
+      "sha256": "d101d159b925d6a22ebba774f77bcabc73b94bd325733843859900e1b2b686e4"
+    },
+    {
+      "file": "winsdk-10.0.22621.0-x64.jsonl",
+      "sha256": "d101d159b925d6a22ebba774f77bcabc73b94bd325733843859900e1b2b686e4"
+    },
+    {
+      "file": "winsdk-10.0.26100.0-x64.jsonl",
+      "sha256": "1132e2bf83081aec047de3d11b055ce21f4ba59d3599e83a99626e7cf70212f5"
+    }
+  ],
+  "existing": [
+    {
+      "file": "vs2022.part2.pat",
+      "sha256": "47e1b44118b60512be571cf00f0da3ce032eac9ee5d78dbecded9d5e525daeef"
+    },
+    {
+      "file": "vs2022.part3.npat",
+      "sha256": "fb0c882b125180fad24fd314a2b88eaa6f4658c6850fc2683098bc5d823e99f0"
+    },
+    {
+      "file": "vs2022.part4.npat",
+      "sha256": "98d89498bdf8c798e282f9c2dfc9183fb2c54072f3dbe020ad4dac89b8b3caac"
+    },
+    {
+      "file": "vs2022.part5.npat",
+      "sha256": "1b348dc9d717aa10ed0174244fc0af7f4159a0861b2c7d5f1eec1e9a8e473f33"
+    },
+    {
+      "file": "vs2022.part6.npat",
+      "sha256": "738f1d4d9baee3a63d081055f1dc98476c5c8e7b7a1419942b09de6b4c53008e"
+    },
+    {
+      "file": "vs2022.part7.npat",
+      "sha256": "8790d5026cefa46f6a3265ba3cde16645d9dc18e00d002b7a617cfd376189729"
+    },
+    {
+      "file": "vs2022.pat",
+      "sha256": "fb5ca8e5529b26f3ada5bbb4788fdb5568cfe00970a9bfd1c6f82674444b5aef"
+    }
+  ],
+  "names": [
+    "??_7_Generic_error_category@std@@6B@",
+    "??_7_Iostream_error_category2@std@@6B@",
+    "??_7regex_error@std@@6B@"
+  ],
+  "output": [
+    {
+      "file": "vs2022.part8.npat",
+      "sha256": "709a5f5a3cef416fb6023a4f6f1cf45a276ca0b5b903e84a35324c68b92e4dcb"
+    }
+  ],
+  "records": 3,
+  "source_assets": [
+    {
+      "asset": "vs2005-8.0.50727.42-x64",
+      "archive_sha256": "866327646f9ec2adc6f38582afdd5b75e1c5b2f5bd2eb323f0398ef71cf2edf7",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "8.0.50727.42",
+      "diagnostic": "Generated 2070 complete and 10 incomplete table declarations \u2192 vs2005-8.0.50727.42-x64.jsonl (3919 objects, 10317 for another machine skipped, 55979 non-object members)\n",
+      "rows": 2080,
+      "sha256": "d363ae436c61dea8c60e315f0eb259f5d81ad895764e790971e0bed7ea232720"
+    },
+    {
+      "asset": "vs2008-9.0.21022-x64",
+      "archive_sha256": "7096b8bdeddc652ca76cd9197e463007b11014e16a14188b9dd392bd4cb65607",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "9.0.21022",
+      "diagnostic": "Generated 2134 complete and 59 incomplete table declarations \u2192 vs2008-9.0.21022-x64.jsonl (4752 objects, 10534 for another machine skipped, 59845 non-object members)\n",
+      "rows": 2193,
+      "sha256": "9d6aac632f155b7debff681335308ff2342ea2e2f26524cf150e146fd6d95e77"
+    },
+    {
+      "asset": "vs2010-10.0.30319-x64",
+      "archive_sha256": "79279514eec08011691d5f1be62899ab136760b912db85bf9df6fb7b035631b9",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "10.0.30319",
+      "diagnostic": "Generated 6006 complete and 33 incomplete table declarations \u2192 vs2010-10.0.30319-x64.jsonl (5557 objects, 14816 for another machine skipped, 91037 non-object members, 9 unreadable members)\n",
+      "rows": 6039,
+      "sha256": "d3678644aacdb81d903493b69fd7dc8f4ca6a57fff245eedc237944afeec83b7"
+    },
+    {
+      "asset": "vs2012-11.0.50727-x64",
+      "archive_sha256": "ac4640857e41ddbe6c87d735695ceca35f14836ecd3b9123db1bcba87a1bac49",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "11.0.50727",
+      "diagnostic": "Generated 7090 complete and 48 incomplete table declarations \u2192 vs2012-11.0.50727-x64.jsonl (5467 objects, 14938 for another machine skipped, 74780 non-object members)\n",
+      "rows": 7138,
+      "sha256": "69cc7e8afe44f08ad344c549f52b64b315f1fbac556d8c40cf3ec3139d9ac8c9"
+    },
+    {
+      "asset": "vs2013-12.0.21005-x64",
+      "archive_sha256": "e0a46893fd349bfa8238da33f5bb1fbf8fc8348c89be8922652ade2010be7699",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "12.0.21005",
+      "diagnostic": "Generated 5164 complete and 9 incomplete table declarations \u2192 vs2013-12.0.21005-x64.jsonl (6125 objects, 13529 for another machine skipped, 64885 non-object members, 9 unreadable members)\n",
+      "rows": 5173,
+      "sha256": "37ae2a50b00ba41c643a896e7c0c4d1704eeac1e4fc3e3cd9aa06ff5e1b559ec"
+    },
+    {
+      "asset": "vs2015-14.0-x64",
+      "archive_sha256": "0a6c3c7ff08897e57ee2c28b23bdb449165af576dfbf2d9cc1642a8da49527b2",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.0",
+      "compiler_version": "19.00.24247.2 built by: VCTOOLSD14ULDR",
+      "diagnostic": "Generated 7749 complete and 8 incomplete table declarations \u2192 vs2015-14.0-x64.jsonl (4298 objects, 15398 for another machine skipped, 69445 non-object members)\n",
+      "rows": 7757,
+      "sha256": "67524072ffa547315c4cee0c673032ed2bfb9e052c41aafb8fd6270fe7bb46a3"
+    },
+    {
+      "asset": "vs2017-14.16.27023-x64",
+      "archive_sha256": "bbaf0d191dd830bce88627f91fbdd614d7cc848dd24e138e6487721b20262e20",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.16.27023",
+      "compiler_version": "19.16.27054.0 built by: cloudtest",
+      "diagnostic": "Generated 7771 complete and 8 incomplete table declarations \u2192 vs2017-14.16.27023-x64.jsonl (4094 objects, 14842 for another machine skipped, 66357 non-object members)\n",
+      "rows": 7779,
+      "sha256": "36e3f1a3bf6bda515858c40ebe97d39a7de5840d22fabeb360397a5e37c45d2a"
+    },
+    {
+      "asset": "vs2019-14.29.30133-x64",
+      "archive_sha256": "b16da73503fb5483aa128acb21a318e7501f917ced68a802056f075a71bacab0",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.29.30133",
+      "compiler_version": "19.29.30159.0 built by: cloudtest",
+      "diagnostic": "Generated 7904 complete and 8 incomplete table declarations \u2192 vs2019-14.29.30133-x64.jsonl (7301 objects, 15404 for another machine skipped, 67819 non-object members)\n",
+      "rows": 7912,
+      "sha256": "15a4534df3f23b0d1c57e88704f9e8f2a28ee39bd6c2ed1ab8387866947af753"
+    },
+    {
+      "asset": "vs2022-14.44.35207-x64",
+      "archive_sha256": "77f0ac320c8eb354134ed09530c6e503f2bee3a52de8c260f19b0ad7d35649ec",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.44.35207",
+      "compiler_version": "19.44.35229.0",
+      "diagnostic": "Generated 8649 complete and 51 incomplete table declarations \u2192 vs2022-14.44.35207-x64.jsonl (8573 objects, 16472 for another machine skipped, 75316 non-object members)\n",
+      "rows": 8700,
+      "sha256": "75af8cb0ccfd1bd9b0014e3098e1ccd5b6b0afd66ad56aa3562d66a0538c735c"
+    },
+    {
+      "asset": "vs2026-14.50.35717-x64",
+      "archive_sha256": "318885cc187463697c9eadd5efccb0e3932ca01a253796b2ff328f2eb7f1a939",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.50.35717",
+      "compiler_version": "19.50.35738.0",
+      "diagnostic": "Generated 8649 complete and 51 incomplete table declarations \u2192 vs2026-14.50.35717-x64.jsonl (7980 objects, 15376 for another machine skipped, 69627 non-object members)\n",
+      "rows": 8700,
+      "sha256": "75af8cb0ccfd1bd9b0014e3098e1ccd5b6b0afd66ad56aa3562d66a0538c735c"
+    },
+    {
+      "asset": "vs2026-14.51.36231-x64",
+      "archive_sha256": "b7db3724cc249540969a683ab8f71c0490e724bb5eb9f72321b8b406e1efb1df",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.51.36231",
+      "compiler_version": "19.51.36257.0",
+      "diagnostic": "Generated 8649 complete and 53 incomplete table declarations \u2192 vs2026-14.51.36231-x64.jsonl (8772 objects, 16426 for another machine skipped, 76697 non-object members)\n",
+      "rows": 8702,
+      "sha256": "4f1c75e7dd4917dcc9f9e7a40eb19576e1f45edd4984590cb1ae4aca45f768a0"
+    },
+    {
+      "asset": "winsdk-10.0.17763.0-x64",
+      "archive_sha256": "54a38eee47cb502f60edb9b2b40cf0cfd32ae52b0a51875498fc87c61e423fff",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.17763.0",
+      "diagnostic": "Generated 33 complete and 562 incomplete table declarations \u2192 winsdk-10.0.17763.0-x64.jsonl (7859 objects, 101239 non-object members)\n",
+      "rows": 595,
+      "sha256": "b9b1a2b500df5d2cccfee2103e15cab9592650943a1e8cc07ab2a706cddd471b"
+    },
+    {
+      "asset": "winsdk-10.0.18362.0-x64",
+      "archive_sha256": "ef65df57068df919848d0aa5fe38b284ed99a171c9e5cf85b984069b2868b977",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.18362.0",
+      "diagnostic": "Generated 37 complete and 562 incomplete table declarations \u2192 winsdk-10.0.18362.0-x64.jsonl (8324 objects, 99950 non-object members)\n",
+      "rows": 599,
+      "sha256": "518ca6e4f97080fc9fa572dc19404b5db1651ab959bc9c802b329bdeed4b05f0"
+    },
+    {
+      "asset": "winsdk-10.0.19041.0-x64",
+      "archive_sha256": "57a42ca6e00415b06e110241f8f3a327f1210ec018ade97f82ce54b30ce7ee59",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.19041.0",
+      "diagnostic": "Generated 37 complete and 562 incomplete table declarations \u2192 winsdk-10.0.19041.0-x64.jsonl (9870 objects, 118037 non-object members)\n",
+      "rows": 599,
+      "sha256": "a32f52b46881d0e0690bc4d479a67ce90bb3aa2a29b018684b3228b0c9d52eb8"
+    },
+    {
+      "asset": "winsdk-10.0.20348.0-x64",
+      "archive_sha256": "779a6f7400fd4b67c95d411ec9342c30041836a0da025a0274a2889f7767a44e",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.20348.0",
+      "diagnostic": "Generated 37 complete and 562 incomplete table declarations \u2192 winsdk-10.0.20348.0-x64.jsonl (10925 objects, 6 for another machine skipped, 126266 non-object members, 314 unreadable members)\n",
+      "rows": 599,
+      "sha256": "d101d159b925d6a22ebba774f77bcabc73b94bd325733843859900e1b2b686e4"
+    },
+    {
+      "asset": "winsdk-10.0.22000.0-x64",
+      "archive_sha256": "8b6aea198651449ba1f0a7de1247665ad983d0395148ea0fd86844297d4167d1",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.22000.0",
+      "diagnostic": "Generated 37 complete and 562 incomplete table declarations \u2192 winsdk-10.0.22000.0-x64.jsonl (10981 objects, 648 for another machine skipped, 127596 non-object members, 316 unreadable members)\n",
+      "rows": 599,
+      "sha256": "d101d159b925d6a22ebba774f77bcabc73b94bd325733843859900e1b2b686e4"
+    },
+    {
+      "asset": "winsdk-10.0.22621.0-x64",
+      "archive_sha256": "c0b87aa69bbadd7192eb80b4892c6ad9daee2ce0776467f6c1564fb212f73e83",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.22621.0",
+      "diagnostic": "Generated 37 complete and 562 incomplete table declarations \u2192 winsdk-10.0.22621.0-x64.jsonl (11063 objects, 648 for another machine skipped, 128214 non-object members, 318 unreadable members)\n",
+      "rows": 599,
+      "sha256": "d101d159b925d6a22ebba774f77bcabc73b94bd325733843859900e1b2b686e4"
+    },
+    {
+      "asset": "winsdk-10.0.26100.0-x64",
+      "archive_sha256": "dcfd27ae46e3cc28562df12441238b5300fefcf04f67243d4a889b41535ec817",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.26100.0",
+      "diagnostic": "Generated 37 complete and 564 incomplete table declarations \u2192 winsdk-10.0.26100.0-x64.jsonl (11436 objects, 648 for another machine skipped, 125402 non-object members)\n",
+      "rows": 601,
+      "sha256": "1132e2bf83081aec047de3d11b055ce21f4ba59d3599e83a99626e7cf70212f5"
+    }
+  ],
+  "native_record": "!vtable",
+  "candidate_identity": "Never grants automatic source identity; weak targets retain explicit fallback alternatives",
+  "source_declarations": 1052,
+  "producer_commit": "550bca08852a47c6d57b71aab16085621c498e3e",
+  "consumer_commit": "7f90ff52d4f0f4a116d355fa9512fee7165c272e"
+}
