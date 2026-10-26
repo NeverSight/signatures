@@ -86,6 +86,12 @@ all bytes, names and earlier references are retained. Static function anchors
 must already match independently, and cross-version operand alternatives stay
 intact. See `runtime-stream-data-context.sources.json` and the validation report.
 
+`vs2022.part11.npat` adds one 224-byte initializer clause using a checked
+same-section address delta; two existing contextual bodies gain source-owned
+alternatives. It requires consumer `174c8015902ce9ad6e14e497008499a12aaf711e`
+(cache format 8). See `runtime-data-layout-context.sources.json` and the
+[validation report](reports/runtime-context-follow-up.md).
+
 ## What a line says
 
 ```
