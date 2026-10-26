@@ -9,6 +9,10 @@ are unchanged.
 `accessors.cpp` exercises `basic_string<char>`, `basic_string<wchar_t>` and
 `vector<uint32_t/uint64_t>` size, empty, data and capacity. The Windows probes
 also exercise shared ATL/MFC `CStringT` and ATL COM `CComPtr<IUnknown>`.
+`locale.cpp` explicitly instantiates `use_facet` and `has_facet` for the
+standard narrow and wide locale facets. Its O0 and O2 objects retain actual
+template symbols and relocation targets for separate signature authoring.
+This capture adds no byte rules or recognition claims by itself.
 `libc.c` keeps C memory/string operations separate from C++ containers.
 User classes, `vector<bool>`, a wrong stride, an ordered load, extra effects
 and a different library configuration provide near misses. A user wrapper
