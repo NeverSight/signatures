@@ -164,7 +164,7 @@ def produce(args: argparse.Namespace) -> dict:
         base = [str(compiler), "/nologo", "/std:c++17", "/EHsc", "/W3",
                 "/Brepro", "/experimental:deterministic", "/Z7", f"/pathmap:{SOURCES}=/src/neverd-probes",
                 f"/pathmap:{output}=/build/neverd-probes"]
-        families = ("accessors", "atl_string", "atl_com")
+        families = ("accessors", "atl_string", "atl_com", "locale")
     else:
         if args.llvm_source is None or args.libcxx_config is None or args.sysroot is None:
             raise ProbeError("libc++ requires --llvm-source, --libcxx-config and --sysroot")
