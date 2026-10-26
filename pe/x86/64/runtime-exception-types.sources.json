@@ -1,0 +1,353 @@
+{
+  "schema": 1,
+  "purpose": "Checked record exception metadata for an unresolved runtime throw helper",
+  "producer_commit": "ca3cc0a3c962e232e32e6e0f1bdb303b97c957d5",
+  "consumer_commit": "ca3cc0a3c962e232e32e6e0f1bdb303b97c957d5",
+  "selector_commit": "ca3cc0a3c962e232e32e6e0f1bdb303b97c957d5",
+  "cache_version": 8,
+  "previous_manifest": "runtime-address-boundary.sources.json",
+  "previous_manifest_sha256": "e1c3a304d8fd4718c94cc4baed62e4782017778bda422d4d0e45f550a58eb444",
+  "source_records": 4180555,
+  "source_evidence": [
+    {
+      "asset": "vs2005-8.0.50727.42-x64",
+      "archive_sha256": "866327646f9ec2adc6f38582afdd5b75e1c5b2f5bd2eb323f0398ef71cf2edf7",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "8.0.50727.42",
+      "rows": 112650,
+      "local_rows": 228,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "4c2e2964668b1fe92060871724529b0aaaf98084bdce244ea374086b0b49b4a6"
+    },
+    {
+      "asset": "vs2008-9.0.21022-x64",
+      "archive_sha256": "7096b8bdeddc652ca76cd9197e463007b11014e16a14188b9dd392bd4cb65607",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "9.0.21022",
+      "rows": 125225,
+      "local_rows": 208,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "8b07463d6f978ce3fcde1be398b5e0771615f95619668c0f0d4bb97f50a7408d"
+    },
+    {
+      "asset": "vs2010-10.0.30319-x64",
+      "archive_sha256": "79279514eec08011691d5f1be62899ab136760b912db85bf9df6fb7b035631b9",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "10.0.30319",
+      "rows": 310651,
+      "local_rows": 482,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "80670fe38a5aa465256aa2b27c5f1715fd9f733e58db7aa2fc870f74c89c2981"
+    },
+    {
+      "asset": "vs2012-11.0.50727-x64",
+      "archive_sha256": "ac4640857e41ddbe6c87d735695ceca35f14836ecd3b9123db1bcba87a1bac49",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "11.0.50727",
+      "rows": 363201,
+      "local_rows": 546,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "b83022af24793f3b382a85042fcd68b57115dd8dbe57b09e30caac4827ababec"
+    },
+    {
+      "asset": "vs2013-12.0.21005-x64",
+      "archive_sha256": "e0a46893fd349bfa8238da33f5bb1fbf8fc8348c89be8922652ade2010be7699",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "12.0.21005",
+      "rows": 263807,
+      "local_rows": 546,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "a9263c1b9e40de66d39b706714f2f5cf54e3e3816216019bfa08325fa7edab36"
+    },
+    {
+      "asset": "vs2015-14.0-x64",
+      "archive_sha256": "0a6c3c7ff08897e57ee2c28b23bdb449165af576dfbf2d9cc1642a8da49527b2",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.0",
+      "compiler_version": "19.00.24247.2 built by: VCTOOLSD14ULDR",
+      "rows": 401307,
+      "local_rows": 544,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "f8f0b53d07c8f9c703b2805d2e902a1728b3cfdc403a303eb4b94f927627d529"
+    },
+    {
+      "asset": "vs2017-14.16.27023-x64",
+      "archive_sha256": "bbaf0d191dd830bce88627f91fbdd614d7cc848dd24e138e6487721b20262e20",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.16.27023",
+      "compiler_version": "19.16.27054.0 built by: cloudtest",
+      "rows": 354482,
+      "local_rows": 534,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "1467573584354ce8582154f51616c829b6aae9a7cb168c9a2db8f00090322e99"
+    },
+    {
+      "asset": "vs2019-14.29.30133-x64",
+      "archive_sha256": "b16da73503fb5483aa128acb21a318e7501f917ced68a802056f075a71bacab0",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.29.30133",
+      "compiler_version": "19.29.30159.0 built by: cloudtest",
+      "rows": 358773,
+      "local_rows": 534,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "db86a8c22f26bbc6e7519caaeac494ca5fa2da2b8aedf149460c96239736e626"
+    },
+    {
+      "asset": "vs2022-14.44.35207-x64",
+      "archive_sha256": "77f0ac320c8eb354134ed09530c6e503f2bee3a52de8c260f19b0ad7d35649ec",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.44.35207",
+      "compiler_version": "19.44.35229.0",
+      "rows": 586388,
+      "local_rows": 543,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "84a01dfbb2751aaf116e34b73ef4a5152c2c2dea171e295f5ed5367d95a5cc5d"
+    },
+    {
+      "asset": "vs2026-14.50.35717-x64",
+      "archive_sha256": "318885cc187463697c9eadd5efccb0e3932ca01a253796b2ff328f2eb7f1a939",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.50.35717",
+      "compiler_version": "19.50.35738.0",
+      "rows": 450649,
+      "local_rows": 543,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "6ba8ff444d99bb18086ca13cdc719517afdadbcf491327c1a370b95f6805f37c"
+    },
+    {
+      "asset": "vs2026-14.51.36231-x64",
+      "archive_sha256": "b7db3724cc249540969a683ab8f71c0490e724bb5eb9f72321b8b406e1efb1df",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.51.36231",
+      "compiler_version": "19.51.36257.0",
+      "rows": 577993,
+      "local_rows": 519,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "41a549bcf7053ccaec48db32ffa2f8501e4c021f40ba920de0a186b98ff5c77a"
+    },
+    {
+      "asset": "winsdk-10.0.17763.0-x64",
+      "archive_sha256": "54a38eee47cb502f60edb9b2b40cf0cfd32ae52b0a51875498fc87c61e423fff",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.17763.0",
+      "rows": 38096,
+      "local_rows": 188,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "ce34c1ba512b956fe592809fd2efeb15a2c083088f80b86a7271819ebe3f6cd7"
+    },
+    {
+      "asset": "winsdk-10.0.18362.0-x64",
+      "archive_sha256": "ef65df57068df919848d0aa5fe38b284ed99a171c9e5cf85b984069b2868b977",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.18362.0",
+      "rows": 38308,
+      "local_rows": 188,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "a9008b45cbba159e048ddd3e58994df474ace8c0f3fa78f6e08ef99c4e3ce5cb"
+    },
+    {
+      "asset": "winsdk-10.0.19041.0-x64",
+      "archive_sha256": "57a42ca6e00415b06e110241f8f3a327f1210ec018ade97f82ce54b30ce7ee59",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.19041.0",
+      "rows": 39495,
+      "local_rows": 188,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "582413133018e852416da3af5e84bc5c47348407fe92bfd39b45f9f5e5c7fc74"
+    },
+    {
+      "asset": "winsdk-10.0.20348.0-x64",
+      "archive_sha256": "779a6f7400fd4b67c95d411ec9342c30041836a0da025a0274a2889f7767a44e",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.20348.0",
+      "rows": 39239,
+      "local_rows": 174,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "eed99b19791ce1fe52f01f2db8f7f98a4e5ac35c56b89524380d97f9f656a439"
+    },
+    {
+      "asset": "winsdk-10.0.22000.0-x64",
+      "archive_sha256": "8b6aea198651449ba1f0a7de1247665ad983d0395148ea0fd86844297d4167d1",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.22000.0",
+      "rows": 40212,
+      "local_rows": 174,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "122222b50a5809bb8780ef564157eea02f5d41f01a6a0c1d0c58cb3933e33d8a"
+    },
+    {
+      "asset": "winsdk-10.0.22621.0-x64",
+      "archive_sha256": "c0b87aa69bbadd7192eb80b4892c6ad9daee2ce0776467f6c1564fb212f73e83",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.22621.0",
+      "rows": 39832,
+      "local_rows": 174,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "50e924a31b466f920ed5c057f9b2f085f2a8b59a807db2ac2561d9e1382d6f16"
+    },
+    {
+      "asset": "winsdk-10.0.26100.0-x64",
+      "archive_sha256": "dcfd27ae46e3cc28562df12441238b5300fefcf04f67243d4a889b41535ec817",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.26100.0",
+      "rows": 40247,
+      "local_rows": 174,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "fa4da34fe9e06db19a4b706285da88ae63a3ef9119162399ade3a540308f7dee"
+    }
+  ],
+  "generation_options": [
+    "--machine x64",
+    "--collision-evidence",
+    "--data-references",
+    "--local-data-layout"
+  ],
+  "local_data_anchors": [
+    "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+    "__dcrt_lowio_ensure_console_output_initialized",
+    "__dcrt_lowio_ensure_console_input_initialized",
+    "??__Eferr@std@@YAXXZ",
+    "??__Efin@std@@YAXXZ",
+    "??__Eflog@std@@YAXXZ",
+    "??__Efout@std@@YAXXZ",
+    "??__Ewferr@std@@YAXXZ",
+    "??__Ewfin@std@@YAXXZ",
+    "??__Ewflog@std@@YAXXZ",
+    "??__Ewfout@std@@YAXXZ"
+  ],
+  "selection": {
+    "parent": "?_Xruntime_error@std@@YAXPEBD@Z",
+    "new_records": 1,
+    "new_record_bytes": 166,
+    "refined_existing_records": 5,
+    "refinement_scope": "Existing complete records with the same exact byte shape as the selected parent; retain every raw version, byte, name and previous field.",
+    "refinement_options": [
+      "--caller-code"
+    ],
+    "selection_options": [
+      "--single-reference-context"
+    ],
+    "required_field": {
+      "offset": 20,
+      "name": "_TI2?AVruntime_error@std@@"
+    },
+    "selected_modules_before": 161358,
+    "selected_modules_after": 161359
+  },
+  "output": [
+    {
+      "file": "vs2022.part3.npat",
+      "sha256": "bee73fe7575571a52dfb527838f7e3fde6b797362e7f6e0f4d7350085faf91ab",
+      "previous_sha256": "0409998e46e37803fd75568cb3fdb70affa26ae259878b097c733414f380079e",
+      "bytes": 318044
+    },
+    {
+      "file": "vs2022.part13.npat",
+      "sha256": "853ecd2ff6f8c2479c024b7265331c27ba4263f86e261746030a7852c84350c0",
+      "previous_sha256": null,
+      "bytes": 166
+    }
+  ],
+  "qualification": {
+    "stripped_probes": 23,
+    "correct_candidates_added": 1,
+    "correct_candidates_lost": 0,
+    "new_wrong_candidates": 0,
+    "preexisting_wrong_candidates": 222,
+    "automatic_signature_only_names": 0,
+    "original_gaps_resolved": 152,
+    "original_gaps_total": 161,
+    "old_pack_exact_json_controls": 23,
+    "native_tests": 304,
+    "python_tests": 119,
+    "scoped_asan_ubsan_tests": 196,
+    "repository_tests": 241,
+    "repository_skipped": 1,
+    "paired_release_runs": 30,
+    "measured_calls_per_variant_after_warmup": 51,
+    "performance": [
+      {
+        "workers": 1,
+        "probe": "vs2022-x64-mt-o2",
+        "before_cpu": 6.286,
+        "after_cpu": 6.375,
+        "paired_cpu": -0.03000000000000025,
+        "paired_wall": -0.01642300000000052,
+        "control_paired_cpu": -0.029999999999999805
+      },
+      {
+        "workers": 1,
+        "probe": "vs2022-x64-mfc-mt-o2",
+        "before_cpu": 47.214,
+        "after_cpu": 47.34,
+        "paired_cpu": -0.08200000000000074,
+        "paired_wall": 0.05263800000000174,
+        "control_paired_cpu": 0.924000000000003
+      },
+      {
+        "workers": 1,
+        "probe": "vs2022-x64-mtd-od",
+        "before_cpu": 16.781,
+        "after_cpu": 16.883,
+        "paired_cpu": 0.02400000000000091,
+        "paired_wall": -0.0028929999999967038,
+        "control_paired_cpu": -0.21699999999999964
+      },
+      {
+        "workers": 4,
+        "probe": "vs2022-x64-mt-o2",
+        "before_cpu": 6.808,
+        "after_cpu": 6.768,
+        "paired_cpu": 0.014000000000000234,
+        "paired_wall": 0.027026999999999468,
+        "control_paired_cpu": 0.0714999999999999
+      },
+      {
+        "workers": 4,
+        "probe": "vs2022-x64-mfc-mt-o2",
+        "before_cpu": 46.361,
+        "after_cpu": 46.816,
+        "paired_cpu": 0.17300000000000182,
+        "paired_wall": 0.29123899999999736,
+        "control_paired_cpu": -0.3739999999999988
+      },
+      {
+        "workers": 4,
+        "probe": "vs2022-x64-mtd-od",
+        "before_cpu": 16.8,
+        "after_cpu": 16.827,
+        "paired_cpu": 0.014000000000002899,
+        "paired_wall": 0.028354999999999464,
+        "control_paired_cpu": 0.14200000000000124
+      }
+    ]
+  },
+  "limits": [
+    "Record class/struct ThrowInfo on x64 PE only: every graph entry, qualifier/count, descriptor and pointer role must validate.",
+    "Source metadata references require canonical zero-addend LEA relocations to external data; defined metadata must be read-only and non-executable.",
+    "Malformed, overlapping, absent, scalar, virtual-base or unsupported metadata remains unknown; ordinary byte and identity floors are unchanged.",
+    "Descriptor cache storage may be writable, but the checked cache word must be empty; metadata agreement does not identify a function or its ABI.",
+    "No automatic naming from signature-only evidence; all matching source variants participate in refinement and selection.",
+    "Release binaries compile affected translation units and link them with previously qualified fixture archives, whose hashes were retained. A complete dependency rebuild was not completed; current-tree changed translation units compile separately.",
+    "Scoped sanitizer coverage excludes some dependencies and leak detection.",
+    "Shared-host repeated matching after warmup does not establish cold-start gains, zero overhead or superiority to another product."
+  ]
+}
