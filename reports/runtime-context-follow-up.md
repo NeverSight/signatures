@@ -382,3 +382,61 @@ clang-format 22.1.2 passes. Sanitized components do not cover every dependency;
 leak detection is disabled. Runtime qualification uses the isolated Release
 fixture, not a full unrelated mainline or native-platform rebuild. Signature
 repository checks pass 241 tests with one optional vendor round-trip skipped.
+
+
+## Checked data-layout follow-up
+
+Producer, refiner and required consumer `174c8015902ce9ad6e14e497008499a12aaf711e` support canonical signed
+address deltas within one non-COMDAT source data section. Cache format 8
+rebuilds older entries. A uniquely defined typed function still needs an
+independently matched complete ordinary body and an exact zero-addend static
+data operand. Defined consumer coordinates, signed addends, operand extents
+and mapped-region bounds are checked. A relative consumer cannot establish
+a binding or feed a second inference round. Auxiliary symbol indices, split
+sections, weak/undefined targets and conflicting source variants remain refused.
+
+`vs2022.part11.npat` contains one complete required clause, **224 bytes**, for
+stream initialization. Two existing wide/unsigned-short initializer records
+gain source-owned alternatives in place. Their bytes, names and prior fields
+remain unchanged. The selected profile grows from 161,356 to 161,357 records,
+with one new byte-index entry and no new name-query body. Ordinary and WDK
+packs are unchanged.
+
+The audit retains 4,180,555 records across 18 collected x64 inputs, including
+6,487 records with local relations. The final producer reproduces every audited
+raw output hash. The proposed stream destructor remains excluded: actual
+14.51 counterclaims put the stream and its static buffer in separate source
+sections. Cross-kind or absent fields are not treated as a distinction.
+
+Across 23 stripped probes the increment adds one correct candidate address,
+loses none and introduces no wrong candidates. The original gap set reaches
+**149/161**, leaving **12** unresolved. The 222 pre-existing wrong candidates
+are unchanged; automatic signature-only names remain zero. All 23 old-pack
+controls reproduce their prior JSON output byte-for-byte.
+
+Thirty Release runs alternate the previous and current implementations in
+one process, using 51 measured repetitions after warmup, at one/four workers.
+The baseline is checked against the previous immutable binary. Private parser
+symbols are isolated between the two implementations; no invalid comparison
+is included. Exact keys avoid coordinate decoding. The table records the
+increment and separate old-pack controls (milliseconds):
+
+| Workers | Probe | Previous CPU median | Current CPU median | Paired CPU delta | Control paired delta |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 1 | vs2022-x64-mt-o2 | 4.876 | 4.862 | +0.019 | +0.006 |
+| 1 | vs2022-x64-mfc-mt-o2 | 34.844 | 34.297 | -0.707 | -0.666 |
+| 1 | vs2022-x64-mtd-od | 16.096 | 16.079 | +0.095 | -0.118 |
+| 4 | vs2022-x64-mt-o2 | 6.288 | 6.248 | +0.032 | +0.043 |
+| 4 | vs2022-x64-mfc-mt-o2 | 36.234 | 36.312 | -0.193 | +0.101 |
+| 4 | vs2022-x64-mtd-od | 15.926 | 16.302 | +0.020 | +0.227 |
+
+There is no clear material regression for this small selection on these
+samples. Shared-host variation is visible in both controls and increments;
+these results do not establish zero overhead or a stable speedup.
+
+Verification passes 286 native signature tests, 116 core Python tests, 178
+focused ASan/UBSan tests and 241 repository tests (one optional vendor
+round-trip skipped). Changed current-tree translation units and the parser/cache
+owners compile; clang-format 22.1.2 passes. Runtime qualification uses the
+isolated Release fixture, not a full unrelated current-mainline rebuild.
+Sanitizer coverage does not include every dependency and disables leak detection.
