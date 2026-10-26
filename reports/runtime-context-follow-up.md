@@ -321,3 +321,64 @@ paired differences in milliseconds are:
 The shared host remains busy; wall times vary substantially. These paired
 measurements show no clear regression for this increment. They establish
 neither zero overhead, a stable speedup nor a ranking against other tools.
+
+
+## Scoped stream-initializer follow-up
+
+Producer and metadata refiner `ab939f0eba2e831ed5e3b29a00f6487599683143` admit uniquely defined typed static
+functions as source-local anchors and preserve every cross-version operand
+alternative. Runtime qualification uses `5a969d6acdfa3b1d1881d896cbbfed02aaa5d518`. Existing cache version 7
+consumers remain format-compatible.
+
+`vs2022.part10.npat` adds **one** complete required clause, **178 bytes**, for the
+release stream-initializer body missing from the original comparison set. It
+adds one byte-index entry and no additional name-query body. Eight existing
+consumer bodies and one existing anchor body gain local fields in place; their
+bytes, names and previous references remain unchanged. Different admission
+clauses are retained only where the existing full-reference clause leaves the
+function unresolved. No ordinary record or WDK pack changes.
+
+The raw audit includes 4,180,555 source records across 18 collected x64 inputs,
+including 2,837 records with local relations. All source and output hashes are
+verified. Wide-character counterclaims retain every alternative anchor operand.
+Missing fields and duplicate definitions remain unknown; consumer alternatives
+cannot establish anchor bindings. Unparsed compiler IR and unreadable members
+remain outside the evidence coverage.
+
+Across 23 stripped probes, this selected increment adds **one** correct
+candidate address with no lost correct or new wrong candidates. The original
+gap set reaches **148/161**, leaving **13** unresolved. The 222 pre-existing
+wrong candidates are unchanged and automatic signature-only names remain zero.
+Running the new engine on the old packs reproduces every prior JSON output
+byte-for-byte.
+
+The initial broader proposal also matched a debug body, but newly activating
+data validation there retained a measurable cost. That extra body is not part
+of this publication. Frozen validation now avoids repeated prefix work and
+entry copies, and anchor lookup compares name lengths before text. No reference
+constraint is removed.
+
+Thirty Release benchmark runs alternate the previous and current implementations
+inside one process, with 51 measured repetitions after warmup. Old-pack controls
+retain identical candidate digests. The selected profile grows from 161,355 to
+161,356 records. The table includes the new engine and the selected increment:
+
+| Workers | Probe | Previous CPU median (ms) | Current CPU median (ms) | Median paired CPU delta (ms) |
+| --- | --- | ---: | ---: | ---: |
+| 1 | vs2022-x64-mt-o2 | 6.844 | 6.731 | -0.114 |
+| 1 | vs2022-x64-mfc-mt-o2 | 48.835 | 47.347 | -1.495 |
+| 1 | vs2022-x64-mtd-od | 17.154 | 16.999 | -0.100 |
+| 4 | vs2022-x64-mt-o2 | 7.076 | 6.932 | -0.115 |
+| 4 | vs2022-x64-mfc-mt-o2 | 48.927 | 48.012 | -1.182 |
+| 4 | vs2022-x64-mtd-od | 17.127 | 17.117 | -0.057 |
+
+These samples show no clear regression for the published selection. Shared-host
+variation and the limited corpus do not support a zero-cost guarantee, a
+universal speedup, or a comparison with other products.
+
+Verification passes 279 native signature tests, 115 core Python tests and 171
+focused ASan/UBSan tests. Changed current-tree translation units compile and
+clang-format 22.1.2 passes. Sanitized components do not cover every dependency;
+leak detection is disabled. Runtime qualification uses the isolated Release
+fixture, not a full unrelated mainline or native-platform rebuild. Signature
+repository checks pass 241 tests with one optional vendor round-trip skipped.

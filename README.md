@@ -79,6 +79,13 @@ Two existing incoming bodies gain these relations in place. The ordinary
 strength and identity gates remain unchanged; see
 `runtime-local-data-context.sources.json` and the validation report above.
 
+`vs2022.part10.npat` adds one complete stream-initialization clause, totaling
+178 bytes. Nine existing contextual bodies
+in `vs2022.part3.npat` and `vs2022.part4.npat` gain source-owned local fields;
+all bytes, names and earlier references are retained. Static function anchors
+must already match independently, and cross-version operand alternatives stay
+intact. See `runtime-stream-data-context.sources.json` and the validation report.
+
 ## What a line says
 
 ```
