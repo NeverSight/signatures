@@ -859,8 +859,8 @@
 4883EC28488B0D........4533C033D2FF15........F7D81BC083E00283C0FC 05 492C 0025 !caller :0000 _heapchk ^0012 __imp_HeapValidate
 4883EC28488B0D........483B0D........750CE8........488905........ 05 492C 0025 !caller :0000 ??$ensure_current_environment_is_not_initial_environment_nolock@D@@YAXXZ ^0015 ??$copy_environment@D@@YAPEAPEADQEAPEAD@Z
 4883EC28488B0D........483B0D........750CE8........488905........ 05 492C 0025 !caller :0000 ??$ensure_current_environment_is_not_initial_environment_nolock@_W@@YAXXZ ^0015 ??$copy_environment@_W@@YAPEAPEA_WQEAPEA_W@Z
-4883EC28488B0D........4883F9FD7706FF15........4883C428C3 00 0000 001C !caller :0000 __dcrt_terminate_console_input ^0013 __imp_CloseHandle
-4883EC28488B0D........4883F9FD7706FF15........4883C428C3 00 0000 001C !caller :0000 __dcrt_terminate_console_output ^0013 __imp_CloseHandle
+4883EC28488B0D........4883F9FD7706FF15........4883C428C3 00 0000 001C !caller :0000 __dcrt_terminate_console_input %0007 00000007:__dcrt_lowio_ensure_console_input_initialized ^0013 __imp_CloseHandle
+4883EC28488B0D........4883F9FD7706FF15........4883C428C3 00 0000 001C !caller :0000 __dcrt_terminate_console_output %0007 0000003F:__dcrt_lowio_ensure_console_output_initialized ^0013 __imp_CloseHandle
 4883EC28488B41104885C07514E8........C70016000000E8........32C0EB 0E DBFF 002E !caller :0000 ?validate@?$string_input_adapter@D@__crt_stdio_input@@QEAA_NXZ ^000E _errno ^0019 _invalid_parameter_noinfo
 4883EC28488B41104885C07514E8........C70016000000E8........32C0EB 0E DBFF 002E !caller :0000 ?validate@?$string_input_adapter@_W@__crt_stdio_input@@QEAA_NXZ ^000E _errno ^0019 _invalid_parameter_noinfo
 4883EC28488BC248894C2430488BC8488D542430E8........4883C428C3 00 0000 001E !caller :0000 ??$__acrt_get_full_path_name_wide@U__crt_win32_buffer_no_resizing@@@@YAHQEB_WAEAV?$__crt_win32_buffer@_WU__crt_win32_buffer_no_resizing@@@@@Z ^0015 ??$call_win32_function@V<lambda_17b8e77e04f0039ff1429d79b8271fa1>@@@?$__crt_win32_buffer@_WU__crt_win32_buffer_no_resizing@@@@QEAAHAEBV<lambda_17b8e77e04f0039ff1429d79b8271fa1>@@@Z

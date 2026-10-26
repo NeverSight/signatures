@@ -1,0 +1,364 @@
+{
+  "schema": 1,
+  "purpose": "Same-object data operand relations with independent external anchors",
+  "producer_commit": "b8ddce7bd49962bfecf99012ee00d6e5441a1f61",
+  "consumer_commit": "b8ddce7bd49962bfecf99012ee00d6e5441a1f61",
+  "source_records": 4180555,
+  "local_relation_records": 545,
+  "assets": [
+    {
+      "asset": "vs2005-8.0.50727.42-x64",
+      "archive_sha256": "866327646f9ec2adc6f38582afdd5b75e1c5b2f5bd2eb323f0398ef71cf2edf7",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "8.0.50727.42",
+      "diagnostic": "Generated 112650 signatures \u2192 vs2005-8.0.50727.42-x64.pat (3919 objects, 10317 for another machine skipped, 55979 non-object members)\n",
+      "rows": 112650,
+      "local_rows": 7,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "a00726c112b8067fb5fa6486b3288d477cb1614e5511e7eeaa63ef66510fda9b",
+      "evidence_file": "vs2005-8.0.50727.42-x64.pat"
+    },
+    {
+      "asset": "vs2008-9.0.21022-x64",
+      "archive_sha256": "7096b8bdeddc652ca76cd9197e463007b11014e16a14188b9dd392bd4cb65607",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "9.0.21022",
+      "diagnostic": "Generated 125225 signatures \u2192 vs2008-9.0.21022-x64.pat (4752 objects, 10534 for another machine skipped, 59845 non-object members)\n",
+      "rows": 125225,
+      "local_rows": 7,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "b3ca86f3b7fbb4e5edf8a128edb59806ed869c6f925e808388514744a06da32c",
+      "evidence_file": "vs2008-9.0.21022-x64.pat"
+    },
+    {
+      "asset": "vs2010-10.0.30319-x64",
+      "archive_sha256": "79279514eec08011691d5f1be62899ab136760b912db85bf9df6fb7b035631b9",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "10.0.30319",
+      "diagnostic": "Generated 310651 signatures \u2192 vs2010-10.0.30319-x64.pat (5557 objects, 14816 for another machine skipped, 91037 non-object members, 9 unreadable members)\n",
+      "rows": 310651,
+      "local_rows": 17,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "9d672f746f01256823a011d96db879d30e03f0b8a73c9ee2b36e1522504b987c",
+      "evidence_file": "vs2010-10.0.30319-x64.pat"
+    },
+    {
+      "asset": "vs2012-11.0.50727-x64",
+      "archive_sha256": "ac4640857e41ddbe6c87d735695ceca35f14836ecd3b9123db1bcba87a1bac49",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "11.0.50727",
+      "diagnostic": "Generated 363201 signatures \u2192 vs2012-11.0.50727-x64.pat (5467 objects, 14938 for another machine skipped, 74780 non-object members)\n",
+      "rows": 363201,
+      "local_rows": 17,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "5ec279825128deddae6c3d2707d3f650aaf339de671b38fa2463e6e1bb1e601b",
+      "evidence_file": "vs2012-11.0.50727-x64.pat"
+    },
+    {
+      "asset": "vs2013-12.0.21005-x64",
+      "archive_sha256": "e0a46893fd349bfa8238da33f5bb1fbf8fc8348c89be8922652ade2010be7699",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "12.0.21005",
+      "diagnostic": "Generated 263807 signatures \u2192 vs2013-12.0.21005-x64.pat (6125 objects, 13529 for another machine skipped, 64885 non-object members, 9 unreadable members)\n",
+      "rows": 263807,
+      "local_rows": 17,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "577139391078cf33a29ccff34db47ee3174a6bbe4d35f5e371ddc86970407ca7",
+      "evidence_file": "vs2013-12.0.21005-x64.pat"
+    },
+    {
+      "asset": "vs2015-14.0-x64",
+      "archive_sha256": "0a6c3c7ff08897e57ee2c28b23bdb449165af576dfbf2d9cc1642a8da49527b2",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.0",
+      "compiler_version": "19.00.24247.2 built by: VCTOOLSD14ULDR",
+      "diagnostic": "Generated 401307 signatures \u2192 vs2015-14.0-x64.pat (4298 objects, 15398 for another machine skipped, 69445 non-object members)\n",
+      "rows": 401307,
+      "local_rows": 17,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "2566b0b9e857c872fe551acfcbb4f3f388fe070662b3b22df01b0960930cc743",
+      "evidence_file": "vs2015-14.0-x64.pat"
+    },
+    {
+      "asset": "vs2017-14.16.27023-x64",
+      "archive_sha256": "bbaf0d191dd830bce88627f91fbdd614d7cc848dd24e138e6487721b20262e20",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.16.27023",
+      "compiler_version": "19.16.27054.0 built by: cloudtest",
+      "diagnostic": "Generated 354482 signatures \u2192 vs2017-14.16.27023-x64.pat (4094 objects, 14842 for another machine skipped, 66357 non-object members)\n",
+      "rows": 354482,
+      "local_rows": 17,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "88fc09775cc17a85934d2c75c99c3bb3db733d5ca8e85b7c53d740c7bba750e0",
+      "evidence_file": "vs2017-14.16.27023-x64.pat"
+    },
+    {
+      "asset": "vs2019-14.29.30133-x64",
+      "archive_sha256": "b16da73503fb5483aa128acb21a318e7501f917ced68a802056f075a71bacab0",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.29.30133",
+      "compiler_version": "19.29.30159.0 built by: cloudtest",
+      "diagnostic": "Generated 358773 signatures \u2192 vs2019-14.29.30133-x64.pat (7301 objects, 15404 for another machine skipped, 67819 non-object members)\n",
+      "rows": 358773,
+      "local_rows": 17,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "ad8d067a89dea6980e87ccf4cdc55621b965ac2faf6f48e1ad59d538386b0cd2",
+      "evidence_file": "vs2019-14.29.30133-x64.pat"
+    },
+    {
+      "asset": "vs2022-14.44.35207-x64",
+      "archive_sha256": "77f0ac320c8eb354134ed09530c6e503f2bee3a52de8c260f19b0ad7d35649ec",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.44.35207",
+      "compiler_version": "19.44.35229.0",
+      "diagnostic": "Generated 586388 signatures \u2192 vs2022-14.44.35207-x64.pat (8573 objects, 16472 for another machine skipped, 75316 non-object members)\n",
+      "rows": 586388,
+      "local_rows": 17,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "7299c22e8706f791d4f0a65df65e11b51951642c77931288e87fe9ab2f97bb3b",
+      "evidence_file": "vs2022-14.44.35207-x64.pat"
+    },
+    {
+      "asset": "vs2026-14.50.35717-x64",
+      "archive_sha256": "318885cc187463697c9eadd5efccb0e3932ca01a253796b2ff328f2eb7f1a939",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.50.35717",
+      "compiler_version": "19.50.35738.0",
+      "diagnostic": "Generated 450649 signatures \u2192 vs2026-14.50.35717-x64.pat (7980 objects, 15376 for another machine skipped, 69627 non-object members)\n",
+      "rows": 450649,
+      "local_rows": 17,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "958f15bf11a35d24fc6d37579321c3671ac3493f6bea206b15c83459bae86825",
+      "evidence_file": "vs2026-14.50.35717-x64.pat"
+    },
+    {
+      "asset": "vs2026-14.51.36231-x64",
+      "archive_sha256": "b7db3724cc249540969a683ab8f71c0490e724bb5eb9f72321b8b406e1efb1df",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.51.36231",
+      "compiler_version": "19.51.36257.0",
+      "diagnostic": "Generated 577993 signatures \u2192 vs2026-14.51.36231-x64.pat (8772 objects, 16426 for another machine skipped, 76697 non-object members)\n",
+      "rows": 577993,
+      "local_rows": 17,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "e1d841213987525ab07161796951fbf529e1c4c1dda8fa3bde24cbcd2c5d72e0",
+      "evidence_file": "vs2026-14.51.36231-x64.pat"
+    },
+    {
+      "asset": "winsdk-10.0.17763.0-x64",
+      "archive_sha256": "54a38eee47cb502f60edb9b2b40cf0cfd32ae52b0a51875498fc87c61e423fff",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.17763.0",
+      "diagnostic": "Generated 38096 signatures \u2192 winsdk-10.0.17763.0-x64.pat (7859 objects, 101239 non-object members)\n",
+      "rows": 38096,
+      "local_rows": 62,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "c43361bff8671eb93ba49fc16eeddd369201c2910f47f7d730aa7bd845f54fe4",
+      "evidence_file": "winsdk-10.0.17763.0-x64.pat"
+    },
+    {
+      "asset": "winsdk-10.0.18362.0-x64",
+      "archive_sha256": "ef65df57068df919848d0aa5fe38b284ed99a171c9e5cf85b984069b2868b977",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.18362.0",
+      "diagnostic": "Generated 38308 signatures \u2192 winsdk-10.0.18362.0-x64.pat (8324 objects, 99950 non-object members)\n",
+      "rows": 38308,
+      "local_rows": 62,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "9b9c883c34265db28c6298cc5438d07d7e6267588c656f3b427950faccbe34bb",
+      "evidence_file": "winsdk-10.0.18362.0-x64.pat"
+    },
+    {
+      "asset": "winsdk-10.0.19041.0-x64",
+      "archive_sha256": "57a42ca6e00415b06e110241f8f3a327f1210ec018ade97f82ce54b30ce7ee59",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.19041.0",
+      "diagnostic": "Generated 39495 signatures \u2192 winsdk-10.0.19041.0-x64.pat (9870 objects, 118037 non-object members)\n",
+      "rows": 39495,
+      "local_rows": 62,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "dd4a3933487271de122b903fd07a4cf54595a422e52508ba53fe0069b7848eb2",
+      "evidence_file": "winsdk-10.0.19041.0-x64.pat"
+    },
+    {
+      "asset": "winsdk-10.0.20348.0-x64",
+      "archive_sha256": "779a6f7400fd4b67c95d411ec9342c30041836a0da025a0274a2889f7767a44e",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.20348.0",
+      "diagnostic": "Generated 39239 signatures \u2192 winsdk-10.0.20348.0-x64.pat (10925 objects, 6 for another machine skipped, 126266 non-object members, 314 unreadable members)\n",
+      "rows": 39239,
+      "local_rows": 48,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "b62edc29273e0c72b95ce3543423e450381b6156e1bd023e9a64f8b48acddb5f",
+      "evidence_file": "winsdk-10.0.20348.0-x64.pat"
+    },
+    {
+      "asset": "winsdk-10.0.22000.0-x64",
+      "archive_sha256": "8b6aea198651449ba1f0a7de1247665ad983d0395148ea0fd86844297d4167d1",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.22000.0",
+      "diagnostic": "Generated 40212 signatures \u2192 winsdk-10.0.22000.0-x64.pat (10981 objects, 648 for another machine skipped, 127596 non-object members, 316 unreadable members)\n",
+      "rows": 40212,
+      "local_rows": 48,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "56d200ad118308aeec134b2ea7faeda6e597490ebf1e6c5023090a706162a386",
+      "evidence_file": "winsdk-10.0.22000.0-x64.pat"
+    },
+    {
+      "asset": "winsdk-10.0.22621.0-x64",
+      "archive_sha256": "c0b87aa69bbadd7192eb80b4892c6ad9daee2ce0776467f6c1564fb212f73e83",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.22621.0",
+      "diagnostic": "Generated 39832 signatures \u2192 winsdk-10.0.22621.0-x64.pat (11063 objects, 648 for another machine skipped, 128214 non-object members, 318 unreadable members)\n",
+      "rows": 39832,
+      "local_rows": 48,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "971ff96482fda09c5f612c22bb9c31bf5a36df5941af631be8186a6b01ac022b",
+      "evidence_file": "winsdk-10.0.22621.0-x64.pat"
+    },
+    {
+      "asset": "winsdk-10.0.26100.0-x64",
+      "archive_sha256": "dcfd27ae46e3cc28562df12441238b5300fefcf04f67243d4a889b41535ec817",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.26100.0",
+      "diagnostic": "Generated 40247 signatures \u2192 winsdk-10.0.26100.0-x64.pat (11436 objects, 648 for another machine skipped, 125402 non-object members)\n",
+      "rows": 40247,
+      "local_rows": 48,
+      "anchors": [
+        "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+        "__dcrt_lowio_ensure_console_output_initialized",
+        "__dcrt_lowio_ensure_console_input_initialized"
+      ],
+      "producer_sha256": "532b49295f04e291213659d87a5b5019253a743104dda4d9c606eab613b5fede",
+      "sha256": "47394ce11b7b3be9a99001ddc200524df8cf08a2802f31d426076e7504c743a9",
+      "evidence_file": "winsdk-10.0.26100.0-x64.pat"
+    }
+  ],
+  "outputs": [
+    {
+      "file": "winsdk.part4.npat",
+      "sha256": "dc63cf8796d3a60cf346d1b527ebe9739cc819f35aa1e5139b03d6d235dbb1b3",
+      "bytes": 1645022,
+      "before_sha256": "ddcf776190e652c5cdaee9b1462dc107377925449d6e452c9a50da19b1a658e8",
+      "refined_bodies": 2
+    },
+    {
+      "file": "winsdk.part6.npat",
+      "sha256": "a55cd451a18c72d0f819e3cace6b291317ab44814a32dd9c715c384e91d07a9b",
+      "bytes": 1766,
+      "required_clauses": 2,
+      "source_anchor_bodies": 4
+    }
+  ],
+  "scope": "All readable collected x64 source functions participate in collision checks, including short and discarded claims. Unknown relocations, unparsed compiler IR and unreadable members remain outside coverage. Archive and manifest file hashes were verified before generation.",
+  "rules": [
+    "Only the uniquely defined external anchor and its exact canonical operand establish a local relation.",
+    "Consumers and anchor operands must refer to the same defined static address within one COFF object; bare static spellings are never global keys.",
+    "Every matching raw variant participates, including absent and alternative fields.",
+    "Existing caller bodies retain their bytes, names and old fields.",
+    "The ordinary fixed-byte floor and candidate-only identity gate remain unchanged."
+  ]
+}
