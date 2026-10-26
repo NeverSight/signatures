@@ -204,3 +204,61 @@ results quantify additional validation cost; they do not establish zero cost,
 a stable speedup from the smaller-index change, an uncontended latency bound
 or a ranking against another tool. The reduced traversal count is independently
 observed and both index directions retain the same candidate results.
+
+
+## Runtime pointer context follow-up
+
+Producer and consumer `a8622eb7ae995b3a0749b2befad87426d25fec4a` add source-owned load-configuration pointer
+metadata. One 911-byte record in `vs2022.part9.npat` names three source fields;
+`vs2022.part4.npat` gains one typed outgoing reference on its existing XFG body.
+No function body or WDK pack is copied. The 897 readable relevant source records
+from 18 collected x64 inputs agree on the selected field/default relationships.
+`runtime-pointer-context.sources.json` retains archive/file and raw-evidence
+hashes, source counts and unreadable-member diagnostics. This is not coverage
+of unparsed compiler IR or every possible source. Source extraction checks
+callable fields and overlapping relocations; disjoint scalar fixups are counted
+separately and confer no pointer evidence.
+
+The selected tree reaches **146/161**, leaving **15** unresolved. Across 23
+stripped probes it adds six correct candidate addresses (two each in the ordinary,
+MFC and debug VS2022 images), loses no correct addresses and adds no wrong
+candidate names. Automatic signature-only identities remain zero. Existing
+incorrect candidates are not reclassified as successes. The selected profile
+grows from 161,348 to 161,349 records, with no new global byte-index entries.
+
+The loader owns callable role/field mapping. Matching queries only recorded
+immutable relocated slots and requested executable entries, then verifies the
+complete existing body. Every wildcard must be a canonical operand referencing
+independently established storage; every reference must agree. The ordinary
+16-byte caller floor is unchanged. Known contradictory defaults and source or
+slot conflicts veto this context. New candidates cannot start incoming inference
+or supply data bindings to another candidate. All their outgoing references are
+already checked against immutable storage, so the pass avoids rebuilding the
+general reference graph. The optimized and preceding outputs are byte-for-byte
+equal on all 23 probes.
+
+Verification passes 269 native signature tests, 110 core Python tests and 241
+signature-repository tests (one optional vendor round-trip skipped). ASan/UBSan
+passes 161 focused tests with changed components instrumented; dependencies are
+not all instrumented and leak detection is disabled. Changed current-tree
+translation units compile separately. Runtime validation uses the frozen Release
+fixture with the current signature implementation; it is not a complete unrelated
+current-tree or native-platform rebuild.
+
+Thirty alternating in-process Release runs retain 51 repetitions after a warmup
+at one and four workers. Separate runs compare old/new engines with unchanged
+packs and the data increment. CPU medians and median paired differences in
+milliseconds for the increment are:
+
+| Workers | Probe | Before / after (ms) | Paired delta (ms) |
+| --- | --- | --- | --- |
+| 1 | vs2022-x64-mt-o2 | 6.682 / 6.705 | -0.003 |
+| 1 | vs2022-x64-mfc-mt-o2 | 48.351 / 48.309 | -0.083 |
+| 1 | vs2022-x64-mtd-od | 17.082 / 16.943 | -0.150 |
+| 4 | vs2022-x64-mt-o2 | 6.853 / 6.839 | -0.032 |
+| 4 | vs2022-x64-mfc-mt-o2 | 48.593 / 48.595 | +0.063 |
+| 4 | vs2022-x64-mtd-od | 18.218 / 18.161 | +0.071 |
+
+The shared host remains busy and variation is substantial. These measurements
+show no clear regression for this increment; negative paired deltas do not prove
+a speedup, zero overhead, an uncontended bound or a cross-tool ranking.
