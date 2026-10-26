@@ -95,3 +95,52 @@ These small changes vary in both directions on the shared host; they do not
 establish a reliable speedup. All 225 native signature tests pass, including
 new self-reference and alias cases for the three formats. The raw evidence
 marker remains rejected by the runtime parser.
+
+## External-data context follow-up
+
+Producer `7723cee5279d6ca5feb888b0eb6c838104d1b212` adds typed external-data references and
+one frozen candidate-validation pass. The five records in `winsdk.part5.npat`
+contain two required clauses and three complete source anchors. They retain
+source-library, output and all 18 raw collision-input hashes in
+`runtime-data-context.sources.json`; no byte-only claim is replaced.
+
+The exact final tree reaches **142/161**, leaving **19** unresolved. Across all
+23 stripped probes it adds 15 correct candidate addresses over the preceding
+140-entry result, with zero lost correct addresses and zero new wrong names.
+Automatic signature-only source identities remain zero. Byte-identical heap
+getters, argv accessors and compiler-generated wrappers remain ambiguous;
+return padding and a changed test driver cannot erase their counterclaims.
+
+The selected x64 profile grows from 161,340 to 161,345 modules. Three complete
+anchor bodies are queried by name, and two required clauses participate in
+byte lookup. The data pass groups only requested addresses and source anchors;
+frozen reference checking groups only referenced targets and retains its old
+prefix in place. There is no additional full-image scan or iterative data chain.
+
+Local Release checks alternate the preceding and new data in one process,
+discard a warmup and measure 51 repetitions at one and four workers. These are
+process-CPU medians in milliseconds; the paired delta is the median difference
+within each repetition, so it need not equal the difference of the medians.
+
+| Workers | Probe | Before / after (ms) | Paired delta (ms) |
+| --- | --- | --- | --- |
+| 1 | vs2022-x64-mt-o2 | 5.520 / 5.084 | +0.046 |
+| 1 | vs2022-x64-mfc-mt-o2 | 41.240 / 42.751 | +1.054 |
+| 1 | vs2022-x64-mtd-od | 12.054 / 11.880 | -0.094 |
+| 4 | vs2022-x64-mt-o2 | 4.287 / 4.403 | +0.125 |
+| 4 | vs2022-x64-mfc-mt-o2 | 30.887 / 31.210 | +0.398 |
+| 4 | vs2022-x64-mtd-od | 12.148 / 12.015 | +0.038 |
+
+The shared host has substantial timing variation. The added validation has a
+measurable cost on the larger MFC image; these checks do not establish zero
+cost, an uncontended bound or a cross-tool performance ranking. Separate
+alternating runs also compare the preceding/current engines with unchanged
+data. The current engine introduces no additional scanning for old packs.
+
+Verification passes 242 native signature tests, 91 core Python tests and
+241 signature-repository tests (one optional vendor round-trip test skipped).
+ASan/UBSan passes 134 focused tests with changed components instrumented;
+linked dependencies are not all instrumented and leak detection is disabled.
+Changed current-tree translation units compile separately. Runtime checks use
+the frozen validation build, with the same current signature implementation;
+they do not claim a complete unrelated current-tree or native-platform rebuild.
