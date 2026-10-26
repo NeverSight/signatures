@@ -2736,8 +2736,8 @@
 488D05........C3 00 0000 0008 !caller :0000 __dstbias
 488D05........C3 00 0000 0008 !caller :0000 __local_stdio_printf_options
 488D05........C3 00 0000 0008 !caller :0000 __p___argc
-488D05........C3 00 0000 0008 !caller :0000 __p___argv
-488D05........C3 00 0000 0008 !caller :0000 __p___wargv
+488D05........C3 00 0000 0008 !caller :0000 __p___argv &0003 __argv
+488D05........C3 00 0000 0008 !caller :0000 __p___wargv &0003 __wargv
 488D05........C3 00 0000 0008 !caller :0000 __p__acmdln
 488D05........C3 00 0000 0008 !caller :0000 __p__commode
 488D05........C3 00 0000 0008 !caller :0000 __p__environ

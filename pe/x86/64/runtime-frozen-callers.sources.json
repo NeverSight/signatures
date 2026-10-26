@@ -1,0 +1,350 @@
+{
+  "schema": 1,
+  "purpose": "Resolve identical incoming getter alternatives using independent frozen data operands",
+  "producer_commit": "ca3cc0a3c962e232e32e6e0f1bdb303b97c957d5",
+  "consumer_commit": "c755d40059cb1e6dc4a827115a5f2bf7d25687e0",
+  "selector_commit": "ef7c8d8a13786973efb680fe66b64b27d832df33",
+  "cache_version": 8,
+  "previous_manifest": "runtime-exception-types.sources.json",
+  "previous_manifest_sha256": "3807e3994b2c0b5b579c938833cb82e582d81c5261bdaddccc36621c1d8d6a11",
+  "source_records": 4180555,
+  "source_evidence": [
+    {
+      "asset": "vs2005-8.0.50727.42-x64",
+      "archive_sha256": "866327646f9ec2adc6f38582afdd5b75e1c5b2f5bd2eb323f0398ef71cf2edf7",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "8.0.50727.42",
+      "rows": 112650,
+      "local_rows": 228,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "4c2e2964668b1fe92060871724529b0aaaf98084bdce244ea374086b0b49b4a6"
+    },
+    {
+      "asset": "vs2008-9.0.21022-x64",
+      "archive_sha256": "7096b8bdeddc652ca76cd9197e463007b11014e16a14188b9dd392bd4cb65607",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "9.0.21022",
+      "rows": 125225,
+      "local_rows": 208,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "8b07463d6f978ce3fcde1be398b5e0771615f95619668c0f0d4bb97f50a7408d"
+    },
+    {
+      "asset": "vs2010-10.0.30319-x64",
+      "archive_sha256": "79279514eec08011691d5f1be62899ab136760b912db85bf9df6fb7b035631b9",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "10.0.30319",
+      "rows": 310651,
+      "local_rows": 482,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "80670fe38a5aa465256aa2b27c5f1715fd9f733e58db7aa2fc870f74c89c2981"
+    },
+    {
+      "asset": "vs2012-11.0.50727-x64",
+      "archive_sha256": "ac4640857e41ddbe6c87d735695ceca35f14836ecd3b9123db1bcba87a1bac49",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "11.0.50727",
+      "rows": 363201,
+      "local_rows": 546,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "b83022af24793f3b382a85042fcd68b57115dd8dbe57b09e30caac4827ababec"
+    },
+    {
+      "asset": "vs2013-12.0.21005-x64",
+      "archive_sha256": "e0a46893fd349bfa8238da33f5bb1fbf8fc8348c89be8922652ade2010be7699",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "12.0.21005",
+      "rows": 263807,
+      "local_rows": 546,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "a9263c1b9e40de66d39b706714f2f5cf54e3e3816216019bfa08325fa7edab36"
+    },
+    {
+      "asset": "vs2015-14.0-x64",
+      "archive_sha256": "0a6c3c7ff08897e57ee2c28b23bdb449165af576dfbf2d9cc1642a8da49527b2",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.0",
+      "compiler_version": "19.00.24247.2 built by: VCTOOLSD14ULDR",
+      "rows": 401307,
+      "local_rows": 544,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "f8f0b53d07c8f9c703b2805d2e902a1728b3cfdc403a303eb4b94f927627d529"
+    },
+    {
+      "asset": "vs2017-14.16.27023-x64",
+      "archive_sha256": "bbaf0d191dd830bce88627f91fbdd614d7cc848dd24e138e6487721b20262e20",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.16.27023",
+      "compiler_version": "19.16.27054.0 built by: cloudtest",
+      "rows": 354482,
+      "local_rows": 534,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "1467573584354ce8582154f51616c829b6aae9a7cb168c9a2db8f00090322e99"
+    },
+    {
+      "asset": "vs2019-14.29.30133-x64",
+      "archive_sha256": "b16da73503fb5483aa128acb21a318e7501f917ced68a802056f075a71bacab0",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.29.30133",
+      "compiler_version": "19.29.30159.0 built by: cloudtest",
+      "rows": 358773,
+      "local_rows": 534,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "db86a8c22f26bbc6e7519caaeac494ca5fa2da2b8aedf149460c96239736e626"
+    },
+    {
+      "asset": "vs2022-14.44.35207-x64",
+      "archive_sha256": "77f0ac320c8eb354134ed09530c6e503f2bee3a52de8c260f19b0ad7d35649ec",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.44.35207",
+      "compiler_version": "19.44.35229.0",
+      "rows": 586388,
+      "local_rows": 543,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "84a01dfbb2751aaf116e34b73ef4a5152c2c2dea171e295f5ed5367d95a5cc5d"
+    },
+    {
+      "asset": "vs2026-14.50.35717-x64",
+      "archive_sha256": "318885cc187463697c9eadd5efccb0e3932ca01a253796b2ff328f2eb7f1a939",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.50.35717",
+      "compiler_version": "19.50.35738.0",
+      "rows": 450649,
+      "local_rows": 543,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "6ba8ff444d99bb18086ca13cdc719517afdadbcf491327c1a370b95f6805f37c"
+    },
+    {
+      "asset": "vs2026-14.51.36231-x64",
+      "archive_sha256": "b7db3724cc249540969a683ab8f71c0490e724bb5eb9f72321b8b406e1efb1df",
+      "kind": "toolset",
+      "arch": "x64",
+      "toolset_version": "14.51.36231",
+      "compiler_version": "19.51.36257.0",
+      "rows": 577993,
+      "local_rows": 519,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "41a549bcf7053ccaec48db32ffa2f8501e4c021f40ba920de0a186b98ff5c77a"
+    },
+    {
+      "asset": "winsdk-10.0.17763.0-x64",
+      "archive_sha256": "54a38eee47cb502f60edb9b2b40cf0cfd32ae52b0a51875498fc87c61e423fff",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.17763.0",
+      "rows": 38096,
+      "local_rows": 188,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "ce34c1ba512b956fe592809fd2efeb15a2c083088f80b86a7271819ebe3f6cd7"
+    },
+    {
+      "asset": "winsdk-10.0.18362.0-x64",
+      "archive_sha256": "ef65df57068df919848d0aa5fe38b284ed99a171c9e5cf85b984069b2868b977",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.18362.0",
+      "rows": 38308,
+      "local_rows": 188,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "a9008b45cbba159e048ddd3e58994df474ace8c0f3fa78f6e08ef99c4e3ce5cb"
+    },
+    {
+      "asset": "winsdk-10.0.19041.0-x64",
+      "archive_sha256": "57a42ca6e00415b06e110241f8f3a327f1210ec018ade97f82ce54b30ce7ee59",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.19041.0",
+      "rows": 39495,
+      "local_rows": 188,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "582413133018e852416da3af5e84bc5c47348407fe92bfd39b45f9f5e5c7fc74"
+    },
+    {
+      "asset": "winsdk-10.0.20348.0-x64",
+      "archive_sha256": "779a6f7400fd4b67c95d411ec9342c30041836a0da025a0274a2889f7767a44e",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.20348.0",
+      "rows": 39239,
+      "local_rows": 174,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "eed99b19791ce1fe52f01f2db8f7f98a4e5ac35c56b89524380d97f9f656a439"
+    },
+    {
+      "asset": "winsdk-10.0.22000.0-x64",
+      "archive_sha256": "8b6aea198651449ba1f0a7de1247665ad983d0395148ea0fd86844297d4167d1",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.22000.0",
+      "rows": 40212,
+      "local_rows": 174,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "122222b50a5809bb8780ef564157eea02f5d41f01a6a0c1d0c58cb3933e33d8a"
+    },
+    {
+      "asset": "winsdk-10.0.22621.0-x64",
+      "archive_sha256": "c0b87aa69bbadd7192eb80b4892c6ad9daee2ce0776467f6c1564fb212f73e83",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.22621.0",
+      "rows": 39832,
+      "local_rows": 174,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "50e924a31b466f920ed5c057f9b2f085f2a8b59a807db2ac2561d9e1382d6f16"
+    },
+    {
+      "asset": "winsdk-10.0.26100.0-x64",
+      "archive_sha256": "dcfd27ae46e3cc28562df12441238b5300fefcf04f67243d4a889b41535ec817",
+      "kind": "winsdk",
+      "arch": "x64",
+      "windows_sdk_version": "10.0.26100.0",
+      "rows": 40247,
+      "local_rows": 174,
+      "producer_sha256": "4af34c2ab8345af2a45ea2e1c9d10411fe0bb753a357160c063a5c81e60e2fba",
+      "sha256": "fa4da34fe9e06db19a4b706285da88ae63a3ef9119162399ade3a540308f7dee"
+    }
+  ],
+  "generation_options": [
+    "--machine x64",
+    "--collision-evidence",
+    "--data-references",
+    "--local-data-layout"
+  ],
+  "local_data_anchors": [
+    "?_Setgloballocale@locale@std@@CAXPEAX@Z",
+    "__dcrt_lowio_ensure_console_output_initialized",
+    "__dcrt_lowio_ensure_console_input_initialized",
+    "??__Eferr@std@@YAXXZ",
+    "??__Efin@std@@YAXXZ",
+    "??__Eflog@std@@YAXXZ",
+    "??__Efout@std@@YAXXZ",
+    "??__Ewferr@std@@YAXXZ",
+    "??__Ewfin@std@@YAXXZ",
+    "??__Ewflog@std@@YAXXZ",
+    "??__Ewfout@std@@YAXXZ"
+  ],
+  "selection": {
+    "parent": "uninitialize_allocated_io_buffers",
+    "new_records": 1,
+    "new_record_bytes": 398,
+    "refined_existing_records": 2,
+    "refinement_added_bytes": 27,
+    "refinement_options": [
+      "--external-data"
+    ],
+    "refinement_scope": "Existing complete incoming argv getter records; all fourteen raw records per name agree on the external-data field. All seven matching cleanup source records agree. Bytes, names and old fields are preserved.",
+    "selected_modules_before": 161359,
+    "selected_modules_after": 161360,
+    "new_globally_scanned_records": 0,
+    "source_owned_getters": [
+      "__p___argv",
+      "__p___wargv"
+    ]
+  },
+  "output": [
+    {
+      "file": "winsdk.part4.npat",
+      "sha256": "2d9efc480742fd3caebd01291057a356690d9b470272d0106acdc8940cfd1853",
+      "previous_sha256": "b3c12b0255490e3371fc9ba4d02f8edac25643d163acc20d3f2ea094d6c56ebd",
+      "bytes": 1645133
+    },
+    {
+      "file": "winsdk.part7.npat",
+      "sha256": "177fe77126090a7dfd28a59aec5fd4eec1a6354ebc69d2ebb6f9f953344c3a58",
+      "previous_sha256": null,
+      "bytes": 398
+    }
+  ],
+  "qualification": {
+    "stripped_probes": 23,
+    "correct_candidates_added": 12,
+    "correct_candidates_lost": 0,
+    "new_wrong_candidates": 0,
+    "preexisting_wrong_candidates": 222,
+    "automatic_signature_only_names": 0,
+    "original_gaps_resolved": 153,
+    "original_gaps_total": 161,
+    "old_pack_exact_json_controls": 23,
+    "native_tests": 307,
+    "python_tests": 120,
+    "scoped_asan_ubsan_tests": 199,
+    "repository_tests": 241,
+    "repository_skipped": 1,
+    "paired_release_runs": 30,
+    "measured_calls_per_variant_after_warmup": 51,
+    "performance": [
+      {
+        "workers": 1,
+        "probe": "vs2022-x64-mt-o2",
+        "before_cpu": 6.995,
+        "after_cpu": 7.03,
+        "paired_cpu": 0.07000000000000028,
+        "paired_wall": 0.03956499999999963,
+        "control_paired_cpu": 0.03000000000000025
+      },
+      {
+        "workers": 1,
+        "probe": "vs2022-x64-mfc-mt-o2",
+        "before_cpu": 36.287,
+        "after_cpu": 36.384,
+        "paired_cpu": 0.5519999999999996,
+        "paired_wall": 0.6558549999999954,
+        "control_paired_cpu": 0.19049999999999656
+      },
+      {
+        "workers": 1,
+        "probe": "vs2022-x64-mtd-od",
+        "before_cpu": 13.645,
+        "after_cpu": 14.254,
+        "paired_cpu": 0.11500000000000021,
+        "paired_wall": 0.0737269999999981,
+        "control_paired_cpu": 0.13699999999999957
+      },
+      {
+        "workers": 4,
+        "probe": "vs2022-x64-mt-o2",
+        "before_cpu": 5.333,
+        "after_cpu": 5.42,
+        "paired_cpu": 0.0649999999999995,
+        "paired_wall": 0.07022299999999948,
+        "control_paired_cpu": 0.08749999999999991
+      },
+      {
+        "workers": 4,
+        "probe": "vs2022-x64-mfc-mt-o2",
+        "before_cpu": 39.817,
+        "after_cpu": 40.993,
+        "paired_cpu": 0.7569999999999979,
+        "paired_wall": 0.5289389999999976,
+        "control_paired_cpu": 0.31250000000000355
+      },
+      {
+        "workers": 4,
+        "probe": "vs2022-x64-mtd-od",
+        "before_cpu": 16.216,
+        "after_cpu": 16.03,
+        "paired_cpu": 0.13599999999999923,
+        "paired_wall": 0.09365400000000079,
+        "control_paired_cpu": 0.12599999999999945
+      }
+    ]
+  },
+  "limits": [
+    "Only previously ambiguous data-bearing requests from complete strong ordinary callers can be deferred. Missing alternative bodies or source disagreement remain unresolved.",
+    "Bindings come from independent ordinary anchors and are frozen once. Actual data operands gate retries; neither deferred children nor descendants can add bindings or restart the data pass.",
+    "Source refinements retain every raw version, reference kind, missing field and alternative. No automatic identity or ordinary fixed-byte threshold is changed.",
+    "Release qualification compiles affected translation units against one consistent fixture ABI and links previously qualified archives with retained hashes. Current author translation units compile separately; this is not a full current-application rebuild.",
+    "Scoped sanitizer coverage instruments selected components and excludes some dependencies and leak detection.",
+    "Shared-host paired hot matching does not establish cold-start gains, zero overhead or superiority to another product."
+  ]
+}

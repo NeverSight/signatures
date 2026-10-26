@@ -1,0 +1,2 @@
+4883EC28488B0D........E8........488B0D........488325........00E8 00 0000 005B !caller :0000 uninitialize_allocated_io_buffers &0007 __acrt_stdout_buffer ^000C _free_base &0013 __acrt_stderr_buffer ^0020 _free_base &0027 __argv ^0034 _free_base &003B __wargv ^0048 _free_base ........488B0D........488325........00E8........488B0D........488325........00E8........488325........00B0014883C428C3
+---
