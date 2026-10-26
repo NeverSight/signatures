@@ -262,3 +262,62 @@ milliseconds for the increment are:
 The shared host remains busy and variation is substantial. These measurements
 show no clear regression for this increment; negative paired deltas do not prove
 a speedup, zero overhead, an uncontended bound or a cross-tool ranking.
+
+
+## Source-local data follow-up
+
+Producer and consumer `b8ddce7bd49962bfecf99012ee00d6e5441a1f61` add exact same-object data operand relations.
+`winsdk.part6.npat` adds 1,766 bytes: two complete required clauses and four
+name-indexed source-anchor bodies. Two existing incoming bodies in
+`winsdk.part4.npat` gain their local relation in place, preserving all bytes,
+names and previous fields. The new required clauses have different admission
+conditions from those existing incoming-only records. No WDK pack changes.
+
+The unpruned collision audit covers 4,180,555 emitted source records from 18
+collected x64 inputs, including 545 records carrying local relations. It retains
+missing fields and conflicting alternatives. The final producer reproduces all
+18 raw output hashes, including after the cross-function relocation-overlap
+check. `runtime-local-data-context.sources.json` records source and output
+hashes, command anchors and unsupported/unreadable-input diagnostics; this is
+not coverage of unparsed compiler IR or arbitrary libraries.
+
+The selected tree reaches **147/161**, leaving **14** unresolved. Across 23
+stripped probes it adds 18 correct candidate addresses, loses no correct
+addresses and adds no wrong candidate names. The 222 pre-existing wrong
+candidates are unchanged; automatic signature-only names remain zero. The
+short global-locale getter still fails the complete counterclaim audit and is
+not added. The selected profile grows from 161,349 to 161,355 records: only
+two new entries participate in global byte matching; four are name queries.
+
+The external anchor must already be a complete, strong ordinary candidate.
+The exact source operand, canonical decode and mapped data extent must agree,
+and every matching source variant must support the relation. A consumer cannot
+create its own binding, restart incoming inference or authorize a source name.
+External and local data keep separate kinds through generation, folding,
+parsing, cache version 7 and frozen reference settlement.
+
+Verification passes 277 native signature tests, 114 core Python tests and 241
+signature-repository tests (one optional vendor round-trip skipped). ASan/UBSan
+passes 169 focused tests; changed components are instrumented, dependencies are
+not all instrumented and leak detection is disabled. Changed current-tree
+translation units compile separately and clang-format 22.1.2 passes. Runtime
+qualification uses the frozen Release fixture, not a full unrelated current
+mainline or native-platform rebuild.
+
+Thirty alternating in-process Release runs use 51 measured repetitions after
+a warmup at one and four workers. Separate unchanged-pack engine comparisons
+preserve identical candidate digests. The increment's CPU medians and median
+paired differences in milliseconds are:
+
+| Workers | Probe | Before / after (ms) | Paired delta (ms) |
+| --- | --- | --- | --- |
+| 1 | vs2022-x64-mt-o2 | 7.821 / 7.753 | +0.005 |
+| 1 | vs2022-x64-mfc-mt-o2 | 51.147 / 51.049 | +0.015 |
+| 1 | vs2022-x64-mtd-od | 22.841 / 21.903 | +0.065 |
+| 4 | vs2022-x64-mt-o2 | 7.581 / 7.704 | +0.010 |
+| 4 | vs2022-x64-mfc-mt-o2 | 56.607 / 57.664 | -0.049 |
+| 4 | vs2022-x64-mtd-od | 18.858 / 18.791 | -0.180 |
+
+The shared host remains busy; wall times vary substantially. These paired
+measurements show no clear regression for this increment. They establish
+neither zero overhead, a stable speedup nor a ranking against other tools.

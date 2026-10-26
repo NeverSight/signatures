@@ -71,6 +71,14 @@ functions automatically. Existing function/import/primary-vftable references
 retain their meanings. See `runtime-data-context.sources.json` and the
 [validation report](reports/runtime-context-follow-up.md).
 
+`winsdk.part6.npat` adds two complete required clauses and four source-anchor
+bodies for console cleanup. `%offset anchor_offset:anchor_name` relates a data
+operand to one exact operand of an independently recognized external function
+in the same source object. Static variable spellings do not bind across objects.
+Two existing incoming bodies gain these relations in place. The ordinary
+strength and identity gates remain unchanged; see
+`runtime-local-data-context.sources.json` and the validation report above.
+
 ## What a line says
 
 ```
