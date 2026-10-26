@@ -1,0 +1,6 @@
+4883EC284885C97517E8........C70016000000E8........B816000000EB0B 02 8E30 0030 !caller :0000 _get_fmode ^000A _errno ^0015 _invalid_parameter_noinfo &0022 _fmode ........90890133C04883C428C3
+48895C2408574883EC20488BFA4885D274464885C97441488B19483BDA750548 0B 582C 0065 !caller :0000 _updatetlocinfoEx_nolock ^002B __acrt_add_locale_ref ^0038 __acrt_release_locale_ref &0045 __acrt_initial_locale_data ^0052 __acrt_free_locale ........4885DB74EB488BCBE8........837B100075DD488D05........483BD874D1488BCBE8........EBC733C0488B5C24304883C4205FC3
+48895C2408574883EC20E8........488DB8900000008B88A80300008B05.... 00 0000 006E !caller :0000 __acrt_update_thread_locale_data ^000B __acrt_getptd &001E __globallocalestatus ^0034 __acrt_lock &003C __acrt_current_locale_data ^0044 _updatetlocinfoEx_nolock ^0051 __acrt_unlock ^0069 abort ....85C87408488B1F4885DB752CB904000000E8........90488B15........488BCFE8........488BD8B904000000E8........4885DB740E488BC3488B5C24304883C4205FC3E8........90
+488D05........488905........B001C3 00 0000 0011 !refs :0000 initialize_global_variables &0003 __acrt_initial_locale_data &000A __acrt_current_locale_data
+833D........00750AC705........0040000033C0C3 00 0000 0016 !refs :0000 __acrt_initialize_fmode &0002 _fmode &000B _fmode
+---

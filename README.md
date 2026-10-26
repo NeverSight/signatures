@@ -63,6 +63,14 @@ was extended to retain self-address constraints. Its source and output hashes
 are in `runtime-self-context.sources.json`. This changes offline evidence;
 runtime patterns still cannot confirm themselves.
 
+`winsdk.part5.npat` adds two complete required clauses and three source-anchor
+bodies using typed `&offset name` external-data references. Only independent,
+complete ordinary candidates establish bindings; all matching source variants
+must agree. Data-derived candidates cannot confirm one another or name source
+functions automatically. Existing function/import/primary-vftable references
+retain their meanings. See `runtime-data-context.sources.json` and the
+[validation report](reports/runtime-context-follow-up.md).
+
 ## What a line says
 
 ```
