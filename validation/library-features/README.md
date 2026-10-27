@@ -49,11 +49,33 @@ including package and included-header hashes. The separate
 patterns, input hashes and held-out accuracy/performance checks. It constrains
 whole byte cohorts together and retains at most one global required clause per
 old record. Earlier generation receipts remain historical evidence; their
-`collision_refinement` links identify the current outputs and qualification.
-The 60-probe check reduces wrong preferred candidates from 541 to 333 with no
-new wrong candidate, while correct library candidates change from 171817 to
-171702. All signature-only names remain unadmitted. This is a precision tradeoff,
+`collision_refinement` links identify that refinement's outputs and qualification.
+The earlier 60-probe check reduced wrong preferred candidates from 541 to 333
+with no new wrong candidate, while correct library candidates changed from
+171817 to 171702. All signature-only names remain unadmitted. This is a precision tradeoff,
 not complete recognition or proof of original source identity.
+
+The [expanded capture receipt](expanded-collision-capture-receipt.json) adds
+43 configurations with 107 byte-identical reproduced objects, their assembly
+and header evidence, and 32 additional archive collections. The
+[expanded refinement receipt](expanded-collision-refinement.json) audits 228
+unpruned source collections across x86, x64, ARM and ARM64. It retains every
+call-only constraint; only an independently distinguishing import or RTTI site
+can justify pruning a complete source clause. Return-padding counterclaims
+retain equal CRC spans and checksums and require literal return/padding bytes.
+No new globally scanned byte record is added by this refinement.
+
+The expanded 60-probe check reduces wrong preferred candidates from 333 to 0,
+with no newly wrong candidate. Correct library candidates change from 171702
+to 171309. Across library and user routines together, 750 formerly correct
+suggestions are withdrawn and 316 are gained; these counts are reported
+separately because abstention is not recognition. Coverage of the original
+161-address gap set is 158. The remaining three identities share all available
+instruction and reference evidence with distinct source routines and remain
+ambiguous. Evaluation names and addresses never select rules.
+The receipt records paired matching CPU/wall time, same-engine controls,
+fresh-process loading and peak memory on the exact final tree. These local
+measurements do not establish universal throughput or competitor superiority.
 
 `libc.c` keeps C memory/string operations separate from C++ containers.
 User classes, `vector<bool>`, a wrong stride, an ordered load, extra effects

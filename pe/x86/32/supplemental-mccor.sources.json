@@ -5,7 +5,7 @@
   "source_kind": "converted_binary_library_signatures",
   "generator": "scripts/import_binary_signatures.py",
   "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
-  "lines": 505,
+  "lines": 503,
   "parts": 1,
   "artifacts": [
     {
@@ -16,5 +16,18 @@
   "validation": {
     "counterexample_policy_sha256": "016e7be3bf848cee0ce6e98b3ca5ddbe5cfdcf1f6fe577b9c72263e36625d758",
     "rejected_records": 3
+  },
+  "native_parts": [
+    {
+      "file": "pe/x86/32/supplemental-mccor.npat",
+      "patterns": 2,
+      "sha256": "9531c4a5d3784b3198a486620879af0e25080e542cdfa279321f3117f4af02dc"
+    }
+  ],
+  "expanded_collision_refinement": {
+    "file": "validation/library-features/expanded-collision-refinement.json",
+    "sha256": "c597185a3a6de5673b48b4198f2fcf58301791ab829dc65842516b2848b2aab4",
+    "scope": "Current expanded source-collision refinement and qualification. Earlier generation and collision-refinement receipts remain historical evidence.",
+    "previous_manifest_sha256": "c2d03b8be7c539ee01062e7113e28e55e1ffe60e46693d8c422d95af8a462011"
   }
 }

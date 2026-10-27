@@ -5,7 +5,7 @@
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 20103,
+  "lines": 20092,
   "sources": [
     {
       "arch": "x64",
@@ -19,8 +19,8 @@
   "native_parts": [
     {
       "file": "pe/x86/64/vs2008.npat",
-      "patterns": 3572,
-      "sha256": "3b39971f94a9920ca4b0084ca171d2b5306c0d13655670ce92adc4ff8cd03065"
+      "patterns": 3583,
+      "sha256": "dfb3f36fc3b4e80fe51a5b39ae44d2faba23d6002cad24c5d2aa138d11a3d50f"
     }
   ],
   "collision_refinement": {
@@ -28,5 +28,11 @@
     "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
     "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
     "previous_manifest_sha256": "019b88b4089418a426737ef1d1cd6311de10ee2136bd08a0af9457d6ba75e91a"
+  },
+  "expanded_collision_refinement": {
+    "file": "validation/library-features/expanded-collision-refinement.json",
+    "sha256": "c597185a3a6de5673b48b4198f2fcf58301791ab829dc65842516b2848b2aab4",
+    "scope": "Current expanded source-collision refinement and qualification. Earlier generation and collision-refinement receipts remain historical evidence.",
+    "previous_manifest_sha256": "9eab61d9071cb6ffd42b5e4f3628ac09983a0eb6523789ea3923f59ba25552d3"
   }
 }
