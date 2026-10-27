@@ -23,7 +23,24 @@ refinements and incoming-context records need separate source and image checks.
 `runtime-collisions.cpp` adds independently named string updates, streams,
 allocation/ownership, synchronization and exception operations under the same
 four configurations. None of these probes reads evaluation programs or their
-symbol maps. Both families are collected only for MSVC.
+symbol maps. These families are collected only for MSVC.
+
+`regex-collisions.cpp` exercises regular expressions and packed-bit containers.
+`operation-collisions.cpp` covers free atomic operations and an ABI-aligned
+stack-storage size sweep. `frame-collisions.cpp` varies the number and type of
+individually destroyed objects, including a stack buffer that exercises compiler
+stack protection. `boundary-collisions.cpp` covers const and mutable container
+boundaries, piecewise node construction, empty deleter types, ordering predicates,
+default atomic loads and calendar wrappers. `eh-state-collisions.cpp` and
+`eh-object-collisions.cpp` compare local arrays with recursive object members
+across the same frame-size range; their generated EH helpers retain different
+security-cookie checks. `member-frame-collisions.cpp` varies nontrivial member
+cleanup after constructor failures and exercises locale boundaries. The retained
+profiles also compare C++14 with C++17, whole-unit with function-section output,
+and native legacy compilation with a mixed compiler/header diagnostic. Their
+actual flags and header identities remain separate in the capture receipt.
+These are independent source counterexamples: a matching body supplies evidence against a unique byte claim,
+not a replacement name for an evaluated function.
 
 The checked-in [capture receipt](collision-capture-receipt.json) records eight
 compiler/target configurations and 128 reproduced objects/assembly files,
@@ -32,11 +49,33 @@ including package and included-header hashes. The separate
 patterns, input hashes and held-out accuracy/performance checks. It constrains
 whole byte cohorts together and retains at most one global required clause per
 old record. Earlier generation receipts remain historical evidence; their
-`collision_refinement` links identify the current outputs and qualification.
-The 60-probe check reduces wrong preferred candidates from 541 to 333 with no
-new wrong candidate, while correct library candidates change from 171817 to
-171702. All signature-only names remain unadmitted. This is a precision tradeoff,
+`collision_refinement` links identify that refinement's outputs and qualification.
+The earlier 60-probe check reduced wrong preferred candidates from 541 to 333
+with no new wrong candidate, while correct library candidates changed from
+171817 to 171702. All signature-only names remain unadmitted. This is a precision tradeoff,
 not complete recognition or proof of original source identity.
+
+The [expanded capture receipt](expanded-collision-capture-receipt.json) adds
+43 configurations with 107 byte-identical reproduced objects, their assembly
+and header evidence, and 32 additional archive collections. The
+[expanded refinement receipt](expanded-collision-refinement.json) audits 228
+unpruned source collections across x86, x64, ARM and ARM64. It retains every
+call-only constraint; only an independently distinguishing import or RTTI site
+can justify pruning a complete source clause. Return-padding counterclaims
+retain equal CRC spans and checksums and require literal return/padding bytes.
+No new globally scanned byte record is added by this refinement.
+
+The expanded 60-probe check reduces wrong preferred candidates from 333 to 0,
+with no newly wrong candidate. Correct library candidates change from 171702
+to 171309. Across library and user routines together, 750 formerly correct
+suggestions are withdrawn and 316 are gained; these counts are reported
+separately because abstention is not recognition. Coverage of the original
+161-address gap set is 158. The remaining three identities share all available
+instruction and reference evidence with distinct source routines and remain
+ambiguous. Evaluation names and addresses never select rules.
+The receipt records paired matching CPU/wall time, same-engine controls,
+fresh-process loading and peak memory on the exact final tree. These local
+measurements do not establish universal throughput or competitor superiority.
 
 `libc.c` keeps C memory/string operations separate from C++ containers.
 User classes, `vector<bool>`, a wrong stride, an ordered load, extra effects

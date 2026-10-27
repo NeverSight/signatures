@@ -5,7 +5,7 @@
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 41575,
+  "lines": 41538,
   "sources": [
     {
       "arch": "x86",
@@ -15,5 +15,18 @@
       "sigmaker": "Generated 215163 signatures \u2192 vs2010-10.0.30319-x86.pat (9084 objects, 16456 for another machine skipped, 92626 non-object members, 8378 functions below --min-size, 110354 functions stating too few exact bytes)",
       "toolset_version": "10.0.30319"
     }
-  ]
+  ],
+  "native_parts": [
+    {
+      "file": "pe/x86/32/vs2010.npat",
+      "patterns": 42,
+      "sha256": "aa966208c7cf8413af7c11854e0a6a0696b761e53c007acc33ab20d55bef411e"
+    }
+  ],
+  "expanded_collision_refinement": {
+    "file": "validation/library-features/expanded-collision-refinement.json",
+    "sha256": "c597185a3a6de5673b48b4198f2fcf58301791ab829dc65842516b2848b2aab4",
+    "scope": "Current expanded source-collision refinement and qualification. Earlier generation and collision-refinement receipts remain historical evidence.",
+    "previous_manifest_sha256": "105426c81f1ee0a5f7d2e7d96311224762b6472176f500ea8e075313e4f158c5"
+  }
 }

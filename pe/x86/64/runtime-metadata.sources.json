@@ -373,38 +373,38 @@
   "output": [
     {
       "file": "vs2015.pat",
-      "sha256": "9546193aff7cc2011409aab4f239f11d6be14435f27fe065fbc1c978c8a415b4",
-      "patterns": 38324
+      "sha256": "850771dc98530089f2be48d1612ca7768c61aa4ec63a0d19c3bd5584e528109b",
+      "patterns": 38271
     },
     {
       "file": "vs2017.pat",
-      "sha256": "25b1f5d16abadcf56c97feaf4db5b7c0e38407799a6246b86e7a544cb659bfb2",
-      "patterns": 36886
+      "sha256": "8a12533d6e83a55b96ee6e3eab055a690fc0359c409b3ca1a2f00da09b65cf1a",
+      "patterns": 36855
     },
     {
       "file": "vs2019.pat",
-      "sha256": "e2e34dccc0dde7f98ab41854a25daf23e1fe9067f01f6b77865e66ff8ce178c3",
-      "patterns": 38130
+      "sha256": "5afc8cb0f2353444ec0b4495ad41e533d046186a8c6da1ee811ff9acc6a60b51",
+      "patterns": 38089
     },
     {
       "file": "vs2022.pat",
-      "sha256": "7f6e006616a41e644a27e57a22635b0531567a28a1d91c47a571ac7776ca13f5",
-      "patterns": 44951
+      "sha256": "55ed647bb1f2eeaba79f91ac587d18879e009593dc0619939e757dd89a925cac",
+      "patterns": 44905
     },
     {
       "file": "vs2026.part2.pat",
-      "sha256": "031d17d0237d6cd5c1e920bcaef1a0ff65906e6803c65b1f3c36564c650261b5",
-      "patterns": 23782
+      "sha256": "4a24690808e1007f1cb486d14f1f6ca1ad8a8b1d147f9ccf74c04689d0952663",
+      "patterns": 23759
     },
     {
       "file": "vs2026.pat",
-      "sha256": "8f6263cf6f5c0441e3d6cd05b00c066b7515b67e92e0b2848abbebc3b72d866f",
-      "patterns": 31367
+      "sha256": "b6acbd7ddc560b11a6b230a120211e71d3323cd1dd50752082335c550f8c50b1",
+      "patterns": 31343
     },
     {
       "file": "winsdk.pat",
-      "sha256": "3d2f2bdb40351878fdab4e53f9af15d4c9e891231df3fda5583c2fd5a2e525a6",
-      "patterns": 19941
+      "sha256": "2de89e2dd80ef3cac868ca645aaa8c92c20e2017dfac0eaad7335e9663504170",
+      "patterns": 19933
     }
   ],
   "generator": {
@@ -582,5 +582,48 @@
     "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
     "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
     "previous_manifest_sha256": "3ba3393c2f56761e5b06da246c0f0dddad039656afdca79981b3915565b0e696"
+  },
+  "pre_expanded_collision_output": [
+    {
+      "file": "vs2015.pat",
+      "sha256": "9546193aff7cc2011409aab4f239f11d6be14435f27fe065fbc1c978c8a415b4",
+      "patterns": 38324
+    },
+    {
+      "file": "vs2017.pat",
+      "sha256": "25b1f5d16abadcf56c97feaf4db5b7c0e38407799a6246b86e7a544cb659bfb2",
+      "patterns": 36886
+    },
+    {
+      "file": "vs2019.pat",
+      "sha256": "e2e34dccc0dde7f98ab41854a25daf23e1fe9067f01f6b77865e66ff8ce178c3",
+      "patterns": 38130
+    },
+    {
+      "file": "vs2022.pat",
+      "sha256": "7f6e006616a41e644a27e57a22635b0531567a28a1d91c47a571ac7776ca13f5",
+      "patterns": 44951
+    },
+    {
+      "file": "vs2026.part2.pat",
+      "sha256": "031d17d0237d6cd5c1e920bcaef1a0ff65906e6803c65b1f3c36564c650261b5",
+      "patterns": 23782
+    },
+    {
+      "file": "vs2026.pat",
+      "sha256": "8f6263cf6f5c0441e3d6cd05b00c066b7515b67e92e0b2848abbebc3b72d866f",
+      "patterns": 31367
+    },
+    {
+      "file": "winsdk.pat",
+      "sha256": "3d2f2bdb40351878fdab4e53f9af15d4c9e891231df3fda5583c2fd5a2e525a6",
+      "patterns": 19941
+    }
+  ],
+  "expanded_collision_refinement": {
+    "file": "validation/library-features/expanded-collision-refinement.json",
+    "sha256": "c597185a3a6de5673b48b4198f2fcf58301791ab829dc65842516b2848b2aab4",
+    "scope": "Current expanded source-collision refinement and qualification. Earlier generation and collision-refinement receipts remain historical evidence.",
+    "previous_manifest_sha256": "10fdcb8fdcb314d445af5ea5e409de138d904a076f6067b840bd805086bb1389"
   }
 }

@@ -4,4 +4,39 @@
 558BEC51894DFC8B4DFCE8........8B40088BE55DC3 00 0000 0016 !refs :0000 ?GetAllocLength@?$CSimpleStringT@_W$0A@@ATL@@QBEHXZ ^000B ?GetData@?$CSimpleStringT@_W$0A@@ATL@@ABEPAUCStringData@2@XZ
 8B41308B54240429108B41200110C20400 00 0000 0011 !caller :0000 ?gbump@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IAEXH@Z
 8B4424048D50018A084084C975F92BC2C3 00 0000 0011 !caller :0000 ?length@?$char_traits@D@std@@SAIPBD@Z
+558BEC51894DFC8B4DFC83C10CE8........8B4DFCE8........8BE55DC3 00 0000 001E !refs :0000 ??1CTraceSnapshot@@QAE@XZ ^000E ??1?$CSimpleArray@KV?$CSimpleArrayEqualHelper@K@ATL@@@ATL@@QAE@XZ ^0016 ??1?$CSimpleArray@UCModuleInfo@CTraceSnapshot@@V?$CSimpleArrayEqualHelper@UCModuleInfo@CTraceSnapshot@@@ATL@@@ATL@@QAE@XZ
+558BEC51894DFC8B4DFC83C10CE8........8B4DFCE8........8BE55DC3 00 0000 001E !caller :0000 ??1CTraceSnapshot@@QAE@XZ ^000E ??1?$CSimpleArray@KV?$CSimpleArrayEqualHelper@K@ATL@@@ATL@@QAE@XZ ^0016 ??1?$CSimpleArray@UCModuleInfo@CTraceSnapshot@@V?$CSimpleArrayEqualHelper@UCModuleInfo@CTraceSnapshot@@@ATL@@@ATL@@QAE@XZ
+558BEC51894DFC8B4DFC83C110E8........8BE55DC3 00 0000 0016 !refs :0000 ??1_ATL_COM_MODULE70@ATL@@QAE@XZ ^000E ??1CComCriticalSection@ATL@@QAE@XZ
+558BEC51894DFC8B4DFCE8........8B4DFC83C10CE8........8B45FC8BE55D 01 EF04 0021 !refs :0000 ??0CTraceSnapshot@@QAE@XZ ^000B ??0?$CSimpleArray@UCModuleInfo@CTraceSnapshot@@V?$CSimpleArrayEqualHelper@UCModuleInfo@CTraceSnapshot@@@ATL@@@ATL@@QAE@XZ ^0016 ??0?$CSimpleArray@KV?$CSimpleArrayEqualHelper@K@ATL@@@ATL@@QAE@XZ
+558BEC51894DFC8B4DFCE8........8B4DFC83C10CE8........8B45FC8BE55D 01 EF04 0021 !caller :0000 ??0CTraceSnapshot@@QAE@XZ ^000B ??0?$CSimpleArray@UCModuleInfo@CTraceSnapshot@@V?$CSimpleArrayEqualHelper@UCModuleInfo@CTraceSnapshot@@@ATL@@@ATL@@QAE@XZ ^0016 ??0?$CSimpleArray@KV?$CSimpleArrayEqualHelper@K@ATL@@@ATL@@QAE@XZ
+558BEC83EC08894DF8C745FC000000008B4508508B4DF8E8........8B4DFC83 0E BA15 002E !refs :0000 ?GetObject@CHttpFile@@QBE?AV?$CStringT@_WV?$StrTraitMFC@_WV?$ChTraitsOS@_W@ATL@@@@@ATL@@XZ ^0018 ?GetObjectW@CHttpFile@@QBE?AV?$CStringT@_WV?$StrTraitMFC@_WV?$ChTraitsOS@_W@ATL@@@@@ATL@@XZ
+8B5424088D420C8B8A64FDFFFF33C8E8........8B4AFC33C8E8........B8.. 00 0000 0028 !caller :0000 __ehhandler$?Open@CMirrorFile@@UAEHPBDIPAVCFileException@@@Z ^0010 @__security_check_cookie@4 ^001A @__security_check_cookie@4 ^0024 ___CxxFrameHandler3 ......E9........
+8B5424088D420C8B8A68FEFFFF33C8E8........B8........E9........ 00 0000 001E !caller :0000 __ehhandler$?UpdatePrinterSelection@CWinApp@@IAEXH@Z ^0010 @__security_check_cookie@4 ^001A ___CxxFrameHandler3
+8B5424088D420C8B8A80FDFFFF33C8E8........B8........E9........ 00 0000 001E !caller :0000 __ehhandler$?_AfxQueryStatusOleCommandHelper@@YGJPAVCCmdTarget@@PBU_GUID@@KQAU_tagOLECMD@@PAU_tagOLECMDTEXT@@@Z ^0010 @__security_check_cookie@4 ^001A ___CxxFrameHandler3
+8B5424088D420C8B8A90FDFFFF33C8E8........B8........E9........ 00 0000 001E !caller :0000 __ehhandler$?_AfxQueryStatusOleCommandHelper@@YGJPAVCCmdTarget@@PBU_GUID@@KQAU_tagOLECMD@@PAU_tagOLECMDTEXT@@@Z ^0010 @__security_check_cookie@4 ^001A ___CxxFrameHandler3
+8B5424088D420C8B8AB0FCFFFF33C8E8........8B4AFC33C8E8........B8.. 00 0000 0028 !caller :0000 __ehhandler$?DoPromptFileName@CDocManager@@UAEHAAV?$CStringT@_WV?$StrTraitMFC@_WV?$ChTraitsCRT@_W@ATL@@@@@ATL@@IKHPAVCDocTemplate@@@Z ^0010 @__security_check_cookie@4 ^001A @__security_check_cookie@4 ^0024 ___CxxFrameHandler3 ......E9........
+8BFF558BEC68040100008B4510508B4D0C518B550852E8........83C4105DC3 00 0000 0020 !refs :0000 __searchenv ^0017 __searchenv_s
+8BFF558BEC68040100008B4510508B4D0C518B550852E8........83C4105DC3 00 0000 0020 !refs :0000 __wsearchenv ^0017 __wsearchenv_s
+8BFF558BEC6804010000FF7510FF750CFF7508E8........83C4105DC3 00 0000 001D !refs :0000 __searchenv ^0014 __searchenv_s
+8BFF558BEC6804010000FF7510FF750CFF7508E8........83C4105DC3 00 0000 001D !refs :0000 __wsearchenv ^0014 __wsearchenv_s
+8BFF558BEC6880000000FF7514FF7510FF750CFF7508E8........83C4145DC3 00 0000 0020 !refs :0000 __wfreopen_s ^0017 __wfreopen_helper
+8BFF558BEC6880000000FF7514FF7510FF750CFF7508E8........83C4145DC3 00 0000 0020 !refs :0000 _freopen_s ^0017 __freopen_helper
+8BFF558BEC6A016AFF8B450850E8........83C40C5DC3 00 0000 0017 !refs :0000 __getws ^000E __getws_helper
+8BFF558BEC6A016AFF8B450850E8........83C40C5DC3 00 0000 0017 !refs :0000 _gets ^000E __gets_helper
+8BFF558BEC6A016AFFFF7508E8........83C40C5DC3 00 0000 0016 !refs :0000 __getws ^000D __getws_helper
+8BFF558BEC6A016AFFFF7508E8........83C40C5DC3 00 0000 0016 !refs :0000 _gets ^000D __gets_helper
+8BFF558BEC6A018B4508508B4D18518B5514528B4510508B4D0C51E8........ 05 94C5 0025 !refs :0000 __sopen_s ^001C __sopen_helper
+8BFF558BEC6A018B4508508B4D18518B5514528B4510508B4D0C51E8........ 05 94C5 0025 !refs :0000 __wsopen_s ^001C __wsopen_helper
+8BFF558BEC6A01FF7508FF7518FF7514FF7510FF750CE8........83C4185DC3 00 0000 0020 !refs :0000 __sopen_s ^0017 __sopen_helper
+8BFF558BEC6A01FF7508FF7518FF7514FF7510FF750CE8........83C4185DC3 00 0000 0020 !refs :0000 __wsopen_s ^0017 __wsopen_helper
+8BFF558BEC6A408B450C508B4D0851E8........83C40C5DC3 00 0000 0019 !refs :0000 __wfopen ^0010 __wfsopen
+8BFF558BEC6A408B450C508B4D0851E8........83C40C5DC3 00 0000 0019 !refs :0000 _fopen ^0010 __fsopen
+8BFF558BEC6A40FF750CFF7508E8........83C40C5DC3 00 0000 0017 !refs :0000 __wfopen ^000E __wfsopen
+8BFF558BEC6A40FF750CFF7508E8........83C40C5DC3 00 0000 0017 !refs :0000 _fopen ^000E __fsopen
+8BFF558BECE8........85C075056A0C585DC3E8........8B4D08890833C05D 01 EF04 0021 !refs :0000 __set_doserrno ^0006 __getptd_noexit ^0014 ___doserrno
+8BFF558BECE8........85C075056A0C585DC3E8........8B4D08890833C05D 01 EF04 0021 !caller :0000 __set_doserrno ^0006 ___acrt_getptd_noexit ^0006 __getptd_noexit ^0014 ___doserrno
+8BFF558BECE8........85C075056A0C585DC3E8........8B4D08890833C05D 01 EF04 0021 !refs :0000 __set_errno ^0006 __getptd_noexit ^0014 __errno
+8BFF558BECE8........85C075056A0C585DC3E8........8B4D08890833C05D 01 EF04 0021 !caller :0000 __set_errno ^0006 ___acrt_getptd_noexit ^0006 __getptd_noexit ^0014 __errno
+8BFF558BECFF7518FF7514FF7510FF750C6AFFFF7508E8........83C4185DC3 00 0000 0020 !refs :0000 __makepath ^0017 __makepath_s
+8BFF558BECFF7518FF7514FF7510FF750C6AFFFF7508E8........83C4185DC3 00 0000 0020 !refs :0000 __wmakepath ^0017 __wmakepath_s
 ---

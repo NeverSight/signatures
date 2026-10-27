@@ -228,7 +228,6 @@
 4883EC28FF15........85C00F95C04883C428C3 00 0000 0014 !refs :0000 ?close@__crt_findfile_traits@@SA_NPEAX@Z ^0006 __imp_FindClose
 4883EC28FF15........85C00F95C04883C428C3 00 0000 0014 !refs :0000 ?close@__crt_handle_traits@@SA_NPEAX@Z ^0006 __imp_CloseHandle
 4883EC28FF15........85C00F95C04883C428C3 00 0000 0014 !refs :0000 ?close@__crt_hmodule_traits@@SA_NPEAUHINSTANCE__@@@Z ^0006 __imp_FreeLibrary
-4883EC28FF15........85C0750B4883C42848FF25........33C04883C428C3 00 0000 0020 !refs :0000 _unloaddll ^0006 __imp_FreeLibrary ^0015 __imp_GetLastError
 4883EC28FF15........B0014883C428C3 00 0000 0011 !refs :0000 ?close@environment_strings_traits@?A0x1bf47908@@SA_NPEA_W@Z ^0006 __imp_FreeEnvironmentStringsW
 4883EC38488364242000E8........4883C438C3 00 0000 0014 !refs :0000 _mbccpy_s ^000B _mbccpy_s_l
 4883EC38488364242000E8........4883C438C3 00 0000 0014 !refs :0000 _mbsnbcat_s ^000B _mbsnbcat_s_l
@@ -435,4 +434,6 @@ BA10000000E9........ 00 0000 000A !refs :0000 tmpfile_s ^0006 ?common_tmpfile@@Y
 E9........CCCCCCCCCCCCCCCCCCCCCC 00 0000 0010 !refs :0000 _expand ^0001 _expand_base
 F20F104908F20F1001E9........ 00 0000 000E !refs :0000 _cabs ^000A _hypot
 F30F5AC9E9........ 00 0000 0009 !refs :0000 nextafterf ^0005 nexttowardf
+4883EC28FF15........85C0750B4883C42848FF25........33C04883C428C3 00 0000 0020 !refs :0000 _unloaddll ^0006 __imp_FreeLibrary
+4883EC28FF15........85C0750B4883C42848FF25........33C04883C428C3 00 0000 0020 !caller :0000 _unloaddll ^0006 __imp_FreeLibrary ^0015 __imp_GetLastError
 ---

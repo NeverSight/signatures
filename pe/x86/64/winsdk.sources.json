@@ -5,7 +5,7 @@
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 19943,
+  "lines": 19935,
   "sources": [
     {
       "arch": "x64",
@@ -67,8 +67,8 @@
   "native_parts": [
     {
       "file": "pe/x86/64/winsdk.npat",
-      "patterns": 4919,
-      "sha256": "387597928d0fc2f27c7a5877c1dc66b5361ff0e113d1f3e68eed73c90783d1c0"
+      "patterns": 4927,
+      "sha256": "99f9cc5be4384ae4f4f4f10e0648f90c4143c5d89e7590b5836d0d81485adc25"
     },
     {
       "file": "pe/x86/64/winsdk.part2.npat",
@@ -77,8 +77,8 @@
     },
     {
       "file": "pe/x86/64/winsdk.part3.npat",
-      "patterns": 437,
-      "sha256": "fc09a6bcac280a2a99fc5a4c8e4212f913e085ba268f5764d8dacbcf1c30d98a"
+      "patterns": 438,
+      "sha256": "0e4fa15a6a7ff64dc94bab71c18d2cf5724975a62c2764c7b1c12c3904a8c781"
     },
     {
       "file": "pe/x86/64/winsdk.part4.npat",
@@ -106,5 +106,11 @@
     "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
     "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
     "previous_manifest_sha256": "9af562959ee53dfb163ad78b6db1adb8db21770fc0277013237beceaf0e86b44"
+  },
+  "expanded_collision_refinement": {
+    "file": "validation/library-features/expanded-collision-refinement.json",
+    "sha256": "c597185a3a6de5673b48b4198f2fcf58301791ab829dc65842516b2848b2aab4",
+    "scope": "Current expanded source-collision refinement and qualification. Earlier generation and collision-refinement receipts remain historical evidence.",
+    "previous_manifest_sha256": "2af511a16bd2b44edccb47b9bdff315a3d604bcfe5efa18e7668729a16b3735f"
   }
 }

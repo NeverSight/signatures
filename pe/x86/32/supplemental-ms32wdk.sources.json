@@ -5,7 +5,7 @@
   "source_kind": "converted_binary_library_signatures",
   "generator": "scripts/import_binary_signatures.py",
   "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
-  "lines": 8409,
+  "lines": 8306,
   "parts": 1,
   "artifacts": [
     {
@@ -20,8 +20,8 @@
   "native_parts": [
     {
       "file": "pe/x86/32/supplemental-ms32wdk.npat",
-      "patterns": 1,
-      "sha256": "7e0fa5525a2126b86feb0d3940f2d6e8dfc8e09f8245a6b0d0b6525ea5b2f3c7"
+      "patterns": 95,
+      "sha256": "ac1a9ba3919a2ff57a77ba3979d36f4f2d72e864f7fccbfc2608872c0944c87b"
     }
   ],
   "collision_refinement": {
@@ -29,5 +29,11 @@
     "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
     "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
     "previous_manifest_sha256": "d2c7b11d72f07014209b3efe2de4a8d11b5c945731f02c826ac6453e0f1f959c"
+  },
+  "expanded_collision_refinement": {
+    "file": "validation/library-features/expanded-collision-refinement.json",
+    "sha256": "c597185a3a6de5673b48b4198f2fcf58301791ab829dc65842516b2848b2aab4",
+    "scope": "Current expanded source-collision refinement and qualification. Earlier generation and collision-refinement receipts remain historical evidence.",
+    "previous_manifest_sha256": "1eb87dda4d20652abb4397d51301716496d8ae10995c997514eb07e12436cb30"
   }
 }
