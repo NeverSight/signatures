@@ -99,6 +99,11 @@
       "file": "pe/x86/64/winsdk.part7.npat",
       "patterns": 1,
       "sha256": "177fe77126090a7dfd28a59aec5fd4eec1a6354ebc69d2ebb6f9f953344c3a58"
+    },
+    {
+      "file": "pe/x86/64/winsdk.part8.npat",
+      "patterns": 1,
+      "sha256": "f444985a8b2b491e44a575f39c1204414a8162fe17d4b972f57e86e9f1e4694e"
     }
   ],
   "collision_refinement": {
@@ -112,5 +117,11 @@
     "sha256": "c597185a3a6de5673b48b4198f2fcf58301791ab829dc65842516b2848b2aab4",
     "scope": "Current expanded source-collision refinement and qualification. Earlier generation and collision-refinement receipts remain historical evidence.",
     "previous_manifest_sha256": "2af511a16bd2b44edccb47b9bdff315a3d604bcfe5efa18e7668729a16b3735f"
+  },
+  "code_layout_context": {
+    "file": "validation/library-features/source-code-layout.json",
+    "sha256": "ac161f6820f2cd7c6556c88c9d75bd72df6e86d920af4098e3b40b64c24896f6",
+    "minimum_consumer_ref": "ec1cefacf42d3a3a8048a9c8efce151d58c9374e",
+    "previous_manifest_sha256": "893821389f20d5d29b59054079d48ccab5ee18521bbd5ca5f5cd23ee9a7302a0"
   }
 }
