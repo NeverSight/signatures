@@ -165,7 +165,8 @@ def produce(args: argparse.Namespace) -> dict:
                 "/Brepro", "/experimental:deterministic", "/Z7", f"/pathmap:{SOURCES}=/src/neverd-probes",
                 f"/pathmap:{output}=/build/neverd-probes"]
         families = ("accessors", "atl_string", "atl_com", "locale",
-                    "template-collisions", "runtime-collisions", "regex-collisions")
+                    "template-collisions", "runtime-collisions", "regex-collisions",
+                    "operation-collisions", "frame-collisions", "boundary-collisions")
     else:
         if args.llvm_source is None or args.libcxx_config is None or args.sysroot is None:
             raise ProbeError("libc++ requires --llvm-source, --libcxx-config and --sysroot")
@@ -229,10 +230,12 @@ def produce(args: argparse.Namespace) -> dict:
             raise ProbeError("preprocessor did not confirm a 64-bit target")
         for family in families:
             if mode == "negative-configuration" and family not in (
-                    "accessors", "template-collisions", "runtime-collisions", "regex-collisions"):
+                    "accessors", "template-collisions", "runtime-collisions", "regex-collisions",
+                    "operation-collisions", "frame-collisions", "boundary-collisions"):
                 continue
             if mode == "debug-standalone" and family not in (
-                    "template-collisions", "runtime-collisions", "regex-collisions"):
+                    "template-collisions", "runtime-collisions", "regex-collisions",
+                    "operation-collisions", "frame-collisions", "boundary-collisions"):
                 continue
             stem = f"{family}-{mode}"
             probe = SOURCES / f"{family}.cpp"

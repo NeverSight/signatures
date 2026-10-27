@@ -23,7 +23,17 @@ refinements and incoming-context records need separate source and image checks.
 `runtime-collisions.cpp` adds independently named string updates, streams,
 allocation/ownership, synchronization and exception operations under the same
 four configurations. None of these probes reads evaluation programs or their
-symbol maps. Both families are collected only for MSVC.
+symbol maps. These families are collected only for MSVC.
+
+`regex-collisions.cpp` exercises regular expressions and packed-bit containers.
+`operation-collisions.cpp` covers free atomic operations and an ABI-aligned
+stack-storage size sweep. `frame-collisions.cpp` varies the number and type of
+individually destroyed objects, including a stack buffer that exercises compiler
+stack protection. `boundary-collisions.cpp` covers const and mutable container
+boundaries, piecewise node construction, empty deleter types, ordering predicates,
+default atomic loads and calendar wrappers. These are independent source
+counterexamples: a matching body supplies evidence against a unique byte claim,
+not a replacement name for an evaluated function.
 
 The checked-in [capture receipt](collision-capture-receipt.json) records eight
 compiler/target configurations and 128 reproduced objects/assembly files,
