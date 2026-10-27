@@ -373,31 +373,38 @@
   "output": [
     {
       "file": "vs2015.pat",
-      "sha256": "8a17de5e6628305f050f987c0bf79c1ba72a15cca9594c38d2c8a8f76b72b939"
+      "sha256": "9546193aff7cc2011409aab4f239f11d6be14435f27fe065fbc1c978c8a415b4",
+      "patterns": 38324
     },
     {
       "file": "vs2017.pat",
-      "sha256": "ecd9ce3699b07da4d061ebbb4942c9ea0c1495c2b7ec87795e1805b7c7667458"
+      "sha256": "25b1f5d16abadcf56c97feaf4db5b7c0e38407799a6246b86e7a544cb659bfb2",
+      "patterns": 36886
     },
     {
       "file": "vs2019.pat",
-      "sha256": "d339a1130a174adad8942f519bcf5607aa26d5853e30d85b8bb65581405ef277"
+      "sha256": "e2e34dccc0dde7f98ab41854a25daf23e1fe9067f01f6b77865e66ff8ce178c3",
+      "patterns": 38130
     },
     {
       "file": "vs2022.pat",
-      "sha256": "fb5ca8e5529b26f3ada5bbb4788fdb5568cfe00970a9bfd1c6f82674444b5aef"
+      "sha256": "7f6e006616a41e644a27e57a22635b0531567a28a1d91c47a571ac7776ca13f5",
+      "patterns": 44951
     },
     {
       "file": "vs2026.part2.pat",
-      "sha256": "0601843a32272a0dfde6f82359ddcd8d8705876c6f73241f86025f1681d78f82"
+      "sha256": "031d17d0237d6cd5c1e920bcaef1a0ff65906e6803c65b1f3c36564c650261b5",
+      "patterns": 23782
     },
     {
       "file": "vs2026.pat",
-      "sha256": "3e3e52bcb8d0c9e33a03879661a7535ea64f54a6846ae006d01278475a87ddb0"
+      "sha256": "8f6263cf6f5c0441e3d6cd05b00c066b7515b67e92e0b2848abbebc3b72d866f",
+      "patterns": 31367
     },
     {
       "file": "winsdk.pat",
-      "sha256": "b67d878373165c5cdde42c9e6021e33e87c32b4de96cbc33de8d410830016b61"
+      "sha256": "3d2f2bdb40351878fdab4e53f9af15d4c9e891231df3fda5583c2fd5a2e525a6",
+      "patterns": 19941
     }
   ],
   "generator": {
@@ -539,5 +546,41 @@
       "windows_sdk_version": "10.0.26100.0"
     }
   ],
-  "scope": "Missing immutable import/vftable constraints in a reviewed name subset. Every byte, existing name and prior reference is preserved; all overlapping raw source versions participate."
+  "scope": "Missing immutable import/vftable constraints in a reviewed name subset. Every byte, existing name and prior reference is preserved; all overlapping raw source versions participate.",
+  "pre_collision_output": [
+    {
+      "file": "vs2015.pat",
+      "sha256": "8a17de5e6628305f050f987c0bf79c1ba72a15cca9594c38d2c8a8f76b72b939"
+    },
+    {
+      "file": "vs2017.pat",
+      "sha256": "ecd9ce3699b07da4d061ebbb4942c9ea0c1495c2b7ec87795e1805b7c7667458"
+    },
+    {
+      "file": "vs2019.pat",
+      "sha256": "d339a1130a174adad8942f519bcf5607aa26d5853e30d85b8bb65581405ef277"
+    },
+    {
+      "file": "vs2022.pat",
+      "sha256": "fb5ca8e5529b26f3ada5bbb4788fdb5568cfe00970a9bfd1c6f82674444b5aef"
+    },
+    {
+      "file": "vs2026.part2.pat",
+      "sha256": "0601843a32272a0dfde6f82359ddcd8d8705876c6f73241f86025f1681d78f82"
+    },
+    {
+      "file": "vs2026.pat",
+      "sha256": "3e3e52bcb8d0c9e33a03879661a7535ea64f54a6846ae006d01278475a87ddb0"
+    },
+    {
+      "file": "winsdk.pat",
+      "sha256": "b67d878373165c5cdde42c9e6021e33e87c32b4de96cbc33de8d410830016b61"
+    }
+  ],
+  "collision_refinement": {
+    "file": "validation/library-features/collision-refinement.json",
+    "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
+    "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
+    "previous_manifest_sha256": "3ba3393c2f56761e5b06da246c0f0dddad039656afdca79981b3915565b0e696"
+  }
 }

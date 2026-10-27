@@ -5,7 +5,7 @@
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 45337,
+  "lines": 45155,
   "sources": [
     {
       "arch": "arm",
@@ -16,5 +16,18 @@
       "sigmaker": "Generated 380000 signatures \u2192 vs2022-14.44.35207-arm.pat (4080 objects, 16426 for another machine skipped, 72608 non-object members, 2 functions below --min-size, 109937 functions stating too few exact bytes)",
       "toolset_version": "14.44.35207"
     }
-  ]
+  ],
+  "native_parts": [
+    {
+      "file": "pe/arm/32/vs2022.npat",
+      "patterns": 307,
+      "sha256": "dc22ff32cbd3f2afb61d855df5238b125e8b83db11411cfa08632ddb094064ef"
+    }
+  ],
+  "collision_refinement": {
+    "file": "validation/library-features/collision-refinement.json",
+    "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
+    "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
+    "previous_manifest_sha256": "533e652c60877e9bb03de0e2b59d2221d389d30c8c832d84bb0fa9289d6b971d"
+  }
 }

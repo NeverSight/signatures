@@ -5,7 +5,7 @@
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 22572,
+  "lines": 19943,
   "sources": [
     {
       "arch": "x64",
@@ -63,5 +63,48 @@
       "sigmaker": "Generated 26889 signatures \u2192 winsdk-10.0.26100.0-x64.pat (11436 objects, 648 for another machine skipped, 125402 non-object members, 773 functions below --min-size, 12586 functions stating too few exact bytes)",
       "windows_sdk_version": "10.0.26100.0"
     }
-  ]
+  ],
+  "native_parts": [
+    {
+      "file": "pe/x86/64/winsdk.npat",
+      "patterns": 4919,
+      "sha256": "387597928d0fc2f27c7a5877c1dc66b5361ff0e113d1f3e68eed73c90783d1c0"
+    },
+    {
+      "file": "pe/x86/64/winsdk.part2.npat",
+      "patterns": 16,
+      "sha256": "3070ecde57d7e62868ea1ae21cb9c05694d864d0bbe1ac9c240d5789692f0562"
+    },
+    {
+      "file": "pe/x86/64/winsdk.part3.npat",
+      "patterns": 437,
+      "sha256": "fc09a6bcac280a2a99fc5a4c8e4212f913e085ba268f5764d8dacbcf1c30d98a"
+    },
+    {
+      "file": "pe/x86/64/winsdk.part4.npat",
+      "patterns": 4078,
+      "sha256": "2d9efc480742fd3caebd01291057a356690d9b470272d0106acdc8940cfd1853"
+    },
+    {
+      "file": "pe/x86/64/winsdk.part5.npat",
+      "patterns": 5,
+      "sha256": "bf327c1d05425c57f7903c82b537dd80974ce2e9cdb0f615db07f91f0f884d14"
+    },
+    {
+      "file": "pe/x86/64/winsdk.part6.npat",
+      "patterns": 6,
+      "sha256": "a55cd451a18c72d0f819e3cace6b291317ab44814a32dd9c715c384e91d07a9b"
+    },
+    {
+      "file": "pe/x86/64/winsdk.part7.npat",
+      "patterns": 1,
+      "sha256": "177fe77126090a7dfd28a59aec5fd4eec1a6354ebc69d2ebb6f9f953344c3a58"
+    }
+  ],
+  "collision_refinement": {
+    "file": "validation/library-features/collision-refinement.json",
+    "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
+    "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
+    "previous_manifest_sha256": "9af562959ee53dfb163ad78b6db1adb8db21770fc0277013237beceaf0e86b44"
+  }
 }

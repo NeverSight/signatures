@@ -184,13 +184,13 @@
   "output": [
     {
       "file": "vs2022.part2.pat",
-      "patterns": 9,
-      "sha256": "47e1b44118b60512be571cf00f0da3ce032eac9ee5d78dbecded9d5e525daeef"
+      "patterns": 7,
+      "sha256": "b04c6117310a5598bd5c1b57bd8eb714bf9b12e24458ec2e9b6a70e53660af81"
     },
     {
       "file": "winsdk.part2.pat",
-      "patterns": 10,
-      "sha256": "f065bb31989baf1e068b9dbacf15891f901e792a625e6ecff911e9e75d9a8940"
+      "patterns": 2,
+      "sha256": "9e0332ae5b99e265d02ca76edf138db91ef24e9e9218c57559b98cadefdae0fd"
     }
   ],
   "generator": {
@@ -405,5 +405,23 @@
       "sigmaker": "Generated 26889 signatures \u2192 winsdk-10.0.26100.0-x64.pat (11436 objects, 648 for another machine skipped, 125402 non-object members, 773 functions below --min-size, 12585 functions stating too few exact bytes)"
     }
   ],
-  "scope": "Additional x64 COFF candidates; existing claims remain untouched. Raw source collisions, including discarded claims, participate in filtering. Import references do not establish independent caller identity."
+  "scope": "Additional x64 COFF candidates; existing claims remain untouched. Raw source collisions, including discarded claims, participate in filtering. Import references do not establish independent caller identity.",
+  "pre_collision_output": [
+    {
+      "file": "vs2022.part2.pat",
+      "patterns": 9,
+      "sha256": "47e1b44118b60512be571cf00f0da3ce032eac9ee5d78dbecded9d5e525daeef"
+    },
+    {
+      "file": "winsdk.part2.pat",
+      "patterns": 10,
+      "sha256": "f065bb31989baf1e068b9dbacf15891f901e792a625e6ecff911e9e75d9a8940"
+    }
+  ],
+  "collision_refinement": {
+    "file": "validation/library-features/collision-refinement.json",
+    "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
+    "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
+    "previous_manifest_sha256": "8ecb4ce3c67fa0ca70875d0c88bfffdfd228ed4f46903bc4ac0b146735fc1c35"
+  }
 }

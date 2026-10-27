@@ -5,7 +5,7 @@
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 30882,
+  "lines": 30850,
   "sources": [
     {
       "arch": "x86",
@@ -15,5 +15,18 @@
       "sigmaker": "Generated 104098 signatures \u2192 vs2005-8.0.50727.42-x86.pat (8418 objects, 11956 for another machine skipped, 65825 non-object members, 3645 functions below --min-size, 56413 functions stating too few exact bytes)",
       "toolset_version": "8.0.50727.42"
     }
-  ]
+  ],
+  "native_parts": [
+    {
+      "file": "pe/x86/32/vs2005.npat",
+      "patterns": 35,
+      "sha256": "af85fde19bc238e9386523475366ec053f96508333248db9722a785a33d832fc"
+    }
+  ],
+  "collision_refinement": {
+    "file": "validation/library-features/collision-refinement.json",
+    "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
+    "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
+    "previous_manifest_sha256": "a46f7a566c20883e528e7617f03b32d0ab66d89989b4369282e8c52ceee00532"
+  }
 }

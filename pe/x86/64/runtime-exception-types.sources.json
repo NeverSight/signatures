@@ -255,9 +255,10 @@
   "output": [
     {
       "file": "vs2022.part3.npat",
-      "sha256": "bee73fe7575571a52dfb527838f7e3fde6b797362e7f6e0f4d7350085faf91ab",
+      "sha256": "eb81db33c058335993e4b2a0c97ad9db319372339d22e8bce01f843decd3b1b7",
       "previous_sha256": "0409998e46e37803fd75568cb3fdb70affa26ae259878b097c733414f380079e",
-      "bytes": 318044
+      "bytes": 318060,
+      "patterns": 755
     },
     {
       "file": "vs2022.part13.npat",
@@ -349,5 +350,25 @@
     "Release binaries compile affected translation units and link them with previously qualified fixture archives, whose hashes were retained. A complete dependency rebuild was not completed; current-tree changed translation units compile separately.",
     "Scoped sanitizer coverage excludes some dependencies and leak detection.",
     "Shared-host repeated matching after warmup does not establish cold-start gains, zero overhead or superiority to another product."
-  ]
+  ],
+  "pre_collision_output": [
+    {
+      "file": "vs2022.part3.npat",
+      "sha256": "bee73fe7575571a52dfb527838f7e3fde6b797362e7f6e0f4d7350085faf91ab",
+      "previous_sha256": "0409998e46e37803fd75568cb3fdb70affa26ae259878b097c733414f380079e",
+      "bytes": 318044
+    },
+    {
+      "file": "vs2022.part13.npat",
+      "sha256": "853ecd2ff6f8c2479c024b7265331c27ba4263f86e261746030a7852c84350c0",
+      "previous_sha256": null,
+      "bytes": 166
+    }
+  ],
+  "collision_refinement": {
+    "file": "validation/library-features/collision-refinement.json",
+    "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
+    "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
+    "previous_manifest_sha256": "3807e3994b2c0b5b579c938833cb82e582d81c5261bdaddccc36621c1d8d6a11"
+  }
 }

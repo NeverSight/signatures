@@ -882,7 +882,6 @@
 8B4130FF088B4120FF008B41208B00C3 00 0000 0010 :0000 ?_Gnpreinc@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IAEPADXZ
 8B4130FF088B49208B0183C0028901C3 00 0000 0010 :0000 ?_Gnpreinc@?$basic_streambuf@_WU?$char_traits@_W@std@@@std@@IAEPA_WXZ
 8B4130FF088B49208B018D50028911C3 00 0000 0010 :0000 ?_Gninc@?$basic_streambuf@_WU?$char_traits@_W@std@@@std@@IAEPA_WXZ
-8B4130FF088B51208B028D4802890AC3 00 0000 0010 :0000 ?_Gninc@?$basic_streambuf@_WU?$char_traits@_W@std@@@std@@IAEPA_WXZ
 8B4134FF088B49248B018D50028911C3 00 0000 0010 :0000 ?_Pninc@?$basic_streambuf@_WU?$char_traits@_W@std@@@std@@IAEPA_WXZ
 8B4134FF088B51248B028D4802890AC3 00 0000 0010 :0000 ?_Pninc@?$basic_streambuf@_WU?$char_traits@_W@std@@@std@@IAEPA_WXZ
 8B41408941148B41708941188B417389411CC20800 00 0000 0015 :0000 ?CopyParameters@FxUsbPipeControlTransferContext@@UAEXPAVFxIoTarget@@PAVFxRequest@@@Z

@@ -5,15 +5,15 @@
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 62027,
+  "lines": 55149,
   "parts": [
     {
-      "file": "pe/x86/64/vs2026.pat",
-      "lines": 34525
+      "file": "pe/x86/64/vs2026.part2.pat",
+      "lines": 23782
     },
     {
-      "file": "pe/x86/64/vs2026.part2.pat",
-      "lines": 27502
+      "file": "pe/x86/64/vs2026.pat",
+      "lines": 31367
     }
   ],
   "sources": [
@@ -35,5 +35,23 @@
       "sigmaker": "Generated 406839 signatures \u2192 vs2026-14.51.36231-x64.pat (8772 objects, 16426 for another machine skipped, 76697 non-object members, 15721 functions below --min-size, 155476 functions stating too few exact bytes)",
       "toolset_version": "14.51.36231"
     }
-  ]
+  ],
+  "native_parts": [
+    {
+      "file": "pe/x86/64/vs2026.npat",
+      "patterns": 5841,
+      "sha256": "eebcc87a1ed1a9d83ed9dca6df81705bde644e75b80aa4ae69463210affc80b7"
+    },
+    {
+      "file": "pe/x86/64/vs2026.part2.npat",
+      "patterns": 7123,
+      "sha256": "da4a5345f68b4d14594e7148818619b29f6fe5268095b85f1b1dc843f49db3c7"
+    }
+  ],
+  "collision_refinement": {
+    "file": "validation/library-features/collision-refinement.json",
+    "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
+    "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
+    "previous_manifest_sha256": "ea403a891193a93d9ed6d444fd5527215a379609f175303f4a02e3999a4fb8ca"
+  }
 }

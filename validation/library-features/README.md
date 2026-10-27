@@ -13,6 +13,31 @@ also exercise shared ATL/MFC `CStringT` and ATL COM `CComPtr<IUnknown>`.
 standard narrow and wide locale facets. Its O0 and O2 objects retain actual
 template symbols and relocation targets for separate signature authoring.
 This capture adds no byte rules or recognition claims by itself.
+`template-collisions.cpp` instantiates containers, ownership operations,
+tuples, atomics and strings for distinct scalar, string and user-defined
+types. The two user-defined types have the same layout but different names.
+Its release/debug O0 and O2 builds retain nominal alternatives that ordinary
+library archives may not instantiate. These bodies are collision evidence;
+matching one of them does not recover an erased source type. Reference-only
+refinements and incoming-context records need separate source and image checks.
+`runtime-collisions.cpp` adds independently named string updates, streams,
+allocation/ownership, synchronization and exception operations under the same
+four configurations. None of these probes reads evaluation programs or their
+symbol maps. Both families are collected only for MSVC.
+
+The checked-in [capture receipt](collision-capture-receipt.json) records eight
+compiler/target configurations and 128 reproduced objects/assembly files,
+including package and included-header hashes. The separate
+[collision refinement receipt](collision-refinement.json) records the selected
+patterns, input hashes and held-out accuracy/performance checks. It constrains
+whole byte cohorts together and retains at most one global required clause per
+old record. Earlier generation receipts remain historical evidence; their
+`collision_refinement` links identify the current outputs and qualification.
+The 60-probe check reduces wrong preferred candidates from 541 to 333 with no
+new wrong candidate, while correct library candidates change from 171817 to
+171702. All signature-only names remain unadmitted. This is a precision tradeoff,
+not complete recognition or proof of original source identity.
+
 `libc.c` keeps C memory/string operations separate from C++ containers.
 User classes, `vector<bool>`, a wrong stride, an ordered load, extra effects
 and a different library configuration provide near misses. A user wrapper

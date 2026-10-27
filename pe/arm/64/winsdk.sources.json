@@ -5,7 +5,7 @@
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 43258,
+  "lines": 43214,
   "sources": [
     {
       "arch": "arm64",
@@ -63,5 +63,18 @@
       "sigmaker": "Generated 33333 signatures \u2192 winsdk-10.0.26100.0-arm64.pat (11163 objects, 3822 for another machine skipped, 229871 non-object members, 7809 functions stating too few exact bytes)",
       "windows_sdk_version": "10.0.26100.0"
     }
-  ]
+  ],
+  "native_parts": [
+    {
+      "file": "pe/arm/64/winsdk.npat",
+      "patterns": 82,
+      "sha256": "c8b1a9b970d528cad16799427cc9732fde831ccaf617eb1ccc174368445aba22"
+    }
+  ],
+  "collision_refinement": {
+    "file": "validation/library-features/collision-refinement.json",
+    "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
+    "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
+    "previous_manifest_sha256": "8ea52b8efd950d87d8c17acd15e60b92fee7c5631d2901d9d2d77e57ef3b94d3"
+  }
 }
