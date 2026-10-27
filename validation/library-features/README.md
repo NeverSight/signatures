@@ -34,8 +34,12 @@ boundaries, piecewise node construction, empty deleter types, ordering predicate
 default atomic loads and calendar wrappers. `eh-state-collisions.cpp` and
 `eh-object-collisions.cpp` compare local arrays with recursive object members
 across the same frame-size range; their generated EH helpers retain different
-security-cookie checks. These are independent source
-counterexamples: a matching body supplies evidence against a unique byte claim,
+security-cookie checks. `member-frame-collisions.cpp` varies nontrivial member
+cleanup after constructor failures and exercises locale boundaries. The retained
+profiles also compare C++14 with C++17, whole-unit with function-section output,
+and native legacy compilation with a mixed compiler/header diagnostic. Their
+actual flags and header identities remain separate in the capture receipt.
+These are independent source counterexamples: a matching body supplies evidence against a unique byte claim,
 not a replacement name for an evaluated function.
 
 The checked-in [capture receipt](collision-capture-receipt.json) records eight
