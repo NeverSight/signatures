@@ -1,0 +1,2 @@
+; Source-owned nonsplittable code layouts; candidates only.
+488B05........C3CCCCCCCCCCCCCCCC4883EC28FF15........4885C0488905........0F95C04883C428C3CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC488325........00B001C3CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC488B05........C3 00 0000 0068 !layout :0000 _get_heap_handle :0010 __acrt_initialize_heap :0040 __acrt_uninitialize_heap :0060 __acrt_getheap &0003 __acrt_heap ^0016 __imp_GetProcessHeap &0020 __acrt_heap &0043 __acrt_heap &0063 __acrt_heap

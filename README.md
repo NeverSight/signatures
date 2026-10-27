@@ -684,3 +684,35 @@ for supported targets, private artifact handling, resumable receipts, and
 candidate-generation gates. It does not publish or dispatch GitHub Actions.
 The existing Actions entry points remain available until replacement coverage
 has been verified.
+
+
+## Complete source code contributions
+
+`pe/x86/64/winsdk.part8.npat` adds one 104-byte non-COMDAT COFF contribution
+with four source-owned function offsets. It is queried through an existing
+strong ordinary member, with exact image import and shared-data checks. The
+record adds no global byte-index entry, supplies no global data bindings and
+cannot authorize automatic names. Use a consumer containing
+[`ec1cefacf42d3a3a8048a9c8efce151d58c9374e`](https://github.com/NeverSight/NeverD/commit/ec1cefacf42d3a3a8048a9c8efce151d58c9374e)
+or later; older parsers reject this native constraint.
+
+Four input libraries reproduce one complete declaration and 103 explicit
+refusals in two independent outputs. On 60 no-debug CLI probes, the addition
+recovers 12 correct candidates across six x64 images, loses no correct
+candidates and introduces no wrong candidates. Correct library candidates rise
+from 171,309 to 171,321, and the original comparison set reaches **160/161**.
+All old-data control outputs remain byte-identical. The remaining `_time64`
+identity has a concrete counterexample: two independently linked stripped PEs
+have identical complete bytes but different source declarations. Nominal
+identity remains unresolved without independent evidence.
+
+Across 12 probes at one/four workers, 120 warm paired measurements use 51
+repetitions each and 168 fresh-process measurements retain startup and RSS.
+The x64 ordinary-release paired CPU increment is 0.020–0.058 ms, MFC is
+0.216–0.284 ms and debug is 0.032–0.130 ms. Same-tree controls vary from
+−0.319 to +0.429 ms across the full sweep. Page and signature caches were not
+flushed, and the host is shared; these measurements do not establish zero
+cost, stable memory savings, broad generalization or a cross-product ranking.
+All 333 native and 148 focused Python tests pass. Source hashes, output hashes,
+full probe results, raw timing samples and the identity counterexample are in
+[the qualification receipt](validation/library-features/source-code-layout.json).
