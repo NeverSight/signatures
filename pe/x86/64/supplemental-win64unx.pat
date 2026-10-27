@@ -2,7 +2,6 @@
 33C041B8020000004885D2440F45C041B900040000E9........ 00 0000 001A :0000 __setbuf
 33C0488D15........66669066666690390A7411FFC04883C22083F81D72F1B8 0A 8D3F 0036 :0000 __convfrombaud
 4488442418668954241048894C2408574881EC9000000048C744243000000000 33 F572 0089 :0000 ?_Donarrow@?$ctype@G@std@@IEBADGD@Z
-44884424188954241048894C24084883EC38488B4424404883784800750D8B44 23 3DC5 004C :0000 ?clear@?$basic_ios@DU?$char_traits@D@std@@@std@@QEAAXH_N@Z ................C3
 448944241848895424104883EC6848896C24604C896C2440448B2D........45 0D 1513 073C :0000 __hsearch_r
 4489442418488954241048894C240856574883EC38837C246001750AC7442420 2D 593D 0093 :0000 ?_Init@?$basic_filebuf@DU?$char_traits@D@std@@@std@@IEAAXPEAU__sFILE@@W4_Initfl@12@@Z
 4489442418488954241048894C240856574883EC38837C246001750AC7442420 2D 89B7 0093 :0000 ?_Init@?$basic_filebuf@GU?$char_traits@G@std@@@std@@IEAAXPEAU__sFILE@@W4_Initfl@12@@Z
@@ -12,12 +11,9 @@
 4489442418F30F114C2410F30F114424084881EC88000000F30F108424900000 60 7A9F 0650 :0000 __kernel_tanf
 4489442418F30F114C2410F30F114424084883EC28F30F10442430F30F114424 68 CF39 0187 :0000 __kernel_sinf
 44894C24204488442418488954241048894C24084883EC18488B442428488904 F4 1FC4 0114 :0000 ?_Ffmt@?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@AEBAPEADPEADDH@Z
-44894C24204489442418488954241048894C24084883EC38488B4424400FB640 36 58EA 009C :0000 ?_Makpat@?$_Mpunct@D@std@@AEAAXAEAUpattern@money_base@2@III@Z ..........................................................................................................................................C3
-44894C24204C89442418488954241048894C24084883EC18488B442428488904 FF A414 0152 :0000 ?_Ifmt@?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@AEBAPEADPEADPEBDH@Z ....................................................................................................C3
 44894C24204C89442418488954241048894C24084883EC38488B44244048C740 43 EEA8 0170 :0000 ?_Init@?$basic_stringbuf@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@IEAAXPEBG_KH@Z
 44894C24204C89442418488954241048894C24084883EC58488B4C2460E8.... 00 0000 0317 :0000 ?seekoff@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@MEAA?AV?$fpos@U__mbstate_t@@@2@_JHH@Z ............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................C3
 44894C24204C89442418488954241048894C24084883EC58488B4C2460E8.... 00 0000 032F :0000 ?seekoff@?$basic_stringbuf@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@MEAA?AV?$fpos@U__mbstate_t@@@2@_JHH@Z ............................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................48
-44894C24204C89442418488954241048894C24084883EC58488B4C2470E8.... 00 0000 0226 :0000 ?seekpos@?$basic_stringbuf@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@MEAA?AV?$fpos@U__mbstate_t@@@2@V32@H@Z ..........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................24
 44894C24204C89442418488954241048894C240856574881EC28010000488B8C 06 DC60 01DC :0000 ?seekpos@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MEAA?AV?$fpos@U__mbstate_t@@@2@V32@H@Z ..................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................79
 44894C24204C89442418488954241048894C240856574881EC28010000488B8C 06 DC60 01DC :0000 ?seekpos@?$basic_filebuf@GU?$char_traits@G@std@@@std@@MEAA?AV?$fpos@U__mbstate_t@@@2@V32@H@Z ..................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................7A
 44894C24204C89442418488954241048894C240856574881EC88000000488B8C 06 C1E3 01A4 :0000 ?seekoff@?$basic_filebuf@DU?$char_traits@D@std@@@std@@MEAA?AV?$fpos@U__mbstate_t@@@2@_JHH@Z ..........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................C3
@@ -242,16 +238,9 @@
 4883EC78E8........C705........00000000488905........48833800488B 13 337A 01FB :0000 __PosixProcessStartup
 48894C24084883EC18488B44242048890424EB0B488B042448FFC04889042448 20 8B12 0040 :0000 __strlen
 48894C24084883EC18488B44242048890424EB0C488B04244883C00248890424 24 FDA9 0044 :0000 __wcslen
-48894C24084883EC18488B442420488B4048488338007410488B442420488B40 18 8CCD 0038 :0000 ?_Pnavail@?$basic_streambuf@DU?$char_traits@D@std@@@std@@IEBA_JXZ
-48894C24084883EC18488B442420488B40588B00FFC8488B4C2420488B495889 36 F91D 0056 :0000 ?_Gninc@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IEAAPEAGXZ
-48894C24084883EC18488B442420488B40608B00FFC8488B4C2420488B496089 36 A778 0056 :0000 ?_Pninc@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IEAAPEAGXZ
-48894C24084883EC1848B8FFFFFFFFFFFFFF7F4889042448833C2400760B488B 1C 6C70 003C :0000 ?max_size@?$allocator@G@std@@QEBA_KXZ
-48894C24084883EC28488B442430488B00488B4C2430FF50384883C428C3 00 0000 001E :0000 ?frac_digits@?$_Mpunct@D@std@@QEBAHXZ
-48894C24084883EC28488B442430488B00488B4C2430FF50604883C428C3 00 0000 001E :0000 ?pubsync@?$basic_streambuf@DU?$char_traits@D@std@@@std@@QEAAHXZ
 48894C24084883EC28488B442430488D0D........488908488B442430837818 0D 104F 0040 :0000 ??1?$ctype@G@std@@MEAA@XZ
 48894C24084883EC3848837C244000750433C0EB48488B4C2440E8........48 0F D98C 0062 :0000 __strdup
 48894C24084883EC38488B4424408B407883E00185C0746F488B4C2440E8.... 00 0000 00CD :0000 ?_Tidy@?$basic_stringbuf@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@IEAAXXZ
-48894C24084883EC38488B4C2440E8........4883F8017E19488B4C2440E8.. 00 0000 0090 :0000 ?snextc@?$basic_streambuf@GU?$char_traits@G@std@@@std@@QEAAGXZ
 48894C24084883EC38488B4C2440E8........48FFC04889442428488B442428 0E 34F6 0061 :0000 __wcsdup
 48894C24084883EC38C744242000000000EB0A8B442420FFC089442420486344 09 86D3 0077 :0000 wctype
 48894C24084883EC48488B4C2450E8........F20F11442420488B4C2450E8.. 00 0000 0072 :0000 ??$norm@N@std@@YANAEBV?$complex@N@0@@Z ^000F ??$real@N@std@@YANAEBV?$complex@N@0@@Z
@@ -264,9 +253,6 @@
 48894C240848895424104C894424184C894C24204883EC38833D........0048 16 D9A1 00A7 :0000 __warnx
 48894C240848895424104C894424184C894C2420534883EC20833D........00 0A A5BD 0069 :0000 __scanf
 48894C2408488B442408488B4028488B00C3 00 0000 0012 :0000 ?pbase@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IEBAPEAGXZ
-48894C2408488B442408488B4040488B4C2408488B4958486309488B00488D04 02 7673 0022 :0000 ?egptr@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IEBAPEAGXZ
-48894C2408488B442408488B4048488B00C3 00 0000 0012 :0000 ?pptr@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IEBAPEAGXZ
-48894C2408488B442408488B4048488B4C2408488B4960486309488B00488D04 02 7673 0022 :0000 ?epptr@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IEBAPEAGXZ
 48894C2408488B442408488B40588B00FFC0488B4C2408488B49588901488B44 26 239B 0046 :0000 ?_Gndec@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IEAAPEAGXZ
 48894C2408488B442408488B40588B00FFC8488B4C2408488B49588901488B44 26 EB00 0046 :0000 ?_Gnpreinc@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IEAAPEAGXZ
 48894C2408488B442408660F124008C3 00 0000 0010 :0000 ?imag@?$_Complex_base@NU_C_double_complex@@@std@@QEBANXZ
@@ -290,7 +276,6 @@
 488954241048894C24084883EC28488B442430488B0048634004488B4C243048 0B AF7F 0047 :0000 ??$getline@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@YAAEAV?$basic_istream@GU?$char_traits@G@std@@@0@AEAV10@AEAV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@@Z ............B7
 488954241048894C24084883EC28488B442430488B00488944240848837C2408 97 696B 00B7 :0000 __strsep
 488954241048894C24084883EC28488B442430488B00488944240848837C2408 9E 0282 00BE :0000 __wcssep
-488954241048894C24084883EC28488B442430488B00488B542438488B4C2430 0D 70AC 002D :0000 ?neg_format@?$_Mpunct@D@std@@QEBA?AUpattern@money_base@2@XZ
 488954241048894C24084883EC28488B44243048D1E0488BC8E8........4883 03 53B6 0023 :0000 ??$_Allocate@G@std@@YAPEAG_KPEAG@Z
 488954241048894C24084883EC28488B4C2430E8........488B442430C64008 19 7482 0039 :0000 ??0?$ostreambuf_iterator@GU?$char_traits@G@std@@@std@@QEAA@PEAV?$basic_streambuf@GU?$char_traits@G@std@@@1@@Z
 488954241048894C24084883EC28488B4C2438E8........488B442430660F12 18 5AAB 005D :0000 ??$_Sub@N@?$_Complex_base@NU_C_double_complex@@@std@@IEAAXAEBV?$complex@N@1@@Z ^0014 ?real@?$_Complex_base@NU_C_double_complex@@@std@@QEBANXZ
@@ -301,7 +286,6 @@
 488954241048894C24084883EC28488B4C2438E8........488B442430F20F11 07 BD90 003F :0000 ??4?$complex@O@std@@QEAAAEAV01@AEBV01@@Z ^0014 ?real@?$_Complex_base@OU_C_ldouble_complex@@@std@@QEBAOXZ
 488954241048894C24084883EC28488B4C2438E8........488B442430F30F11 07 BD90 003F :0000 ??4?$complex@M@std@@QEAAAEAV01@AEBV01@@Z
 488954241048894C24084883EC28488D05........48890424488B4424304889 93 5FE2 00B3 :0000 __strcasecmp_win
-488954241048894C24084883EC28488D542438488B4C2430E8........488B44 05 E1E9 0036 :0000 ??0bad_exception@std@@QEAA@PEBD@Z
 488954241048894C24084883EC380F57C0F30F114424204C8D442420488B5424 07 53B7 0035 :0000 ??$polar@M@std@@YA?AV?$complex@M@0@AEBM@Z
 488954241048894C24084883EC38488B4424480FB600884424280FBE44242848 16 2ED3 00A2 :0000 __strstr
 488954241048894C24084883EC38488B4424480FB600884424280FBE44242848 16 9109 00B6 :0000 __strcasestr
@@ -318,7 +302,6 @@
 488954241048894C24084883EC38488B4C2448E8........660F120D........ 14 2E95 005C :0000 ??$conj@O@std@@YA?AV?$complex@O@0@AEBV10@@Z ^0014 ??$imag@O@std@@YAOAEBV?$complex@O@0@@Z ..............................................................................C3
 488954241048894C24084883EC38488B4C2448E8........660F120D........ 14 2E95 006C :0000 ??$?GN@std@@YA?AV?$complex@N@0@AEBV10@@Z ^0014 ??$imag@N@std@@YANAEBV?$complex@N@0@@Z ..............................................................................24
 488954241048894C24084883EC38488B4C2448E8........660F120D........ 14 2E95 006C :0000 ??$?GO@std@@YA?AV?$complex@O@0@AEBV10@@Z ^0014 ??$imag@O@std@@YAOAEBV?$complex@O@0@@Z ..............................................................................24
-488954241048894C24084883EC38488B4C2448E8........66894424200FB744 23 7504 0043 :0000 ??$_Fgetc@G@std@@YA_NAEAGPEAU__sFILE@@@Z
 488954241048894C24084883EC38488B542440488B4C2448E8........0FB6C0 1F 6389 003F :0000 ??$?NDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z ^0019 ??$?MDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z
 488954241048894C24084883EC38488B542440488B4C2448E8........0FB6C0 1F 6389 003F :0000 ??$?NDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEBD@Z ^0019 ??$?MDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NPEBDAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z
 488954241048894C24084883EC38488B542440488B4C2448E8........0FB6C0 1F 6389 003F :0000 ??$?NDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NPEBDAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z ^0019 ??$?MDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEBD@Z
@@ -327,26 +310,6 @@
 488954241048894C24084883EC38488B542440488B4C2448E8........0FB6C0 1F 6389 003F :0000 ??$?NGU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NPEBGAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@@Z ^0019 ??$?MGU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@PEBG@Z
 488954241048894C24084883EC38488B542440488B4C2448E8........85C07E 1C 423B 003C :0000 ??$?MDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NPEBDAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z ^0019 ?compare@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBAHPEBD@Z
 488954241048894C24084883EC38488B542440488B4C2448E8........85C07E 1C 423B 003C :0000 ??$?MGU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NPEBGAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@@Z ^0019 ?compare@?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@QEBAHPEBG@Z
-488954241048894C24084883EC38488B542448488B4424400FB708E8........ 25 11DE 0045 :0000 ??$_Ungetc@G@std@@YA_NAEBGPEAU__sFILE@@@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?9DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEBD@Z ^0019 ??$?8DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEBD@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?9DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NPEBDAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z ^0019 ??$?8DU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NPEBDAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?9GU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@0@Z ^0019 ??$?8GU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@0@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?9GU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@PEBG@Z ^0019 ??$?8GU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@PEBG@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?9GU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NPEBGAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@@Z ^0019 ??$?8GU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NPEBGAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?9N@std@@YA_NAEBNAEBV?$complex@N@0@@Z ^0019 ??$?8N@std@@YA_NAEBNAEBV?$complex@N@0@@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?9N@std@@YA_NAEBV?$complex@N@0@0@Z ^0019 ??$?8N@std@@YA_NAEBV?$complex@N@0@0@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?9N@std@@YA_NAEBV?$complex@N@0@AEBN@Z ^0019 ??$?8N@std@@YA_NAEBV?$complex@N@0@AEBN@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?9O@std@@YA_NAEBOAEBV?$complex@O@0@@Z ^0019 ??$?8O@std@@YA_NAEBOAEBV?$complex@O@0@@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?9O@std@@YA_NAEBV?$complex@O@0@0@Z ^0019 ??$?8O@std@@YA_NAEBV?$complex@O@0@0@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?9O@std@@YA_NAEBV?$complex@O@0@AEBO@Z ^0019 ??$?8O@std@@YA_NAEBV?$complex@O@0@AEBO@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?PDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z ^0019 ??$?MDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@0@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?PDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEBD@Z ^0019 ??$?MDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEBD@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?PDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NPEBDAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z ^0019 ??$?MDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NPEBDAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?PGU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@0@Z ^0019 ??$?MGU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@0@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?PGU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@PEBG@Z ^0019 ??$?MGU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@PEBG@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??$?PGU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NPEBGAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@@Z ^0019 ??$?MGU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NPEBGAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??9?$_String_const_iterator@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA_NAEBV01@@Z ^0019 ??8?$_String_const_iterator@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA_NAEBV01@@Z
-488954241048894C24084883EC38488B542448488B4C2440E8........0FB6C0 1F 6389 003F :0000 ??9?$_String_const_iterator@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@QEBA_NAEBV01@@Z ^0019 ??8?$_String_const_iterator@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@QEBA_NAEBV01@@Z
 488954241048894C24084883EC38488B542448488B4C2440E8........85C07D 1C 423B 003C :0000 ??$?MDU?$char_traits@D@std@@V?$allocator@D@1@@std@@YA_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@0@PEBD@Z ^0019 ?compare@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBAHPEBD@Z
 488954241048894C24084883EC38488B542448488B4C2440E8........85C07D 1C 423B 003C :0000 ??$?MGU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@0@Z ^0019 ?compare@?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@QEBAHAEBV12@@Z
 488954241048894C24084883EC38488B542448488B4C2440E8........85C07D 1C 423B 003C :0000 ??$?MGU?$char_traits@G@std@@V?$allocator@G@1@@std@@YA_NAEBV?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@0@PEBG@Z ^0019 ?compare@?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@QEBAHPEBG@Z
@@ -362,8 +325,6 @@
 488954241048894C2408488B442408488B4C2410660F1201F20F114008488B44 08 F0CE 0028 :0000 ?imag@?$_Complex_base@NU_C_double_complex@@@std@@QEAANAEBN@Z
 488954241048894C2408488B442408488B4C2410F30F1001F30F1100488B4424 06 4697 0026 :0000 ?real@?$_Complex_base@MU_C_float_complex@@@std@@QEAAMAEBM@Z
 488954241048894C2408488B442408488B4C2410F30F1001F30F114004488B44 08 B30D 0028 :0000 ?imag@?$_Complex_base@MU_C_float_complex@@@std@@QEAAMAEBM@Z
-488954241048894C2408488B4424088B403C488B4C24108901488B442410C3 00 0000 001F :0000 ?do_pos_format@?$_Mpunct@D@std@@MEBA?AUpattern@money_base@2@XZ
-488954241048894C2408488B4424088B4040488B4C24108901488B442410C3 00 0000 001F :0000 ?do_neg_format@?$_Mpunct@D@std@@MEBA?AUpattern@money_base@2@XZ
 488954241048894C2408488B4424100FB700488B4C24080FB709488B54241048 4F 2C5B 006F :0000 __wcscmp
 488954241048894C2408488B4424100FBE00488B4C24080FBE09488B54241048 3E 717D 005E :0000 __strcmp
 488954241048894C240856574883EC28488D442410488BF8488B742448B91000 39 0DA0 0059 :0000 ??$?HN@std@@YA?AV?$complex@N@0@AEBV10@@Z
@@ -375,7 +336,6 @@
 48895424104C894424184C894C24204883EC4848895C244048896C2438488974 12 8AF3 00E3 :0000 __err
 48895424104C894424184C894C24204C8BDC4881ECF8000000488B05........ 57 EAEE 0098 :0000 __sprintf
 48895424104C894424184C894C2420574C8BDC4881ECF0000000488B05...... 00 0000 00B1 :0000 __sscanf
-488954241066894C24084883EC38488B5424480FB74C2440E8........0FB7C0 22 8A02 0042 :0000 ??$_Fputc@G@std@@YA_NGPEAU__sFILE@@@Z
 488954241066894C2408574881EC80000000C64424200048C744243000000000 2C 9DA8 005D :0000 ??$_Maklocbyte@G@std@@YADGAEBU_Cvtvec@@@Z
 4889542410F20F114424084881EC88000000660F12842490000000F20F114424 FF B546 02E6 :0000 __modf
 4889542410F20F114424084881ECA8000000660F128424B0000000F20F118424 70 7B69 0DA1 :0000 __lgamma_r
@@ -433,8 +393,6 @@
 4C89442418488954241048894C24084883EC48488B4424504889442438488B44 7B C08A 0120 :0000 __strlcat
 4C89442418488954241048894C24084883EC48488B4424504889442438488B44 7F 950A 012C :0000 __wcslcat
 4C89442418488954241048894C24084883EC58488B05........488944244848 30 BD8D 011C :0000 __wcsncasecmp
-4C89442418488954241048894C2408488B442408488B4028488B4C2410488908 30 7EB8 0050 :0000 ?setp@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IEAAXPEAG0@Z
-4C89442418488954241048894C2408488B442408488B4C2410F30F1001F30F11 1A 7C95 003A :0000 ??0?$_Complex_base@MU_C_float_complex@@@std@@QEAA@AEBM0@Z
 4C89442418488954241048894C240856574883EC58488B44247048C700000000 48 27C1 0068 :0000 ??0?$fpos@U__mbstate_t@@@std@@QEAA@U__mbstate_t@@_J@Z
 4C894424184889542410884C2408574881EC9000000066C7442430000048C744 3D A249 006F :0000 ??$_Maklocchr@G@std@@YAGDPEAGAEBU_Cvtvec@@@Z
 4C894424184C894C2420534881ECF0000000488B05........48898424E00000 87 9352 00CE :0000 __snprintf
@@ -442,8 +400,6 @@
 4C894424188954241048894C24084883EC28488B4424304889042448837C2440 FF 4601 0176 :0000 __memset
 4C894C24204489442418488954241048894C24084883EC2848837C244800766D 74 B34B 0094 :0000 __memccpy
 4C894C24204C89442418488954241048894C24084883EC48488B442450488B4C 09 7E56 0108 :0000 ?compare@?$basic_string@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@QEBAH_K0PEBG0@Z ....................................................................................................................................................................................................................................................................................................................................................................................................................................................48
-4C894C24204C89442418488954241048894C24084883EC48488B442470488B4C A7 98B3 0181 :0000 ?do_in@?$codecvt@GDU__mbstate_t@@@std@@MEBAHAEAU__mbstate_t@@PEBD1AEAPEBDPEAG3AEAPEAG@Z
-4C894C24204C89442418488954241048894C2408488B442408488B4020488B4C 35 B433 0055 :0000 ?setg@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IEAAXPEAG00@Z
 4C894C24204C89442418488954241048894C2408488B442408488B4028488B4C 35 4EEB 0055 :0000 ?setp@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IEAAXPEAG00@Z
 4C894C24204C89442418488954241048894C240856574881ECD8000000488B84 6B 8C5E 015E :0000 ?do_unshift@?$codecvt@GDU__mbstate_t@@@std@@MEBAHAEAU__mbstate_t@@PEAD1AEAPEAD@Z
 4C894C24204C89442418488954241048894C240856574881ECE8000000488B84 90 1499 02B5 :0000 ?do_out@?$codecvt@GDU__mbstate_t@@@std@@MEBAHAEAU__mbstate_t@@PEBG1AEAPEBGPEAD3AEAPEAD@Z
@@ -468,14 +424,10 @@
 4C8BDC4883EC58488BD133C049895B1849897B2048C7C3FFFFFFFF488BFA488B 12 4423 00B1 :0000 __puts
 4D63C833C041B8020000004885D2440F45C0E9........ 00 0000 0017 :0000 __setbuffer
 4D8BD04C8BC949D1FA41F6C207742190410FB641014D0FBE0149FFCA88024488 B5 DB92 00D5 :0000 __swab
-664489442418668954241048894C24084883EC28488B442430488B00440FB744 14 15F6 0034 :0000 ?is@?$ctype@G@std@@QEBA_NFG@Z
-664489442418668954241048894C24084883EC38488B4424404883C010488BD0 06 36FD 0051 :0000 ?do_is@?$ctype@G@std@@MEBA_NFG@Z
 664489442418F30F114C241048894C24084883EC28440FB7442440F30F104C24 07 DB56 0030 :0000 ?_Exp@?$_Ctraits@M@std@@SAFPEAMMF@Z
 66894C24084883EC280FB744243085C0750733C0E9F70000000FB74424308BC8 01 3E9B 0115 :0000 __wcwidth
 668954241048894C24084881ECB8000000488B8424C00000008B407883E00885 0C 20C1 0556 :0000 ?overflow@?$basic_stringbuf@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@MEAAGG@Z
 668954241048894C24084883EC1848C7042400000000EB0E488B4424204883C0 39 54FC 0059 :0000 __wcsrchr
-668954241048894C24084883EC28488B4424304883C010488BD00FB74C2438E8 00 0000 0029 :0000 ?do_tolower@?$ctype@G@std@@MEBAGG@Z ^0020 _Towlower
-668954241048894C24084883EC28488B4424304883C010488BD00FB74C2438E8 00 0000 0029 :0000 ?do_toupper@?$ctype@G@std@@MEBAGG@Z ^0020 _Towupper
 668954241048894C24084883EC48488B4C2450E8........4885C00F84830000 07 283B 010C :0000 ?pbackfail@?$basic_stringbuf@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@MEAAGG@Z
 668954241048894C24084883EC48488B4C2450E8........4885C0745E488B4C 03 271E 00B1 :0000 ?sputbackc@?$basic_streambuf@GU?$char_traits@G@std@@@std@@QEAAGG@Z
 668954241048894C2408EB0E488B4424084883C0024889442408488B4424080F 25 7DB0 0045 :0000 __wcschr
@@ -485,8 +437,6 @@
 833D........007522488B15........B839300000488B0A4869C993B1393E48 0E 065C 0090 :0000 __random
 83F902448BC2742083F904741583F906741083F909740B83F90B7406B81F0000 5A C7A9 007A :0000 _i_days_per_month
 85C9750333C0C3B80100000084C87509D1E9FFC0F6C10174F7C20000 00 0000 001C :0000 __ffs
-8854241048894C24084883EC280FB6542438488B4C2430E8........4883C428 01 EF04 0021 :0000 ??$?6U?$char_traits@D@std@@@std@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@0@AEAV10@C@Z ^0018 ??$?6U?$char_traits@D@std@@@std@@YAAEAV?$basic_ostream@DU?$char_traits@D@std@@@0@AEAV10@D@Z
-8854241048894C24084883EC28488B442430488B000FB6542438488B4C2430FF 07 E05D 0027 :0000 ?widen@?$ctype@G@std@@QEBAGD@Z
 8854241048894C24084883EC48488B442450488944242848C744243000000000 1A AD51 009D :0000 __mbsrchr
 894C24080FB6442409884C2409884424088B442408C3 00 0000 0016 :0000 __ntohs
 894C24080FB6442409884C2411884424108B442410C3 00 0000 0016 :0000 __htons
@@ -498,15 +448,7 @@
 894C240848895424104C894424184C894C24204883EC4848895C244048897C24 02 631C 00F6 :0000 __ulimit
 8954241048894C24084883EC180FB6442428880424488B4424204889442408EB 3C 5A9A 005C :0000 __strchr
 8954241048894C24084883EC18488B4424208B40188904248B44242825FFFF00 11 382A 0031 :0000 ?flags@ios_base@std@@QEAAHH@Z
-8954241048894C24084883EC18C70424000000008B44242883E00185C075098B 4C 4D39 006C :0000 ?_Getstate@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEAAHH@Z
 8954241048894C24084883EC28488B442430488904240FB64424388844241048 47 45D4 0067 :0000 __strrchr
-8954241048894C24084883EC28488B4C2430E8........8B44243883E00185C0 08 8E26 0036 :0000 ??_G?$basic_stringbuf@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@UEAAPEAXI@Z ^0013 ??1?$basic_stringbuf@GU?$char_traits@G@std@@V?$allocator@G@2@@std@@UEAA@XZ
-8954241048894C24084883EC28488B4C2430E8........8B44243883E00185C0 08 8E26 0036 :0000 ??_G?$codecvt@DDU__mbstate_t@@@std@@MEAAPEAXI@Z ^0013 ??1?$codecvt@DDU__mbstate_t@@@std@@MEAA@XZ
-8954241048894C24084883EC28488B4C2430E8........8B44243883E00185C0 08 8E26 0036 :0000 ??_G?$codecvt@GDU__mbstate_t@@@std@@MEAAPEAXI@Z ^0013 ??1?$codecvt@GDU__mbstate_t@@@std@@MEAA@XZ
-8954241048894C24084883EC28488B4C2430E8........8B44243883E00185C0 08 8E26 0036 :0000 ??_Gexception@@UEAAPEAXI@Z ^0013 ??1exception@@UEAA@XZ
-8954241048894C24084883EC28488B4C2430E8........8B44243883E00185C0 08 8E26 0036 :0000 ??_Gfacet@locale@std@@UEAAPEAXI@Z ^0013 ??1facet@locale@std@@UEAA@XZ
-8954241048894C2408488B442408488B40588B4C24108B002BC1488B4C240848 27 A1CB 0047 :0000 ?gbump@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IEAAXH@Z
-8954241048894C2408488B442408488B40608B4C24108B002BC1488B4C240848 27 063E 0047 :0000 ?pbump@?$basic_streambuf@GU?$char_traits@G@std@@@std@@IEAAXH@Z
 89542410F20F114424084883EC28660F12442430E8........85C07412660F12 07 2A13 0083 :0000 __ldexp
 89542410F20F114424084883EC288B542438660F12442430E8........4883C4 02 2316 0022 :0000 ?ldexp@?$_Ctraits@O@std@@SAOOH@Z ^0019 ?ldexpl@@YAOOH@Z
 89542410F20F114424084883EC288B542438660F12442430E8........4883C4 02 2316 0022 :0000 ?ldexpl@@YAOOH@Z ^0019 ldexp
@@ -584,11 +526,6 @@ F30F114424084883EC18F30F10442420F30F114424048B44240489042433C085 32 B5EC 0052 :0
 F30F114424084883EC18F30F10442420F30F114424088B4424088944240433C0 96 7DBB 00B6 :0000 __ilogbf
 F30F114424084883EC28488D15........F30F10442430E8........4883C428 01 EF04 0021 :0000 __gammaf ^0018 __gammaf_r
 F30F114424084883EC28488D15........F30F10442430E8........4883C428 01 EF04 0021 :0000 __lgammaf ^0018 __lgammaf_r
-F30F114424084883EC28F30F10442430E8........4883C428C3 00 0000 001A :0000 ?cos@?$_Ctraits@M@std@@SAMM@Z ^0011 cosf
-F30F114424084883EC28F30F10442430E8........4883C428C3 00 0000 001A :0000 ?log@?$_Ctraits@M@std@@SAMM@Z ^0011 logf
-F30F114424084883EC28F30F10442430E8........4883C428C3 00 0000 001A :0000 ?sin@?$_Ctraits@M@std@@SAMM@Z ^0011 sinf
-F30F114424084883EC28F30F10442430E8........4883C428C3 00 0000 001A :0000 ?sqrt@?$_Ctraits@M@std@@SAMM@Z ^0011 sqrtf
-F30F114424084883EC28F30F10442430E8........4883C428C3 00 0000 001A :0000 ?tan@?$_Ctraits@M@std@@SAMM@Z ^0011 tanf
 F30F114424084883EC28F30F10442430E8........F7D8F30F2AC00F28C8F30F 05 D2A2 002E :0000 __significandf
 F30F114424084883EC28F30F10442430F30F1144240C8B44240C8944240433C0 2D 40C7 0152 :0000 __ceilf
 F30F114424084883EC28F30F10442430F30F1144240C8B44240C8944240433C0 2D 854D 0110 :0000 __truncf
@@ -629,11 +566,6 @@ F30F114C2410F30F114424084883EC18F30F10442420F30F110424F30F104424 B1 A65D 00D1 :0
 F30F114C2410F30F114424084883EC28F30F10442430E8........85C0750FF3 06 6369 0124 :0000 __scalbf
 F30F114C2410F30F114424084883EC28F30F10442430F30F114424088B442408 58 548D 0078 :0000 __copysignf
 F30F114C2410F30F114424084883EC28F30F10442430F30F114424188B442418 2F 4A23 01FB :0000 __kernel_cosf
-F30F114C2410F30F114424084883EC28F30F104C2438F30F10442430E8...... 00 0000 0026 :0000 ?_Cosh@?$_Ctraits@M@std@@SAMMM@Z ^001D _FCosh
-F30F114C2410F30F114424084883EC28F30F104C2438F30F10442430E8...... 00 0000 0026 :0000 ?_Sinh@?$_Ctraits@M@std@@SAMMM@Z ^001D _FSinh
-F30F114C2410F30F114424084883EC28F30F104C2438F30F10442430E8...... 00 0000 0026 :0000 ?atan2@?$_Ctraits@M@std@@SAMMM@Z ^001D atan2f
-F30F114C2410F30F114424084883EC28F30F104C2438F30F10442430E8...... 00 0000 0026 :0000 ?pow@?$_Ctraits@M@std@@SAMMM@Z ^001D powf
-F30F114C2410F30F114424084883EC28F30F104C2438F30F10442430E8...... 00 0000 0026 :0000 __dremf ^001D __remainderf
 F30F114C2410F30F114424084883EC38F30F10442440E8........85C07408F3 0E 28A0 0078 :0000 __fdimf
 F30F114C2410F30F114424084883EC38F30F10442440F30F114424108B442410 FF 1344 01E3 :0000 __nextafterf
 F30F114C2410F30F114424084883EC38F30F10442440F30F114424208B442420 B2 94CD 036D :0000 __fmodf

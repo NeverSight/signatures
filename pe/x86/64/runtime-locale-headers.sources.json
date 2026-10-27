@@ -262,9 +262,9 @@
   "output": [
     {
       "file": "pe/x86/64/vs2022.part16.npat",
-      "patterns": 73,
-      "bytes": 90635,
-      "sha256": "feff90f1b40c192d3ce3242bb5304eebda1305e27cfef711087ce2fb5973bcd3"
+      "patterns": 139,
+      "bytes": 145415,
+      "sha256": "1cc887084a28501afabccc4c17253081207461b01be170fd7576aae32a368737"
     },
     {
       "file": "pe/x86/64/vs2022.part17.npat",
@@ -1178,5 +1178,25 @@
         }
       }
     ]
+  },
+  "pre_collision_output": [
+    {
+      "file": "pe/x86/64/vs2022.part16.npat",
+      "patterns": 73,
+      "bytes": 90635,
+      "sha256": "feff90f1b40c192d3ce3242bb5304eebda1305e27cfef711087ce2fb5973bcd3"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part17.npat",
+      "patterns": 102,
+      "bytes": 138762,
+      "sha256": "f18bff01ee0e1c230c70e3330dae0c98bd31e491483ddbc76f6b8b13ffeda8be"
+    }
+  ],
+  "collision_refinement": {
+    "file": "validation/library-features/collision-refinement.json",
+    "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
+    "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
+    "previous_manifest_sha256": "0470d5bc71423faadda34798c5b6f2f529a714eb7a294f56abff78ade9535e6a"
   }
 }

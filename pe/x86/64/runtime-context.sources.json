@@ -193,7 +193,7 @@
     {
       "file": "vs2022.part3.npat",
       "patterns": 755,
-      "sha256": "fb0c882b125180fad24fd314a2b88eaa6f4658c6850fc2683098bc5d823e99f0"
+      "sha256": "eb81db33c058335993e4b2a0c97ad9db319372339d22e8bce01f843decd3b1b7"
     },
     {
       "file": "winsdk.part3.npat",
@@ -398,5 +398,23 @@
       "windows_sdk_version": "10.0.26100.0"
     }
   ],
-  "scope": "Complete x64 runtime candidate bodies requiring independently checked context. Incoming records are queried by name and excluded from global byte scanning. These candidates do not authorize automatic source names."
+  "scope": "Complete x64 runtime candidate bodies requiring independently checked context. Incoming records are queried by name and excluded from global byte scanning. These candidates do not authorize automatic source names.",
+  "pre_collision_output": [
+    {
+      "file": "vs2022.part3.npat",
+      "patterns": 755,
+      "sha256": "fb0c882b125180fad24fd314a2b88eaa6f4658c6850fc2683098bc5d823e99f0"
+    },
+    {
+      "file": "winsdk.part3.npat",
+      "patterns": 437,
+      "sha256": "fc09a6bcac280a2a99fc5a4c8e4212f913e085ba268f5764d8dacbcf1c30d98a"
+    }
+  ],
+  "collision_refinement": {
+    "file": "validation/library-features/collision-refinement.json",
+    "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
+    "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
+    "previous_manifest_sha256": "1dcb2397673a817d32cfa02b16f9fd8a3fae8845872fda17d0157bbea57859a8"
+  }
 }

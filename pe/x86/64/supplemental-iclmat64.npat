@@ -1,0 +1,5 @@
+4883EC284885C97405E8........4883C428C390 00 0000 0014 !caller :0000 kmpc_sharable_free
+4883EC28488B0D........E8........4883C428C3909090 00 0000 0018 !caller :0000 __kmp_aux_print_banner
+4883EC28B901000000E8........4883C428C390 00 0000 0014 !caller :0000 kmp_set_library_serial
+4883EC28B902000000E8........4883C428C390 00 0000 0014 !caller :0000 kmp_set_library_turnaround
+---

@@ -5,7 +5,7 @@
   "source_kind": "converted_binary_library_signatures",
   "generator": "scripts/import_binary_signatures.py",
   "baseline_ref": "254a63f839f27348badbabdd14f9d15f7d65ee37",
-  "lines": 56165,
+  "lines": 56162,
   "parts": 1,
   "artifacts": [
     {
@@ -16,5 +16,18 @@
   "validation": {
     "counterexample_policy_sha256": "016e7be3bf848cee0ce6e98b3ca5ddbe5cfdcf1f6fe577b9c72263e36625d758",
     "rejected_records": 1
+  },
+  "native_parts": [
+    {
+      "file": "pe/x86/32/supplemental-iclmat.npat",
+      "patterns": 3,
+      "sha256": "febdf243d06bc4b253ec75dd2023c3b847ab7e347ec6c9deb7a4895a8c54be98"
+    }
+  ],
+  "collision_refinement": {
+    "file": "validation/library-features/collision-refinement.json",
+    "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
+    "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
+    "previous_manifest_sha256": "093431a7bd8dfb39cd5577a8079a80a2fbba4efccab387ef3580fefc08f4d5c2"
   }
 }

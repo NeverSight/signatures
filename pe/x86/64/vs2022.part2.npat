@@ -1,0 +1,5 @@
+4883EC284883F9FF740AFF15........85C074054883C428C3E8........CC 00 0000 001F !refs :0000 __std_fs_close_handle ^000C __imp_CloseHandle
+4883EC284883F9FF740AFF15........85C074054883C428C3E8........CC 00 0000 001F !caller :0000 __std_fs_close_handle ^000C __imp_CloseHandle ^001A abort ^001A terminate
+4883EC284883F9FF740AFF15........85C074054883C428C3E8........CC 00 0000 001F !refs :0000 __std_fs_directory_iterator_close ^000C __imp_FindClose
+4883EC284883F9FF740AFF15........85C074054883C428C3E8........CC 00 0000 001F !caller :0000 __std_fs_directory_iterator_close ^000C __imp_FindClose ^001A abort ^001A terminate
+---

@@ -5,7 +5,7 @@
     "release": "msvc-libs-20260928-elf msvc-libs-20260928-vs2010 msvc-libs-20260928-masm32 msvc-libs-20260928-legacy msvc-libs-20260927-14 msvc-libs-20260927-12 msvc-libs-20260927-13 msvc-libs-20260927-11",
     "tail": 65535
   },
-  "lines": 50645,
+  "lines": 44958,
   "sources": [
     {
       "arch": "x64",
@@ -16,5 +16,98 @@
       "sigmaker": "Generated 413800 signatures \u2192 vs2022-14.44.35207-x64.pat (8573 objects, 16472 for another machine skipped, 75316 non-object members, 15255 functions below --min-size, 157376 functions stating too few exact bytes)",
       "toolset_version": "14.44.35207"
     }
-  ]
+  ],
+  "native_parts": [
+    {
+      "file": "pe/x86/64/vs2022.npat",
+      "patterns": 10676,
+      "sha256": "51ccc8eb032eac779939f0ae46ff6d9cf3fcbbb2f4c2471f40a2a6d9c26956f0"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part10.npat",
+      "patterns": 1,
+      "sha256": "97167497e14ae9d0015fc7947c27ca7eb1765f8d3085ab8896ef8b2b5232ee49"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part11.npat",
+      "patterns": 1,
+      "sha256": "580efd6151567cd1e3ef1b8a42f0a7c5ccc515ffbac5a048241f48a91c1ac383"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part12.npat",
+      "patterns": 1,
+      "sha256": "48a7a275c6ec6ea83c9568c01955d176a9525244a30baaf5e1b8feffa2bf7ff9"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part13.npat",
+      "patterns": 1,
+      "sha256": "853ecd2ff6f8c2479c024b7265331c27ba4263f86e261746030a7852c84350c0"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part14.npat",
+      "patterns": 1,
+      "sha256": "1e3fba495ab0e73696fe3eb3e123788e7ed5952674d4692ebb179816468ba2b2"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part15.npat",
+      "patterns": 1,
+      "sha256": "4a1a1d0ae1f5fb73472ae5af966dc81aa850770e60b430b02f5fbde0cfecd338"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part16.npat",
+      "patterns": 139,
+      "sha256": "1cc887084a28501afabccc4c17253081207461b01be170fd7576aae32a368737"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part17.npat",
+      "patterns": 102,
+      "sha256": "f18bff01ee0e1c230c70e3330dae0c98bd31e491483ddbc76f6b8b13ffeda8be"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part2.npat",
+      "patterns": 4,
+      "sha256": "b7f58e233f67395a8acb8f35dd9251aa1c5b1d9a77ceba58068df72962209e6e"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part3.npat",
+      "patterns": 755,
+      "sha256": "eb81db33c058335993e4b2a0c97ad9db319372339d22e8bce01f843decd3b1b7"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part4.npat",
+      "patterns": 5429,
+      "sha256": "4bca4f93d6d5e21ada6164f2cf460d29c96922d5372ebd21d1f9e421a815495a"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part5.npat",
+      "patterns": 5,
+      "sha256": "1b348dc9d717aa10ed0174244fc0af7f4159a0861b2c7d5f1eec1e9a8e473f33"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part6.npat",
+      "patterns": 1,
+      "sha256": "738f1d4d9baee3a63d081055f1dc98476c5c8e7b7a1419942b09de6b4c53008e"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part7.npat",
+      "patterns": 1,
+      "sha256": "8790d5026cefa46f6a3265ba3cde16645d9dc18e00d002b7a617cfd376189729"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part8.npat",
+      "patterns": 3,
+      "sha256": "709a5f5a3cef416fb6023a4f6f1cf45a276ca0b5b903e84a35324c68b92e4dcb"
+    },
+    {
+      "file": "pe/x86/64/vs2022.part9.npat",
+      "patterns": 1,
+      "sha256": "52cf1a79c6d6c4ba3314636c8f247b4513f9fea6d9d953a4a1625ef8d6c1596f"
+    }
+  ],
+  "collision_refinement": {
+    "file": "validation/library-features/collision-refinement.json",
+    "sha256": "fc2bc78d2b8e78f0362f8fb632c970e656081f85f8b5b8d940e5ade3852f4860",
+    "scope": "Current postprocessing and qualification. Earlier generation/selection/qualification fields describe the original source collection.",
+    "previous_manifest_sha256": "062a73ec3d4f14de4f19afb94408b62cccb80af23049a2fac43ecd6984887e71"
+  }
 }
