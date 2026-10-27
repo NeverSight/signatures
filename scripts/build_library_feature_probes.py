@@ -164,7 +164,8 @@ def produce(args: argparse.Namespace) -> dict:
         base = [str(compiler), "/nologo", "/std:c++17", "/EHsc", "/W3",
                 "/Brepro", "/experimental:deterministic", "/Z7", f"/pathmap:{SOURCES}=/src/neverd-probes",
                 f"/pathmap:{output}=/build/neverd-probes"]
-        families = ("accessors", "atl_string", "atl_com", "locale")
+        families = ("accessors", "atl_string", "atl_com", "locale",
+                    "template-collisions", "runtime-collisions")
     else:
         if args.llvm_source is None or args.libcxx_config is None or args.sysroot is None:
             raise ProbeError("libc++ requires --llvm-source, --libcxx-config and --sysroot")
@@ -204,11 +205,15 @@ def produce(args: argparse.Namespace) -> dict:
                 "compiler_version": version.strip(), "builds": [],
                 "generator": describe(Path(__file__)), "recognition_verified": False}
     write_json(output / "manifest.json", manifest)
-    for mode in ("standalone", "inline", "negative-configuration"):
-        flags = (["/Od", "/Ob0"] if mode == "standalone" else ["/O2", "/Ob2"]) if msvc else (
-            ["-O0", "-fno-inline"] if mode == "standalone" else ["-O2"])
+    modes = ("standalone", "inline", "negative-configuration")
+    if msvc:
+        modes += ("debug-standalone",)
+    for mode in modes:
+        standalone = mode in ("standalone", "debug-standalone")
+        flags = (["/Od", "/Ob0"] if standalone else ["/O2", "/Ob2"]) if msvc else (
+            ["-O0", "-fno-inline"] if standalone else ["-O2"])
         if msvc:
-            flags += ["/MTd", "/D_ITERATOR_DEBUG_LEVEL=2"] if mode == "negative-configuration" else [
+            flags += ["/MTd", "/D_ITERATOR_DEBUG_LEVEL=2"] if mode in ("negative-configuration", "debug-standalone") else [
                 "/MT", "/D_ITERATOR_DEBUG_LEVEL=0"]
             macro_args = base + flags + ["/EP", str(config_file)]
         else:
@@ -223,7 +228,11 @@ def produce(args: argparse.Namespace) -> dict:
         if not msvc and macros.get("__SIZEOF_POINTER__") != "8":
             raise ProbeError("preprocessor did not confirm a 64-bit target")
         for family in families:
-            if mode == "negative-configuration" and family != "accessors":
+            if mode == "negative-configuration" and family not in (
+                    "accessors", "template-collisions", "runtime-collisions"):
+                continue
+            if mode == "debug-standalone" and family not in (
+                    "template-collisions", "runtime-collisions"):
                 continue
             stem = f"{family}-{mode}"
             probe = SOURCES / f"{family}.cpp"
