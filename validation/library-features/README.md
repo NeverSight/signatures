@@ -31,7 +31,10 @@ stack-storage size sweep. `frame-collisions.cpp` varies the number and type of
 individually destroyed objects, including a stack buffer that exercises compiler
 stack protection. `boundary-collisions.cpp` covers const and mutable container
 boundaries, piecewise node construction, empty deleter types, ordering predicates,
-default atomic loads and calendar wrappers. These are independent source
+default atomic loads and calendar wrappers. `eh-state-collisions.cpp` and
+`eh-object-collisions.cpp` compare local arrays with recursive object members
+across the same frame-size range; their generated EH helpers retain different
+security-cookie checks. These are independent source
 counterexamples: a matching body supplies evidence against a unique byte claim,
 not a replacement name for an evaluated function.
 

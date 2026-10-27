@@ -166,7 +166,8 @@ def produce(args: argparse.Namespace) -> dict:
                 f"/pathmap:{output}=/build/neverd-probes"]
         families = ("accessors", "atl_string", "atl_com", "locale",
                     "template-collisions", "runtime-collisions", "regex-collisions",
-                    "operation-collisions", "frame-collisions", "boundary-collisions")
+                    "operation-collisions", "frame-collisions", "boundary-collisions",
+                    "eh-state-collisions", "eh-object-collisions")
     else:
         if args.llvm_source is None or args.libcxx_config is None or args.sysroot is None:
             raise ProbeError("libc++ requires --llvm-source, --libcxx-config and --sysroot")
@@ -231,11 +232,13 @@ def produce(args: argparse.Namespace) -> dict:
         for family in families:
             if mode == "negative-configuration" and family not in (
                     "accessors", "template-collisions", "runtime-collisions", "regex-collisions",
-                    "operation-collisions", "frame-collisions", "boundary-collisions"):
+                    "operation-collisions", "frame-collisions", "boundary-collisions",
+                    "eh-state-collisions", "eh-object-collisions"):
                 continue
             if mode == "debug-standalone" and family not in (
                     "template-collisions", "runtime-collisions", "regex-collisions",
-                    "operation-collisions", "frame-collisions", "boundary-collisions"):
+                    "operation-collisions", "frame-collisions", "boundary-collisions",
+                    "eh-state-collisions", "eh-object-collisions"):
                 continue
             stem = f"{family}-{mode}"
             probe = SOURCES / f"{family}.cpp"
