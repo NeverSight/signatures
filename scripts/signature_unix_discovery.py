@@ -168,9 +168,12 @@ def discover_source(source, fetch):
                 lengths = {"sha1": 40, "sha256": 64}
                 if algorithm not in lengths or not re.fullmatch(r"[0-9a-f]{%d}" % lengths[algorithm], value):
                     raise ValueError("invalid NDK checksum")
+                size_text = (complete.findtext("size") or "").strip()
+                if not re.fullmatch(r"[0-9]+", size_text) or int(size_text) <= 0:
+                    raise ValueError("invalid NDK archive size")
                 archives.append(dict(host_os=archive.findtext("host-os", "unknown"), target_architecture="unknown",
                                      url="https://dl.google.com/android/repository/" + name,
-                                     checksum_algorithm=algorithm, checksum=value, size=int(complete.findtext("size", "0"))))
+                                     checksum_algorithm=algorithm, checksum=value, size=int(size_text)))
             if not archives:
                 raise ValueError("NDK package has no complete archives")
             row.update(package=path, revision_preview=preview, payloads=archives,

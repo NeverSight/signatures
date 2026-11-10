@@ -72,6 +72,18 @@ class DiscoveryTest(unittest.TestCase):
         self.assertEqual(item["host_os"], "linux")
         self.assertEqual(item["target_architecture"], "unknown")
         self.assertEqual(item["checksum_algorithm"], "sha1")
+        self.assertEqual(item["size"], 123)
+
+    def test_ndk_reject_missing_or_invalid_archive_size(self):
+        for size in (b"", b"<size/>", b"<size>0</size>", b"<size>-1</size>",
+                     b"<size>1.5</size>", b"<size>abc</size>",
+                     "<size>１２３</size>".encode()):
+            with self.subTest(size=size), self.assertRaisesRegex(ValueError, "invalid NDK archive size"):
+                self.run_source("android-ndk", self.ndk().replace(b"<size>123</size>", size))
+
+    def test_ndk_archive_size_allows_surrounding_whitespace(self):
+        rows = self.run_source("android-ndk", self.ndk().replace(b"<size>123</size>", b"<size> 123\n </size>"))
+        self.assertEqual(rows[0]["payloads"][0]["size"], 123)
 
     def test_ndk_reject_unsafe_xml_checksum_and_url(self):
         for data in (b'<broken', b'<!DOCTYPE x [<!ENTITY e "x">]><x/>', self.ndk(checksum="garbage"), self.ndk(name="../evil.zip")):
