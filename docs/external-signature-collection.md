@@ -42,6 +42,35 @@ and attribution notices continue to apply. In particular, never upload the
 private state directory or unmodified Microsoft SDK/library archives to a public
 PR, artifact store, or release.
 
+### Homebrew bottle bounds
+
+The bottle collector caps each compressed download/cache entry at 512 MiB, the
+complete gzip-expanded tar at 2 GiB, each logical member at 256 MiB, and the
+raw and logical member counts at 100,000. Raw PAX/GNU extension payloads are
+capped at 1 MiB each and consecutive extension chains at 32 before tar parsing.
+PAX size/sparse overrides and nonzero payload sizes on non-data member types
+are refused to keep the raw preflight aligned with tar parsing. The token
+response is capped at 64 KiB. Limits
+fail closed; they are not a promise that every historical bottle fits. No
+historical pins, archive identities or manifest provenance are changed.
+
+Decompression finishes into a bounded temporary file on the work volume before
+tar parsing, including ignored payloads, padding and PAX/GNU extension data.
+All exposed members are checked for unsafe paths, normalized duplicate names,
+size bounds and unsupported types before any selected archive is written.
+Unselected symbolic/hard links are ignored, never followed or extracted;
+selected archives must be ordinary, non-sparse files. Existing destination
+files are not overwritten. These checks do not replace a trusted private work
+directory, OS-enforced resource quotas, source/license review, full historical
+baseline or native consumer validation. Scratch storage must allow for the
+compressed bottle, expanded tar and selected archives simultaneously.
+
+Offline guards can be exercised without fetching or executing bottles:
+
+```sh
+python3 -m unittest discover -s scripts/tests -p 'test*homebrew*.py' -v
+```
+
 ## External scheduler contract
 
 A scheduler should first record the signatures checkout commit and run
