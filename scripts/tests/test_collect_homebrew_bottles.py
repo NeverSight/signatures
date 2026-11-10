@@ -16,7 +16,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import collect_homebrew_bottles as collect  # noqa: E402
-import fetch_imported_sources as fetcher  # noqa: E402
 import msvc_matrix  # noqa: E402
 
 
@@ -106,13 +105,13 @@ class ObtainTests(unittest.TestCase):
         """What obtain() makes of these transfers, and the files it leaves."""
 
         good = hashlib.sha256(b"bottle").hexdigest()
-        original_fetch, original_location = fetcher.fetch, collect.blob_location
+        original_fetch, original_location = collect.fetch_bottle, collect.blob_location
         remaining = iter(transfers)
 
         def fetch(url: str, destination: Path) -> None:
             destination.write_bytes(next(remaining))
 
-        fetcher.fetch = fetch
+        collect.fetch_bottle = fetch
         collect.blob_location = lambda formula, digest: "https://example.invalid/b"
         try:
             with tempfile.TemporaryDirectory() as scratch:
@@ -124,7 +123,7 @@ class ObtainTests(unittest.TestCase):
                     package, problem = None, str(error)
                 left = sorted(path.name for path in Path(scratch).iterdir())
         finally:
-            fetcher.fetch, collect.blob_location = original_fetch, original_location
+            collect.fetch_bottle, collect.blob_location = original_fetch, original_location
         return package, problem, left
 
     def test_a_damaged_transfer_is_fetched_again(self) -> None:
@@ -246,3 +245,4 @@ class MatrixTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
