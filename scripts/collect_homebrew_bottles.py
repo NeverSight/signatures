@@ -24,6 +24,7 @@ an error: the asset would not be the libraries the row states.
 from __future__ import annotations
 
 import argparse
+import gzip
 import hashlib
 import json
 import os
@@ -31,6 +32,7 @@ import shutil
 import struct
 import sys
 import tarfile
+import tempfile
 import threading
 import time
 import urllib.error
@@ -42,7 +44,6 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 import collect_msvc_libraries as collector  # noqa: E402
-import fetch_imported_sources as fetcher  # noqa: E402
 
 DEFAULT_MATRIX = HERE.parent / ".github" / "homebrew-matrix.json"
 
@@ -51,6 +52,43 @@ DEFAULT_MATRIX = HERE.parent / ".github" / "homebrew-matrix.json"
 REGISTRY = "https://ghcr.io/v2/homebrew/core"
 TOKEN_URL = "https://ghcr.io/token"
 TOKEN_SERVICE = "ghcr.io"
+
+# Per-bottle bounds, including ignored tar payloads and extension headers.
+# These supplement, not replace, the scheduler's OS-enforced resource quotas.
+MAX_DOWNLOAD_BYTES = 512 << 20
+MAX_TAR_BYTES = 2 << 30
+MAX_MEMBER_BYTES = 256 << 20
+MAX_MEMBERS = 100_000
+MAX_TOKEN_BYTES = 64 << 10
+MAX_EXTENSION_BYTES = 1 << 20
+MAX_EXTENSION_CHAIN = 32
+
+
+def bounded_copy(source, destination, limit: int) -> int:
+    total = 0
+    while chunk := source.read(min(1 << 20, limit - total + 1)):
+        total += len(chunk)
+        if total > limit:
+            raise CollectionError(f"stream exceeds {limit} byte limit")
+        destination.write(chunk)
+    return total
+
+
+def fetch_bottle(url: str, destination: Path) -> None:
+    request = urllib.request.Request(url, headers={"User-Agent": "neverd-signatures"})
+    with urllib.request.urlopen(request, timeout=300) as response:
+        expected = response.headers.get("Content-Length")
+        if expected is not None:
+            try:
+                expected = int(expected)
+            except ValueError as error:
+                raise CollectionError("invalid bottle Content-Length") from error
+            if expected < 0 or expected > MAX_DOWNLOAD_BYTES:
+                raise CollectionError("bottle Content-Length exceeds download bounds")
+        with destination.open("wb") as out:
+            received = bounded_copy(response, out, MAX_DOWNLOAD_BYTES)
+        if expected is not None and received != expected:
+            raise OSError(f"received {received} of {expected} bytes")
 
 # The directory of the tree, and the architecture asset manifests name, that
 # the objects of each Mach-O CPU type (<mach/machine.h>) belong to.
@@ -109,7 +147,10 @@ def blob_location(formula: str, digest: str) -> str:
     request = urllib.request.Request(f"{TOKEN_URL}?{query}",
                                      headers={"User-Agent": "neverd-signatures"})
     with urllib.request.urlopen(request, timeout=60) as response:
-        token = json.load(response)["token"]
+        data = response.read(MAX_TOKEN_BYTES + 1)
+        if len(data) > MAX_TOKEN_BYTES:
+            raise CollectionError("registry token response exceeds byte limit")
+        token = json.loads(data)["token"]
     request = urllib.request.Request(bottle_url(formula, digest), headers={
         "User-Agent": "neverd-signatures",
         "Authorization": f"Bearer {token}",
@@ -139,6 +180,8 @@ def obtain(formula: str, bottle: dict, downloads: Path, attempts: int = 6) -> Pa
 
     digest = bottle["sha256"]
     package = downloads / f"{formula}--{bottle['tag']}--{digest}.tar.gz"
+    if package.is_file() and package.stat().st_size > MAX_DOWNLOAD_BYTES:
+        raise CollectionError(f"{package.name}: cached bottle exceeds download limit")
     if package.is_file() and sha256(package) == digest:
         return package
     # The download takes the bottle's name only once it checks out, so a
@@ -147,8 +190,10 @@ def obtain(formula: str, bottle: dict, downloads: Path, attempts: int = 6) -> Pa
     try:
         for attempt in range(1, attempts + 1):
             try:
-                fetcher.fetch(blob_location(formula, digest), partial)
+                fetch_bottle(blob_location(formula, digest), partial)
             except OSError as error:
+                if isinstance(error, urllib.error.HTTPError) and error.code not in (408, 429, 500, 502, 503, 504):
+                    raise CollectionError(f"{formula} {bottle['tag']}: HTTP {error.code}") from error
                 if attempt == attempts:
                     raise CollectionError(f"{formula} {bottle['tag']}: {error}") from error
                 time.sleep(min(60, 5 * attempt))
@@ -178,12 +223,22 @@ def archive_cpu_type(path: Path) -> int:
         if len(header) < AR_HEADER or header[58:60] != b"`\n":
             raise CollectionError(f"{path.name}: malformed member header at {offset}")
         name = header[:16].rstrip(b" ")
-        size = int(header[48:58])
+        try:
+            size = int(header[48:58])
+        except ValueError as error:
+            raise CollectionError(f"{path.name}: invalid member size at {offset}") from error
+        if size < 0:
+            raise CollectionError(f"{path.name}: negative member size at {offset}")
         body = data[offset + AR_HEADER:offset + AR_HEADER + size]
         if len(body) != size:
             raise CollectionError(f"{path.name}: member at {offset} runs past the end")
         if name.startswith(AR_LONG_NAME):
-            length = int(name[len(AR_LONG_NAME):])
+            try:
+                length = int(name[len(AR_LONG_NAME):])
+            except ValueError as error:
+                raise CollectionError(f"{path.name}: invalid BSD member name length") from error
+            if length <= 0 or length > len(body):
+                raise CollectionError(f"{path.name}: BSD member name exceeds member bounds")
             name, body = body[:length].rstrip(b"\0"), body[length:]
         offset += AR_HEADER + size + (size & 1)
         text = name.decode("utf-8", "replace")
@@ -198,29 +253,122 @@ def archive_cpu_type(path: Path) -> int:
     return types.pop()
 
 
+def safe_member_name(name: str) -> str:
+    path = PurePosixPath(name)
+    if (not name or "\\" in name or "\0" in name or path.is_absolute()
+            or ".." in path.parts or str(path) == "." or ":" in path.parts[0]):
+        raise CollectionError(f"unsafe archive path: {name!r}")
+    return str(path)
+
+
+def preflight_tar(raw, size: int) -> None:
+    """Bound hidden extension chains before tarfile recursively parses them."""
+    offset = count = chain = 0
+    extensions = (tarfile.XHDTYPE, tarfile.XGLTYPE, tarfile.GNUTYPE_LONGNAME,
+                  tarfile.GNUTYPE_LONGLINK, tarfile.SOLARIS_XHDTYPE)
+    while offset < size:
+        raw.seek(offset)
+        block = raw.read(tarfile.BLOCKSIZE)
+        if block == b"\0" * tarfile.BLOCKSIZE:
+            return
+        member = tarfile.TarInfo.frombuf(block, "utf-8", "surrogateescape")
+        count += 1
+        if count > MAX_MEMBERS:
+            raise CollectionError("bottle exceeds raw member count limit")
+        if member.size < 0 or member.size > MAX_MEMBER_BYTES:
+            raise CollectionError("raw member exceeds size bounds")
+        if member.type not in extensions and not member.isfile() and member.size:
+            raise CollectionError("non-data tar member has a nonzero size")
+        if member.type in extensions:
+            chain += 1
+            if chain > MAX_EXTENSION_CHAIN or member.size > MAX_EXTENSION_BYTES:
+                raise CollectionError("tar extension exceeds parsing limits")
+            if member.type in (tarfile.XHDTYPE, tarfile.XGLTYPE, tarfile.SOLARIS_XHDTYPE):
+                # PAX size/sparse overrides can change the parser's next header
+                # offset, bypassing this physical-header walk. Small bottle
+                # archives need neither representation; fail closed on them.
+                payload = raw.read(member.size)
+                if b" size=" in payload or b"GNU.sparse." in payload:
+                    raise CollectionError("PAX size/sparse overrides are unsupported")
+        else:
+            chain = 0
+        if member.type == tarfile.GNUTYPE_SPARSE:
+            raise CollectionError("sparse tar members are unsupported")
+        offset += tarfile.BLOCKSIZE + ((member.size + 511) // 512) * 512
+        if offset > size:
+            raise CollectionError("truncated raw tar member")
+
+
 def unpack(package: Path, formula: str, version: str, archives: list[str],
            destination: Path) -> dict[str, Path]:
-    """Each archive the row names, read from the bottle's keg,
-    `<formula>/<version>/<archive>`, to a file under `destination`."""
+    """Validate the entire bounded bottle before extracting selected regular files.
 
-    wanted = {str(PurePosixPath(formula, version, archive)): archive for archive in archives}
+    Unselected links are never followed or materialized. Decompress to a bounded
+    temporary file first: tarfile may otherwise consume hidden PAX/GNU headers
+    or skipped payloads before exposing a member to our validation loop.
+    """
+
+    wanted = {}
+    for archive in archives:
+        if safe_member_name(archive) != archive:
+            raise CollectionError(f"noncanonical requested archive: {archive!r}")
+        name = safe_member_name(f"{formula}/{version}/{archive}")
+        if name in wanted:
+            raise CollectionError(f"duplicate requested archive: {archive!r}")
+        wanted[name] = archive
+    if package.stat().st_size > MAX_DOWNLOAD_BYTES:
+        raise CollectionError(f"{package.name}: bottle exceeds download limit")
     found: dict[str, Path] = {}
-    with tarfile.open(package, "r:gz") as bottle:
-        for member in bottle:
-            archive = wanted.get(member.name)
-            if archive is None:
-                continue
-            if not member.isfile():
-                raise CollectionError(f"{package.name}: {member.name} is not a regular file")
-            target = destination / archive
-            target.parent.mkdir(parents=True, exist_ok=True)
-            with bottle.extractfile(member) as stream, target.open("wb") as out:
-                shutil.copyfileobj(stream, out, 1 << 20)
-            found[archive] = target
-    missing = sorted(set(archives) - set(found))
-    if missing:
-        raise CollectionError(f"{package.name} has no {', '.join(missing)}")
-    return found
+    try:
+        # Keep scratch on the same quota-controlled volume as the caller's work.
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryFile(dir=destination.parent) as raw:
+            with gzip.open(package, "rb") as compressed:
+                bounded_copy(compressed, raw, MAX_TAR_BYTES)
+            tar_size = raw.tell()
+            preflight_tar(raw, tar_size)
+            raw.seek(0)
+            with tarfile.open(fileobj=raw, mode="r:") as bottle:
+                seen: set[str] = set()
+                selected = {}
+                for member in bottle:
+                    if len(seen) >= MAX_MEMBERS:
+                        raise CollectionError("bottle exceeds member count limit")
+                    name = safe_member_name(member.name)
+                    if name in seen:
+                        raise CollectionError(f"duplicate bottle member: {name}")
+                    seen.add(name)
+                    if member.size < 0 or member.size > MAX_MEMBER_BYTES:
+                        raise CollectionError(f"{name}: member exceeds size bounds")
+                    if member.issparse() or not (member.isfile() or member.isdir()
+                                               or member.issym() or member.islnk()):
+                        raise CollectionError(f"{name}: unsupported bottle member type")
+                    # Reject declared data extending beyond the physical tar.
+                    if member.offset_data + member.size > tar_size:
+                        raise CollectionError(f"{name}: truncated bottle member")
+                    archive = wanted.get(name)
+                    if archive is not None:
+                        if not member.isfile():
+                            raise CollectionError(f"{name}: selected archive is not a regular file")
+                        selected[archive] = member
+                missing = sorted(set(archives) - set(selected))
+                if missing:
+                    raise CollectionError(f"{package.name} has no {', '.join(missing)}")
+                for archive, member in selected.items():
+                    target = destination / archive
+                    target.resolve().relative_to(destination.resolve())
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    # Never follow or overwrite a preexisting destination file/link.
+                    with bottle.extractfile(member) as stream, target.open("xb") as out:
+                        found[archive] = target
+                        bounded_copy(stream, out, member.size)
+        return found
+    except (OSError, EOFError, tarfile.TarError, ValueError, CollectionError) as error:
+        for target in found.values():
+            target.unlink(missing_ok=True)
+        if isinstance(error, CollectionError):
+            raise
+        raise CollectionError(f"{package.name}: {error}") from error
 
 
 def collect(row: dict, work: Path, downloads: Path
